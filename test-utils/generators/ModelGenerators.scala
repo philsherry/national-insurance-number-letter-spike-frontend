@@ -32,12 +32,13 @@ trait ModelGenerators {
       Gen.oneOf(WhichPrimaryDocument.values.toSeq)
     }
 
-  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddress: Arbitrary[WhatIsYourPreviousEmployersAddress] =
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddress: Arbitrary[PreviousEmployersAddress] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
         addressLine2 <- arbitrary[String]
-      } yield WhatIsYourPreviousEmployersAddress(addressLine1, addressLine2)
+        addressLine3 <- arbitrary[Option[String]]
+      } yield PreviousEmployersAddress(addressLine1, addressLine2, addressLine3)
     }
 
   implicit lazy val arbitraryWhatIsYourEmployersAddress: Arbitrary[WhatIsYourEmployersAddress] =
