@@ -125,3 +125,39 @@ whatIsYourCurrentAddressUk.error.addressLine1.length = addressLine1 must be 100 
 whatIsYourCurrentAddressUk.error.addressLine2.length = addressLine2 must be 100 characters or less
 whatIsYourCurrentAddressUk.addressLine1.change.hidden = addressLine1
 whatIsYourCurrentAddressUk.addressLine2.change.hidden = addressLine2
+
+doYouHaveAnyPreviousAddresses.title = doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.heading = doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.checkYourAnswersLabel = doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.error.required = Select yes if doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.change.hidden = DoYouHaveAnyPreviousAddresses
+
+isYourPreviousAddressInUk.title = isYourPreviousAddressInUk
+isYourPreviousAddressInUk.heading = isYourPreviousAddressInUk
+isYourPreviousAddressInUk.checkYourAnswersLabel = isYourPreviousAddressInUk
+isYourPreviousAddressInUk.error.required = Select yes if isYourPreviousAddressInUk
+isYourPreviousAddressInUk.change.hidden = IsYourPreviousAddressInUk
+
+whatIsYourPreviousAddressInternational.title = whatIsYourPreviousAddressInternational
+whatIsYourPreviousAddressInternational.heading = whatIsYourPreviousAddressInternational
+whatIsYourPreviousAddressInternational.addressLine1 = addressLine1
+whatIsYourPreviousAddressInternational.adressLine2 = adressLine2
+whatIsYourPreviousAddressInternational.checkYourAnswersLabel = WhatIsYourPreviousAddressInternational
+whatIsYourPreviousAddressInternational.error.addressLine1.required = Enter addressLine1
+whatIsYourPreviousAddressInternational.error.adressLine2.required = Enter adressLine2
+whatIsYourPreviousAddressInternational.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourPreviousAddressInternational.error.adressLine2.length = adressLine2 must be 100 characters or less
+whatIsYourPreviousAddressInternational.addressLine1.change.hidden = addressLine1
+whatIsYourPreviousAddressInternational.adressLine2.change.hidden = adressLine2
+
+whatIsYourPreviousAddressUk.title = whatIsYourPreviousAddressUk
+whatIsYourPreviousAddressUk.heading = whatIsYourPreviousAddressUk
+whatIsYourPreviousAddressUk.addressLine1 = addressLine1
+whatIsYourPreviousAddressUk.adressLine2 = adressLine2
+whatIsYourPreviousAddressUk.checkYourAnswersLabel = WhatIsYourPreviousAddressUk
+whatIsYourPreviousAddressUk.error.addressLine1.required = Enter addressLine1
+whatIsYourPreviousAddressUk.error.adressLine2.required = Enter adressLine2
+whatIsYourPreviousAddressUk.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourPreviousAddressUk.error.adressLine2.length = adressLine2 must be 100 characters or less
+whatIsYourPreviousAddressUk.addressLine1.change.hidden = addressLine1
+whatIsYourPreviousAddressUk.adressLine2.change.hidden = adressLine2

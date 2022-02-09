@@ -24,6 +24,38 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryWhatIsYourPreviousAddressUkUserAnswersEntry: Arbitrary[(WhatIsYourPreviousAddressUkPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[WhatIsYourPreviousAddressUkPage.type]
+        value <- arbitrary[WhatIsYourPreviousAddressUk].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryWhatIsYourPreviousAddressInternationalUserAnswersEntry: Arbitrary[(WhatIsYourPreviousAddressInternationalPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[WhatIsYourPreviousAddressInternationalPage.type]
+        value <- arbitrary[WhatIsYourPreviousAddressInternational].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryIsYourPreviousAddressInUkUserAnswersEntry: Arbitrary[(IsYourPreviousAddressInUkPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[IsYourPreviousAddressInUkPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDoYouHaveAnyPreviousAddressesUserAnswersEntry: Arbitrary[(DoYouHaveAnyPreviousAddressesPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DoYouHaveAnyPreviousAddressesPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryWhatIsYourCurrentAddressUkUserAnswersEntry: Arbitrary[(WhatIsYourCurrentAddressUkPage.type, JsValue)] =
     Arbitrary {
       for {

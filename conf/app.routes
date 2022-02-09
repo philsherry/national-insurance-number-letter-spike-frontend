@@ -54,3 +54,23 @@ GET        /whatIsYourCurrentAddressUk                        controllers.WhatIs
 POST       /whatIsYourCurrentAddressUk                        controllers.WhatIsYourCurrentAddressUkController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhatIsYourCurrentAddressUk                  controllers.WhatIsYourCurrentAddressUkController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourCurrentAddressUk                  controllers.WhatIsYourCurrentAddressUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHaveAnyPreviousAddresses                        controllers.DoYouHaveAnyPreviousAddressesController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveAnyPreviousAddresses                        controllers.DoYouHaveAnyPreviousAddressesController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveAnyPreviousAddresses                  controllers.DoYouHaveAnyPreviousAddressesController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveAnyPreviousAddresses                  controllers.DoYouHaveAnyPreviousAddressesController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = CheckMode)

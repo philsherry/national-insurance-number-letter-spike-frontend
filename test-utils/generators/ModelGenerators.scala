@@ -22,6 +22,22 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryWhatIsYourPreviousAddressUk: Arbitrary[WhatIsYourPreviousAddressUk] =
+    Arbitrary {
+      for {
+        addressLine1 <- arbitrary[String]
+        adressLine2 <- arbitrary[String]
+      } yield WhatIsYourPreviousAddressUk(addressLine1, adressLine2)
+    }
+
+  implicit lazy val arbitraryWhatIsYourPreviousAddressInternational: Arbitrary[WhatIsYourPreviousAddressInternational] =
+    Arbitrary {
+      for {
+        addressLine1 <- arbitrary[String]
+        adressLine2 <- arbitrary[String]
+      } yield WhatIsYourPreviousAddressInternational(addressLine1, adressLine2)
+    }
+
   implicit lazy val arbitraryWhatIsYourCurrentAddressUk: Arbitrary[WhatIsYourCurrentAddressUk] =
     Arbitrary {
       for {
