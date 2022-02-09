@@ -21,6 +21,15 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhatIsYourCurrentAddressUkPage: Arbitrary[WhatIsYourCurrentAddressUkPage.type] =
+    Arbitrary(WhatIsYourCurrentAddressUkPage)
+
+  implicit lazy val arbitraryWhatIsYourCurrentAddressInternationalPage: Arbitrary[WhatIsYourCurrentAddressInternationalPage.type] =
+    Arbitrary(WhatIsYourCurrentAddressInternationalPage)
+
+  implicit lazy val arbitraryIsYourCurrentAddressInUkPage: Arbitrary[IsYourCurrentAddressInUkPage.type] =
+    Arbitrary(IsYourCurrentAddressInUkPage)
+
   implicit lazy val arbitraryWhatIsYourDateOfBirthPage: Arbitrary[WhatIsYourDateOfBirthPage.type] =
     Arbitrary(WhatIsYourDateOfBirthPage)
 

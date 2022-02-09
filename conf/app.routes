@@ -39,3 +39,18 @@ GET        /whatIsYourDateOfBirth                  controllers.WhatIsYourDateOfB
 POST       /whatIsYourDateOfBirth                  controllers.WhatIsYourDateOfBirthController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhatIsYourDateOfBirth                        controllers.WhatIsYourDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourDateOfBirth                        controllers.WhatIsYourDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isYourCurrentAddressInUk                        controllers.IsYourCurrentAddressInUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /isYourCurrentAddressInUk                        controllers.IsYourCurrentAddressInUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsYourCurrentAddressInUk                  controllers.IsYourCurrentAddressInUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsYourCurrentAddressInUk                  controllers.IsYourCurrentAddressInUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourCurrentAddressInternational                        controllers.WhatIsYourCurrentAddressInternationalController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourCurrentAddressInternational                        controllers.WhatIsYourCurrentAddressInternationalController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourCurrentAddressInternational                  controllers.WhatIsYourCurrentAddressInternationalController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourCurrentAddressInternational                  controllers.WhatIsYourCurrentAddressInternationalController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourCurrentAddressUk                        controllers.WhatIsYourCurrentAddressUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourCurrentAddressUk                        controllers.WhatIsYourCurrentAddressUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourCurrentAddressUk                  controllers.WhatIsYourCurrentAddressUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourCurrentAddressUk                  controllers.WhatIsYourCurrentAddressUkController.onSubmit(mode: Mode = CheckMode)

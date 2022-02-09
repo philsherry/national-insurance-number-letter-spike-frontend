@@ -95,3 +95,33 @@ whatIsYourDateOfBirth.error.required.two = The whatIsYourDateOfBirth must includ
 whatIsYourDateOfBirth.error.required = The whatIsYourDateOfBirth must include {0}
 whatIsYourDateOfBirth.error.invalid = Enter a real WhatIsYourDateOfBirth
 whatIsYourDateOfBirth.change.hidden = WhatIsYourDateOfBirth
+
+isYourCurrentAddressInUk.title = isYourCurrentAddressInUk
+isYourCurrentAddressInUk.heading = isYourCurrentAddressInUk
+isYourCurrentAddressInUk.checkYourAnswersLabel = isYourCurrentAddressInUk
+isYourCurrentAddressInUk.error.required = Select yes if isYourCurrentAddressInUk
+isYourCurrentAddressInUk.change.hidden = IsYourCurrentAddressInUk
+
+whatIsYourCurrentAddressInternational.title = whatIsYourCurrentAddressInternational
+whatIsYourCurrentAddressInternational.heading = whatIsYourCurrentAddressInternational
+whatIsYourCurrentAddressInternational.addressLine1 = addressLine1
+whatIsYourCurrentAddressInternational.addressLine2 = addressLine2
+whatIsYourCurrentAddressInternational.checkYourAnswersLabel = WhatIsYourCurrentAddressInternational
+whatIsYourCurrentAddressInternational.error.addressLine1.required = Enter addressLine1
+whatIsYourCurrentAddressInternational.error.addressLine2.required = Enter addressLine2
+whatIsYourCurrentAddressInternational.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourCurrentAddressInternational.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourCurrentAddressInternational.addressLine1.change.hidden = addressLine1
+whatIsYourCurrentAddressInternational.addressLine2.change.hidden = addressLine2
+
+whatIsYourCurrentAddressUk.title = whatIsYourCurrentAddressUk
+whatIsYourCurrentAddressUk.heading = whatIsYourCurrentAddressUk
+whatIsYourCurrentAddressUk.addressLine1 = addressLine1
+whatIsYourCurrentAddressUk.addressLine2 = addressLine2
+whatIsYourCurrentAddressUk.checkYourAnswersLabel = WhatIsYourCurrentAddressUk
+whatIsYourCurrentAddressUk.error.addressLine1.required = Enter addressLine1
+whatIsYourCurrentAddressUk.error.addressLine2.required = Enter addressLine2
+whatIsYourCurrentAddressUk.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourCurrentAddressUk.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourCurrentAddressUk.addressLine1.change.hidden = addressLine1
+whatIsYourCurrentAddressUk.addressLine2.change.hidden = addressLine2
