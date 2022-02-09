@@ -134,3 +134,13 @@ GET        /whatIsYourChildBenefitNumber                        controllers.What
 POST       /whatIsYourChildBenefitNumber                        controllers.WhatIsYourChildBenefitNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhatIsYourChildBenefitNumber                  controllers.WhatIsYourChildBenefitNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourChildBenefitNumber                  controllers.WhatIsYourChildBenefitNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouEverReceivedOtherUkBenefits                        controllers.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouEverReceivedOtherUkBenefits                        controllers.HaveYouEverReceivedOtherUkBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouEverReceivedOtherUkBenefits                  controllers.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouEverReceivedOtherUkBenefits                  controllers.HaveYouEverReceivedOtherUkBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatOtherUkBenefitsHaveYouReceived                        controllers.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatOtherUkBenefitsHaveYouReceived                        controllers.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatOtherUkBenefitsHaveYouReceived                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatOtherUkBenefitsHaveYouReceived                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode: Mode = CheckMode)
