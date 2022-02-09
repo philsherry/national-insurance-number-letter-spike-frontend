@@ -89,3 +89,23 @@ GET        /whatIsYourTelephoneNumber                        controllers.WhatIsY
 POST       /whatIsYourTelephoneNumber                        controllers.WhatIsYourTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhatIsYourTelephoneNumber                  controllers.WhatIsYourTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourTelephoneNumber                  controllers.WhatIsYourTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouInACivilPartnership                        controllers.AreYouInACivilPartnershipController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouInACivilPartnership                        controllers.AreYouInACivilPartnershipController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouInACivilPartnership                  controllers.AreYouInACivilPartnershipController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouInACivilPartnership                  controllers.AreYouInACivilPartnershipController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouMarried                        controllers.AreYouMarriedController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouMarried                        controllers.AreYouMarriedController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouMarried                  controllers.AreYouMarriedController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouMarried                  controllers.AreYouMarriedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouEnterACivilPartnership                  controllers.WhenDidYouEnterACivilPartnershipController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouEnterACivilPartnership                  controllers.WhenDidYouEnterACivilPartnershipController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouEnterACivilPartnership                        controllers.WhenDidYouEnterACivilPartnershipController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouEnterACivilPartnership                        controllers.WhenDidYouEnterACivilPartnershipController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouGetMarried                  controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouGetMarried                  controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouGetMarried                        controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouGetMarried                        controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = CheckMode)

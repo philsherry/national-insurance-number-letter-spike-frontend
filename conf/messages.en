@@ -181,3 +181,35 @@ whatIsYourTelephoneNumber.checkYourAnswersLabel = whatIsYourTelephoneNumber
 whatIsYourTelephoneNumber.error.required = Enter whatIsYourTelephoneNumber
 whatIsYourTelephoneNumber.error.length = WhatIsYourTelephoneNumber must be 100 characters or less
 whatIsYourTelephoneNumber.change.hidden = WhatIsYourTelephoneNumber
+
+areYouInACivilPartnership.title = areYouInACivilPartnership
+areYouInACivilPartnership.heading = areYouInACivilPartnership
+areYouInACivilPartnership.checkYourAnswersLabel = areYouInACivilPartnership
+areYouInACivilPartnership.error.required = Select yes if areYouInACivilPartnership
+areYouInACivilPartnership.change.hidden = AreYouInACivilPartnership
+
+areYouMarried.title = areYouMarried
+areYouMarried.heading = areYouMarried
+areYouMarried.checkYourAnswersLabel = areYouMarried
+areYouMarried.error.required = Select yes if areYouMarried
+areYouMarried.change.hidden = AreYouMarried
+
+whenDidYouEnterACivilPartnership.title = WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.heading = WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.hint = For example, 12 11 2007
+whenDidYouEnterACivilPartnership.checkYourAnswersLabel = WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.error.required.all = Enter the whenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.error.required.two = The whenDidYouEnterACivilPartnership must include {0} and {1}
+whenDidYouEnterACivilPartnership.error.required = The whenDidYouEnterACivilPartnership must include {0}
+whenDidYouEnterACivilPartnership.error.invalid = Enter a real WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.change.hidden = WhenDidYouEnterACivilPartnership
+
+whenDidYouGetMarried.title = WhenDidYouGetMarried
+whenDidYouGetMarried.heading = WhenDidYouGetMarried
+whenDidYouGetMarried.hint = For example, 12 11 2007
+whenDidYouGetMarried.checkYourAnswersLabel = WhenDidYouGetMarried
+whenDidYouGetMarried.error.required.all = Enter the whenDidYouGetMarried
+whenDidYouGetMarried.error.required.two = The whenDidYouGetMarried must include {0} and {1}
+whenDidYouGetMarried.error.required = The whenDidYouGetMarried must include {0}
+whenDidYouGetMarried.error.invalid = Enter a real WhenDidYouGetMarried
+whenDidYouGetMarried.change.hidden = WhenDidYouGetMarried
