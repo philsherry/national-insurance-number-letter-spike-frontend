@@ -21,6 +21,15 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhatIsYourChildBenefitNumberPage: Arbitrary[WhatIsYourChildBenefitNumberPage.type] =
+    Arbitrary(WhatIsYourChildBenefitNumberPage)
+
+  implicit lazy val arbitraryHaveYouEverClaimedChildBenefitPage: Arbitrary[HaveYouEverClaimedChildBenefitPage.type] =
+    Arbitrary(HaveYouEverClaimedChildBenefitPage)
+
+  implicit lazy val arbitraryDoYouKnowYourChildBenefitNumberPage: Arbitrary[DoYouKnowYourChildBenefitNumberPage.type] =
+    Arbitrary(DoYouKnowYourChildBenefitNumberPage)
+
   implicit lazy val arbitraryPreviousMarriageOrPartnershipDetailsPage: Arbitrary[PreviousMarriageOrPartnershipDetailsPage.type] =
     Arbitrary(PreviousMarriageOrPartnershipDetailsPage)
 

@@ -231,3 +231,22 @@ previousMarriageOrPartnershipDetails.error.startDate.length = startDate must be 
 previousMarriageOrPartnershipDetails.error.endDate.length = endDate must be 100 characters or less
 previousMarriageOrPartnershipDetails.startDate.change.hidden = startDate
 previousMarriageOrPartnershipDetails.endDate.change.hidden = endDate
+
+doYouKnowYourChildBenefitNumber.title = doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.heading = doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.checkYourAnswersLabel = doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.error.required = Select yes if doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.change.hidden = DoYouKnowYourChildBenefitNumber
+
+haveYouEverClaimedChildBenefit.title = haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.heading = haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.checkYourAnswersLabel = haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.error.required = Select yes if haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.change.hidden = HaveYouEverClaimedChildBenefit
+
+whatIsYourChildBenefitNumber.title = whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.heading = whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.checkYourAnswersLabel = whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.error.required = Enter whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.error.length = WhatIsYourChildBenefitNumber must be 100 characters or less
+whatIsYourChildBenefitNumber.change.hidden = WhatIsYourChildBenefitNumber

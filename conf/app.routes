@@ -119,3 +119,18 @@ GET        /previousMarriageOrPartnershipDetails                        controll
 POST       /previousMarriageOrPartnershipDetails                        controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = NormalMode)
 GET        /changePreviousMarriageOrPartnershipDetails                  controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changePreviousMarriageOrPartnershipDetails                  controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouKnowYourChildBenefitNumber                        controllers.DoYouKnowYourChildBenefitNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouKnowYourChildBenefitNumber                        controllers.DoYouKnowYourChildBenefitNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouKnowYourChildBenefitNumber                  controllers.DoYouKnowYourChildBenefitNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouKnowYourChildBenefitNumber                  controllers.DoYouKnowYourChildBenefitNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouEverClaimedChildBenefit                        controllers.HaveYouEverClaimedChildBenefitController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouEverClaimedChildBenefit                        controllers.HaveYouEverClaimedChildBenefitController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouEverClaimedChildBenefit                  controllers.HaveYouEverClaimedChildBenefitController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouEverClaimedChildBenefit                  controllers.HaveYouEverClaimedChildBenefitController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourChildBenefitNumber                        controllers.WhatIsYourChildBenefitNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourChildBenefitNumber                        controllers.WhatIsYourChildBenefitNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourChildBenefitNumber                  controllers.WhatIsYourChildBenefitNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourChildBenefitNumber                  controllers.WhatIsYourChildBenefitNumberController.onSubmit(mode: Mode = CheckMode)
