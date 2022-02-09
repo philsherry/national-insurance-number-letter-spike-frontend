@@ -32,7 +32,8 @@ object WhatIsYourPreviousAddressInternationalSummary  {
     answers.get(WhatIsYourPreviousAddressInternationalPage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.adressLine2).toString
+        // TODO
+      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2.toString).toString
 
         SummaryListRowViewModel(
           key     = "whatIsYourPreviousAddressInternational.checkYourAnswersLabel",
