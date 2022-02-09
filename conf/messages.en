@@ -67,3 +67,9 @@ whatIsYourName.error.firstName.length = firstName must be 100 characters or less
 whatIsYourName.error.middleNames.length = middleNames must be 100 characters or less
 whatIsYourName.firstName.change.hidden = firstName
 whatIsYourName.middleNames.change.hidden = middleNames
+
+doYouHaveAPreviousName.title = doYouHaveAPreviousName
+doYouHaveAPreviousName.heading = doYouHaveAPreviousName
+doYouHaveAPreviousName.checkYourAnswersLabel = doYouHaveAPreviousName
+doYouHaveAPreviousName.error.required = Select yes if doYouHaveAPreviousName
+doYouHaveAPreviousName.change.hidden = DoYouHaveAPreviousName
