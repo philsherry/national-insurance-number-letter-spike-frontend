@@ -17,8 +17,8 @@
 package forms
 
 import java.time.{LocalDate, ZoneOffset}
-
 import forms.behaviours.DateBehaviours
+import play.api.data.FormError
 
 class WhatIsYourDateOfBirthFormProviderSpec extends DateBehaviours {
 
@@ -27,11 +27,13 @@ class WhatIsYourDateOfBirthFormProviderSpec extends DateBehaviours {
   ".value" - {
 
     val validData = datesBetween(
-      min = LocalDate.of(2000, 1, 1),
-      max = LocalDate.now(ZoneOffset.UTC)
+      min = LocalDate.of(1900, 1, 1),
+      max = LocalDate.now().minusDays(1)
     )
 
     behave like dateField(form, "value", validData)
+
+    behave like dateFieldWithMax(form, "value", LocalDate.now().minusDays(1), FormError("value", "whatIsYourDateOfBirth.error.beforeToday"))
 
     behave like mandatoryDateField(form, "value", "whatIsYourDateOfBirth.error.required.all")
   }

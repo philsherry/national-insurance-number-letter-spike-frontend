@@ -101,6 +101,7 @@ whatIsYourDateOfBirth.error.required.all = Enter the whatIsYourDateOfBirth
 whatIsYourDateOfBirth.error.required.two = The whatIsYourDateOfBirth must include {0} and {1}
 whatIsYourDateOfBirth.error.required = The whatIsYourDateOfBirth must include {0}
 whatIsYourDateOfBirth.error.invalid = Enter a real WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.error.beforeToday = The date of birth must be in the past
 whatIsYourDateOfBirth.change.hidden = WhatIsYourDateOfBirth
 
 isYourCurrentAddressInUk.title = isYourCurrentAddressInUk
