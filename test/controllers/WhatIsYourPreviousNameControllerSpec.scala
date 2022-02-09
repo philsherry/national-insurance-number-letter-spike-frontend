@@ -47,8 +47,10 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
     userAnswersId,
     Json.obj(
       WhatIsYourPreviousNamePage.toString -> Json.obj(
-        "firstName" -> "value 1",
-        "middleNames" -> "value 2"
+        "title" -> "title",
+        "firstName" -> "first",
+        "middleNames" -> "middle",
+        "lastName" -> "last"
       )
     )
   )
@@ -83,7 +85,7 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourPreviousName("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhatIsYourPreviousName("title", "first", "middle", "last")), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -104,7 +106,7 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourPreviousNameRoute)
-            .withFormUrlEncodedBody(("firstName", "value 1"), ("middleNames", "value 2"))
+            .withFormUrlEncodedBody(("title", "title"), ("firstName", "first"), ("middleNames", "middle"), ("lastName", "last"))
 
         val result = route(application, request).value
 
@@ -154,7 +156,7 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourPreviousNameRoute)
-            .withFormUrlEncodedBody(("firstName", "value 1"), ("middleNames", "value 2"))
+            .withFormUrlEncodedBody(("title", "title"), ("firstName", "first"), ("middleNames", "middle"), ("lastName", "last"))
 
         val result = route(application, request).value
 
