@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package generators
+package models
 
-import org.scalacheck.Arbitrary
-import pages._
+import play.api.libs.json._
 
-trait PageGenerators {
+case class WhatIsYourPreviousName (firstName: String, middleNames: String)
 
-  implicit lazy val arbitraryWhatIsYourPreviousNamePage: Arbitrary[WhatIsYourPreviousNamePage.type] =
-    Arbitrary(WhatIsYourPreviousNamePage)
-
-  implicit lazy val arbitraryDoYouHaveAPreviousNamePage: Arbitrary[DoYouHaveAPreviousNamePage.type] =
-    Arbitrary(DoYouHaveAPreviousNamePage)
-
-  implicit lazy val arbitraryWhatIsYourNamePage: Arbitrary[WhatIsYourNamePage.type] =
-    Arbitrary(WhatIsYourNamePage)
+object WhatIsYourPreviousName {
+  implicit val format = Json.format[WhatIsYourPreviousName]
 }

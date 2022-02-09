@@ -29,3 +29,8 @@ GET        /doYouHaveAPreviousName                        controllers.DoYouHaveA
 POST       /doYouHaveAPreviousName                        controllers.DoYouHaveAPreviousNameController.onSubmit(mode: Mode = NormalMode)
 GET        /changeDoYouHaveAPreviousName                  controllers.DoYouHaveAPreviousNameController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeDoYouHaveAPreviousName                  controllers.DoYouHaveAPreviousNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousName                        controllers.WhatIsYourPreviousNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousName                        controllers.WhatIsYourPreviousNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousName                  controllers.WhatIsYourPreviousNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousName                  controllers.WhatIsYourPreviousNameController.onSubmit(mode: Mode = CheckMode)

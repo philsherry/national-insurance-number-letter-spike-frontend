@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import models.WhatIsYourPreviousName
+import pages.behaviours.PageBehaviours
 
-trait PageGenerators {
+class WhatIsYourPreviousNamePageSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryWhatIsYourPreviousNamePage: Arbitrary[WhatIsYourPreviousNamePage.type] =
-    Arbitrary(WhatIsYourPreviousNamePage)
+  "WhatIsYourPreviousNamePage" - {
 
-  implicit lazy val arbitraryDoYouHaveAPreviousNamePage: Arbitrary[DoYouHaveAPreviousNamePage.type] =
-    Arbitrary(DoYouHaveAPreviousNamePage)
+    beRetrievable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage)
 
-  implicit lazy val arbitraryWhatIsYourNamePage: Arbitrary[WhatIsYourNamePage.type] =
-    Arbitrary(WhatIsYourNamePage)
+    beSettable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage)
+
+    beRemovable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage)
+  }
 }

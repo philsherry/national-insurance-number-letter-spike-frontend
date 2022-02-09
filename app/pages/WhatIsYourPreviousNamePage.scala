@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import models.WhatIsYourPreviousName
+import play.api.libs.json.JsPath
 
-trait PageGenerators {
+case object WhatIsYourPreviousNamePage extends QuestionPage[WhatIsYourPreviousName] {
 
-  implicit lazy val arbitraryWhatIsYourPreviousNamePage: Arbitrary[WhatIsYourPreviousNamePage.type] =
-    Arbitrary(WhatIsYourPreviousNamePage)
+  override def path: JsPath = JsPath \ toString
 
-  implicit lazy val arbitraryDoYouHaveAPreviousNamePage: Arbitrary[DoYouHaveAPreviousNamePage.type] =
-    Arbitrary(DoYouHaveAPreviousNamePage)
-
-  implicit lazy val arbitraryWhatIsYourNamePage: Arbitrary[WhatIsYourNamePage.type] =
-    Arbitrary(WhatIsYourNamePage)
+  override def toString: String = "whatIsYourPreviousName"
 }

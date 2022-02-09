@@ -73,3 +73,15 @@ doYouHaveAPreviousName.heading = doYouHaveAPreviousName
 doYouHaveAPreviousName.checkYourAnswersLabel = doYouHaveAPreviousName
 doYouHaveAPreviousName.error.required = Select yes if doYouHaveAPreviousName
 doYouHaveAPreviousName.change.hidden = DoYouHaveAPreviousName
+
+whatIsYourPreviousName.title = whatIsYourPreviousName
+whatIsYourPreviousName.heading = whatIsYourPreviousName
+whatIsYourPreviousName.firstName = firstName
+whatIsYourPreviousName.middleNames = middleNames
+whatIsYourPreviousName.checkYourAnswersLabel = WhatIsYourPreviousName
+whatIsYourPreviousName.error.firstName.required = Enter firstName
+whatIsYourPreviousName.error.middleNames.required = Enter middleNames
+whatIsYourPreviousName.error.firstName.length = firstName must be 100 characters or less
+whatIsYourPreviousName.error.middleNames.length = middleNames must be 100 characters or less
+whatIsYourPreviousName.firstName.change.hidden = firstName
+whatIsYourPreviousName.middleNames.change.hidden = middleNames
