@@ -21,16 +21,20 @@ import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
-import models.WhatIsYourCurrentAddressUk
+import models.CurrentAddressUk
 
 class WhatIsYourCurrentAddressUkFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[WhatIsYourCurrentAddressUk] = Form(
+   def apply(): Form[CurrentAddressUk] = Form(
      mapping(
-      "addressLine1" -> text("whatIsYourCurrentAddressUk.error.addressLine1.required")
-        .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine1.length")),
-      "addressLine2" -> text("whatIsYourCurrentAddressUk.error.addressLine2.required")
-        .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine2.length"))
-    )(WhatIsYourCurrentAddressUk.apply)(WhatIsYourCurrentAddressUk.unapply)
+       "addressLine1" -> text("whatIsYourCurrentAddressUk.error.addressLine1.required")
+         .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine1.length")),
+       "addressLine2" -> optional(text("whatIsYourCurrentAddressUk.error.addressLine2.required")
+         .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine2.length"))),
+       "addressLine3" -> optional(text("whatIsYourCurrentAddressUk.error.addressLine3.required")
+         .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine3.length"))),
+       "postcode" -> text("whatIsYourCurrentAddressUk.error.postcode.required")
+         .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.postcode.length"))
+    )(CurrentAddressUk.apply)(CurrentAddressUk.unapply)
    )
  }

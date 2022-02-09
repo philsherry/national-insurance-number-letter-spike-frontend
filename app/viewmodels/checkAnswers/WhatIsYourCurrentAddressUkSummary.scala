@@ -32,7 +32,8 @@ object WhatIsYourCurrentAddressUkSummary  {
     answers.get(WhatIsYourCurrentAddressUkPage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2).toString
+        // TODO
+      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2.toString).toString
 
         SummaryListRowViewModel(
           key     = "whatIsYourCurrentAddressUk.checkYourAnswersLabel",

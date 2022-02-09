@@ -276,7 +276,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
     Arbitrary {
       for {
         page  <- arbitrary[WhatIsYourCurrentAddressUkPage.type]
-        value <- arbitrary[WhatIsYourCurrentAddressUk].map(Json.toJson(_))
+        value <- arbitrary[CurrentAddressUk].map(Json.toJson(_))
       } yield (page, value)
     }
 

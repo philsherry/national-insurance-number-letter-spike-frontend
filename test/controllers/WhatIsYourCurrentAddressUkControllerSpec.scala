@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourCurrentAddressUkFormProvider
-import models.{NormalMode, WhatIsYourCurrentAddressUk, UserAnswers}
+import models.{NormalMode, CurrentAddressUk, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -43,15 +43,13 @@ class WhatIsYourCurrentAddressUkControllerSpec extends SpecBase with MockitoSuga
 
   lazy val whatIsYourCurrentAddressUkRoute = routes.WhatIsYourCurrentAddressUkController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      WhatIsYourCurrentAddressUkPage.toString -> Json.obj(
-        "addressLine1" -> "value 1",
-        "addressLine2" -> "value 2"
-      )
-    )
+  val validData = CurrentAddressUk(
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = "postcode"
   )
+
+  val userAnswers = UserAnswers(userAnswersId)
+    .set(WhatIsYourCurrentAddressUkPage, validData)
+    .success.value
 
   "WhatIsYourCurrentAddressUk Controller" - {
 
@@ -83,7 +81,7 @@ class WhatIsYourCurrentAddressUkControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourCurrentAddressUk("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validData), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -104,7 +102,10 @@ class WhatIsYourCurrentAddressUkControllerSpec extends SpecBase with MockitoSuga
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourCurrentAddressUkRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              "addressLine1" -> "value 1",
+              "postcode" -> "postcode"
+            )
 
         val result = route(application, request).value
 
