@@ -93,7 +93,7 @@ trait ModelGenerators {
       for {
         title <- arbitrary[String]
         firstName <- arbitrary[String]
-        middleNames <- arbitrary[String]
+        middleNames <- arbitrary[Option[String]]
         lastName <- arbitrary[String]
       } yield WhatIsYourPreviousName(title, firstName, middleNames, lastName)
     }
@@ -103,7 +103,7 @@ trait ModelGenerators {
       for {
         title <- arbitrary[String]
         firstName <- arbitrary[String]
-        middleNames <- arbitrary[String]
+        middleNames <- arbitrary[Option[String]]
         lastName <- arbitrary[String]
       } yield WhatIsYourName(title, firstName, middleNames, lastName)
     }

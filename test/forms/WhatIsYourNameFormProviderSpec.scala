@@ -80,7 +80,6 @@ class WhatIsYourNameFormProviderSpec extends StringFieldBehaviours {
   ".middleNames" - {
 
     val fieldName = "middleNames"
-    val requiredKey = "whatIsYourName.error.middleNames.required"
     val lengthKey = "whatIsYourName.error.middleNames.length"
     val maxLength = 100
 
@@ -97,11 +96,6 @@ class WhatIsYourNameFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
   }
 
   ".lastName" - {

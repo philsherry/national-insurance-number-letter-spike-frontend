@@ -31,8 +31,8 @@ class WhatIsYourNameFormProvider @Inject() extends Mappings {
          .verifying(maxLength(20, "whatIsYourName.error.titleField.length")),
       "firstName" -> text("whatIsYourName.error.firstName.required")
         .verifying(maxLength(100, "whatIsYourName.error.firstName.length")),
-      "middleNames" -> text("whatIsYourName.error.middleNames.required")
-        .verifying(maxLength(100, "whatIsYourName.error.middleNames.length")),
+      "middleNames" -> optional(text("whatIsYourName.error.middleNames.required")
+        .verifying(maxLength(100, "whatIsYourName.error.middleNames.length"))),
        "lastName" -> text("whatIsYourName.error.lastName.required")
          .verifying(maxLength(100, "whatIsYourName.error.lastName.length"))
     )(WhatIsYourName.apply)(WhatIsYourName.unapply)

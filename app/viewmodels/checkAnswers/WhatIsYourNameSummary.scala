@@ -32,7 +32,7 @@ object WhatIsYourNameSummary  {
     answers.get(WhatIsYourNamePage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.firstName).toString + "<br/>" + HtmlFormat.escape(answer.middleNames).toString
+      val value = HtmlFormat.escape(answer.firstName).toString + "<br/>" + HtmlFormat.escape(answer.middleNames.getOrElse("")).toString
 
         SummaryListRowViewModel(
           key     = "whatIsYourName.checkYourAnswersLabel",
