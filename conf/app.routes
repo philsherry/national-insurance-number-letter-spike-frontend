@@ -79,3 +79,13 @@ GET        /areYouReturningFromLivingAbroad                        controllers.A
 POST       /areYouReturningFromLivingAbroad                        controllers.AreYouReturningFromLivingAbroadController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAreYouReturningFromLivingAbroad                  controllers.AreYouReturningFromLivingAbroadController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAreYouReturningFromLivingAbroad                  controllers.AreYouReturningFromLivingAbroadController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourNationalInsuranceNumber                        controllers.WhatIsYourNationalInsuranceNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourNationalInsuranceNumber                        controllers.WhatIsYourNationalInsuranceNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourNationalInsuranceNumber                  controllers.WhatIsYourNationalInsuranceNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourNationalInsuranceNumber                  controllers.WhatIsYourNationalInsuranceNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourTelephoneNumber                        controllers.WhatIsYourTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourTelephoneNumber                        controllers.WhatIsYourTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourTelephoneNumber                  controllers.WhatIsYourTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourTelephoneNumber                  controllers.WhatIsYourTelephoneNumberController.onSubmit(mode: Mode = CheckMode)

@@ -167,3 +167,17 @@ areYouReturningFromLivingAbroad.heading = areYouReturningFromLivingAbroad
 areYouReturningFromLivingAbroad.checkYourAnswersLabel = areYouReturningFromLivingAbroad
 areYouReturningFromLivingAbroad.error.required = Select yes if areYouReturningFromLivingAbroad
 areYouReturningFromLivingAbroad.change.hidden = AreYouReturningFromLivingAbroad
+
+whatIsYourNationalInsuranceNumber.title = whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.heading = whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.checkYourAnswersLabel = whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.error.required = Enter whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.error.length = WhatIsYourNationalInsuranceNumber must be 100 characters or less
+whatIsYourNationalInsuranceNumber.change.hidden = WhatIsYourNationalInsuranceNumber
+
+whatIsYourTelephoneNumber.title = whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.heading = whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.checkYourAnswersLabel = whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.error.required = Enter whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.error.length = WhatIsYourTelephoneNumber must be 100 characters or less
+whatIsYourTelephoneNumber.change.hidden = WhatIsYourTelephoneNumber
