@@ -85,3 +85,13 @@ whatIsYourPreviousName.error.firstName.length = firstName must be 100 characters
 whatIsYourPreviousName.error.middleNames.length = middleNames must be 100 characters or less
 whatIsYourPreviousName.firstName.change.hidden = firstName
 whatIsYourPreviousName.middleNames.change.hidden = middleNames
+
+whatIsYourDateOfBirth.title = WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.heading = WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.hint = For example, 12 11 2007
+whatIsYourDateOfBirth.checkYourAnswersLabel = WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.error.required.all = Enter the whatIsYourDateOfBirth
+whatIsYourDateOfBirth.error.required.two = The whatIsYourDateOfBirth must include {0} and {1}
+whatIsYourDateOfBirth.error.required = The whatIsYourDateOfBirth must include {0}
+whatIsYourDateOfBirth.error.invalid = Enter a real WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.change.hidden = WhatIsYourDateOfBirth
