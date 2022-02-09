@@ -21,6 +21,18 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhichSecondaryDocumentsPage: Arbitrary[WhichSecondaryDocumentsPage.type] =
+    Arbitrary(WhichSecondaryDocumentsPage)
+
+  implicit lazy val arbitraryWhichPrimaryDocumentPage: Arbitrary[WhichPrimaryDocumentPage.type] =
+    Arbitrary(WhichPrimaryDocumentPage)
+
+  implicit lazy val arbitraryDoYouHaveTwoSecondaryDocumentsPage: Arbitrary[DoYouHaveTwoSecondaryDocumentsPage.type] =
+    Arbitrary(DoYouHaveTwoSecondaryDocumentsPage)
+
+  implicit lazy val arbitraryDoYouHavePrimaryDocumentPage: Arbitrary[DoYouHavePrimaryDocumentPage.type] =
+    Arbitrary(DoYouHavePrimaryDocumentPage)
+
   implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStopWorkingForPreviousEmployerPage.type] =
     Arbitrary(WhenDidYouStopWorkingForPreviousEmployerPage)
 

@@ -189,3 +189,23 @@ GET        /whenDidYouStopWorkingForPreviousEmployer                  controller
 POST       /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHavePrimaryDocument                        controllers.DoYouHavePrimaryDocumentController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHavePrimaryDocument                        controllers.DoYouHavePrimaryDocumentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHavePrimaryDocument                  controllers.DoYouHavePrimaryDocumentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHavePrimaryDocument                  controllers.DoYouHavePrimaryDocumentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHaveTwoSecondaryDocuments                        controllers.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveTwoSecondaryDocuments                        controllers.DoYouHaveTwoSecondaryDocumentsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveTwoSecondaryDocuments                  controllers.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveTwoSecondaryDocuments                  controllers.DoYouHaveTwoSecondaryDocumentsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichPrimaryDocument                        controllers.WhichPrimaryDocumentController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichPrimaryDocument                        controllers.WhichPrimaryDocumentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichPrimaryDocument                  controllers.WhichPrimaryDocumentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichPrimaryDocument                  controllers.WhichPrimaryDocumentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichSecondaryDocuments                        controllers.WhichSecondaryDocumentsController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichSecondaryDocuments                        controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = CheckMode)

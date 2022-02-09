@@ -343,3 +343,31 @@ whenDidYouStopWorkingForPreviousEmployer.error.required.two = The whenDidYouStop
 whenDidYouStopWorkingForPreviousEmployer.error.required = The whenDidYouStopWorkingForPreviousEmployer must include {0}
 whenDidYouStopWorkingForPreviousEmployer.error.invalid = Enter a real WhenDidYouStopWorkingForPreviousEmployer
 whenDidYouStopWorkingForPreviousEmployer.change.hidden = WhenDidYouStopWorkingForPreviousEmployer
+
+doYouHavePrimaryDocument.title = doYouHavePrimaryDocument
+doYouHavePrimaryDocument.heading = doYouHavePrimaryDocument
+doYouHavePrimaryDocument.checkYourAnswersLabel = doYouHavePrimaryDocument
+doYouHavePrimaryDocument.error.required = Select yes if doYouHavePrimaryDocument
+doYouHavePrimaryDocument.change.hidden = DoYouHavePrimaryDocument
+
+doYouHaveTwoSecondaryDocuments.title = doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.heading = doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.checkYourAnswersLabel = doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.error.required = Select yes if doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.change.hidden = DoYouHaveTwoSecondaryDocuments
+
+whichPrimaryDocument.title = whichPrimaryDocument
+whichPrimaryDocument.heading = whichPrimaryDocument
+whichPrimaryDocument.passport = Passport
+whichPrimaryDocument.drivingLicense = Driving license
+whichPrimaryDocument.checkYourAnswersLabel = whichPrimaryDocument
+whichPrimaryDocument.error.required = Select whichPrimaryDocument
+whichPrimaryDocument.change.hidden = WhichPrimaryDocument
+
+whichSecondaryDocuments.title = whichSecondaryDocuments
+whichSecondaryDocuments.heading = whichSecondaryDocuments
+whichSecondaryDocuments.option1 = Option 1
+whichSecondaryDocuments.option2 = Option 2
+whichSecondaryDocuments.checkYourAnswersLabel = whichSecondaryDocuments
+whichSecondaryDocuments.error.required = Select whichSecondaryDocuments
+whichSecondaryDocuments.change.hidden = WhichSecondaryDocuments

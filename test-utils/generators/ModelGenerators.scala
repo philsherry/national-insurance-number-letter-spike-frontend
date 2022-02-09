@@ -22,6 +22,16 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryWhichSecondaryDocuments: Arbitrary[WhichSecondaryDocuments] =
+    Arbitrary {
+      Gen.oneOf(WhichSecondaryDocuments.values.toSeq)
+    }
+
+  implicit lazy val arbitraryWhichPrimaryDocument: Arbitrary[WhichPrimaryDocument] =
+    Arbitrary {
+      Gen.oneOf(WhichPrimaryDocument.values.toSeq)
+    }
+
   implicit lazy val arbitraryWhatIsYourPreviousEmployersAddress: Arbitrary[WhatIsYourPreviousEmployersAddress] =
     Arbitrary {
       for {

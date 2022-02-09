@@ -24,6 +24,38 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryWhichSecondaryDocumentsUserAnswersEntry: Arbitrary[(WhichSecondaryDocumentsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[WhichSecondaryDocumentsPage.type]
+        value <- arbitrary[WhichSecondaryDocuments].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryWhichPrimaryDocumentUserAnswersEntry: Arbitrary[(WhichPrimaryDocumentPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[WhichPrimaryDocumentPage.type]
+        value <- arbitrary[WhichPrimaryDocument].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDoYouHaveTwoSecondaryDocumentsUserAnswersEntry: Arbitrary[(DoYouHaveTwoSecondaryDocumentsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DoYouHaveTwoSecondaryDocumentsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDoYouHavePrimaryDocumentUserAnswersEntry: Arbitrary[(DoYouHavePrimaryDocumentPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DoYouHavePrimaryDocumentPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStopWorkingForPreviousEmployerPage.type, JsValue)] =
     Arbitrary {
       for {
