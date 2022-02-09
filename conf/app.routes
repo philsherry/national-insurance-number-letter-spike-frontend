@@ -109,3 +109,13 @@ GET        /whenDidYouGetMarried                  controllers.WhenDidYouGetMarri
 POST       /whenDidYouGetMarried                  controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhenDidYouGetMarried                        controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhenDidYouGetMarried                        controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouPreviouslyBeenInAMarriageOrCivilPartnership                        controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouPreviouslyBeenInAMarriageOrCivilPartnership                        controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouPreviouslyBeenInAMarriageOrCivilPartnership                  controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouPreviouslyBeenInAMarriageOrCivilPartnership                  controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode: Mode = CheckMode)
+
+GET        /previousMarriageOrPartnershipDetails                        controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /previousMarriageOrPartnershipDetails                        controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /changePreviousMarriageOrPartnershipDetails                  controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePreviousMarriageOrPartnershipDetails                  controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = CheckMode)

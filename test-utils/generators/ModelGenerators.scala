@@ -22,6 +22,14 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryPreviousMarriageOrPartnershipDetails: Arbitrary[PreviousMarriageOrPartnershipDetails] =
+    Arbitrary {
+      for {
+        startDate <- arbitrary[String]
+        endDate <- arbitrary[String]
+      } yield PreviousMarriageOrPartnershipDetails(startDate, endDate)
+    }
+
   implicit lazy val arbitraryWhatIsYourPreviousAddressUk: Arbitrary[WhatIsYourPreviousAddressUk] =
     Arbitrary {
       for {

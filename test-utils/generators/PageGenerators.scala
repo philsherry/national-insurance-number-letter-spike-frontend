@@ -21,6 +21,12 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryPreviousMarriageOrPartnershipDetailsPage: Arbitrary[PreviousMarriageOrPartnershipDetailsPage.type] =
+    Arbitrary(PreviousMarriageOrPartnershipDetailsPage)
+
+  implicit lazy val arbitraryHaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage: Arbitrary[HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage.type] =
+    Arbitrary(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage)
+
   implicit lazy val arbitraryWhenDidYouGetMarriedPage: Arbitrary[WhenDidYouGetMarriedPage.type] =
     Arbitrary(WhenDidYouGetMarriedPage)
 

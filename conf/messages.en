@@ -213,3 +213,21 @@ whenDidYouGetMarried.error.required.two = The whenDidYouGetMarried must include 
 whenDidYouGetMarried.error.required = The whenDidYouGetMarried must include {0}
 whenDidYouGetMarried.error.invalid = Enter a real WhenDidYouGetMarried
 whenDidYouGetMarried.change.hidden = WhenDidYouGetMarried
+
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.title = haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.heading = haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.checkYourAnswersLabel = haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.error.required = Select yes if haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.change.hidden = HaveYouPreviouslyBeenInAMarriageOrCivilPartnership
+
+previousMarriageOrPartnershipDetails.title = previousMarriageOrPartnershipDetails
+previousMarriageOrPartnershipDetails.heading = previousMarriageOrPartnershipDetails
+previousMarriageOrPartnershipDetails.startDate = startDate
+previousMarriageOrPartnershipDetails.endDate = endDate
+previousMarriageOrPartnershipDetails.checkYourAnswersLabel = PreviousMarriageOrPartnershipDetails
+previousMarriageOrPartnershipDetails.error.startDate.required = Enter startDate
+previousMarriageOrPartnershipDetails.error.endDate.required = Enter endDate
+previousMarriageOrPartnershipDetails.error.startDate.length = startDate must be 100 characters or less
+previousMarriageOrPartnershipDetails.error.endDate.length = endDate must be 100 characters or less
+previousMarriageOrPartnershipDetails.startDate.change.hidden = startDate
+previousMarriageOrPartnershipDetails.endDate.change.hidden = endDate
