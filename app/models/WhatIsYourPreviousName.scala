@@ -18,7 +18,7 @@ package models
 
 import play.api.libs.json._
 
-case class WhatIsYourPreviousName (firstName: String, middleNames: String)
+case class WhatIsYourPreviousName (title: String, firstName: String, middleNames: Option[String], lastName: String)
 
 object WhatIsYourPreviousName {
   implicit val format = Json.format[WhatIsYourPreviousName]

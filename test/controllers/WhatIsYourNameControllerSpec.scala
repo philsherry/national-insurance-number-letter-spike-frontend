@@ -85,7 +85,7 @@ class WhatIsYourNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourName("title", "first", "middle", "last")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhatIsYourName("title", "first", Some("middle"), "last")), NormalMode)(request, messages(application)).toString
       }
     }
 

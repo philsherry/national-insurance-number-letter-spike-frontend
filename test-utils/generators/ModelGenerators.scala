@@ -91,9 +91,11 @@ trait ModelGenerators {
   implicit lazy val arbitraryWhatIsYourPreviousName: Arbitrary[WhatIsYourPreviousName] =
     Arbitrary {
       for {
+        title <- arbitrary[String]
         firstName <- arbitrary[String]
-        middleNames <- arbitrary[String]
-      } yield WhatIsYourPreviousName(firstName, middleNames)
+        middleNames <- arbitrary[Option[String]]
+        lastName <- arbitrary[String]
+      } yield WhatIsYourPreviousName(title, firstName, middleNames, lastName)
     }
 
   implicit lazy val arbitraryWhatIsYourName: Arbitrary[WhatIsYourName] =
@@ -101,7 +103,7 @@ trait ModelGenerators {
       for {
         title <- arbitrary[String]
         firstName <- arbitrary[String]
-        middleNames <- arbitrary[String]
+        middleNames <- arbitrary[Option[String]]
         lastName <- arbitrary[String]
       } yield WhatIsYourName(title, firstName, middleNames, lastName)
     }

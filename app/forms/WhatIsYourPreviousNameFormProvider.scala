@@ -27,10 +27,14 @@ class WhatIsYourPreviousNameFormProvider @Inject() extends Mappings {
 
    def apply(): Form[WhatIsYourPreviousName] = Form(
      mapping(
-      "firstName" -> text("whatIsYourPreviousName.error.firstName.required")
-        .verifying(maxLength(100, "whatIsYourPreviousName.error.firstName.length")),
-      "middleNames" -> text("whatIsYourPreviousName.error.middleNames.required")
-        .verifying(maxLength(100, "whatIsYourPreviousName.error.middleNames.length"))
+       "title" -> text("whatIsYourPreviousName.error.titleField.required")
+         .verifying(maxLength(20, "whatIsYourPreviousName.error.titleField.length")),
+       "firstName" -> text("whatIsYourPreviousName.error.firstName.required")
+         .verifying(maxLength(100, "whatIsYourPreviousName.error.firstName.length")),
+       "middleNames" -> optional(text("whatIsYourPreviousName.error.middleNames.required")
+         .verifying(maxLength(100, "whatIsYourPreviousName.error.middleNames.length"))),
+       "lastName" -> text("whatIsYourPreviousName.error.lastName.required")
+         .verifying(maxLength(100, "whatIsYourPreviousName.error.lastName.length"))
     )(WhatIsYourPreviousName.apply)(WhatIsYourPreviousName.unapply)
    )
  }
