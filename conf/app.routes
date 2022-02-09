@@ -19,3 +19,193 @@ GET         /account/sign-out                            controllers.auth.AuthCo
 GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad
+
+GET        /whatIsYourName                        controllers.WhatIsYourNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourName                        controllers.WhatIsYourNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourName                  controllers.WhatIsYourNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourName                  controllers.WhatIsYourNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHaveAPreviousName                        controllers.DoYouHaveAPreviousNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveAPreviousName                        controllers.DoYouHaveAPreviousNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveAPreviousName                  controllers.DoYouHaveAPreviousNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveAPreviousName                  controllers.DoYouHaveAPreviousNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousName                        controllers.WhatIsYourPreviousNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousName                        controllers.WhatIsYourPreviousNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousName                  controllers.WhatIsYourPreviousNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousName                  controllers.WhatIsYourPreviousNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourDateOfBirth                  controllers.WhatIsYourDateOfBirthController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourDateOfBirth                  controllers.WhatIsYourDateOfBirthController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourDateOfBirth                        controllers.WhatIsYourDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourDateOfBirth                        controllers.WhatIsYourDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isYourCurrentAddressInUk                        controllers.IsYourCurrentAddressInUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /isYourCurrentAddressInUk                        controllers.IsYourCurrentAddressInUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsYourCurrentAddressInUk                  controllers.IsYourCurrentAddressInUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsYourCurrentAddressInUk                  controllers.IsYourCurrentAddressInUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourCurrentAddressInternational                        controllers.WhatIsYourCurrentAddressInternationalController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourCurrentAddressInternational                        controllers.WhatIsYourCurrentAddressInternationalController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourCurrentAddressInternational                  controllers.WhatIsYourCurrentAddressInternationalController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourCurrentAddressInternational                  controllers.WhatIsYourCurrentAddressInternationalController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourCurrentAddressUk                        controllers.WhatIsYourCurrentAddressUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourCurrentAddressUk                        controllers.WhatIsYourCurrentAddressUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourCurrentAddressUk                  controllers.WhatIsYourCurrentAddressUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourCurrentAddressUk                  controllers.WhatIsYourCurrentAddressUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHaveAnyPreviousAddresses                        controllers.DoYouHaveAnyPreviousAddressesController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveAnyPreviousAddresses                        controllers.DoYouHaveAnyPreviousAddressesController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveAnyPreviousAddresses                  controllers.DoYouHaveAnyPreviousAddressesController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveAnyPreviousAddresses                  controllers.DoYouHaveAnyPreviousAddressesController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouReturningFromLivingAbroad                        controllers.AreYouReturningFromLivingAbroadController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouReturningFromLivingAbroad                        controllers.AreYouReturningFromLivingAbroadController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouReturningFromLivingAbroad                  controllers.AreYouReturningFromLivingAbroadController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouReturningFromLivingAbroad                  controllers.AreYouReturningFromLivingAbroadController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourNationalInsuranceNumber                        controllers.WhatIsYourNationalInsuranceNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourNationalInsuranceNumber                        controllers.WhatIsYourNationalInsuranceNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourNationalInsuranceNumber                  controllers.WhatIsYourNationalInsuranceNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourNationalInsuranceNumber                  controllers.WhatIsYourNationalInsuranceNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourTelephoneNumber                        controllers.WhatIsYourTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourTelephoneNumber                        controllers.WhatIsYourTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourTelephoneNumber                  controllers.WhatIsYourTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourTelephoneNumber                  controllers.WhatIsYourTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouInACivilPartnership                        controllers.AreYouInACivilPartnershipController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouInACivilPartnership                        controllers.AreYouInACivilPartnershipController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouInACivilPartnership                  controllers.AreYouInACivilPartnershipController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouInACivilPartnership                  controllers.AreYouInACivilPartnershipController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouMarried                        controllers.AreYouMarriedController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouMarried                        controllers.AreYouMarriedController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouMarried                  controllers.AreYouMarriedController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouMarried                  controllers.AreYouMarriedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouEnterACivilPartnership                  controllers.WhenDidYouEnterACivilPartnershipController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouEnterACivilPartnership                  controllers.WhenDidYouEnterACivilPartnershipController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouEnterACivilPartnership                        controllers.WhenDidYouEnterACivilPartnershipController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouEnterACivilPartnership                        controllers.WhenDidYouEnterACivilPartnershipController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouGetMarried                  controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouGetMarried                  controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouGetMarried                        controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouGetMarried                        controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouPreviouslyBeenInAMarriageOrCivilPartnership                        controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouPreviouslyBeenInAMarriageOrCivilPartnership                        controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouPreviouslyBeenInAMarriageOrCivilPartnership                  controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouPreviouslyBeenInAMarriageOrCivilPartnership                  controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode: Mode = CheckMode)
+
+GET        /previousMarriageOrPartnershipDetails                        controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /previousMarriageOrPartnershipDetails                        controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /changePreviousMarriageOrPartnershipDetails                  controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePreviousMarriageOrPartnershipDetails                  controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouKnowYourChildBenefitNumber                        controllers.DoYouKnowYourChildBenefitNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouKnowYourChildBenefitNumber                        controllers.DoYouKnowYourChildBenefitNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouKnowYourChildBenefitNumber                  controllers.DoYouKnowYourChildBenefitNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouKnowYourChildBenefitNumber                  controllers.DoYouKnowYourChildBenefitNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouEverClaimedChildBenefit                        controllers.HaveYouEverClaimedChildBenefitController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouEverClaimedChildBenefit                        controllers.HaveYouEverClaimedChildBenefitController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouEverClaimedChildBenefit                  controllers.HaveYouEverClaimedChildBenefitController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouEverClaimedChildBenefit                  controllers.HaveYouEverClaimedChildBenefitController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourChildBenefitNumber                        controllers.WhatIsYourChildBenefitNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourChildBenefitNumber                        controllers.WhatIsYourChildBenefitNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourChildBenefitNumber                  controllers.WhatIsYourChildBenefitNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourChildBenefitNumber                  controllers.WhatIsYourChildBenefitNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouEverReceivedOtherUkBenefits                        controllers.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouEverReceivedOtherUkBenefits                        controllers.HaveYouEverReceivedOtherUkBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouEverReceivedOtherUkBenefits                  controllers.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouEverReceivedOtherUkBenefits                  controllers.HaveYouEverReceivedOtherUkBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatOtherUkBenefitsHaveYouReceived                        controllers.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatOtherUkBenefitsHaveYouReceived                        controllers.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatOtherUkBenefitsHaveYouReceived                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatOtherUkBenefitsHaveYouReceived                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHaveAnyPreviousEmployers                        controllers.DoYouHaveAnyPreviousEmployersController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveAnyPreviousEmployers                        controllers.DoYouHaveAnyPreviousEmployersController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveAnyPreviousEmployers                  controllers.DoYouHaveAnyPreviousEmployersController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveAnyPreviousEmployers                  controllers.DoYouHaveAnyPreviousEmployersController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouEverWorkedInUk                        controllers.HaveYouEverWorkedInUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouEverWorkedInUk                        controllers.HaveYouEverWorkedInUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouEverWorkedInUk                  controllers.HaveYouEverWorkedInUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouEverWorkedInUk                  controllers.HaveYouEverWorkedInUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourEmployersAddress                        controllers.WhatIsYourEmployersAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourEmployersAddress                        controllers.WhatIsYourEmployersAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourEmployersAddress                  controllers.WhatIsYourEmployersAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourEmployersAddress                  controllers.WhatIsYourEmployersAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourEmployersName                        controllers.WhatIsYourEmployersNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourEmployersName                        controllers.WhatIsYourEmployersNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourEmployersName                  controllers.WhatIsYourEmployersNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourEmployersName                  controllers.WhatIsYourEmployersNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouStartWorkingForEmployer                  controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouStartWorkingForEmployer                  controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouStartWorkingForEmployer                        controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouStartWorkingForEmployer                        controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHavePrimaryDocument                        controllers.DoYouHavePrimaryDocumentController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHavePrimaryDocument                        controllers.DoYouHavePrimaryDocumentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHavePrimaryDocument                  controllers.DoYouHavePrimaryDocumentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHavePrimaryDocument                  controllers.DoYouHavePrimaryDocumentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHaveTwoSecondaryDocuments                        controllers.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveTwoSecondaryDocuments                        controllers.DoYouHaveTwoSecondaryDocumentsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveTwoSecondaryDocuments                  controllers.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveTwoSecondaryDocuments                  controllers.DoYouHaveTwoSecondaryDocumentsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichPrimaryDocument                        controllers.WhichPrimaryDocumentController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichPrimaryDocument                        controllers.WhichPrimaryDocumentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichPrimaryDocument                  controllers.WhichPrimaryDocumentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichPrimaryDocument                  controllers.WhichPrimaryDocumentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichSecondaryDocuments                        controllers.WhichSecondaryDocumentsController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichSecondaryDocuments                        controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = CheckMode)

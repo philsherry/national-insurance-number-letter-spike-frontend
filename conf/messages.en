@@ -55,3 +55,319 @@ signedOut.guidance = We did not save your answers.
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+whatIsYourName.title = whatIsYourName
+whatIsYourName.heading = whatIsYourName
+whatIsYourName.firstName = firstName
+whatIsYourName.middleNames = middleNames
+whatIsYourName.checkYourAnswersLabel = WhatIsYourName
+whatIsYourName.error.firstName.required = Enter firstName
+whatIsYourName.error.middleNames.required = Enter middleNames
+whatIsYourName.error.firstName.length = firstName must be 100 characters or less
+whatIsYourName.error.middleNames.length = middleNames must be 100 characters or less
+whatIsYourName.firstName.change.hidden = firstName
+whatIsYourName.middleNames.change.hidden = middleNames
+
+doYouHaveAPreviousName.title = doYouHaveAPreviousName
+doYouHaveAPreviousName.heading = doYouHaveAPreviousName
+doYouHaveAPreviousName.checkYourAnswersLabel = doYouHaveAPreviousName
+doYouHaveAPreviousName.error.required = Select yes if doYouHaveAPreviousName
+doYouHaveAPreviousName.change.hidden = DoYouHaveAPreviousName
+
+whatIsYourPreviousName.title = whatIsYourPreviousName
+whatIsYourPreviousName.heading = whatIsYourPreviousName
+whatIsYourPreviousName.firstName = firstName
+whatIsYourPreviousName.middleNames = middleNames
+whatIsYourPreviousName.checkYourAnswersLabel = WhatIsYourPreviousName
+whatIsYourPreviousName.error.firstName.required = Enter firstName
+whatIsYourPreviousName.error.middleNames.required = Enter middleNames
+whatIsYourPreviousName.error.firstName.length = firstName must be 100 characters or less
+whatIsYourPreviousName.error.middleNames.length = middleNames must be 100 characters or less
+whatIsYourPreviousName.firstName.change.hidden = firstName
+whatIsYourPreviousName.middleNames.change.hidden = middleNames
+
+whatIsYourDateOfBirth.title = WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.heading = WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.hint = For example, 12 11 2007
+whatIsYourDateOfBirth.checkYourAnswersLabel = WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.error.required.all = Enter the whatIsYourDateOfBirth
+whatIsYourDateOfBirth.error.required.two = The whatIsYourDateOfBirth must include {0} and {1}
+whatIsYourDateOfBirth.error.required = The whatIsYourDateOfBirth must include {0}
+whatIsYourDateOfBirth.error.invalid = Enter a real WhatIsYourDateOfBirth
+whatIsYourDateOfBirth.change.hidden = WhatIsYourDateOfBirth
+
+isYourCurrentAddressInUk.title = isYourCurrentAddressInUk
+isYourCurrentAddressInUk.heading = isYourCurrentAddressInUk
+isYourCurrentAddressInUk.checkYourAnswersLabel = isYourCurrentAddressInUk
+isYourCurrentAddressInUk.error.required = Select yes if isYourCurrentAddressInUk
+isYourCurrentAddressInUk.change.hidden = IsYourCurrentAddressInUk
+
+whatIsYourCurrentAddressInternational.title = whatIsYourCurrentAddressInternational
+whatIsYourCurrentAddressInternational.heading = whatIsYourCurrentAddressInternational
+whatIsYourCurrentAddressInternational.addressLine1 = addressLine1
+whatIsYourCurrentAddressInternational.addressLine2 = addressLine2
+whatIsYourCurrentAddressInternational.checkYourAnswersLabel = WhatIsYourCurrentAddressInternational
+whatIsYourCurrentAddressInternational.error.addressLine1.required = Enter addressLine1
+whatIsYourCurrentAddressInternational.error.addressLine2.required = Enter addressLine2
+whatIsYourCurrentAddressInternational.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourCurrentAddressInternational.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourCurrentAddressInternational.addressLine1.change.hidden = addressLine1
+whatIsYourCurrentAddressInternational.addressLine2.change.hidden = addressLine2
+
+whatIsYourCurrentAddressUk.title = whatIsYourCurrentAddressUk
+whatIsYourCurrentAddressUk.heading = whatIsYourCurrentAddressUk
+whatIsYourCurrentAddressUk.addressLine1 = addressLine1
+whatIsYourCurrentAddressUk.addressLine2 = addressLine2
+whatIsYourCurrentAddressUk.checkYourAnswersLabel = WhatIsYourCurrentAddressUk
+whatIsYourCurrentAddressUk.error.addressLine1.required = Enter addressLine1
+whatIsYourCurrentAddressUk.error.addressLine2.required = Enter addressLine2
+whatIsYourCurrentAddressUk.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourCurrentAddressUk.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourCurrentAddressUk.addressLine1.change.hidden = addressLine1
+whatIsYourCurrentAddressUk.addressLine2.change.hidden = addressLine2
+
+doYouHaveAnyPreviousAddresses.title = doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.heading = doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.checkYourAnswersLabel = doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.error.required = Select yes if doYouHaveAnyPreviousAddresses
+doYouHaveAnyPreviousAddresses.change.hidden = DoYouHaveAnyPreviousAddresses
+
+isYourPreviousAddressInUk.title = isYourPreviousAddressInUk
+isYourPreviousAddressInUk.heading = isYourPreviousAddressInUk
+isYourPreviousAddressInUk.checkYourAnswersLabel = isYourPreviousAddressInUk
+isYourPreviousAddressInUk.error.required = Select yes if isYourPreviousAddressInUk
+isYourPreviousAddressInUk.change.hidden = IsYourPreviousAddressInUk
+
+whatIsYourPreviousAddressInternational.title = whatIsYourPreviousAddressInternational
+whatIsYourPreviousAddressInternational.heading = whatIsYourPreviousAddressInternational
+whatIsYourPreviousAddressInternational.addressLine1 = addressLine1
+whatIsYourPreviousAddressInternational.adressLine2 = adressLine2
+whatIsYourPreviousAddressInternational.checkYourAnswersLabel = WhatIsYourPreviousAddressInternational
+whatIsYourPreviousAddressInternational.error.addressLine1.required = Enter addressLine1
+whatIsYourPreviousAddressInternational.error.adressLine2.required = Enter adressLine2
+whatIsYourPreviousAddressInternational.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourPreviousAddressInternational.error.adressLine2.length = adressLine2 must be 100 characters or less
+whatIsYourPreviousAddressInternational.addressLine1.change.hidden = addressLine1
+whatIsYourPreviousAddressInternational.adressLine2.change.hidden = adressLine2
+
+whatIsYourPreviousAddressUk.title = whatIsYourPreviousAddressUk
+whatIsYourPreviousAddressUk.heading = whatIsYourPreviousAddressUk
+whatIsYourPreviousAddressUk.addressLine1 = addressLine1
+whatIsYourPreviousAddressUk.adressLine2 = adressLine2
+whatIsYourPreviousAddressUk.checkYourAnswersLabel = WhatIsYourPreviousAddressUk
+whatIsYourPreviousAddressUk.error.addressLine1.required = Enter addressLine1
+whatIsYourPreviousAddressUk.error.adressLine2.required = Enter adressLine2
+whatIsYourPreviousAddressUk.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourPreviousAddressUk.error.adressLine2.length = adressLine2 must be 100 characters or less
+whatIsYourPreviousAddressUk.addressLine1.change.hidden = addressLine1
+whatIsYourPreviousAddressUk.adressLine2.change.hidden = adressLine2
+
+areYouReturningFromLivingAbroad.title = areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.heading = areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.checkYourAnswersLabel = areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.error.required = Select yes if areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.change.hidden = AreYouReturningFromLivingAbroad
+
+whatIsYourNationalInsuranceNumber.title = whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.heading = whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.checkYourAnswersLabel = whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.error.required = Enter whatIsYourNationalInsuranceNumber
+whatIsYourNationalInsuranceNumber.error.length = WhatIsYourNationalInsuranceNumber must be 100 characters or less
+whatIsYourNationalInsuranceNumber.change.hidden = WhatIsYourNationalInsuranceNumber
+
+whatIsYourTelephoneNumber.title = whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.heading = whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.checkYourAnswersLabel = whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.error.required = Enter whatIsYourTelephoneNumber
+whatIsYourTelephoneNumber.error.length = WhatIsYourTelephoneNumber must be 100 characters or less
+whatIsYourTelephoneNumber.change.hidden = WhatIsYourTelephoneNumber
+
+areYouInACivilPartnership.title = areYouInACivilPartnership
+areYouInACivilPartnership.heading = areYouInACivilPartnership
+areYouInACivilPartnership.checkYourAnswersLabel = areYouInACivilPartnership
+areYouInACivilPartnership.error.required = Select yes if areYouInACivilPartnership
+areYouInACivilPartnership.change.hidden = AreYouInACivilPartnership
+
+areYouMarried.title = areYouMarried
+areYouMarried.heading = areYouMarried
+areYouMarried.checkYourAnswersLabel = areYouMarried
+areYouMarried.error.required = Select yes if areYouMarried
+areYouMarried.change.hidden = AreYouMarried
+
+whenDidYouEnterACivilPartnership.title = WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.heading = WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.hint = For example, 12 11 2007
+whenDidYouEnterACivilPartnership.checkYourAnswersLabel = WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.error.required.all = Enter the whenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.error.required.two = The whenDidYouEnterACivilPartnership must include {0} and {1}
+whenDidYouEnterACivilPartnership.error.required = The whenDidYouEnterACivilPartnership must include {0}
+whenDidYouEnterACivilPartnership.error.invalid = Enter a real WhenDidYouEnterACivilPartnership
+whenDidYouEnterACivilPartnership.change.hidden = WhenDidYouEnterACivilPartnership
+
+whenDidYouGetMarried.title = WhenDidYouGetMarried
+whenDidYouGetMarried.heading = WhenDidYouGetMarried
+whenDidYouGetMarried.hint = For example, 12 11 2007
+whenDidYouGetMarried.checkYourAnswersLabel = WhenDidYouGetMarried
+whenDidYouGetMarried.error.required.all = Enter the whenDidYouGetMarried
+whenDidYouGetMarried.error.required.two = The whenDidYouGetMarried must include {0} and {1}
+whenDidYouGetMarried.error.required = The whenDidYouGetMarried must include {0}
+whenDidYouGetMarried.error.invalid = Enter a real WhenDidYouGetMarried
+whenDidYouGetMarried.change.hidden = WhenDidYouGetMarried
+
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.title = haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.heading = haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.checkYourAnswersLabel = haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.error.required = Select yes if haveYouPreviouslyBeenInAMarriageOrCivilPartnership
+haveYouPreviouslyBeenInAMarriageOrCivilPartnership.change.hidden = HaveYouPreviouslyBeenInAMarriageOrCivilPartnership
+
+previousMarriageOrPartnershipDetails.title = previousMarriageOrPartnershipDetails
+previousMarriageOrPartnershipDetails.heading = previousMarriageOrPartnershipDetails
+previousMarriageOrPartnershipDetails.startDate = startDate
+previousMarriageOrPartnershipDetails.endDate = endDate
+previousMarriageOrPartnershipDetails.checkYourAnswersLabel = PreviousMarriageOrPartnershipDetails
+previousMarriageOrPartnershipDetails.error.startDate.required = Enter startDate
+previousMarriageOrPartnershipDetails.error.endDate.required = Enter endDate
+previousMarriageOrPartnershipDetails.error.startDate.length = startDate must be 100 characters or less
+previousMarriageOrPartnershipDetails.error.endDate.length = endDate must be 100 characters or less
+previousMarriageOrPartnershipDetails.startDate.change.hidden = startDate
+previousMarriageOrPartnershipDetails.endDate.change.hidden = endDate
+
+doYouKnowYourChildBenefitNumber.title = doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.heading = doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.checkYourAnswersLabel = doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.error.required = Select yes if doYouKnowYourChildBenefitNumber
+doYouKnowYourChildBenefitNumber.change.hidden = DoYouKnowYourChildBenefitNumber
+
+haveYouEverClaimedChildBenefit.title = haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.heading = haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.checkYourAnswersLabel = haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.error.required = Select yes if haveYouEverClaimedChildBenefit
+haveYouEverClaimedChildBenefit.change.hidden = HaveYouEverClaimedChildBenefit
+
+whatIsYourChildBenefitNumber.title = whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.heading = whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.checkYourAnswersLabel = whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.error.required = Enter whatIsYourChildBenefitNumber
+whatIsYourChildBenefitNumber.error.length = WhatIsYourChildBenefitNumber must be 100 characters or less
+whatIsYourChildBenefitNumber.change.hidden = WhatIsYourChildBenefitNumber
+
+haveYouEverReceivedOtherUkBenefits.title = haveYouEverReceivedOtherUkBenefits
+haveYouEverReceivedOtherUkBenefits.heading = haveYouEverReceivedOtherUkBenefits
+haveYouEverReceivedOtherUkBenefits.checkYourAnswersLabel = haveYouEverReceivedOtherUkBenefits
+haveYouEverReceivedOtherUkBenefits.error.required = Select yes if haveYouEverReceivedOtherUkBenefits
+haveYouEverReceivedOtherUkBenefits.change.hidden = HaveYouEverReceivedOtherUkBenefits
+
+whatOtherUkBenefitsHaveYouReceived.title = whatOtherUkBenefitsHaveYouReceived
+whatOtherUkBenefitsHaveYouReceived.heading = whatOtherUkBenefitsHaveYouReceived
+whatOtherUkBenefitsHaveYouReceived.checkYourAnswersLabel = whatOtherUkBenefitsHaveYouReceived
+whatOtherUkBenefitsHaveYouReceived.error.required = Enter whatOtherUkBenefitsHaveYouReceived
+whatOtherUkBenefitsHaveYouReceived.error.length = WhatOtherUkBenefitsHaveYouReceived must be 100 characters or less
+whatOtherUkBenefitsHaveYouReceived.change.hidden = WhatOtherUkBenefitsHaveYouReceived
+
+doYouHaveAnyPreviousEmployers.title = doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.heading = doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.checkYourAnswersLabel = doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.error.required = Select yes if doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.change.hidden = DoYouHaveAnyPreviousEmployers
+
+haveYouEverWorkedInUk.title = haveYouEverWorkedInUk
+haveYouEverWorkedInUk.heading = haveYouEverWorkedInUk
+haveYouEverWorkedInUk.checkYourAnswersLabel = haveYouEverWorkedInUk
+haveYouEverWorkedInUk.error.required = Select yes if haveYouEverWorkedInUk
+haveYouEverWorkedInUk.change.hidden = HaveYouEverWorkedInUk
+
+whatIsYourEmployersAddress.title = whatIsYourEmployersAddress
+whatIsYourEmployersAddress.heading = whatIsYourEmployersAddress
+whatIsYourEmployersAddress.addressLine1 = addressLine1
+whatIsYourEmployersAddress.addressLine2 = addressLine2
+whatIsYourEmployersAddress.checkYourAnswersLabel = WhatIsYourEmployersAddress
+whatIsYourEmployersAddress.error.addressLine1.required = Enter addressLine1
+whatIsYourEmployersAddress.error.addressLine2.required = Enter addressLine2
+whatIsYourEmployersAddress.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourEmployersAddress.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourEmployersAddress.addressLine1.change.hidden = addressLine1
+whatIsYourEmployersAddress.addressLine2.change.hidden = addressLine2
+
+whatIsYourEmployersName.title = whatIsYourEmployersName
+whatIsYourEmployersName.heading = whatIsYourEmployersName
+whatIsYourEmployersName.checkYourAnswersLabel = whatIsYourEmployersName
+whatIsYourEmployersName.error.required = Enter whatIsYourEmployersName
+whatIsYourEmployersName.error.length = WhatIsYourEmployersName must be 100 characters or less
+whatIsYourEmployersName.change.hidden = WhatIsYourEmployersName
+
+whatIsYourPreviousEmployersAddress.title = whatIsYourPreviousEmployersAddress
+whatIsYourPreviousEmployersAddress.heading = whatIsYourPreviousEmployersAddress
+whatIsYourPreviousEmployersAddress.addressLine1 = addressLine1
+whatIsYourPreviousEmployersAddress.addressLine2 = addressLine2
+whatIsYourPreviousEmployersAddress.checkYourAnswersLabel = WhatIsYourPreviousEmployersAddress
+whatIsYourPreviousEmployersAddress.error.addressLine1.required = Enter addressLine1
+whatIsYourPreviousEmployersAddress.error.addressLine2.required = Enter addressLine2
+whatIsYourPreviousEmployersAddress.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourPreviousEmployersAddress.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourPreviousEmployersAddress.addressLine1.change.hidden = addressLine1
+whatIsYourPreviousEmployersAddress.addressLine2.change.hidden = addressLine2
+
+whatIsYourPreviousEmployersName.title = whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.heading = whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.checkYourAnswersLabel = whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.error.required = Enter whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.error.length = WhatIsYourPreviousEmployersName must be 100 characters or less
+whatIsYourPreviousEmployersName.change.hidden = WhatIsYourPreviousEmployersName
+
+whenDidYouStartWorkingForEmployer.title = WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.heading = WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.hint = For example, 12 11 2007
+whenDidYouStartWorkingForEmployer.checkYourAnswersLabel = WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.error.required.all = Enter the whenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.error.required.two = The whenDidYouStartWorkingForEmployer must include {0} and {1}
+whenDidYouStartWorkingForEmployer.error.required = The whenDidYouStartWorkingForEmployer must include {0}
+whenDidYouStartWorkingForEmployer.error.invalid = Enter a real WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.change.hidden = WhenDidYouStartWorkingForEmployer
+
+whenDidYouStartWorkingForPreviousEmployer.title = WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.heading = WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.hint = For example, 12 11 2007
+whenDidYouStartWorkingForPreviousEmployer.checkYourAnswersLabel = WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.error.required.all = Enter the whenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.error.required.two = The whenDidYouStartWorkingForPreviousEmployer must include {0} and {1}
+whenDidYouStartWorkingForPreviousEmployer.error.required = The whenDidYouStartWorkingForPreviousEmployer must include {0}
+whenDidYouStartWorkingForPreviousEmployer.error.invalid = Enter a real WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.change.hidden = WhenDidYouStartWorkingForPreviousEmployer
+
+whenDidYouStopWorkingForPreviousEmployer.title = WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.heading = WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.hint = For example, 12 11 2007
+whenDidYouStopWorkingForPreviousEmployer.checkYourAnswersLabel = WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.error.required.all = Enter the whenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.error.required.two = The whenDidYouStopWorkingForPreviousEmployer must include {0} and {1}
+whenDidYouStopWorkingForPreviousEmployer.error.required = The whenDidYouStopWorkingForPreviousEmployer must include {0}
+whenDidYouStopWorkingForPreviousEmployer.error.invalid = Enter a real WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.change.hidden = WhenDidYouStopWorkingForPreviousEmployer
+
+doYouHavePrimaryDocument.title = doYouHavePrimaryDocument
+doYouHavePrimaryDocument.heading = doYouHavePrimaryDocument
+doYouHavePrimaryDocument.checkYourAnswersLabel = doYouHavePrimaryDocument
+doYouHavePrimaryDocument.error.required = Select yes if doYouHavePrimaryDocument
+doYouHavePrimaryDocument.change.hidden = DoYouHavePrimaryDocument
+
+doYouHaveTwoSecondaryDocuments.title = doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.heading = doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.checkYourAnswersLabel = doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.error.required = Select yes if doYouHaveTwoSecondaryDocuments
+doYouHaveTwoSecondaryDocuments.change.hidden = DoYouHaveTwoSecondaryDocuments
+
+whichPrimaryDocument.title = whichPrimaryDocument
+whichPrimaryDocument.heading = whichPrimaryDocument
+whichPrimaryDocument.passport = Passport
+whichPrimaryDocument.drivingLicense = Driving license
+whichPrimaryDocument.checkYourAnswersLabel = whichPrimaryDocument
+whichPrimaryDocument.error.required = Select whichPrimaryDocument
+whichPrimaryDocument.change.hidden = WhichPrimaryDocument
+
+whichSecondaryDocuments.title = whichSecondaryDocuments
+whichSecondaryDocuments.heading = whichSecondaryDocuments
+whichSecondaryDocuments.option1 = Option 1
+whichSecondaryDocuments.option2 = Option 2
+whichSecondaryDocuments.checkYourAnswersLabel = whichSecondaryDocuments
+whichSecondaryDocuments.error.required = Select whichSecondaryDocuments
+whichSecondaryDocuments.change.hidden = WhichSecondaryDocuments
