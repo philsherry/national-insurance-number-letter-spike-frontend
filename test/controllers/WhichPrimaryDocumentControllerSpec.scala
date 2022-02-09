@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhichPrimaryDocumentFormProvider
-import models.{NormalMode, WhichPrimaryDocument, UserAnswers}
+import models.{NormalMode, PrimaryDocument, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -62,7 +62,7 @@ class WhichPrimaryDocumentControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhichPrimaryDocumentPage, WhichPrimaryDocument.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhichPrimaryDocumentPage, PrimaryDocument.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +74,7 @@ class WhichPrimaryDocumentControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhichPrimaryDocument.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(PrimaryDocument.values.head), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -95,7 +95,7 @@ class WhichPrimaryDocumentControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whichPrimaryDocumentRoute)
-            .withFormUrlEncodedBody(("value", WhichPrimaryDocument.values.head.toString))
+            .withFormUrlEncodedBody(("value", PrimaryDocument.values.head.toString))
 
         val result = route(application, request).value
 
@@ -145,7 +145,7 @@ class WhichPrimaryDocumentControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whichPrimaryDocumentRoute)
-            .withFormUrlEncodedBody(("value", WhichPrimaryDocument.values.head.toString))
+            .withFormUrlEncodedBody(("value", PrimaryDocument.values.head.toString))
 
         val result = route(application, request).value
 

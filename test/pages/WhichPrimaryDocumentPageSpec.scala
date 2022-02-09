@@ -16,17 +16,17 @@
 
 package pages
 
-import models.WhichPrimaryDocument
+import models.PrimaryDocument
 import pages.behaviours.PageBehaviours
 
 class WhichPrimaryDocumentSpec extends PageBehaviours {
 
   "WhichPrimaryDocumentPage" - {
 
-    beRetrievable[WhichPrimaryDocument](WhichPrimaryDocumentPage)
+    beRetrievable[PrimaryDocument](WhichPrimaryDocumentPage)
 
-    beSettable[WhichPrimaryDocument](WhichPrimaryDocumentPage)
+    beSettable[PrimaryDocument](WhichPrimaryDocumentPage)
 
-    beRemovable[WhichPrimaryDocument](WhichPrimaryDocumentPage)
+    beRemovable[PrimaryDocument](WhichPrimaryDocumentPage)
   }
 }

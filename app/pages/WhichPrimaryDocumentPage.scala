@@ -16,10 +16,10 @@
 
 package pages
 
-import models.WhichPrimaryDocument
+import models.PrimaryDocument
 import play.api.libs.json.JsPath
 
-case object WhichPrimaryDocumentPage extends QuestionPage[WhichPrimaryDocument] {
+case object WhichPrimaryDocumentPage extends QuestionPage[PrimaryDocument] {
 
   override def path: JsPath = JsPath \ toString
 

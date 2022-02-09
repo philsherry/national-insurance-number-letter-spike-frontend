@@ -16,17 +16,17 @@
 
 package pages
 
-import models.WhichSecondaryDocuments
+import models.SecondaryDocument
 import pages.behaviours.PageBehaviours
 
 class WhichSecondaryDocumentsSpec extends PageBehaviours {
 
   "WhichSecondaryDocumentsPage" - {
 
-    beRetrievable[WhichSecondaryDocuments](WhichSecondaryDocumentsPage)
+    beRetrievable[SecondaryDocument](WhichSecondaryDocumentsPage)
 
-    beSettable[WhichSecondaryDocuments](WhichSecondaryDocumentsPage)
+    beSettable[SecondaryDocument](WhichSecondaryDocumentsPage)
 
-    beRemovable[WhichSecondaryDocuments](WhichSecondaryDocumentsPage)
+    beRemovable[SecondaryDocument](WhichSecondaryDocumentsPage)
   }
 }

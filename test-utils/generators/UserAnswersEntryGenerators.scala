@@ -28,7 +28,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhichSecondaryDocumentsPage.type]
-        value <- arbitrary[WhichSecondaryDocuments].map(Json.toJson(_))
+        value <- arbitrary[SecondaryDocument].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -36,7 +36,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhichPrimaryDocumentPage.type]
-        value <- arbitrary[WhichPrimaryDocument].map(Json.toJson(_))
+        value <- arbitrary[PrimaryDocument].map(Json.toJson(_))
       } yield (page, value)
     }
 

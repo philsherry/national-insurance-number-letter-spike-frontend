@@ -20,12 +20,12 @@ import javax.inject.Inject
 
 import forms.mappings.Mappings
 import play.api.data.Form
-import models.WhichSecondaryDocuments
+import models.SecondaryDocument
 
 class WhichSecondaryDocumentsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[WhichSecondaryDocuments] =
+  def apply(): Form[SecondaryDocument] =
     Form(
-      "value" -> enumerable[WhichSecondaryDocuments]("whichSecondaryDocuments.error.required")
+      "value" -> enumerable[SecondaryDocument]("whichSecondaryDocuments.error.required")
     )
 }

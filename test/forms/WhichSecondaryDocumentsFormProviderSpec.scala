@@ -17,7 +17,7 @@
 package forms
 
 import forms.behaviours.OptionFieldBehaviours
-import models.WhichSecondaryDocuments
+import models.SecondaryDocument
 import play.api.data.FormError
 
 class WhichSecondaryDocumentsFormProviderSpec extends OptionFieldBehaviours {
@@ -29,10 +29,10 @@ class WhichSecondaryDocumentsFormProviderSpec extends OptionFieldBehaviours {
     val fieldName = "value"
     val requiredKey = "whichSecondaryDocuments.error.required"
 
-    behave like optionsField[WhichSecondaryDocuments](
+    behave like optionsField[SecondaryDocument](
       form,
       fieldName,
-      validValues  = WhichSecondaryDocuments.values,
+      validValues  = SecondaryDocument.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

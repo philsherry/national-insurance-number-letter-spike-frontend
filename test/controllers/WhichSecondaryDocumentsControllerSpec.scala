@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhichSecondaryDocumentsFormProvider
-import models.{NormalMode, WhichSecondaryDocuments, UserAnswers}
+import models.{NormalMode, SecondaryDocument, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -62,7 +62,7 @@ class WhichSecondaryDocumentsControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhichSecondaryDocumentsPage, WhichSecondaryDocuments.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhichSecondaryDocumentsPage, SecondaryDocument.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +74,7 @@ class WhichSecondaryDocumentsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhichSecondaryDocuments.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(SecondaryDocument.values.head), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -95,7 +95,7 @@ class WhichSecondaryDocumentsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whichSecondaryDocumentsRoute)
-            .withFormUrlEncodedBody(("value", WhichSecondaryDocuments.values.head.toString))
+            .withFormUrlEncodedBody(("value", SecondaryDocument.values.head.toString))
 
         val result = route(application, request).value
 
@@ -145,7 +145,7 @@ class WhichSecondaryDocumentsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whichSecondaryDocumentsRoute)
-            .withFormUrlEncodedBody(("value", WhichSecondaryDocuments.values.head.toString))
+            .withFormUrlEncodedBody(("value", SecondaryDocument.values.head.toString))
 
         val result = route(application, request).value
 

@@ -20,26 +20,27 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
-sealed trait WhichSecondaryDocuments
+sealed trait PrimaryDocument
 
-object WhichSecondaryDocuments extends Enumerable.Implicits {
+object PrimaryDocument extends Enumerable.Implicits {
 
-  case object Option1 extends WithName("option1") with WhichSecondaryDocuments
-  case object Option2 extends WithName("option2") with WhichSecondaryDocuments
+  case object BirthCertificate extends WithName("birth-certificate") with PrimaryDocument
+  case object Passport extends WithName("passport") with PrimaryDocument
+  case object DrivingLicense extends WithName("driving-license") with PrimaryDocument
 
-  val values: Seq[WhichSecondaryDocuments] = Seq(
-    Option1, Option2
+  val values: Seq[PrimaryDocument] = Seq(
+    BirthCertificate, Passport, DrivingLicense
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
     case (value, index) =>
       RadioItem(
-        content = Text(messages(s"whichSecondaryDocuments.${value.toString}")),
+        content = Text(messages(s"whichPrimaryDocument.${value.toString}")),
         value   = Some(value.toString),
         id      = Some(s"value_$index")
       )
   }
 
-  implicit val enumerable: Enumerable[WhichSecondaryDocuments] =
+  implicit val enumerable: Enumerable[PrimaryDocument] =
     Enumerable(values.map(v => v.toString -> v): _*)
 }
