@@ -16,10 +16,12 @@
 
 package forms
 
-import forms.behaviours.StringFieldBehaviours
+import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
 import play.api.data.FormError
 
-class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBehaviours {
+import java.time.{LocalDate, ZoneOffset}
+
+class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
 
   val form = new WhatIsYourPreviousEmployersAddressFormProvider()()
 
@@ -75,5 +77,53 @@ class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBeha
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
     )
+  }
+
+  ".addressLine3" - {
+
+    val fieldName = "addressLine3"
+    val lengthKey = "whatIsYourPreviousEmployersAddress.error.addressLine3.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+
+  ".from" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "from", validData)
+
+    behave like mandatoryDateField(form, "from", "whatIsYourPreviousEmployersAddress.error.from.required.all")
+
+    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousEmployersAddress.error.from.past"))
+  }
+
+  ".to" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "to", validData)
+
+    behave like mandatoryDateField(form, "to", "whatIsYourPreviousEmployersAddress.error.to.required.all")
+
+    behave like dateFieldWithMax(form, "to", LocalDate.now, FormError("to", "whatIsYourPreviousEmployersAddress.error.to.past"))
   }
 }

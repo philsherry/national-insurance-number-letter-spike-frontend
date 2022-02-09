@@ -32,6 +32,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.WhatIsYourPreviousEmployersAddressView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with MockitoSugar {
@@ -43,15 +44,9 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
 
   lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      WhatIsYourPreviousEmployersAddressPage.toString -> Json.obj(
-        "addressLine1" -> "value 1",
-        "addressLine2" -> "value 2"
-      )
-    )
-  )
+  val userAnswers = UserAnswers(userAnswersId)
+    .set(WhatIsYourPreviousEmployersAddressPage, PreviousEmployersAddress("value 1", "value 2", None, LocalDate.now, LocalDate.now))
+    .success.value
 
   "WhatIsYourPreviousEmployersAddress Controller" - {
 
@@ -83,7 +78,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PreviousEmployersAddress("value 1", "value 2", None)), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(PreviousEmployersAddress("value 1", "value 2", None, LocalDate.now, LocalDate.now)), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -101,10 +96,16 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
           )
           .build()
 
+      val validData = List(
+        "addressLine1" -> "value 1", "addressLine2" -> "value 2",
+        "from.day" -> LocalDate.now.getDayOfMonth.toString, "from.month" -> LocalDate.now.getMonthValue.toString, "from.year" -> LocalDate.now.getYear.toString,
+        "to.day" -> LocalDate.now.getDayOfMonth.toString, "to.month" -> LocalDate.now.getMonthValue.toString, "to.year" -> LocalDate.now.getYear.toString
+      )
+
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourPreviousEmployersAddressRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(validData: _*)
 
         val result = route(application, request).value
 
