@@ -62,12 +62,16 @@ trait ModelGenerators { this: Generators =>
       } yield PreviousMarriageOrPartnershipDetails(startDate, endDate, endingReason)
     }
 
-  implicit lazy val arbitraryWhatIsYourPreviousAddressUk: Arbitrary[WhatIsYourPreviousAddressUk] =
+  implicit lazy val arbitraryWhatIsYourPreviousAddressUk: Arbitrary[PreviousAddressUk] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
-        adressLine2 <- arbitrary[String]
-      } yield WhatIsYourPreviousAddressUk(addressLine1, adressLine2)
+        addressLine2 <- arbitrary[Option[String]]
+        addressLine3 <- arbitrary[Option[String]]
+        postcode     <- arbitrary[String]
+        from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+      } yield PreviousAddressUk(addressLine1, addressLine2, addressLine3, postcode, from, to)
     }
 
   implicit lazy val arbitraryWhatIsYourPreviousAddressInternational: Arbitrary[PreviousAddressInternational] =
