@@ -32,7 +32,8 @@ object PreviousMarriageOrPartnershipDetailsSummary  {
     answers.get(PreviousMarriageOrPartnershipDetailsPage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.startDate).toString + "<br/>" + HtmlFormat.escape(answer.endDate).toString
+        // TODO
+      val value = HtmlFormat.escape(answer.startDate.toString).toString + "<br/>" + HtmlFormat.escape(answer.endDate.toString).toString
 
         SummaryListRowViewModel(
           key     = "previousMarriageOrPartnershipDetails.checkYourAnswersLabel",

@@ -18,7 +18,9 @@ package models
 
 import play.api.libs.json._
 
-case class PreviousMarriageOrPartnershipDetails (startDate: String, endDate: String)
+import java.time.LocalDate
+
+final case class PreviousMarriageOrPartnershipDetails(startDate: LocalDate, endDate: LocalDate, endingReason: String)
 
 object PreviousMarriageOrPartnershipDetails {
   implicit val format = Json.format[PreviousMarriageOrPartnershipDetails]

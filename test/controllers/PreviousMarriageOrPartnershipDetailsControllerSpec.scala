@@ -32,6 +32,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.PreviousMarriageOrPartnershipDetailsView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with MockitoSugar {
@@ -83,7 +84,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PreviousMarriageOrPartnershipDetails("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "value")), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -92,6 +93,12 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val validData = List(
+        "startDate.day" -> LocalDate.now.getDayOfMonth.toString, "startDate.month" -> LocalDate.now.getMonthValue.toString, "startDate.year" -> LocalDate.now.getYear.toString,
+        "endDate.day" -> LocalDate.now.getDayOfMonth.toString, "endDate.month" -> LocalDate.now.getMonthValue.toString, "endDate.year" -> LocalDate.now.getYear.toString,
+        "endReason" -> "foo"
+      )
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -104,7 +111,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
       running(application) {
         val request =
           FakeRequest(POST, previousMarriageOrPartnershipDetailsRoute)
-            .withFormUrlEncodedBody(("startDate", "value 1"), ("endDate", "value 2"))
+            .withFormUrlEncodedBody(validData: _*)
 
         val result = route(application, request).value
 

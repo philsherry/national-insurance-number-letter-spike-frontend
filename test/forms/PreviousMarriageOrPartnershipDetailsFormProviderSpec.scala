@@ -16,45 +16,50 @@
 
 package forms
 
-import forms.behaviours.StringFieldBehaviours
+import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
 import play.api.data.FormError
 
-class PreviousMarriageOrPartnershipDetailsFormProviderSpec extends StringFieldBehaviours {
+import java.time.{LocalDate, ZoneOffset}
+
+class PreviousMarriageOrPartnershipDetailsFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
 
   val form = new PreviousMarriageOrPartnershipDetailsFormProvider()()
 
   ".startDate" - {
 
     val fieldName = "startDate"
-    val requiredKey = "previousMarriageOrPartnershipDetails.error.startDate.required"
-    val lengthKey = "previousMarriageOrPartnershipDetails.error.startDate.length"
-    val maxLength = 100
-
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
     )
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    behave like dateField(form, fieldName, validData)
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryDateField(form, fieldName, "previousMarriageOrPartnershipDetails.error.startDate.required.all")
+
+    behave like dateFieldWithMax(form, fieldName, LocalDate.now, FormError(fieldName, "previousMarriageOrPartnershipDetails.error.startDate.past"))
   }
 
   ".endDate" - {
 
     val fieldName = "endDate"
-    val requiredKey = "previousMarriageOrPartnershipDetails.error.endDate.required"
-    val lengthKey = "previousMarriageOrPartnershipDetails.error.endDate.length"
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, fieldName, validData)
+
+    behave like mandatoryDateField(form, fieldName, "previousMarriageOrPartnershipDetails.error.endDate.required.all")
+
+    behave like dateFieldWithMax(form, fieldName, LocalDate.now, FormError(fieldName, "previousMarriageOrPartnershipDetails.error.endDate.past"))
+  }
+
+  ".endReason" - {
+
+    val fieldName = "endReason"
+    val requiredKey = "previousMarriageOrPartnershipDetails.error.endReason.required"
+    val lengthKey = "previousMarriageOrPartnershipDetails.error.endReason.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(

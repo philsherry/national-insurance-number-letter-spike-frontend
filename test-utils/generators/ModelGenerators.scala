@@ -20,7 +20,9 @@ import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 
-trait ModelGenerators {
+import java.time.LocalDate
+
+trait ModelGenerators { this: Generators =>
 
   implicit lazy val arbitraryWhichSecondaryDocuments: Arbitrary[SecondaryDocument] =
     Arbitrary {
@@ -52,9 +54,10 @@ trait ModelGenerators {
   implicit lazy val arbitraryPreviousMarriageOrPartnershipDetails: Arbitrary[PreviousMarriageOrPartnershipDetails] =
     Arbitrary {
       for {
-        startDate <- arbitrary[String]
-        endDate <- arbitrary[String]
-      } yield PreviousMarriageOrPartnershipDetails(startDate, endDate)
+        startDate    <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        endDate      <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        endingReason <- arbitrary[String]
+      } yield PreviousMarriageOrPartnershipDetails(startDate, endDate, endingReason)
     }
 
   implicit lazy val arbitraryWhatIsYourPreviousAddressUk: Arbitrary[WhatIsYourPreviousAddressUk] =

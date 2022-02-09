@@ -17,20 +17,31 @@
 package forms
 
 import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
 import models.PreviousMarriageOrPartnershipDetails
 
+import java.time.LocalDate
+
 class PreviousMarriageOrPartnershipDetailsFormProvider @Inject() extends Mappings {
 
    def apply(): Form[PreviousMarriageOrPartnershipDetails] = Form(
      mapping(
-      "startDate" -> text("previousMarriageOrPartnershipDetails.error.startDate.required")
-        .verifying(maxLength(100, "previousMarriageOrPartnershipDetails.error.startDate.length")),
-      "endDate" -> text("previousMarriageOrPartnershipDetails.error.endDate.required")
-        .verifying(maxLength(100, "previousMarriageOrPartnershipDetails.error.endDate.length"))
+       "startDate" -> localDate(
+         invalidKey     = "previousMarriageOrPartnershipDetails.error.startDate.invalid",
+         allRequiredKey = "previousMarriageOrPartnershipDetails.error.startDate.required.all",
+         twoRequiredKey = "previousMarriageOrPartnershipDetails.error.startDate.required.two",
+         requiredKey    = "previousMarriageOrPartnershipDetails.error.startDate.required"
+       ).verifying(maxDate(LocalDate.now, "previousMarriageOrPartnershipDetails.error.startDate.past")),
+       "endDate" -> localDate(
+          invalidKey     = "previousMarriageOrPartnershipDetails.error.endDate.invalid",
+          allRequiredKey = "previousMarriageOrPartnershipDetails.error.endDate.required.all",
+          twoRequiredKey = "previousMarriageOrPartnershipDetails.error.endDate.required.two",
+          requiredKey    = "previousMarriageOrPartnershipDetails.error.endDate.required"
+        ).verifying(maxDate(LocalDate.now, "previousMarriageOrPartnershipDetails.error.endDate.past")),
+      "endReason" -> text("previousMarriageOrPartnershipDetails.error.endReason.required")
+        .verifying(maxLength(100, "previousMarriageOrPartnershipDetails.error.endReason.length"))
     )(PreviousMarriageOrPartnershipDetails.apply)(PreviousMarriageOrPartnershipDetails.unapply)
    )
  }
