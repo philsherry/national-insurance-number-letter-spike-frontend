@@ -58,15 +58,22 @@ unauthorised.heading = You can’t access this service with this account
 
 whatIsYourName.title = whatIsYourName
 whatIsYourName.heading = whatIsYourName
+whatIsYourName.titleField = title
 whatIsYourName.firstName = firstName
 whatIsYourName.middleNames = middleNames
 whatIsYourName.checkYourAnswersLabel = WhatIsYourName
+whatIsYourName.error.titleField.required = Enter title
 whatIsYourName.error.firstName.required = Enter firstName
 whatIsYourName.error.middleNames.required = Enter middleNames
+whatIsYourName.error.lastName.required = Enter lastName
+whatIsYourName.error.titleField.length = title must be 20 characters or less
 whatIsYourName.error.firstName.length = firstName must be 100 characters or less
 whatIsYourName.error.middleNames.length = middleNames must be 100 characters or less
+whatIsYourName.error.lastName.length = lastName must be 100 characters or less
+whatIsYourName.titleField.change.hidden = title
 whatIsYourName.firstName.change.hidden = firstName
 whatIsYourName.middleNames.change.hidden = middleNames
+whatIsYourName.lastName.change.hidden = lastName
 
 doYouHaveAPreviousName.title = doYouHaveAPreviousName
 doYouHaveAPreviousName.heading = doYouHaveAPreviousName

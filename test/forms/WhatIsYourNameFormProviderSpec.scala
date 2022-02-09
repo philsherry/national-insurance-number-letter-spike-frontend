@@ -23,6 +23,33 @@ class WhatIsYourNameFormProviderSpec extends StringFieldBehaviours {
 
   val form = new WhatIsYourNameFormProvider()()
 
+  ".title" - {
+
+    val fieldName = "title"
+    val requiredKey = "whatIsYourName.error.titleField.required"
+    val lengthKey = "whatIsYourName.error.titleField.length"
+    val maxLength = 20
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
+
   ".firstName" - {
 
     val fieldName = "firstName"
@@ -55,6 +82,33 @@ class WhatIsYourNameFormProviderSpec extends StringFieldBehaviours {
     val fieldName = "middleNames"
     val requiredKey = "whatIsYourName.error.middleNames.required"
     val lengthKey = "whatIsYourName.error.middleNames.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
+
+  ".lastName" - {
+
+    val fieldName = "lastName"
+    val requiredKey = "whatIsYourName.error.lastName.required"
+    val lengthKey = "whatIsYourName.error.lastName.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(

@@ -47,8 +47,10 @@ class WhatIsYourNameControllerSpec extends SpecBase with MockitoSugar {
     userAnswersId,
     Json.obj(
       WhatIsYourNamePage.toString -> Json.obj(
-        "firstName" -> "value 1",
-        "middleNames" -> "value 2"
+        "title" -> "title",
+        "firstName" -> "first",
+        "middleNames" -> "middle",
+        "lastName" -> "last"
       )
     )
   )
@@ -83,7 +85,7 @@ class WhatIsYourNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourName("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhatIsYourName("title", "first", "middle", "last")), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -104,7 +106,7 @@ class WhatIsYourNameControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourNameRoute)
-            .withFormUrlEncodedBody(("firstName", "value 1"), ("middleNames", "value 2"))
+            .withFormUrlEncodedBody(("title", "title"), ("firstName", "first"), ("middleNames", "middle"), ("lastName", "last"))
 
         val result = route(application, request).value
 
@@ -133,34 +135,5 @@ class WhatIsYourNameControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val request = FakeRequest(GET, whatIsYourNameRoute)
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
-      }
-    }
-
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, whatIsYourNameRoute)
-            .withFormUrlEncodedBody(("firstName", "value 1"), ("middleNames", "value 2"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
-      }
-    }
   }
 }
