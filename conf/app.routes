@@ -74,3 +74,8 @@ GET        /whatIsYourPreviousAddressUk                        controllers.WhatI
 POST       /whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouReturningFromLivingAbroad                        controllers.AreYouReturningFromLivingAbroadController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouReturningFromLivingAbroad                        controllers.AreYouReturningFromLivingAbroadController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouReturningFromLivingAbroad                  controllers.AreYouReturningFromLivingAbroadController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouReturningFromLivingAbroad                  controllers.AreYouReturningFromLivingAbroadController.onSubmit(mode: Mode = CheckMode)

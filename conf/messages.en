@@ -161,3 +161,9 @@ whatIsYourPreviousAddressUk.error.addressLine1.length = addressLine1 must be 100
 whatIsYourPreviousAddressUk.error.adressLine2.length = adressLine2 must be 100 characters or less
 whatIsYourPreviousAddressUk.addressLine1.change.hidden = addressLine1
 whatIsYourPreviousAddressUk.adressLine2.change.hidden = adressLine2
+
+areYouReturningFromLivingAbroad.title = areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.heading = areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.checkYourAnswersLabel = areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.error.required = Select yes if areYouReturningFromLivingAbroad
+areYouReturningFromLivingAbroad.change.hidden = AreYouReturningFromLivingAbroad
