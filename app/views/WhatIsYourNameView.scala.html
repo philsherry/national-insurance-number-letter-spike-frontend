@@ -38,6 +38,14 @@
 
         @govukInput(
             InputViewModel(
+                field = form("title"),
+                label = LabelViewModel(messages("whatIsYourName.titleField"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
                 field = form("firstName"),
                 label = LabelViewModel(messages("whatIsYourName.firstName"))
             )
@@ -48,6 +56,14 @@
             InputViewModel(
                 field = form("middleNames"),
                 label = LabelViewModel(messages("whatIsYourName.middleNames"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("lastName"),
+                label = LabelViewModel(messages("whatIsYourName.lastName"))
             )
             .withWidth(Full)
         )
