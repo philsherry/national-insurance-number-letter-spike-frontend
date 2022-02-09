@@ -21,16 +21,20 @@ import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
-import models.WhatIsYourCurrentAddressInternational
+import models.CurrentAddressInternational
 
 class WhatIsYourCurrentAddressInternationalFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[WhatIsYourCurrentAddressInternational] = Form(
+   def apply(): Form[CurrentAddressInternational] = Form(
      mapping(
       "addressLine1" -> text("whatIsYourCurrentAddressInternational.error.addressLine1.required")
         .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine1.length")),
-      "addressLine2" -> text("whatIsYourCurrentAddressInternational.error.addressLine2.required")
-        .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine2.length"))
-    )(WhatIsYourCurrentAddressInternational.apply)(WhatIsYourCurrentAddressInternational.unapply)
+      "addressLine2" -> optional(text("whatIsYourCurrentAddressInternational.error.addressLine2.required")
+        .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine2.length"))),
+      "addressLine3" -> optional(text("whatIsYourCurrentAddressInternational.error.addressLine3.required")
+        .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine3.length"))),
+       "country" -> text("whatIsYourCurrentAddressInternational.error.country.required")
+         .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.country.length"))
+     )(CurrentAddressInternational.apply)(CurrentAddressInternational.unapply)
    )
  }

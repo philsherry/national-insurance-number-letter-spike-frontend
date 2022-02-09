@@ -94,12 +94,14 @@ trait ModelGenerators { this: Generators =>
       } yield WhatIsYourCurrentAddressUk(addressLine1, addressLine2)
     }
 
-  implicit lazy val arbitraryWhatIsYourCurrentAddressInternational: Arbitrary[WhatIsYourCurrentAddressInternational] =
+  implicit lazy val arbitraryWhatIsYourCurrentAddressInternational: Arbitrary[CurrentAddressInternational] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
-        addressLine2 <- arbitrary[String]
-      } yield WhatIsYourCurrentAddressInternational(addressLine1, addressLine2)
+        addressLine2 <- arbitrary[Option[String]]
+        addressLine3 <- arbitrary[Option[String]]
+        country      <- arbitrary[String]
+      } yield CurrentAddressInternational(addressLine1, addressLine2, addressLine3, country)
     }
 
   implicit lazy val arbitraryWhatIsYourPreviousName: Arbitrary[WhatIsYourPreviousName] =

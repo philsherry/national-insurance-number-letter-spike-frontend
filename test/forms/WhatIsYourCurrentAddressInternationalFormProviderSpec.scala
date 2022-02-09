@@ -53,8 +53,48 @@ class WhatIsYourCurrentAddressInternationalFormProviderSpec extends StringFieldB
   ".addressLine2" - {
 
     val fieldName = "addressLine2"
-    val requiredKey = "whatIsYourCurrentAddressInternational.error.addressLine2.required"
     val lengthKey = "whatIsYourCurrentAddressInternational.error.addressLine2.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+  
+  ".addressLine3" - {
+
+    val fieldName = "addressLine3"
+    val lengthKey = "whatIsYourCurrentAddressInternational.error.addressLine3.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+  
+  ".country" - {
+
+    val fieldName = "country"
+    val requiredKey = "whatIsYourCurrentAddressInternational.error.country.required"
+    val lengthKey = "whatIsYourCurrentAddressInternational.error.country.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(
