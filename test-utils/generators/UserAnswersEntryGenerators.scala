@@ -22,13 +22,13 @@ import org.scalacheck.Arbitrary.arbitrary
 import pages._
 import play.api.libs.json.{JsValue, Json}
 
-trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { this: Generators =>
 
   implicit lazy val arbitraryWhichSecondaryDocumentsUserAnswersEntry: Arbitrary[(WhichSecondaryDocumentsPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[WhichSecondaryDocumentsPage.type]
-        value <- arbitrary[WhichSecondaryDocuments].map(Json.toJson(_))
+        value <- arbitrary[SecondaryDocument].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -36,7 +36,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhichPrimaryDocumentPage.type]
-        value <- arbitrary[WhichPrimaryDocument].map(Json.toJson(_))
+        value <- arbitrary[PrimaryDocument].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -92,7 +92,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhatIsYourPreviousEmployersAddressPage.type]
-        value <- arbitrary[WhatIsYourPreviousEmployersAddress].map(Json.toJson(_))
+        value <- arbitrary[PreviousEmployersAddress].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -244,7 +244,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhatIsYourPreviousAddressUkPage.type]
-        value <- arbitrary[WhatIsYourPreviousAddressUk].map(Json.toJson(_))
+        value <- arbitrary[PreviousAddressUk].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -252,7 +252,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhatIsYourPreviousAddressInternationalPage.type]
-        value <- arbitrary[WhatIsYourPreviousAddressInternational].map(Json.toJson(_))
+        value <- arbitrary[PreviousAddressInternational].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -276,7 +276,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhatIsYourCurrentAddressUkPage.type]
-        value <- arbitrary[WhatIsYourCurrentAddressUk].map(Json.toJson(_))
+        value <- arbitrary[CurrentAddressUk].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -284,7 +284,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[WhatIsYourCurrentAddressInternationalPage.type]
-        value <- arbitrary[WhatIsYourCurrentAddressInternational].map(Json.toJson(_))
+        value <- arbitrary[CurrentAddressInternational].map(Json.toJson(_))
       } yield (page, value)
     }
 

@@ -16,10 +16,12 @@
 
 package forms
 
-import forms.behaviours.StringFieldBehaviours
+import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
 import play.api.data.FormError
 
-class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringFieldBehaviours {
+import java.time.{LocalDate, ZoneOffset}
+
+class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
 
   val form = new WhatIsYourPreviousAddressInternationalFormProvider()()
 
@@ -50,11 +52,51 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
     )
   }
 
-  ".adressLine2" - {
+  ".addressLine2" - {
 
-    val fieldName = "adressLine2"
-    val requiredKey = "whatIsYourPreviousAddressInternational.error.adressLine2.required"
-    val lengthKey = "whatIsYourPreviousAddressInternational.error.adressLine2.length"
+    val fieldName = "addressLine2"
+    val lengthKey = "whatIsYourPreviousAddressInternational.error.addressLine2.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+
+  ".addressLine3" - {
+
+    val fieldName = "addressLine3"
+    val lengthKey = "whatIsYourPreviousAddressInternational.error.addressLine3.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+
+  ".country" - {
+
+    val fieldName = "country"
+    val requiredKey = "whatIsYourPreviousAddressInternational.error.country.required"
+    val lengthKey = "whatIsYourPreviousAddressInternational.error.country.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(
@@ -75,5 +117,33 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
     )
+  }
+
+  ".from" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "from", validData)
+
+    behave like mandatoryDateField(form, "from", "whatIsYourPreviousAddressInternational.error.from.required.all")
+
+    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousAddressInternational.error.from.past"))
+  }
+
+  ".to" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "from", validData)
+
+    behave like mandatoryDateField(form, "from", "whatIsYourPreviousAddressInternational.error.from.required.all")
+
+    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousAddressInternational.error.from.past"))
   }
 }

@@ -18,8 +18,10 @@ package models
 
 import play.api.libs.json._
 
-case class WhatIsYourPreviousAddressInternational (addressLine1: String, adressLine2: String)
+import java.time.LocalDate
 
-object WhatIsYourPreviousAddressInternational {
-  implicit val format = Json.format[WhatIsYourPreviousAddressInternational]
+final case class PreviousEmployersAddress(addressLine1: String, addressLine2: String, addressLine3: Option[String], from: LocalDate, to: LocalDate)
+
+object PreviousEmployersAddress {
+  implicit val format = Json.format[PreviousEmployersAddress]
 }

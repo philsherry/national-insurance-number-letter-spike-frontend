@@ -16,10 +16,10 @@
 
 package pages
 
-import models.WhatIsYourCurrentAddressUk
+import models.CurrentAddressUk
 import play.api.libs.json.JsPath
 
-case object WhatIsYourCurrentAddressUkPage extends QuestionPage[WhatIsYourCurrentAddressUk] {
+case object WhatIsYourCurrentAddressUkPage extends QuestionPage[CurrentAddressUk] {
 
   override def path: JsPath = JsPath \ toString
 

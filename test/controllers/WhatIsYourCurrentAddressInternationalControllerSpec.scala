@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourCurrentAddressInternationalFormProvider
-import models.{NormalMode, WhatIsYourCurrentAddressInternational, UserAnswers}
+import models.{NormalMode, CurrentAddressInternational, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -43,15 +43,13 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
 
   lazy val whatIsYourCurrentAddressInternationalRoute = routes.WhatIsYourCurrentAddressInternationalController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      WhatIsYourCurrentAddressInternationalPage.toString -> Json.obj(
-        "addressLine1" -> "value 1",
-        "addressLine2" -> "value 2"
-      )
-    )
+  val validData = CurrentAddressInternational(
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, country = "country"
   )
+
+  val userAnswers = UserAnswers(userAnswersId)
+    .set(WhatIsYourCurrentAddressInternationalPage, validData)
+    .success.value
 
   "WhatIsYourCurrentAddressInternational Controller" - {
 
@@ -83,7 +81,7 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourCurrentAddressInternational("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validData), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -104,7 +102,10 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourCurrentAddressInternationalRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              "addressLine1"->  "value 1",
+              "country" -> "country"
+            )
 
         val result = route(application, request).value
 

@@ -18,8 +18,13 @@ package models
 
 import play.api.libs.json._
 
-case class WhatIsYourCurrentAddressInternational (addressLine1: String, addressLine2: String)
+final case class CurrentAddressUk(
+                                   addressLine1: String,
+                                   addressLine2: Option[String],
+                                   addressLine3: Option[String],
+                                   postcode: String
+                                 )
 
-object WhatIsYourCurrentAddressInternational {
-  implicit val format = Json.format[WhatIsYourCurrentAddressInternational]
+object CurrentAddressUk {
+  implicit val format = Json.format[CurrentAddressUk]
 }

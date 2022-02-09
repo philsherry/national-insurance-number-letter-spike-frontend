@@ -17,20 +17,37 @@
 package forms
 
 import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
-import models.WhatIsYourPreviousAddressInternational
+import models.PreviousAddressInternational
+
+import java.time.LocalDate
 
 class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[WhatIsYourPreviousAddressInternational] = Form(
+   def apply(): Form[PreviousAddressInternational] = Form(
      mapping(
       "addressLine1" -> text("whatIsYourPreviousAddressInternational.error.addressLine1.required")
         .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine1.length")),
-      "adressLine2" -> text("whatIsYourPreviousAddressInternational.error.adressLine2.required")
-        .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.adressLine2.length"))
-    )(WhatIsYourPreviousAddressInternational.apply)(WhatIsYourPreviousAddressInternational.unapply)
+      "addressLine2" -> optional(text("whatIsYourPreviousAddressInternational.error.addressLine2.required")
+        .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine2.length"))),
+      "addressLine3" -> optional(text("whatIsYourPreviousAddressInternational.error.addressLine3.required")
+        .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine3.length"))),
+       "country" -> text("whatIsYourPreviousAddressInternational.error.country.required")
+         .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.country.length")),
+       "from" -> localDate(
+         invalidKey = "whatIsYourPreviousAddressInternational.error.from.invalid",
+         allRequiredKey = "whatIsYourPreviousAddressInternational.error.from.required.all",
+         twoRequiredKey = "whatIsYourPreviousAddressInternational.error.from.required.two",
+         requiredKey    = "whatIsYourPreviousAddressInternational.error.from.required"
+       ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressInternational.error.from.past")),
+       "to" -> localDate(
+         invalidKey = "whatIsYourPreviousAddressInternational.error.to.invalid",
+         allRequiredKey = "whatIsYourPreviousAddressInternational.error.to.required.all",
+         twoRequiredKey = "whatIsYourPreviousAddressInternational.error.to.required.two",
+         requiredKey    = "whatIsYourPreviousAddressInternational.error.to.required"
+       ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressInternational.error.to.past"))
+     )(PreviousAddressInternational.apply)(PreviousAddressInternational.unapply)
    )
  }

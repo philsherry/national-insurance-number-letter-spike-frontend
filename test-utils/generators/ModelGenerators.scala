@@ -20,24 +20,29 @@ import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 
-trait ModelGenerators {
+import java.time.LocalDate
 
-  implicit lazy val arbitraryWhichSecondaryDocuments: Arbitrary[WhichSecondaryDocuments] =
+trait ModelGenerators { this: Generators =>
+
+  implicit lazy val arbitraryWhichSecondaryDocuments: Arbitrary[SecondaryDocument] =
     Arbitrary {
-      Gen.oneOf(WhichSecondaryDocuments.values.toSeq)
+      Gen.oneOf(SecondaryDocument.values.toSeq)
     }
 
-  implicit lazy val arbitraryWhichPrimaryDocument: Arbitrary[WhichPrimaryDocument] =
+  implicit lazy val arbitraryWhichPrimaryDocument: Arbitrary[PrimaryDocument] =
     Arbitrary {
-      Gen.oneOf(WhichPrimaryDocument.values.toSeq)
+      Gen.oneOf(PrimaryDocument.values.toSeq)
     }
 
-  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddress: Arbitrary[WhatIsYourPreviousEmployersAddress] =
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddress: Arbitrary[PreviousEmployersAddress] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
         addressLine2 <- arbitrary[String]
-      } yield WhatIsYourPreviousEmployersAddress(addressLine1, addressLine2)
+        addressLine3 <- arbitrary[Option[String]]
+        from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+      } yield PreviousEmployersAddress(addressLine1, addressLine2, addressLine3, from, to)
     }
 
   implicit lazy val arbitraryWhatIsYourEmployersAddress: Arbitrary[WhatIsYourEmployersAddress] =
@@ -51,41 +56,54 @@ trait ModelGenerators {
   implicit lazy val arbitraryPreviousMarriageOrPartnershipDetails: Arbitrary[PreviousMarriageOrPartnershipDetails] =
     Arbitrary {
       for {
-        startDate <- arbitrary[String]
-        endDate <- arbitrary[String]
-      } yield PreviousMarriageOrPartnershipDetails(startDate, endDate)
+        startDate    <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        endDate      <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        endingReason <- arbitrary[String]
+      } yield PreviousMarriageOrPartnershipDetails(startDate, endDate, endingReason)
     }
 
-  implicit lazy val arbitraryWhatIsYourPreviousAddressUk: Arbitrary[WhatIsYourPreviousAddressUk] =
+  implicit lazy val arbitraryWhatIsYourPreviousAddressUk: Arbitrary[PreviousAddressUk] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
-        adressLine2 <- arbitrary[String]
-      } yield WhatIsYourPreviousAddressUk(addressLine1, adressLine2)
+        addressLine2 <- arbitrary[Option[String]]
+        addressLine3 <- arbitrary[Option[String]]
+        postcode     <- arbitrary[String]
+        from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+      } yield PreviousAddressUk(addressLine1, addressLine2, addressLine3, postcode, from, to)
     }
 
-  implicit lazy val arbitraryWhatIsYourPreviousAddressInternational: Arbitrary[WhatIsYourPreviousAddressInternational] =
+  implicit lazy val arbitraryWhatIsYourPreviousAddressInternational: Arbitrary[PreviousAddressInternational] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
-        adressLine2 <- arbitrary[String]
-      } yield WhatIsYourPreviousAddressInternational(addressLine1, adressLine2)
+        addressLine2 <- arbitrary[Option[String]]
+        addressLine3 <- arbitrary[Option[String]]
+        country      <- arbitrary[String]
+        from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+        to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
+      } yield PreviousAddressInternational(addressLine1, addressLine2, addressLine3, country, from, to)
     }
 
-  implicit lazy val arbitraryWhatIsYourCurrentAddressUk: Arbitrary[WhatIsYourCurrentAddressUk] =
+  implicit lazy val arbitraryWhatIsYourCurrentAddressUk: Arbitrary[CurrentAddressUk] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
-        addressLine2 <- arbitrary[String]
-      } yield WhatIsYourCurrentAddressUk(addressLine1, addressLine2)
+        addressLine2 <- arbitrary[Option[String]]
+        addressLine3 <- arbitrary[Option[String]]
+        postcode     <- arbitrary[String]
+      } yield CurrentAddressUk(addressLine1, addressLine2, addressLine3, postcode)
     }
 
-  implicit lazy val arbitraryWhatIsYourCurrentAddressInternational: Arbitrary[WhatIsYourCurrentAddressInternational] =
+  implicit lazy val arbitraryWhatIsYourCurrentAddressInternational: Arbitrary[CurrentAddressInternational] =
     Arbitrary {
       for {
         addressLine1 <- arbitrary[String]
-        addressLine2 <- arbitrary[String]
-      } yield WhatIsYourCurrentAddressInternational(addressLine1, addressLine2)
+        addressLine2 <- arbitrary[Option[String]]
+        addressLine3 <- arbitrary[Option[String]]
+        country      <- arbitrary[String]
+      } yield CurrentAddressInternational(addressLine1, addressLine2, addressLine3, country)
     }
 
   implicit lazy val arbitraryWhatIsYourPreviousName: Arbitrary[WhatIsYourPreviousName] =

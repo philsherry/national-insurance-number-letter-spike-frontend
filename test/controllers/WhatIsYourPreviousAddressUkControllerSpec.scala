@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourPreviousAddressUkFormProvider
-import models.{NormalMode, WhatIsYourPreviousAddressUk, UserAnswers}
+import models.{NormalMode, PreviousAddressUk, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -32,6 +32,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.WhatIsYourPreviousAddressUkView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSugar {
@@ -43,15 +44,13 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
 
   lazy val whatIsYourPreviousAddressUkRoute = routes.WhatIsYourPreviousAddressUkController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      WhatIsYourPreviousAddressUkPage.toString -> Json.obj(
-        "addressLine1" -> "value 1",
-        "adressLine2" -> "value 2"
-      )
-    )
+  val validData = PreviousAddressUk(
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = LocalDate.now, to = LocalDate.now
   )
+
+  val userAnswers = UserAnswers(userAnswersId)
+    .set(WhatIsYourPreviousAddressUkPage, validData)
+    .success.value
 
   "WhatIsYourPreviousAddressUk Controller" - {
 
@@ -83,7 +82,7 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourPreviousAddressUk("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validData), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -104,7 +103,12 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourPreviousAddressUkRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("adressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              "addressLine1" -> "value 1",
+              "postcode" -> "postcode",
+              "from.day" -> LocalDate.now.getDayOfMonth.toString, "from.month" -> LocalDate.now.getMonthValue.toString, "from.year" -> LocalDate.now.getYear.toString,
+              "to.day" -> LocalDate.now.getDayOfMonth.toString, "to.month" -> LocalDate.now.getMonthValue.toString, "to.year" -> LocalDate.now.getYear.toString
+            )
 
         val result = route(application, request).value
 
