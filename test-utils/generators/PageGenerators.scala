@@ -21,6 +21,33 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStopWorkingForPreviousEmployerPage.type] =
+    Arbitrary(WhenDidYouStopWorkingForPreviousEmployerPage)
+
+  implicit lazy val arbitraryWhenDidYouStartWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStartWorkingForPreviousEmployerPage.type] =
+    Arbitrary(WhenDidYouStartWorkingForPreviousEmployerPage)
+
+  implicit lazy val arbitraryWhenDidYouStartWorkingForEmployerPage: Arbitrary[WhenDidYouStartWorkingForEmployerPage.type] =
+    Arbitrary(WhenDidYouStartWorkingForEmployerPage)
+
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersNamePage: Arbitrary[WhatIsYourPreviousEmployersNamePage.type] =
+    Arbitrary(WhatIsYourPreviousEmployersNamePage)
+
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddressPage: Arbitrary[WhatIsYourPreviousEmployersAddressPage.type] =
+    Arbitrary(WhatIsYourPreviousEmployersAddressPage)
+
+  implicit lazy val arbitraryWhatIsYourEmployersNamePage: Arbitrary[WhatIsYourEmployersNamePage.type] =
+    Arbitrary(WhatIsYourEmployersNamePage)
+
+  implicit lazy val arbitraryWhatIsYourEmployersAddressPage: Arbitrary[WhatIsYourEmployersAddressPage.type] =
+    Arbitrary(WhatIsYourEmployersAddressPage)
+
+  implicit lazy val arbitraryHaveYouEverWorkedInUkPage: Arbitrary[HaveYouEverWorkedInUkPage.type] =
+    Arbitrary(HaveYouEverWorkedInUkPage)
+
+  implicit lazy val arbitraryDoYouHaveAnyPreviousEmployersPage: Arbitrary[DoYouHaveAnyPreviousEmployersPage.type] =
+    Arbitrary(DoYouHaveAnyPreviousEmployersPage)
+
   implicit lazy val arbitraryWhatOtherUkBenefitsHaveYouReceivedPage: Arbitrary[WhatOtherUkBenefitsHaveYouReceivedPage.type] =
     Arbitrary(WhatOtherUkBenefitsHaveYouReceivedPage)
 

@@ -263,3 +263,83 @@ whatOtherUkBenefitsHaveYouReceived.checkYourAnswersLabel = whatOtherUkBenefitsHa
 whatOtherUkBenefitsHaveYouReceived.error.required = Enter whatOtherUkBenefitsHaveYouReceived
 whatOtherUkBenefitsHaveYouReceived.error.length = WhatOtherUkBenefitsHaveYouReceived must be 100 characters or less
 whatOtherUkBenefitsHaveYouReceived.change.hidden = WhatOtherUkBenefitsHaveYouReceived
+
+doYouHaveAnyPreviousEmployers.title = doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.heading = doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.checkYourAnswersLabel = doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.error.required = Select yes if doYouHaveAnyPreviousEmployers
+doYouHaveAnyPreviousEmployers.change.hidden = DoYouHaveAnyPreviousEmployers
+
+haveYouEverWorkedInUk.title = haveYouEverWorkedInUk
+haveYouEverWorkedInUk.heading = haveYouEverWorkedInUk
+haveYouEverWorkedInUk.checkYourAnswersLabel = haveYouEverWorkedInUk
+haveYouEverWorkedInUk.error.required = Select yes if haveYouEverWorkedInUk
+haveYouEverWorkedInUk.change.hidden = HaveYouEverWorkedInUk
+
+whatIsYourEmployersAddress.title = whatIsYourEmployersAddress
+whatIsYourEmployersAddress.heading = whatIsYourEmployersAddress
+whatIsYourEmployersAddress.addressLine1 = addressLine1
+whatIsYourEmployersAddress.addressLine2 = addressLine2
+whatIsYourEmployersAddress.checkYourAnswersLabel = WhatIsYourEmployersAddress
+whatIsYourEmployersAddress.error.addressLine1.required = Enter addressLine1
+whatIsYourEmployersAddress.error.addressLine2.required = Enter addressLine2
+whatIsYourEmployersAddress.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourEmployersAddress.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourEmployersAddress.addressLine1.change.hidden = addressLine1
+whatIsYourEmployersAddress.addressLine2.change.hidden = addressLine2
+
+whatIsYourEmployersName.title = whatIsYourEmployersName
+whatIsYourEmployersName.heading = whatIsYourEmployersName
+whatIsYourEmployersName.checkYourAnswersLabel = whatIsYourEmployersName
+whatIsYourEmployersName.error.required = Enter whatIsYourEmployersName
+whatIsYourEmployersName.error.length = WhatIsYourEmployersName must be 100 characters or less
+whatIsYourEmployersName.change.hidden = WhatIsYourEmployersName
+
+whatIsYourPreviousEmployersAddress.title = whatIsYourPreviousEmployersAddress
+whatIsYourPreviousEmployersAddress.heading = whatIsYourPreviousEmployersAddress
+whatIsYourPreviousEmployersAddress.addressLine1 = addressLine1
+whatIsYourPreviousEmployersAddress.addressLine2 = addressLine2
+whatIsYourPreviousEmployersAddress.checkYourAnswersLabel = WhatIsYourPreviousEmployersAddress
+whatIsYourPreviousEmployersAddress.error.addressLine1.required = Enter addressLine1
+whatIsYourPreviousEmployersAddress.error.addressLine2.required = Enter addressLine2
+whatIsYourPreviousEmployersAddress.error.addressLine1.length = addressLine1 must be 100 characters or less
+whatIsYourPreviousEmployersAddress.error.addressLine2.length = addressLine2 must be 100 characters or less
+whatIsYourPreviousEmployersAddress.addressLine1.change.hidden = addressLine1
+whatIsYourPreviousEmployersAddress.addressLine2.change.hidden = addressLine2
+
+whatIsYourPreviousEmployersName.title = whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.heading = whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.checkYourAnswersLabel = whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.error.required = Enter whatIsYourPreviousEmployersName
+whatIsYourPreviousEmployersName.error.length = WhatIsYourPreviousEmployersName must be 100 characters or less
+whatIsYourPreviousEmployersName.change.hidden = WhatIsYourPreviousEmployersName
+
+whenDidYouStartWorkingForEmployer.title = WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.heading = WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.hint = For example, 12 11 2007
+whenDidYouStartWorkingForEmployer.checkYourAnswersLabel = WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.error.required.all = Enter the whenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.error.required.two = The whenDidYouStartWorkingForEmployer must include {0} and {1}
+whenDidYouStartWorkingForEmployer.error.required = The whenDidYouStartWorkingForEmployer must include {0}
+whenDidYouStartWorkingForEmployer.error.invalid = Enter a real WhenDidYouStartWorkingForEmployer
+whenDidYouStartWorkingForEmployer.change.hidden = WhenDidYouStartWorkingForEmployer
+
+whenDidYouStartWorkingForPreviousEmployer.title = WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.heading = WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.hint = For example, 12 11 2007
+whenDidYouStartWorkingForPreviousEmployer.checkYourAnswersLabel = WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.error.required.all = Enter the whenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.error.required.two = The whenDidYouStartWorkingForPreviousEmployer must include {0} and {1}
+whenDidYouStartWorkingForPreviousEmployer.error.required = The whenDidYouStartWorkingForPreviousEmployer must include {0}
+whenDidYouStartWorkingForPreviousEmployer.error.invalid = Enter a real WhenDidYouStartWorkingForPreviousEmployer
+whenDidYouStartWorkingForPreviousEmployer.change.hidden = WhenDidYouStartWorkingForPreviousEmployer
+
+whenDidYouStopWorkingForPreviousEmployer.title = WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.heading = WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.hint = For example, 12 11 2007
+whenDidYouStopWorkingForPreviousEmployer.checkYourAnswersLabel = WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.error.required.all = Enter the whenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.error.required.two = The whenDidYouStopWorkingForPreviousEmployer must include {0} and {1}
+whenDidYouStopWorkingForPreviousEmployer.error.required = The whenDidYouStopWorkingForPreviousEmployer must include {0}
+whenDidYouStopWorkingForPreviousEmployer.error.invalid = Enter a real WhenDidYouStopWorkingForPreviousEmployer
+whenDidYouStopWorkingForPreviousEmployer.change.hidden = WhenDidYouStopWorkingForPreviousEmployer

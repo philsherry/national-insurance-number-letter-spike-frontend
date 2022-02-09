@@ -144,3 +144,48 @@ GET        /whatOtherUkBenefitsHaveYouReceived                        controller
 POST       /whatOtherUkBenefitsHaveYouReceived                        controllers.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhatOtherUkBenefitsHaveYouReceived                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatOtherUkBenefitsHaveYouReceived                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouHaveAnyPreviousEmployers                        controllers.DoYouHaveAnyPreviousEmployersController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveAnyPreviousEmployers                        controllers.DoYouHaveAnyPreviousEmployersController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveAnyPreviousEmployers                  controllers.DoYouHaveAnyPreviousEmployersController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveAnyPreviousEmployers                  controllers.DoYouHaveAnyPreviousEmployersController.onSubmit(mode: Mode = CheckMode)
+
+GET        /haveYouEverWorkedInUk                        controllers.HaveYouEverWorkedInUkController.onPageLoad(mode: Mode = NormalMode)
+POST       /haveYouEverWorkedInUk                        controllers.HaveYouEverWorkedInUkController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHaveYouEverWorkedInUk                  controllers.HaveYouEverWorkedInUkController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHaveYouEverWorkedInUk                  controllers.HaveYouEverWorkedInUkController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourEmployersAddress                        controllers.WhatIsYourEmployersAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourEmployersAddress                        controllers.WhatIsYourEmployersAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourEmployersAddress                  controllers.WhatIsYourEmployersAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourEmployersAddress                  controllers.WhatIsYourEmployersAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourEmployersName                        controllers.WhatIsYourEmployersNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourEmployersName                        controllers.WhatIsYourEmployersNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourEmployersName                  controllers.WhatIsYourEmployersNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourEmployersName                  controllers.WhatIsYourEmployersNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouStartWorkingForEmployer                  controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouStartWorkingForEmployer                  controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouStartWorkingForEmployer                        controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouStartWorkingForEmployer                        controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = CheckMode)
