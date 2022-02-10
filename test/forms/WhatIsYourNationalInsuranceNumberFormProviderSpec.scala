@@ -16,10 +16,10 @@
 
 package forms
 
-import forms.behaviours.StringFieldBehaviours
+import forms.behaviours.FieldBehaviours
 import play.api.data.FormError
 
-class WhatIsYourNationalInsuranceNumberFormProviderSpec extends StringFieldBehaviours {
+class WhatIsYourNationalInsuranceNumberFormProviderSpec extends FieldBehaviours {
 
   val requiredKey = "whatIsYourNationalInsuranceNumber.error.required"
 
@@ -29,23 +29,21 @@ class WhatIsYourNationalInsuranceNumberFormProviderSpec extends StringFieldBehav
 
     val fieldName = "value"
 
-//    behave like fieldThatBindsValidData(
-//      form,
-//      fieldName,
-//      stringsWithMaxLength(maxLength)
-//    )
-//
-//    behave like fieldWithMaxLength(
-//      form,
-//      fieldName,
-//      maxLength = maxLength,
-//      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-//    )
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      arbitraryNino.arbitrary.map(_.value)
+    )
 
     behave like mandatoryField(
       form,
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
     )
+
+    "not bind values in the wrong format" in {
+      val result = form.bind(Map(fieldName -> "GB123456A")).apply(fieldName)
+      result.errors.head mustBe FormError(fieldName, "whatIsYourNationalInsuranceNumber.error.invalid")
+    }
   }
 }
