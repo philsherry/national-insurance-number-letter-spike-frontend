@@ -379,3 +379,9 @@ whichSecondaryDocuments.option2 = Option 2
 whichSecondaryDocuments.checkYourAnswersLabel = whichSecondaryDocuments
 whichSecondaryDocuments.error.required = Select whichSecondaryDocuments
 whichSecondaryDocuments.change.hidden = WhichSecondaryDocuments
+
+doYouKnowYourNationalInsuranceNumber.title = doYouKnowYourNationalInsuranceNumber
+doYouKnowYourNationalInsuranceNumber.heading = doYouKnowYourNationalInsuranceNumber
+doYouKnowYourNationalInsuranceNumber.checkYourAnswersLabel = doYouKnowYourNationalInsuranceNumber
+doYouKnowYourNationalInsuranceNumber.error.required = Select yes if doYouKnowYourNationalInsuranceNumber
+doYouKnowYourNationalInsuranceNumber.change.hidden = DoYouKnowYourNationalInsuranceNumber

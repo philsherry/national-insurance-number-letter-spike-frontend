@@ -209,3 +209,8 @@ GET        /whichSecondaryDocuments                        controllers.WhichSeco
 POST       /whichSecondaryDocuments                        controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /doYouKnowYourNationalInsuranceNumber                        controllers.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouKnowYourNationalInsuranceNumber                        controllers.DoYouKnowYourNationalInsuranceNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouKnowYourNationalInsuranceNumber                  controllers.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouKnowYourNationalInsuranceNumber                  controllers.DoYouKnowYourNationalInsuranceNumberController.onSubmit(mode: Mode = CheckMode)
