@@ -165,10 +165,10 @@ POST       /whatIsYourEmployersName                        controllers.WhatIsYou
 GET        /changeWhatIsYourEmployersName                  controllers.WhatIsYourEmployersNameController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourEmployersName                  controllers.WhatIsYourEmployersNameController.onSubmit(mode: Mode = CheckMode)
 
-GET        /whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(mode: Mode = NormalMode)
-POST       /whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(mode: Mode = NormalMode)
-GET        /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/whatIsYourPreviousEmployersAddress                        controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = NormalMode)
