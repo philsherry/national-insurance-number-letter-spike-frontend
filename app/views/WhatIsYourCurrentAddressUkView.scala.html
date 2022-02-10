@@ -52,6 +52,22 @@
             .withWidth(Full)
         )
 
+        @govukInput(
+            InputViewModel(
+                field = form("addressLine3"),
+                label = LabelViewModel(messages("whatIsYourCurrentAddressUk.addressLine3"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("postcode"),
+                label = LabelViewModel(messages("whatIsYourCurrentAddressUk.postcode"))
+            )
+            .withWidth(Full)
+        )
+
         @govukButton(
             ButtonViewModel(messages("site.continue"))
         )

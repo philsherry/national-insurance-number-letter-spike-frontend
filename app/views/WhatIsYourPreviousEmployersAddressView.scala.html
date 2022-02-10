@@ -21,7 +21,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    govukDateInput: GovukDateInput
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -50,6 +51,36 @@
                 label = LabelViewModel(messages("whatIsYourPreviousEmployersAddress.addressLine2"))
             )
             .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("addressLine3"),
+                label = LabelViewModel(messages("whatIsYourPreviousEmployersAddress.addressLine3"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("postcode"),
+                label = LabelViewModel(messages("whatIsYourPreviousEmployersAddress.postcode"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukDateInput(
+            DateViewModel(
+                field  = form("from"),
+                legend = LegendViewModel(messages("whatIsYourPreviousAddressInternational.from"))
+            )
+        )
+
+        @govukDateInput(
+            DateViewModel(
+                field  = form("to"),
+                legend = LegendViewModel(messages("whatIsYourPreviousAddressInternational.to"))
+            )
         )
 
         @govukButton(
