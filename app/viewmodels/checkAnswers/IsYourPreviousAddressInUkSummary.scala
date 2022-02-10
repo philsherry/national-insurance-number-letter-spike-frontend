@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Index, UserAnswers}
 import pages.IsYourPreviousAddressInUkPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -26,8 +26,8 @@ import viewmodels.implicits._
 
 object IsYourPreviousAddressInUkSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IsYourPreviousAddressInUkPage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(IsYourPreviousAddressInUkPage(Index(index))).map {
       answer =>
 
         val value = if (answer) "site.yes" else "site.no"
@@ -36,7 +36,7 @@ object IsYourPreviousAddressInUkSummary  {
           key     = "isYourPreviousAddressInUk.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IsYourPreviousAddressInUkController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.IsYourPreviousAddressInUkController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("isYourPreviousAddressInUk.change.hidden"))
           )
         )

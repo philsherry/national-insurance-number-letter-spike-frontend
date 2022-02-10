@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourPreviousAddressUkFormProvider
-import models.{NormalMode, PreviousAddressUk, UserAnswers}
+import models.{Index, NormalMode, PreviousAddressUk, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -42,14 +42,14 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
   val formProvider = new WhatIsYourPreviousAddressUkFormProvider()
   val form = formProvider()
 
-  lazy val whatIsYourPreviousAddressUkRoute = routes.WhatIsYourPreviousAddressUkController.onPageLoad(NormalMode).url
+  lazy val whatIsYourPreviousAddressUkRoute = routes.WhatIsYourPreviousAddressUkController.onPageLoad(Index(0), NormalMode).url
 
   val validData = PreviousAddressUk(
     addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = LocalDate.now, to = LocalDate.now
   )
 
   val userAnswers = UserAnswers(userAnswersId)
-    .set(WhatIsYourPreviousAddressUkPage, validData)
+    .set(WhatIsYourPreviousAddressUkPage(Index(0)), validData)
     .success.value
 
   "WhatIsYourPreviousAddressUk Controller" - {
@@ -66,7 +66,7 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -82,7 +82,7 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validData), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validData), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -133,7 +133,7 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

@@ -16,17 +16,10 @@
 
 package pages
 
-import models.Index
-import pages.behaviours.PageBehaviours
+import play.api.libs.json.{JsPath, JsValue}
+import queries.Gettable
 
-class IsYourPreviousAddressInUkPageSpec extends PageBehaviours {
+case object PreviousAddressesQuery extends Gettable[Seq[JsValue]] {
 
-  "IsYourPreviousAddressInUkPage" - {
-
-    beRetrievable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
-
-    beSettable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
-
-    beRemovable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
-  }
+  override def path: JsPath = JsPath \ "previousAddress"
 }

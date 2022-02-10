@@ -16,11 +16,12 @@
 
 package pages
 
+import models.Index
 import play.api.libs.json.JsPath
 
-case object IsYourPreviousAddressInUkPage extends QuestionPage[Boolean] {
+final case class IsYourPreviousAddressInUkPage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "previousAddress" \ index.position \ toString
 
   override def toString: String = "isYourPreviousAddressInUk"
 }
