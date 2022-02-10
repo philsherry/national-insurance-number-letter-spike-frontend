@@ -36,8 +36,8 @@ class Navigator @Inject()() {
     case WhatIsYourCurrentAddressInternationalPage  => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case DoYouHaveAnyPreviousAddressesPage          => doYouHaveAnyPreviousAddressesRoutes
     case AreYouReturningFromLivingAbroadPage        => _ => routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
-    case WhatIsYourTelephoneNumberPage              => _ => ???
-    // TODO Do you have an NI number
+    case WhatIsYourTelephoneNumberPage              => _ => routes.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(NormalMode)
+    case DoYouKnowYourNationalInsuranceNumberPage   => doYouKnowYourNationalInsuranceNumberRoutes
     case WhatIsYourNationalInsuranceNumberPage      => _ => routes.AreYouMarriedController.onPageLoad(NormalMode)
     case AreYouMarriedPage                          => areYouMarriedRoutes
     case _ => _ => routes.IndexController.onPageLoad
@@ -59,6 +59,12 @@ class Navigator @Inject()() {
     answers.get(DoYouHaveAnyPreviousAddressesPage).map {
       case true  => ???
       case false => routes.AreYouReturningFromLivingAbroadController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def doYouKnowYourNationalInsuranceNumberRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouKnowYourNationalInsuranceNumberPage).map {
+      case true  => routes.WhatIsYourNationalInsuranceNumberController.onPageLoad(NormalMode)
+      case false => routes.AreYouMarriedController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def areYouMarriedRoutes(answers: UserAnswers): Call =
