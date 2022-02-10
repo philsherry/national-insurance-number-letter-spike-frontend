@@ -27,8 +27,45 @@ import models._
 class Navigator @Inject()() {
 
   private val normalRoutes: Page => UserAnswers => Call = {
+    case WhatIsYourNamePage                         => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
+    case DoYouHaveAPreviousNamePage                 => doYouHaveAPreviousNameRoutes
+    case WhatIsYourPreviousNamePage                 => _ => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
+    case WhatIsYourDateOfBirthPage                  => _ => routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
+    case IsYourCurrentAddressInUkPage               => isYourCurrentAddressInUkRoutes
+    case WhatIsYourCurrentAddressUkPage             => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
+    case WhatIsYourCurrentAddressInternationalPage  => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
+    case DoYouHaveAnyPreviousAddressesPage          => doYouHaveAnyPreviousAddressesRoutes
+    case AreYouReturningFromLivingAbroadPage        => _ => routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
+    case WhatIsYourTelephoneNumberPage              => _ => ???
+    // TODO Do you have an NI number
+    case WhatIsYourNationalInsuranceNumberPage      => _ => routes.AreYouMarriedController.onPageLoad(NormalMode)
+    case AreYouMarriedPage                          => areYouMarriedRoutes
     case _ => _ => routes.IndexController.onPageLoad
   }
+
+  private def doYouHaveAPreviousNameRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouHaveAPreviousNamePage).map {
+      case true  => routes.WhatIsYourPreviousNameController.onPageLoad(NormalMode)
+      case false => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def isYourCurrentAddressInUkRoutes(answers: UserAnswers): Call =
+    answers.get(IsYourCurrentAddressInUkPage).map {
+      case true  => routes.WhatIsYourCurrentAddressUkController.onPageLoad(NormalMode)
+      case false => routes.WhatIsYourCurrentAddressInternationalController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def doYouHaveAnyPreviousAddressesRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouHaveAnyPreviousAddressesPage).map {
+      case true  => ???
+      case false => routes.AreYouReturningFromLivingAbroadController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def areYouMarriedRoutes(answers: UserAnswers): Call =
+    answers.get(AreYouMarriedPage).map {
+      case true  => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+      case false => routes.AreYouInACivilPartnershipController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
