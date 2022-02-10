@@ -219,3 +219,8 @@ GET        /areYouStillEmployed                        controllers.AreYouStillEm
 POST       /areYouStillEmployed                        controllers.AreYouStillEmployedController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAreYouStillEmployed                  controllers.AreYouStillEmployedController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAreYouStillEmployed                  controllers.AreYouStillEmployedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouFinishYourEmployment                  controllers.WhenDidYouFinishYourEmploymentController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouFinishYourEmployment                  controllers.WhenDidYouFinishYourEmploymentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouFinishYourEmployment                        controllers.WhenDidYouFinishYourEmploymentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouFinishYourEmployment                        controllers.WhenDidYouFinishYourEmploymentController.onSubmit(mode: Mode = CheckMode)
