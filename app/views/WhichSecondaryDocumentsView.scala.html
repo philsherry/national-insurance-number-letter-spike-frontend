@@ -37,7 +37,7 @@
                 field  = form("value"),
                 legend = LegendViewModel(messages("whichSecondaryDocuments.heading")).asPageHeading(),
                 items  = SecondaryDocument.options
-            )
+            ).withHint(Hint(content = "whichSecondaryDocuments.hint"))
         )
 
         @govukButton(
