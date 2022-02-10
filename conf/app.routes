@@ -170,10 +170,10 @@ POST       /whatIsYourPreviousEmployersAddress                        controller
 GET        /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourPreviousEmployersAddress                  controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(mode: Mode = CheckMode)
 
-GET        /whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(mode: Mode = NormalMode)
-GET        /changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/whatIsYourPreviousEmployersName                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeWhatIsYourPreviousEmployersName                  controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /whenDidYouStartWorkingForEmployer                  controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = NormalMode)
 POST       /whenDidYouStartWorkingForEmployer                  controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = NormalMode)
