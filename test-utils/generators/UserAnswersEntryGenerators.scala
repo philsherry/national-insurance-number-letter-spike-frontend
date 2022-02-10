@@ -256,10 +256,10 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhatIsYourPreviousAddressInternationalUserAnswersEntry: Arbitrary[(WhatIsYourPreviousAddressInternationalPage.type, JsValue)] =
+  implicit lazy val arbitraryWhatIsYourPreviousAddressInternationalUserAnswersEntry: Arbitrary[(WhatIsYourPreviousAddressInternationalPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhatIsYourPreviousAddressInternationalPage.type]
+        page  <- arbitrary[WhatIsYourPreviousAddressInternationalPage]
         value <- arbitrary[PreviousAddressInternational].map(Json.toJson(_))
       } yield (page, value)
     }

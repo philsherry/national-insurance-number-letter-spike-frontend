@@ -65,10 +65,10 @@ POST       /:index/isYourPreviousAddressInUk                        controllers.
 GET        /:index/changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = NormalMode)
-POST       /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = NormalMode)
-GET        /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onSubmit(index: Index, mode: Mode = NormalMode)

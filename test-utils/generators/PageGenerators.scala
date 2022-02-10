@@ -109,8 +109,8 @@ trait PageGenerators {
   implicit lazy val arbitraryWhatIsYourPreviousAddressUkPage: Arbitrary[WhatIsYourPreviousAddressUkPage] =
     Arbitrary(WhatIsYourPreviousAddressUkPage(Index(0)))
 
-  implicit lazy val arbitraryWhatIsYourPreviousAddressInternationalPage: Arbitrary[WhatIsYourPreviousAddressInternationalPage.type] =
-    Arbitrary(WhatIsYourPreviousAddressInternationalPage)
+  implicit lazy val arbitraryWhatIsYourPreviousAddressInternationalPage: Arbitrary[WhatIsYourPreviousAddressInternationalPage] =
+    Arbitrary(WhatIsYourPreviousAddressInternationalPage(Index(0)))
 
   implicit lazy val arbitraryIsYourPreviousAddressInUkPage: Arbitrary[IsYourPreviousAddressInUkPage] =
     Arbitrary(IsYourPreviousAddressInUkPage(Index(0)))

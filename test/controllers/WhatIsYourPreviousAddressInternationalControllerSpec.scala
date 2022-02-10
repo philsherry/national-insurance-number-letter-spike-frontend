@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourPreviousAddressInternationalFormProvider
-import models.{NormalMode, PreviousAddressInternational, UserAnswers}
+import models.{Index, NormalMode, PreviousAddressInternational, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -42,14 +42,14 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
   val formProvider = new WhatIsYourPreviousAddressInternationalFormProvider()
   val form = formProvider()
 
-  lazy val whatIsYourPreviousAddressInternationalRoute = routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(NormalMode).url
+  lazy val whatIsYourPreviousAddressInternationalRoute = routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(Index(0), NormalMode).url
 
   val validData = PreviousAddressInternational(
     addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, country = "country", from = LocalDate.now, to = LocalDate.now
   )
 
   val userAnswers = UserAnswers(userAnswersId)
-    .set(WhatIsYourPreviousAddressInternationalPage, validData)
+    .set(WhatIsYourPreviousAddressInternationalPage(Index(0)), validData)
     .success.value
 
   "WhatIsYourPreviousAddressInternational Controller" - {
@@ -66,7 +66,7 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -82,7 +82,7 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validData), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validData), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -133,7 +133,7 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

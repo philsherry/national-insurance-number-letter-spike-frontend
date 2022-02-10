@@ -56,7 +56,7 @@ trait UserAnswersGenerator extends TryValues {
     arbitrary[(WhatIsYourNationalInsuranceNumberPage.type, JsValue)] ::
     arbitrary[(AreYouReturningFromLivingAbroadPage.type, JsValue)] ::
     arbitrary[(WhatIsYourPreviousAddressUkPage, JsValue)] ::
-    arbitrary[(WhatIsYourPreviousAddressInternationalPage.type, JsValue)] ::
+    arbitrary[(WhatIsYourPreviousAddressInternationalPage, JsValue)] ::
     arbitrary[(IsYourPreviousAddressInUkPage, JsValue)] ::
     arbitrary[(DoYouHaveAnyPreviousAddressesPage.type, JsValue)] ::
     arbitrary[(WhatIsYourCurrentAddressUkPage.type, JsValue)] ::
