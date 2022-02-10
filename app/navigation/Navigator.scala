@@ -27,19 +27,33 @@ import models._
 class Navigator @Inject()() {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case WhatIsYourNamePage                         => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
-    case DoYouHaveAPreviousNamePage                 => doYouHaveAPreviousNameRoutes
-    case WhatIsYourPreviousNamePage                 => _ => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
-    case WhatIsYourDateOfBirthPage                  => _ => routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
-    case IsYourCurrentAddressInUkPage               => isYourCurrentAddressInUkRoutes
-    case WhatIsYourCurrentAddressUkPage             => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
-    case WhatIsYourCurrentAddressInternationalPage  => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
-    case DoYouHaveAnyPreviousAddressesPage          => doYouHaveAnyPreviousAddressesRoutes
-    case AreYouReturningFromLivingAbroadPage        => _ => routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
-    case WhatIsYourTelephoneNumberPage              => _ => routes.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(NormalMode)
-    case DoYouKnowYourNationalInsuranceNumberPage   => doYouKnowYourNationalInsuranceNumberRoutes
-    case WhatIsYourNationalInsuranceNumberPage      => _ => routes.AreYouMarriedController.onPageLoad(NormalMode)
-    case AreYouMarriedPage                          => areYouMarriedRoutes
+    case WhatIsYourNamePage                                     => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
+    case DoYouHaveAPreviousNamePage                             => doYouHaveAPreviousNameRoutes
+    case WhatIsYourPreviousNamePage                             => _ => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
+    case WhatIsYourDateOfBirthPage                              => _ => routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
+    case IsYourCurrentAddressInUkPage                           => isYourCurrentAddressInUkRoutes
+    case WhatIsYourCurrentAddressUkPage                         => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
+    case WhatIsYourCurrentAddressInternationalPage              => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
+    case DoYouHaveAnyPreviousAddressesPage                      => doYouHaveAnyPreviousAddressesRoutes
+    case AreYouReturningFromLivingAbroadPage                    => _ => routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
+    case WhatIsYourTelephoneNumberPage                          => _ => routes.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(NormalMode)
+    case DoYouKnowYourNationalInsuranceNumberPage               => doYouKnowYourNationalInsuranceNumberRoutes
+    case WhatIsYourNationalInsuranceNumberPage                  => _ => routes.AreYouMarriedController.onPageLoad(NormalMode)
+    case AreYouMarriedPage                                      => areYouMarriedRoutes
+    case WhenDidYouGetMarriedPage                               => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+    case AreYouInACivilPartnershipPage                          => areYouInACivilPartnershipRoutes
+    case WhenDidYouEnterACivilPartnershipPage                   => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+    case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes
+    case HaveYouEverClaimedChildBenefitPage                     => haveYouEverClaimedChildBenefitRoutes
+    case DoYouKnowYourChildBenefitNumberPage                    => doYouKnowYourChildBenefitNumberRoutes
+    case WhatIsYourChildBenefitNumberPage                       => _ => routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
+    case HaveYouEverReceivedOtherUkBenefitsPage                 => haveYouEverReceivedOtherUkBenefitsRoutes
+    case WhatOtherUkBenefitsHaveYouReceivedPage                 => _ => routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
+    case HaveYouEverWorkedInUkPage                              => haveYouEverWorkedInUkRoutes
+    case DoYouHavePrimaryDocumentPage                           => doYouHaveAPrimaryDocumentRoutes
+    case WhichPrimaryDocumentPage                               => _ => routes.CheckYourAnswersController.onPageLoad
+    case DoYouHaveTwoSecondaryDocumentsPage                     => doYouHaveTwoSecondaryDocumentsRoutes
+    case WhichSecondaryDocumentsPage                            => _ => routes.CheckYourAnswersController.onPageLoad
     case _ => _ => routes.IndexController.onPageLoad
   }
 
@@ -69,8 +83,56 @@ class Navigator @Inject()() {
 
   private def areYouMarriedRoutes(answers: UserAnswers): Call =
     answers.get(AreYouMarriedPage).map {
-      case true  => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+      case true  => routes.WhenDidYouGetMarriedController.onPageLoad(NormalMode)
       case false => routes.AreYouInACivilPartnershipController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def areYouInACivilPartnershipRoutes(answers: UserAnswers): Call =
+    answers.get(AreYouInACivilPartnershipPage).map {
+      case true  => routes.WhenDidYouEnterACivilPartnershipController.onPageLoad(NormalMode)
+      case false => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes(answers: UserAnswers): Call =
+    answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage).map {
+      case true  => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(NormalMode)
+      case false => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def haveYouEverClaimedChildBenefitRoutes(answers: UserAnswers): Call =
+    answers.get(HaveYouEverClaimedChildBenefitPage).map {
+      case true  => routes.DoYouKnowYourChildBenefitNumberController.onPageLoad(NormalMode)
+      case false => routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def doYouKnowYourChildBenefitNumberRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouKnowYourChildBenefitNumberPage).map {
+      case true  => routes.WhatIsYourChildBenefitNumberController.onPageLoad(NormalMode)
+      case false => routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def haveYouEverReceivedOtherUkBenefitsRoutes(answers: UserAnswers): Call =
+    answers.get(HaveYouEverReceivedOtherUkBenefitsPage).map {
+      case true  => routes.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(NormalMode)
+      case false => routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def haveYouEverWorkedInUkRoutes(answers: UserAnswers): Call =
+    answers.get(HaveYouEverWorkedInUkPage).map {
+      case true  => ???
+      case false => routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def doYouHaveAPrimaryDocumentRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouHavePrimaryDocumentPage).map {
+      case true  => routes.WhichPrimaryDocumentController.onPageLoad(NormalMode)
+      case false => routes.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def doYouHaveTwoSecondaryDocumentsRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
+      case true  => routes.WhichSecondaryDocumentsController.onPageLoad(NormalMode)
+      case false => ???
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {

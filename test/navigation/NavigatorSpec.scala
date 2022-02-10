@@ -139,7 +139,7 @@ class NavigatorSpec extends SpecBase {
 
         "to the have you previously been married page when the user selects yes" in {
           val answers = emptyUserAnswers.set(AreYouMarriedPage, true).success.value
-          navigator.nextPage(AreYouMarriedPage, NormalMode, answers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+          navigator.nextPage(AreYouMarriedPage, NormalMode, answers) mustBe routes.WhenDidYouGetMarriedController.onPageLoad(NormalMode)
         }
 
         "to the are you in a civil partnership page when the user selects no" in {
@@ -150,6 +150,165 @@ class NavigatorSpec extends SpecBase {
         "to the journey recovery page when the user has no selection" in {
           navigator.nextPage(AreYouMarriedPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
+      }
+
+      "must go from the when did you get married page to the have you previously been married page" in {
+        navigator.nextPage(WhenDidYouGetMarriedPage, NormalMode, emptyUserAnswers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+      }
+
+      "must go from the are you in a civil partnership page" - {
+
+        "to the when did you enter a civil partnership page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(AreYouInACivilPartnershipPage, true).success.value
+          navigator.nextPage(AreYouInACivilPartnershipPage, NormalMode, answers) mustBe routes.WhenDidYouEnterACivilPartnershipController.onPageLoad(NormalMode)
+        }
+
+        "to the have you previously been in a marriage page when the user selects no" in {
+          val answers = emptyUserAnswers.set(AreYouInACivilPartnershipPage, false).success.value
+          navigator.nextPage(AreYouInACivilPartnershipPage, NormalMode, answers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(AreYouMarriedPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "must go from the when did you enter a civil partnership page to the have you previously been married page" in {
+        navigator.nextPage(WhenDidYouEnterACivilPartnershipPage, NormalMode, emptyUserAnswers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+      }
+
+      "must go from the previously married page" - {
+
+        "to the when previous marriage or civil partnership details page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(NormalMode)
+        }
+
+        "to have you ever claimed child benefit page when the user selects no" in {
+          val answers = emptyUserAnswers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, false).success.value
+          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the have you claimed child benefit page" - {
+
+        "to the do you know your child benefit number page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(HaveYouEverClaimedChildBenefitPage, true).success.value
+          navigator.nextPage(HaveYouEverClaimedChildBenefitPage, NormalMode, answers) mustBe routes.DoYouKnowYourChildBenefitNumberController.onPageLoad(NormalMode)
+        }
+
+        "to the have you claimed other benefits page when the user selects no" in {
+          val answers = emptyUserAnswers.set(HaveYouEverClaimedChildBenefitPage, false).success.value
+          navigator.nextPage(HaveYouEverClaimedChildBenefitPage, NormalMode, answers) mustBe routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(HaveYouEverClaimedChildBenefitPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the do you know your child benefit number page" - {
+
+        "to the what is your child benefit number page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(DoYouKnowYourChildBenefitNumberPage, true).success.value
+          navigator.nextPage(DoYouKnowYourChildBenefitNumberPage, NormalMode, answers) mustBe routes.WhatIsYourChildBenefitNumberController.onPageLoad(NormalMode)
+        }
+
+        "to the have you claimed other benefits page when the user selects no" in {
+          val answers = emptyUserAnswers.set(DoYouKnowYourChildBenefitNumberPage, false).success.value
+          navigator.nextPage(DoYouKnowYourChildBenefitNumberPage, NormalMode, answers) mustBe routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(DoYouKnowYourChildBenefitNumberPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the what is your child benefit number page to the have you claimed other benefits page when the user selects no" in {
+        navigator.nextPage(WhatIsYourChildBenefitNumberPage, NormalMode, emptyUserAnswers) mustBe routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go from the have you claimed other benefits page" - {
+
+        "to the what other benefits have you claimed page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
+          navigator.nextPage(HaveYouEverReceivedOtherUkBenefitsPage, NormalMode, answers) mustBe routes.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(NormalMode)
+        }
+
+        "to the have you ever worked in the uk page when the user selects no" in {
+          val answers = emptyUserAnswers.set(HaveYouEverReceivedOtherUkBenefitsPage, false).success.value
+          navigator.nextPage(HaveYouEverReceivedOtherUkBenefitsPage, NormalMode, answers) mustBe routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(HaveYouEverReceivedOtherUkBenefitsPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the what other benefits page to the have you worked in the uk page" in {
+        navigator.nextPage(WhatOtherUkBenefitsHaveYouReceivedPage, NormalMode, emptyUserAnswers) mustBe routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
+      }
+
+      "go from the have you worked in the uk page" - {
+
+        "to the employer details page when the user selects yes" ignore {
+          // TODO
+        }
+
+        "to the do you have a primary document page when the user selects no" in {
+          val answers = emptyUserAnswers.set(HaveYouEverWorkedInUkPage, false).success.value
+          navigator.nextPage(HaveYouEverWorkedInUkPage, NormalMode, answers) mustBe routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(HaveYouEverWorkedInUkPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the do you have a primary document page" - {
+
+        "to the which primary document page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(DoYouHavePrimaryDocumentPage, true).success.value
+          navigator.nextPage(DoYouHavePrimaryDocumentPage, NormalMode, answers) mustBe routes.WhichPrimaryDocumentController.onPageLoad(NormalMode)
+        }
+
+        "to the do you have two secondary documents page when the user selects no" in {
+          val answers = emptyUserAnswers.set(DoYouHavePrimaryDocumentPage, false).success.value
+          navigator.nextPage(DoYouHavePrimaryDocumentPage, NormalMode, answers) mustBe routes.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(DoYouHavePrimaryDocumentPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the which primary document page to the check your answers page" in {
+        navigator.nextPage(WhichPrimaryDocumentPage, NormalMode, emptyUserAnswers) mustBe routes.CheckYourAnswersController.onPageLoad
+      }
+
+      "go from the do you have two secondary documents page" - {
+
+        "to the which two secondary documents page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.WhichSecondaryDocumentsController.onPageLoad(NormalMode)
+        }
+
+        "to ... when the user selects no" ignore {
+          val answers = emptyUserAnswers.set(DoYouHaveTwoSecondaryDocumentsPage, false).success.value
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe ???
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the which two secondary documents page to the check your answers page" in {
+        navigator.nextPage(WhichSecondaryDocumentsPage, NormalMode, emptyUserAnswers) mustBe routes.CheckYourAnswersController.onPageLoad
       }
     }
 
