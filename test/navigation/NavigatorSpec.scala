@@ -21,6 +21,8 @@ import controllers.routes
 import pages._
 import models._
 
+import java.time.LocalDate
+
 class NavigatorSpec extends SpecBase {
 
   val navigator = new Navigator
@@ -90,10 +92,28 @@ class NavigatorSpec extends SpecBase {
 
       "must go from the do you have any previous addresses page" - {
 
-        "to ... when the user selects yes" ignore {
-          // TODO
-          val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousAddressesPage, true).success.value
-          navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, NormalMode, answers) mustBe ???
+        "to the is your previous address in the uk page when the user selects yes" - {
+
+          "at index 0 when there are no previous addresses" in {
+            val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousAddressesPage, true).success.value
+            navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, NormalMode, answers) mustBe routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), NormalMode)
+          }
+
+          "at index 1 when there is already a previous address" in {
+            val address = PreviousAddressUk(
+              addressLine1 = "line 1",
+              addressLine2 = None,
+              addressLine3 = None,
+              postcode = "postcode",
+              from = LocalDate.now,
+              to = LocalDate.now
+            )
+            val answers = emptyUserAnswers
+              .set(DoYouHaveAnyPreviousAddressesPage, true).success.value
+              .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
+              .set(WhatIsYourPreviousAddressUkPage(Index(0)), address).success.value
+            navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, NormalMode, answers) mustBe routes.IsYourPreviousAddressInUkController.onPageLoad(Index(1), NormalMode)
+          }
         }
 
         "to the returning from living abroad page when the user selects no" in {
@@ -104,6 +124,31 @@ class NavigatorSpec extends SpecBase {
         "to the journey recovery controller when the user has no selection" in {
           navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
+      }
+
+      "must go from the is your previous address in the uk" - {
+
+        "to the what is your previous address uk page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
+          navigator.nextPage(IsYourPreviousAddressInUkPage(Index(0)), NormalMode, answers) mustBe routes.WhatIsYourPreviousAddressUkController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the what is your previous address international page when the user selects no" in {
+          val answers = emptyUserAnswers.set(IsYourPreviousAddressInUkPage(Index(0)), false).success.value
+          navigator.nextPage(IsYourPreviousAddressInUkPage(Index(0)), NormalMode, answers) mustBe routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(IsYourPreviousAddressInUkPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "must go from the what is your previous address uk to do you have any previous address" in {
+        navigator.nextPage(WhatIsYourPreviousAddressUkPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
+      }
+
+      "must go from the what is your previous address international to do you have any previous address" in {
+        navigator.nextPage(WhatIsYourPreviousAddressInternationalPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
       }
 
       "must go from the returning from living abroad page to the telephone number page" in {
