@@ -16,6 +16,7 @@
 
 package generators
 
+import models.Index
 import org.scalacheck.Arbitrary
 import pages._
 
@@ -111,8 +112,8 @@ trait PageGenerators {
   implicit lazy val arbitraryWhatIsYourPreviousAddressInternationalPage: Arbitrary[WhatIsYourPreviousAddressInternationalPage.type] =
     Arbitrary(WhatIsYourPreviousAddressInternationalPage)
 
-  implicit lazy val arbitraryIsYourPreviousAddressInUkPage: Arbitrary[IsYourPreviousAddressInUkPage.type] =
-    Arbitrary(IsYourPreviousAddressInUkPage)
+  implicit lazy val arbitraryIsYourPreviousAddressInUkPage: Arbitrary[IsYourPreviousAddressInUkPage] =
+    Arbitrary(IsYourPreviousAddressInUkPage(Index(0)))
 
   implicit lazy val arbitraryDoYouHaveAnyPreviousAddressesPage: Arbitrary[DoYouHaveAnyPreviousAddressesPage.type] =
     Arbitrary(DoYouHaveAnyPreviousAddressesPage)

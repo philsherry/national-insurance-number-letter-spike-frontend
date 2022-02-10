@@ -60,10 +60,10 @@ POST       /doYouHaveAnyPreviousAddresses                        controllers.DoY
 GET        /changeDoYouHaveAnyPreviousAddresses                  controllers.DoYouHaveAnyPreviousAddressesController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeDoYouHaveAnyPreviousAddresses                  controllers.DoYouHaveAnyPreviousAddressesController.onSubmit(mode: Mode = CheckMode)
 
-GET        /isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onPageLoad(mode: Mode = NormalMode)
-POST       /isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onSubmit(mode: Mode = NormalMode)
-GET        /changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/isYourPreviousAddressInUk                        controllers.IsYourPreviousAddressInUkController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeIsYourPreviousAddressInUk                  controllers.IsYourPreviousAddressInUkController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = NormalMode)
 POST       /whatIsYourPreviousAddressInternational                        controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = NormalMode)

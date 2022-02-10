@@ -16,16 +16,17 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 class IsYourPreviousAddressInUkPageSpec extends PageBehaviours {
 
   "IsYourPreviousAddressInUkPage" - {
 
-    beRetrievable[Boolean](IsYourPreviousAddressInUkPage)
+    beRetrievable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
 
-    beSettable[Boolean](IsYourPreviousAddressInUkPage)
+    beSettable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
 
-    beRemovable[Boolean](IsYourPreviousAddressInUkPage)
+    beRemovable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
   }
 }
