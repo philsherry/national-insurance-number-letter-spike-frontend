@@ -32,10 +32,18 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <h1 class="govuk-heading-xl">@messages("doYouHavePrimaryDocument.heading")</h1>
+
+        <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+            <li>@messages("doYouHavePrimaryDocument.birthCertificate")</li>
+            <li>@messages("doYouHavePrimaryDocument.drivingLicense")</li>
+            <li>@messages("doYouHavePrimaryDocument.passport")</li>
+        </ul>
+
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("doYouHavePrimaryDocument.heading")).asPageHeading()
+                legend = LegendViewModel(messages("doYouHavePrimaryDocument.legend")).withCssClass("govuk-visually-hidden")
             )
         )
 

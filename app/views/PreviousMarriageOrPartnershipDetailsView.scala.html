@@ -21,7 +21,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    govukHint: GovukHint
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -35,6 +36,8 @@
         }
 
         <h1 class="govuk-heading-xl">@messages("previousMarriageOrPartnershipDetails.heading")</h1>
+
+        @govukHint(Hint(content = "previousMarriageOrPartnershipDetails.hint"))
 
         @govukInput(
             InputViewModel(

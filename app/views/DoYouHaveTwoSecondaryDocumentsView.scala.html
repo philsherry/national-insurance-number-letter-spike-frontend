@@ -32,10 +32,22 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <h1 class="govuk-heading-xl">@messages("doYouHaveTwoSecondaryDocuments.heading")</h1>
+
+        <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+            <li>@messages("doYouHaveTwoSecondaryDocuments.adoptionCertificate")</li>
+            <li>@messages("doYouHaveTwoSecondaryDocuments.homeOfficeOrTravelDocument")</li>
+            <li>@messages("doYouHaveTwoSecondaryDocuments.workPermit")</li>
+            <li>@messages("doYouHaveTwoSecondaryDocuments.certificateOfNaturalisation")</li>
+            <li>@messages("doYouHaveTwoSecondaryDocuments.marriageOrCivilCertificate")</li>
+            <li>@messages("doYouHaveTwoSecondaryDocuments.armyOrNavyCertificate")</li>
+            <li>@messages("doYouHaveTwoSecondaryDocuments.identityOrMedicalCard")</li>
+        </ul>
+
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("doYouHaveTwoSecondaryDocuments.heading")).asPageHeading()
+                legend = LegendViewModel(messages("doYouHaveTwoSecondaryDocuments.legend")).withCssClass("govuk-visually-hidden")
             )
         )
 
