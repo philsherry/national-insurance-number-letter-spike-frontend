@@ -19,6 +19,7 @@ package generators
 import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
+import uk.gov.hmrc.domain.Nino
 
 import java.time.LocalDate
 
@@ -125,4 +126,14 @@ trait ModelGenerators { this: Generators =>
         lastName <- arbitrary[String]
       } yield WhatIsYourName(title, firstName, middleNames, lastName)
     }
+
+  implicit lazy val arbitraryNino: Arbitrary[Nino] = Arbitrary {
+    for {
+      firstChar <- Gen.oneOf('A', 'C', 'E', 'H', 'J', 'L', 'M', 'O', 'P', 'R', 'S', 'W', 'X', 'Y').map(_.toString)
+      secondChar <- Gen.oneOf('A', 'B', 'C', 'E', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z').map(_.toString)
+      digits <- Gen.listOfN(6, Gen.numChar)
+      lastChar <- Gen.oneOf('A', 'B', 'C', 'D')
+    } yield Nino(firstChar ++ secondChar ++ digits :+ lastChar)
+  }
+
 }

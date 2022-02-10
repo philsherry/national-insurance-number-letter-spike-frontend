@@ -16,8 +16,6 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.WhatIsYourDateOfBirthFormProvider
 import models.{NormalMode, UserAnswers}
@@ -33,6 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.WhatIsYourDateOfBirthView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class WhatIsYourDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
@@ -42,7 +41,7 @@ class WhatIsYourDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val validAnswer = LocalDate.now().minusDays(1)
 
   lazy val whatIsYourDateOfBirthRoute = routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode).url
 

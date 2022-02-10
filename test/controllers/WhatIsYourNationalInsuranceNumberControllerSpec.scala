@@ -29,6 +29,7 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import uk.gov.hmrc.domain.Nino
 import views.html.WhatIsYourNationalInsuranceNumberView
 
 import scala.concurrent.Future
@@ -62,7 +63,7 @@ class WhatIsYourNationalInsuranceNumberControllerSpec extends SpecBase with Mock
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhatIsYourNationalInsuranceNumberPage, "answer").success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhatIsYourNationalInsuranceNumberPage, Nino("AA000000A")).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +75,7 @@ class WhatIsYourNationalInsuranceNumberControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(Nino("AA000000A")), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -95,7 +96,7 @@ class WhatIsYourNationalInsuranceNumberControllerSpec extends SpecBase with Mock
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourNationalInsuranceNumberRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+            .withFormUrlEncodedBody(("value", "AA000000A"))
 
         val result = route(application, request).value
 
