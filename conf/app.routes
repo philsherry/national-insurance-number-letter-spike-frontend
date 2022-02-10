@@ -70,10 +70,10 @@ POST       /whatIsYourPreviousAddressInternational                        contro
 GET        /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhatIsYourPreviousAddressInternational                  controllers.WhatIsYourPreviousAddressInternationalController.onSubmit(mode: Mode = CheckMode)
 
-GET        /whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onPageLoad(mode: Mode = NormalMode)
-POST       /whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = NormalMode)
-GET        /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/whatIsYourPreviousAddressUk                        controllers.WhatIsYourPreviousAddressUkController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeWhatIsYourPreviousAddressUk                  controllers.WhatIsYourPreviousAddressUkController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /areYouReturningFromLivingAbroad                        controllers.AreYouReturningFromLivingAbroadController.onPageLoad(mode: Mode = NormalMode)
 POST       /areYouReturningFromLivingAbroad                        controllers.AreYouReturningFromLivingAbroadController.onSubmit(mode: Mode = NormalMode)
