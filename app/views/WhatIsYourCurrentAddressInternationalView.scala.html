@@ -52,6 +52,22 @@
             .withWidth(Full)
         )
 
+        @govukInput(
+            InputViewModel(
+                field = form("addressLine3"),
+                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.addressLine3"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("country"),
+                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.country"))
+            )
+            .withWidth(Full)
+        )
+
         @govukButton(
             ButtonViewModel(messages("site.continue"))
         )

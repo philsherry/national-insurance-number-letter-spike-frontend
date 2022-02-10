@@ -178,6 +178,8 @@ whatIsYourPreviousAddressInternational.addressLine1.change.hidden = address line
 whatIsYourPreviousAddressInternational.addressLine2.change.hidden = address line 2
 whatIsYourPreviousAddressInternational.addressLine3.change.hidden = address line 3
 whatIsYourPreviousAddressInternational.country.change.hidden = country
+whatIsYourPreviousAddressInternational.from = From
+whatIsYourPreviousAddressInternational.to = From
 
 whatIsYourPreviousAddressUk.title = What is your previous address?
 whatIsYourPreviousAddressUk.heading = What is your previous address?
