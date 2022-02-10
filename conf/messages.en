@@ -450,3 +450,9 @@ doYouKnowYourNationalInsuranceNumber.hint = It’s on your National Insurance ca
 doYouKnowYourNationalInsuranceNumber.checkYourAnswersLabel = Do you know your National Insurance number?
 doYouKnowYourNationalInsuranceNumber.error.required = Select yes if you know your National Insurance number
 doYouKnowYourNationalInsuranceNumber.change.hidden = whether you know your National Insurance number
+
+areYouStillEmployed.title = areYouStillEmployed
+areYouStillEmployed.heading = areYouStillEmployed
+areYouStillEmployed.checkYourAnswersLabel = areYouStillEmployed
+areYouStillEmployed.error.required = Select yes if areYouStillEmployed
+areYouStillEmployed.change.hidden = AreYouStillEmployed
