@@ -31,15 +31,22 @@
     <p class="govuk-body">@messages("index.p2")</p>
     <p class="govuk-body">@messages("index.p3")</p>
 
-    <a href="@routes.WhatIsYourNameController.onPageLoad(NormalMode)" class="govuk-button govuk-button--start">@messages("site.start")</a>
-
     <h2 class="govuk-heading-l">@messages("index.h2")</h2>
 
     <p class="govuk-body">@messages("index.p4")</p>
+    <p class="govuk-body">@messages("index.p5")</p>
+
+    <a href="@routes.WhatIsYourNameController.onPageLoad(NormalMode)" class="govuk-button govuk-button--start">@messages("site.start")</a>
+
+    <h2 class="govuk-heading-l">@messages("index.h3")</h2>
+
+    <p class="govuk-body">@messages("index.p6")</p>
     <ul class="govuk-list govuk-list--bullet">
         <li>@messages("index.li.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/personal-tax-account">@messages("index.li.1.link")</a></li>
         <li>@messages("index.li.2")</li>
         <li>@messages("index.li.3")</li>
         <li>@messages("index.li.4")</li>
     </ul>
+
+    <p class="govuk-body">@messages("index.p7.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/apply-national-insurance-number">@messages("index.p7.link")</a> @messages("index.p7.2")</p>
 }
