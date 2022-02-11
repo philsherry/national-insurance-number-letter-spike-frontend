@@ -43,8 +43,8 @@ trait PageGenerators {
   implicit lazy val arbitraryDoYouHavePrimaryDocumentPage: Arbitrary[DoYouHavePrimaryDocumentPage.type] =
     Arbitrary(DoYouHavePrimaryDocumentPage)
 
-  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStopWorkingForPreviousEmployerPage.type] =
-    Arbitrary(WhenDidYouStopWorkingForPreviousEmployerPage)
+  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStopWorkingForPreviousEmployerPage] =
+    Arbitrary(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)))
 
   implicit lazy val arbitraryWhenDidYouStartWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStartWorkingForPreviousEmployerPage] =
     Arbitrary(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))

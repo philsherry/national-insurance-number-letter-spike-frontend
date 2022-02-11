@@ -185,10 +185,10 @@ POST       /:index/whenDidYouStartWorkingForPreviousEmployer                  co
 GET        /:index/changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = NormalMode)
-POST       /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)
-GET        /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeWhenDidYouStopWorkingForPreviousEmployer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /doYouHavePrimaryDocument                        controllers.DoYouHavePrimaryDocumentController.onPageLoad(mode: Mode = NormalMode)
 POST       /doYouHavePrimaryDocument                        controllers.DoYouHavePrimaryDocumentController.onSubmit(mode: Mode = NormalMode)
