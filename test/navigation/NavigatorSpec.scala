@@ -18,6 +18,7 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
+import models.PrimaryDocument.BirthCertificate
 import pages._
 import models._
 
@@ -441,6 +442,29 @@ class NavigatorSpec extends SpecBase {
     }
 
     "in Check mode" - {
+
+      "go from the do you have primary document page" - {
+
+        "to the check your answers page when the user selects yes and which primary document is set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHavePrimaryDocumentPage, true).success.value
+            .set(WhichPrimaryDocumentPage, BirthCertificate).success.value
+          navigator.nextPage(DoYouHavePrimaryDocumentPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the which primary documents page when the user selects yes and which primary document is not set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHavePrimaryDocumentPage, true).success.value
+          navigator.nextPage(DoYouHavePrimaryDocumentPage, CheckMode, answers) mustBe routes.WhichPrimaryDocumentController.onPageLoad(CheckMode)
+        }
+
+        "to the do you have two secondary documents page when the user selects no" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHavePrimaryDocumentPage, false).success.value
+          navigator.nextPage(DoYouHavePrimaryDocumentPage, CheckMode, answers) mustBe routes.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(CheckMode)
+        }
+
+      }
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
 
