@@ -25,9 +25,9 @@ import java.time.LocalDate
 
 trait ModelGenerators { this: Generators =>
 
-  implicit lazy val arbitraryWhichSecondaryDocuments: Arbitrary[SecondaryDocument] =
+  implicit lazy val arbitraryAlternativeDocuments: Arbitrary[AlternativeDocuments] =
     Arbitrary {
-      Gen.oneOf(SecondaryDocument.values.toSeq)
+      Gen.oneOf(AlternativeDocuments.values)
     }
 
   implicit lazy val arbitraryWhichPrimaryDocument: Arbitrary[PrimaryDocument] =

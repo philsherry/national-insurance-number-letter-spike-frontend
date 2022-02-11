@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.WhichSecondaryDocumentsPage
+import pages.WhichAlternativeDocumentsPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -26,24 +26,27 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhichSecondaryDocumentsSummary  {
+object WhichAlternativeDocumentsSummary  {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhichSecondaryDocumentsPage).map {
-      answer =>
+    answers.get(WhichAlternativeDocumentsPage).map {
+      answers =>
 
         val value = ValueViewModel(
           HtmlContent(
-            HtmlFormat.escape(messages(s"whichSecondaryDocuments.$answer"))
+            answers.map {
+              answer => HtmlFormat.escape(messages(s"whichAlternativeDocuments.$answer")).toString
+            }
+            .mkString(",<br>")
           )
         )
 
         SummaryListRowViewModel(
-          key     = "whichSecondaryDocuments.checkYourAnswersLabel",
+          key     = "whichAlternativeDocuments.checkYourAnswersLabel",
           value   = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.WhichSecondaryDocumentsController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whichSecondaryDocuments.change.hidden"))
+            ActionItemViewModel("site.change", routes.WhichAlternativeDocumentsController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("whichAlternativeDocuments.change.hidden"))
           )
         )
     }

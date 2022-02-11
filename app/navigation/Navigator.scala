@@ -66,7 +66,7 @@ class Navigator @Inject()() {
     case DoYouHavePrimaryDocumentPage                           => doYouHaveAPrimaryDocumentRoutes
     case WhichPrimaryDocumentPage                               => _ => routes.CheckYourAnswersController.onPageLoad
     case DoYouHaveTwoSecondaryDocumentsPage                     => doYouHaveTwoSecondaryDocumentsRoutes
-    case WhichSecondaryDocumentsPage                            => _ => routes.CheckYourAnswersController.onPageLoad
+    case WhichAlternativeDocumentsPage                          => _ => routes.CheckYourAnswersController.onPageLoad
     case _ => _ => routes.IndexController.onPageLoad
   }
 
@@ -166,7 +166,7 @@ class Navigator @Inject()() {
 
   private def doYouHaveTwoSecondaryDocumentsRoutes(answers: UserAnswers): Call =
     answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
-      case true  => routes.WhichSecondaryDocumentsController.onPageLoad(NormalMode)
+      case true  => routes.WhichAlternativeDocumentsController.onPageLoad(NormalMode)
       case false => ???
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 

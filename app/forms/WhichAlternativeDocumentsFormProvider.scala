@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.SecondaryDocument
-import play.api.libs.json.JsPath
+import javax.inject.Inject
 
-case object WhichSecondaryDocumentsPage extends QuestionPage[SecondaryDocument] {
+import forms.mappings.Mappings
+import play.api.data.Form
+import play.api.data.Forms.set
+import models.AlternativeDocuments
 
-  override def path: JsPath = JsPath \ toString
+class WhichAlternativeDocumentsFormProvider @Inject() extends Mappings {
 
-  override def toString: String = "whichSecondaryDocuments"
+  def apply(): Form[Set[AlternativeDocuments]] =
+    Form(
+      "value" -> set(enumerable[AlternativeDocuments]("whichAlternativeDocuments.error.required")).verifying(nonEmptySet("whichAlternativeDocuments.error.required"))
+    )
 }
