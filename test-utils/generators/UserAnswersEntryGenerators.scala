@@ -24,6 +24,14 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { this: Generators =>
 
+  implicit lazy val arbitraryWhichAlternativeDocumentsUserAnswersEntry: Arbitrary[(WhichAlternativeDocumentsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[WhichAlternativeDocumentsPage.type]
+        value <- arbitrary[AlternativeDocuments].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryWhenDidYouFinishYourEmploymentUserAnswersEntry: Arbitrary[(WhenDidYouFinishYourEmploymentPage.type, JsValue)] =
     Arbitrary {
       for {
@@ -45,14 +53,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       for {
         page  <- arbitrary[DoYouKnowYourNationalInsuranceNumberPage.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryWhichSecondaryDocumentsUserAnswersEntry: Arbitrary[(WhichSecondaryDocumentsPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhichSecondaryDocumentsPage.type]
-        value <- arbitrary[SecondaryDocument].map(Json.toJson(_))
       } yield (page, value)
     }
 

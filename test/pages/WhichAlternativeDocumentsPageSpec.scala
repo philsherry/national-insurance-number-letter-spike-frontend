@@ -16,16 +16,17 @@
 
 package pages
 
+import models.AlternativeDocuments
 import pages.behaviours.PageBehaviours
 
-class DoYouHaveTwoSecondaryDocumentsPageSpec extends PageBehaviours {
+class WhichAlternativeDocumentsPageSpec extends PageBehaviours {
 
-  "DoYouHaveTwoSecondaryDocumentsPage" - {
+  "WhichAlternativeDocumentsPage" - {
 
-    beRetrievable[Boolean](DoYouHaveTwoSecondaryDocumentsPage)
+    beRetrievable[Set[AlternativeDocuments]](WhichAlternativeDocumentsPage)
 
-    beSettable[Boolean](DoYouHaveTwoSecondaryDocumentsPage)
+    beSettable[Set[AlternativeDocuments]](WhichAlternativeDocumentsPage)
 
-    beRemovable[Boolean](DoYouHaveTwoSecondaryDocumentsPage)
+    beRemovable[Set[AlternativeDocuments]](WhichAlternativeDocumentsPage)
   }
 }

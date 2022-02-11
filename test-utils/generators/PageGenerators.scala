@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhichAlternativeDocumentsPage: Arbitrary[WhichAlternativeDocumentsPage.type] =
+    Arbitrary(WhichAlternativeDocumentsPage)
+
   implicit lazy val arbitraryWhenDidYouFinishYourEmploymentPage: Arbitrary[WhenDidYouFinishYourEmploymentPage.type] =
     Arbitrary(WhenDidYouFinishYourEmploymentPage)
 
@@ -30,9 +33,6 @@ trait PageGenerators {
 
   implicit lazy val arbitraryDoYouKnowYourNationalInsuranceNumberPage: Arbitrary[DoYouKnowYourNationalInsuranceNumberPage.type] =
     Arbitrary(DoYouKnowYourNationalInsuranceNumberPage)
-
-  implicit lazy val arbitraryWhichSecondaryDocumentsPage: Arbitrary[WhichSecondaryDocumentsPage.type] =
-    Arbitrary(WhichSecondaryDocumentsPage)
 
   implicit lazy val arbitraryWhichPrimaryDocumentPage: Arbitrary[WhichPrimaryDocumentPage.type] =
     Arbitrary(WhichPrimaryDocumentPage)

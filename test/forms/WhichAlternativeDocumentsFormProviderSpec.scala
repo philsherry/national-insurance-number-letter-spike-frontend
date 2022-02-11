@@ -16,30 +16,30 @@
 
 package forms
 
-import forms.behaviours.OptionFieldBehaviours
-import models.SecondaryDocument
+import forms.behaviours.CheckboxFieldBehaviours
+import models.AlternativeDocuments
 import play.api.data.FormError
 
-class WhichSecondaryDocumentsFormProviderSpec extends OptionFieldBehaviours {
+class WhichAlternativeDocumentsFormProviderSpec extends CheckboxFieldBehaviours {
 
-  val form = new WhichSecondaryDocumentsFormProvider()()
+  val form = new WhichAlternativeDocumentsFormProvider()()
 
   ".value" - {
 
     val fieldName = "value"
-    val requiredKey = "whichSecondaryDocuments.error.required"
+    val requiredKey = "whichAlternativeDocuments.error.required"
 
-    behave like optionsField[SecondaryDocument](
+    behave like checkboxField[AlternativeDocuments](
       form,
       fieldName,
-      validValues  = SecondaryDocument.values,
-      invalidError = FormError(fieldName, "error.invalid")
+      validValues  = AlternativeDocuments.values,
+      invalidError = FormError(s"$fieldName[0]", "error.invalid")
     )
 
-    behave like mandatoryField(
+    behave like mandatoryCheckboxField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredKey
     )
   }
 }

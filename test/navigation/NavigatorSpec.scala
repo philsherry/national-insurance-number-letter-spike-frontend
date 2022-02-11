@@ -420,9 +420,9 @@ class NavigatorSpec extends SpecBase {
 
       "go from the do you have two secondary documents page" - {
 
-        "to the which two secondary documents page when the user selects yes" in {
+        "to the which two alternative documents page when the user selects yes" in {
           val answers = emptyUserAnswers.set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
-          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.WhichSecondaryDocumentsController.onPageLoad(NormalMode)
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.WhichAlternativeDocumentsController.onPageLoad(NormalMode)
         }
 
         "to ... when the user selects no" ignore {
@@ -436,7 +436,7 @@ class NavigatorSpec extends SpecBase {
       }
 
       "go from the which two secondary documents page to the check your answers page" in {
-        navigator.nextPage(WhichSecondaryDocumentsPage, NormalMode, emptyUserAnswers) mustBe routes.CheckYourAnswersController.onPageLoad
+        navigator.nextPage(WhichAlternativeDocumentsPage, NormalMode, emptyUserAnswers) mustBe routes.CheckYourAnswersController.onPageLoad
       }
     }
 

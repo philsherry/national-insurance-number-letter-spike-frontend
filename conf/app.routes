@@ -205,11 +205,6 @@ POST       /whichPrimaryDocument                        controllers.WhichPrimary
 GET        /changeWhichPrimaryDocument                  controllers.WhichPrimaryDocumentController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhichPrimaryDocument                  controllers.WhichPrimaryDocumentController.onSubmit(mode: Mode = CheckMode)
 
-GET        /whichSecondaryDocuments                        controllers.WhichSecondaryDocumentsController.onPageLoad(mode: Mode = NormalMode)
-POST       /whichSecondaryDocuments                        controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = NormalMode)
-GET        /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeWhichSecondaryDocuments                  controllers.WhichSecondaryDocumentsController.onSubmit(mode: Mode = CheckMode)
-
 GET        /doYouKnowYourNationalInsuranceNumber                        controllers.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /doYouKnowYourNationalInsuranceNumber                        controllers.DoYouKnowYourNationalInsuranceNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /changeDoYouKnowYourNationalInsuranceNumber                  controllers.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(mode: Mode = CheckMode)
@@ -224,3 +219,8 @@ GET        /whenDidYouFinishYourEmployment                  controllers.WhenDidY
 POST       /whenDidYouFinishYourEmployment                  controllers.WhenDidYouFinishYourEmploymentController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhenDidYouFinishYourEmployment                        controllers.WhenDidYouFinishYourEmploymentController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhenDidYouFinishYourEmployment                        controllers.WhenDidYouFinishYourEmploymentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichAlternativeDocuments                        controllers.WhichAlternativeDocumentsController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichAlternativeDocuments                        controllers.WhichAlternativeDocumentsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichAlternativeDocuments                  controllers.WhichAlternativeDocumentsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichAlternativeDocuments                  controllers.WhichAlternativeDocumentsController.onSubmit(mode: Mode = CheckMode)

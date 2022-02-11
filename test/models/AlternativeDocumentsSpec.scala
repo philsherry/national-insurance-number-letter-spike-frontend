@@ -16,48 +16,48 @@
 
 package models
 
+import generators.Generators
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.Gen
-import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import org.scalatest.OptionValues
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json.{JsError, JsString, Json}
 
-class SecondaryDocumentSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
+class AlternativeDocumentsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues with Generators {
 
-  "WhichSecondaryDocuments" - {
+  "AlternativeDocuments" - {
 
     "must deserialise valid values" in {
 
-      val gen = Gen.oneOf(SecondaryDocument.values.toSeq)
+      val gen = arbitrary[AlternativeDocuments]
 
       forAll(gen) {
-        whichSecondaryDocuments =>
+        whichAlternativeDocuments =>
 
-          JsString(whichSecondaryDocuments.toString).validate[SecondaryDocument].asOpt.value mustEqual whichSecondaryDocuments
+          JsString(whichAlternativeDocuments.toString).validate[AlternativeDocuments].asOpt.value mustEqual whichAlternativeDocuments
       }
     }
 
     "must fail to deserialise invalid values" in {
 
-      val gen = arbitrary[String] suchThat (!SecondaryDocument.values.map(_.toString).contains(_))
+      val gen = arbitrary[String] suchThat (!AlternativeDocuments.values.map(_.toString).contains(_))
 
       forAll(gen) {
         invalidValue =>
 
-          JsString(invalidValue).validate[SecondaryDocument] mustEqual JsError("error.invalid")
+          JsString(invalidValue).validate[AlternativeDocuments] mustEqual JsError("error.invalid")
       }
     }
 
     "must serialise" in {
 
-      val gen = Gen.oneOf(SecondaryDocument.values.toSeq)
+      val gen = arbitrary[AlternativeDocuments]
 
       forAll(gen) {
-        whichSecondaryDocuments =>
+        whichAlternativeDocuments =>
 
-          Json.toJson(whichSecondaryDocuments) mustEqual JsString(whichSecondaryDocuments.toString)
+          Json.toJson(whichAlternativeDocuments) mustEqual JsString(whichAlternativeDocuments.toString)
       }
     }
   }
