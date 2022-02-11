@@ -32,7 +32,10 @@ object WhatIsYourEmployersAddressSummary  {
     answers.get(WhatIsYourEmployersAddressPage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2).toString
+        // TODO missing fields
+        val value = List(Some(answer.addressLine1), Some(answer.addressLine2))
+          .flatten.map(HtmlFormat.escape(_).toString)
+          .mkString("<br/>")
 
         SummaryListRowViewModel(
           key     = "whatIsYourEmployersAddress.checkYourAnswersLabel",

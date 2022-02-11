@@ -32,7 +32,9 @@ object WhatIsYourPreviousNameSummary  {
     answers.get(WhatIsYourPreviousNamePage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.firstName).toString + "<br/>" + HtmlFormat.escape(answer.middleNames.getOrElse("")).toString
+        val value = List(Some(answer.firstName), answer.middleNames, Some(answer.lastName))
+          .flatten.map(HtmlFormat.escape(_).toString)
+          .mkString("<br/>")
 
         SummaryListRowViewModel(
           key     = "whatIsYourPreviousName.checkYourAnswersLabel",
