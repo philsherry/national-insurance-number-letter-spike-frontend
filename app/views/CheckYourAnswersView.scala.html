@@ -19,11 +19,27 @@
     govukSummaryList: GovukSummaryList
 )
 
-@(list: SummaryList)(implicit request: Request[_], messages: Messages)
+@(personalDetails: SummaryList, addressHistory: SummaryList, relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
-    @govukSummaryList(list)
+    <h2 class="govuk-heading-m">@messages("checkYourAnswers.personalDetails")</h2>
+    @govukSummaryList(personalDetails.withCssClass("govuk-!-margin-bottom-9"))
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswers.addressHistory")</h2>
+    @govukSummaryList(addressHistory.withCssClass("govuk-!-margin-bottom-9"))
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswers.relationshipHistory")</h2>
+    @govukSummaryList(relationshipHistory.withCssClass("govuk-!-margin-bottom-9"))
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswers.benefitHistory")</h2>
+    @govukSummaryList(benefitHistory.withCssClass("govuk-!-margin-bottom-9"))
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswers.employmentHistory")</h2>
+    @govukSummaryList(employmentHistory.withCssClass("govuk-!-margin-bottom-9"))
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswers.supportingDocuments")</h2>
+    @govukSummaryList(supportingDocuments.withCssClass("govuk-!-margin-bottom-9"))
 }
