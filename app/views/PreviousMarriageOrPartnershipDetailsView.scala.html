@@ -22,7 +22,8 @@
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
     govukButton: GovukButton,
-    govukHint: GovukHint
+    govukHint: GovukHint,
+    govukDateInput: GovukDateInput
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -39,20 +40,27 @@
 
         @govukHint(Hint(content = "previousMarriageOrPartnershipDetails.hint"))
 
-        @govukInput(
-            InputViewModel(
-                field = form("startDate"),
-                label = LabelViewModel(messages("previousMarriageOrPartnershipDetails.startDate"))
+        @govukDateInput(
+            DateViewModel(
+                field  = form("startDate"),
+                legend = LegendViewModel(messages("previousMarriageOrPartnershipDetails.startDate"))
             )
-            .withWidth(Full)
+        )
+
+        @govukDateInput(
+            DateViewModel(
+                field  = form("endDate"),
+                legend = LegendViewModel(messages("previousMarriageOrPartnershipDetails.endDate"))
+            )
         )
 
         @govukInput(
             InputViewModel(
-                field = form("endDate"),
-                label = LabelViewModel(messages("previousMarriageOrPartnershipDetails.endDate"))
+                field = form("endReason"),
+                label = LabelViewModel(messages("previousMarriageOrPartnershipDetails.endReason"))
             )
             .withWidth(Full)
+            .withHint(Hint(content = "previousMarriageOrPartnershipDetails.endReason.hint"))
         )
 
         @govukButton(

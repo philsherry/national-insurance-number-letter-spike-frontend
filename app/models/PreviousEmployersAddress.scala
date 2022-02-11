@@ -20,7 +20,7 @@ import play.api.libs.json._
 
 import java.time.LocalDate
 
-final case class PreviousEmployersAddress(addressLine1: String, addressLine2: String, addressLine3: Option[String], from: LocalDate, to: LocalDate)
+final case class PreviousEmployersAddress(addressLine1: String, addressLine2: Option[String], addressLine3: Option[String])
 
 object PreviousEmployersAddress {
   implicit val format = Json.format[PreviousEmployersAddress]

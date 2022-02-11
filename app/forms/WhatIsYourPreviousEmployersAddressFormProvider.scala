@@ -30,22 +30,10 @@ class WhatIsYourPreviousEmployersAddressFormProvider @Inject() extends Mappings 
      mapping(
        "addressLine1" -> text("whatIsYourPreviousEmployersAddress.error.addressLine1.required")
          .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine1.length")),
-       "addressLine2" -> text("whatIsYourPreviousEmployersAddress.error.addressLine2.required")
-         .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine2.length")),
+       "addressLine2" -> optional(text("whatIsYourPreviousEmployersAddress.error.addressLine2.required")
+         .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine2.length"))),
        "addressLine3" -> optional(text("whatIsYourPreviousEmployersAddress.error.addressLine3.required")
-         .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine3.length"))),
-       "from" -> localDate(
-          invalidKey = "whatIsYourPreviousEmployersAddress.error.from.invalid",
-          allRequiredKey = "whatIsYourPreviousEmployersAddress.error.from.required.all",
-          twoRequiredKey = "whatIsYourPreviousEmployersAddress.error.from.required.two",
-          requiredKey    = "whatIsYourPreviousEmployersAddress.error.from.required"
-        ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousEmployersAddress.error.from.past")),
-       "to" -> localDate(
-         invalidKey = "whatIsYourPreviousEmployersAddress.error.to.invalid",
-         allRequiredKey = "whatIsYourPreviousEmployersAddress.error.to.required.all",
-         twoRequiredKey = "whatIsYourPreviousEmployersAddress.error.to.required.two",
-         requiredKey    = "whatIsYourPreviousEmployersAddress.error.to.required"
-       ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousEmployersAddress.error.to.past"))
+         .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine3.length")))
      )(PreviousEmployersAddress.apply)(PreviousEmployersAddress.unapply)
    )
  }

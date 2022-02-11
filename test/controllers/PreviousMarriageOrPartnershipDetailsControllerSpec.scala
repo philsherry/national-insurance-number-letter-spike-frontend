@@ -44,15 +44,11 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
 
   lazy val previousMarriageOrPartnershipDetailsRoute = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      PreviousMarriageOrPartnershipDetailsPage.toString -> Json.obj(
-        "startDate" -> "value 1",
-        "endDate" -> "value 2"
-      )
-    )
+  val model = PreviousMarriageOrPartnershipDetails(
+    startDate = LocalDate.now, endDate = LocalDate.now, endingReason = "value"
   )
+
+  val userAnswers = UserAnswers(userAnswersId).set(PreviousMarriageOrPartnershipDetailsPage, model).success.value
 
   "PreviousMarriageOrPartnershipDetails Controller" - {
 
@@ -84,7 +80,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "value")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(model), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -97,7 +93,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
       val validData = List(
         "startDate.day" -> LocalDate.now.getDayOfMonth.toString, "startDate.month" -> LocalDate.now.getMonthValue.toString, "startDate.year" -> LocalDate.now.getYear.toString,
         "endDate.day" -> LocalDate.now.getDayOfMonth.toString, "endDate.month" -> LocalDate.now.getMonthValue.toString, "endDate.year" -> LocalDate.now.getYear.toString,
-        "endReason" -> "foo"
+        "endReason" -> "value"
       )
 
       val application =

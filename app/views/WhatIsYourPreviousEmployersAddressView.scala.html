@@ -69,20 +69,6 @@
             .withWidth(Full)
         )
 
-        @govukDateInput(
-            DateViewModel(
-                field  = form("from"),
-                legend = LegendViewModel(messages("whatIsYourPreviousAddressInternational.from"))
-            )
-        )
-
-        @govukDateInput(
-            DateViewModel(
-                field  = form("to"),
-                legend = LegendViewModel(messages("whatIsYourPreviousAddressInternational.to"))
-            )
-        )
-
         @govukButton(
             ButtonViewModel(messages("site.continue"))
         )

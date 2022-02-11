@@ -1,5 +1,5 @@
 # Add all the application routes to the app.routes file
-->         /national-insurance-number-letter-spike-frontend                    app.Routes
-->         /                          health.Routes
+->         /get-your-national-insurance-number-by-post                    app.Routes
+->         /                                                              health.Routes
 
-GET        /admin/metrics             @com.kenshoo.play.metrics.MetricsController.metrics
+GET        /admin/metrics                                                 @com.kenshoo.play.metrics.MetricsController.metrics
