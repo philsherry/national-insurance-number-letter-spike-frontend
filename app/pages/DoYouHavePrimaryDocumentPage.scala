@@ -16,11 +16,22 @@
 
 package pages
 
+import models.UserAnswers
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 case object DoYouHavePrimaryDocumentPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "doYouHavePrimaryDocument"
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(false) => userAnswers.remove(WhichPrimaryDocumentPage)
+      case Some(true) => userAnswers.remove(DoYouHaveTwoSecondaryDocumentsPage).flatMap(_.remove(WhichAlternativeDocumentsPage))
+      case _ => super.cleanup(value, userAnswers)
+    }
+  }
 }

@@ -16,6 +16,9 @@
 
 package pages
 
+import models.AlternativeDocuments.HomeOfficeOrTravelDocument
+import models.PrimaryDocument.BirthCertificate
+import models.{AlternativeDocuments, UserAnswers}
 import pages.behaviours.PageBehaviours
 
 class DoYouHavePrimaryDocumentPageSpec extends PageBehaviours {
@@ -27,5 +30,30 @@ class DoYouHavePrimaryDocumentPageSpec extends PageBehaviours {
     beSettable[Boolean](DoYouHavePrimaryDocumentPage)
 
     beRemovable[Boolean](DoYouHavePrimaryDocumentPage)
+
+    "must remove which primary document when false" in {
+
+      val answers =
+        UserAnswers("id")
+          .set(WhichPrimaryDocumentPage, BirthCertificate).success.value
+
+      val result = answers.set(DoYouHavePrimaryDocumentPage, false).success.value
+
+      result.get(WhichPrimaryDocumentPage) must not be defined
+    }
+
+    "must remove alternative documents when true" in {
+
+      val answers =
+        UserAnswers("id")
+          .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
+          .set(WhichAlternativeDocumentsPage, Set[AlternativeDocuments](HomeOfficeOrTravelDocument)).success.value
+
+      val result = answers.set(DoYouHavePrimaryDocumentPage, true).success.value
+
+      result.get(DoYouHaveTwoSecondaryDocumentsPage) must not be defined
+      result.get(WhichAlternativeDocumentsPage) must not be defined
+    }
+
   }
 }

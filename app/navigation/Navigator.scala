@@ -172,8 +172,23 @@ class Navigator @Inject()() {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
+    case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
+    case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
+
+  private def doYouHavePrimaryDocumentCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(DoYouHavePrimaryDocumentPage), answers.get(WhichPrimaryDocumentPage)) match {
+      case (Some(true), Some(_)) => routes.CheckYourAnswersController.onPageLoad
+      case (Some(true), None) => routes.WhichPrimaryDocumentController.onPageLoad(CheckMode)
+      case (_, _) => routes.DoYouHaveTwoSecondaryDocumentsController.onPageLoad(CheckMode)
+    }
+
+  private def doYouHaveTwoSecondaryDocumentsCheckRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
+      case true => routes.WhichAlternativeDocumentsController.onPageLoad(CheckMode)
+      case false => ???
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>
