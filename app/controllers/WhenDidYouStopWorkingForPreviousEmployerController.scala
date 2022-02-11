@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.WhenDidYouStopWorkingForPreviousEmployerFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.WhenDidYouStopWorkingForPreviousEmployerPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -44,29 +45,29 @@ class WhenDidYouStopWorkingForPreviousEmployerController @Inject()(
 
   def form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage) match {
+      val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, index, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForPreviousEmployerPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForPreviousEmployerPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage(index), mode, updatedAnswers))
       )
   }
 }

@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourPreviousEmployersAddressFormProvider
-import models.{NormalMode, PreviousEmployersAddress, UserAnswers}
+import models.{Index, NormalMode, PreviousEmployersAddress, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -42,10 +42,10 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
   val formProvider = new WhatIsYourPreviousEmployersAddressFormProvider()
   val form = formProvider()
 
-  lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(NormalMode).url
+  lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(Index(0), NormalMode).url
 
   val userAnswers = UserAnswers(userAnswersId)
-    .set(WhatIsYourPreviousEmployersAddressPage, PreviousEmployersAddress("value 1", Some("value 2"), None))
+    .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("value 1", Some("value 2"), None))
     .success.value
 
   "WhatIsYourPreviousEmployersAddress Controller" - {
@@ -62,7 +62,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -78,7 +78,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PreviousEmployersAddress("value 1", Some("value 2"), None)), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(PreviousEmployersAddress("value 1", Some("value 2"), None)), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -130,7 +130,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

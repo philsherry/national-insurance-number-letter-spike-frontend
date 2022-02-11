@@ -348,6 +348,55 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(WhenDidYouFinishYourEmploymentPage, NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
       }
 
+      "go from the do you have any previous employers page" - {
+
+        "to the what is your previous employers name page when the user selects yes" - {
+
+          "at index 0 when there are no previous addresses" in {
+            val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousEmployersPage, true).success.value
+            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), NormalMode)
+          }
+
+          "at index 1 when there is a previous address" in {
+            val address = PreviousEmployersAddress(
+              addressLine1 = "line 1", addressLine2 = Some("line 2"), addressLine3 = None
+            )
+            val answers = emptyUserAnswers
+              .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
+              .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "foobar").success.value
+              .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), address).success.value
+              .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
+              .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
+            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(1), NormalMode)
+          }
+        }
+
+        "to the do you have a primary document page when the user selects no" in {
+          val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousEmployersPage, false).success.value
+          navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the what is your previous employers name page to the what is your previous employers address page" in {
+        navigator.nextPage(WhatIsYourPreviousEmployersNamePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "go from the what is your previous employers address page to the when did you start working for previous employer page" in {
+        navigator.nextPage(WhatIsYourPreviousEmployersAddressPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "go from when did you start working for your previous employer page to the when did you stop working for your previous employer page" in {
+        navigator.nextPage(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "go from when did you stop working for your previous employer page to the do you have any previous employers page" in {
+        navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+      }
+
       "go from the do you have a primary document page" - {
 
         "to the which primary document page when the user selects yes" in {

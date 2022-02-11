@@ -16,6 +16,7 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 
@@ -23,10 +24,10 @@ class WhatIsYourPreviousEmployersNamePageSpec extends PageBehaviours {
 
   "WhatIsYourPreviousEmployersNamePage" - {
 
-    beRetrievable[String](WhatIsYourPreviousEmployersNamePage)
+    beRetrievable[String](WhatIsYourPreviousEmployersNamePage(Index(0)))
 
-    beSettable[String](WhatIsYourPreviousEmployersNamePage)
+    beSettable[String](WhatIsYourPreviousEmployersNamePage(Index(0)))
 
-    beRemovable[String](WhatIsYourPreviousEmployersNamePage)
+    beRemovable[String](WhatIsYourPreviousEmployersNamePage(Index(0)))
   }
 }

@@ -17,10 +17,9 @@
 package controllers
 
 import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.WhenDidYouStopWorkingForPreviousEmployerFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -44,7 +43,7 @@ class WhenDidYouStopWorkingForPreviousEmployerControllerSpec extends SpecBase wi
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  lazy val whenDidYouStopWorkingForPreviousEmployerRoute = routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(NormalMode).url
+  lazy val whenDidYouStopWorkingForPreviousEmployerRoute = routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(Index(0), NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -71,13 +70,13 @@ class WhenDidYouStopWorkingForPreviousEmployerControllerSpec extends SpecBase wi
         val view = application.injector.instanceOf[WhenDidYouStopWorkingForPreviousEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(getRequest, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStopWorkingForPreviousEmployerPage, validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -87,7 +86,7 @@ class WhenDidYouStopWorkingForPreviousEmployerControllerSpec extends SpecBase wi
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(getRequest, messages(application)).toString
       }
     }
 
@@ -129,7 +128,7 @@ class WhenDidYouStopWorkingForPreviousEmployerControllerSpec extends SpecBase wi
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

@@ -16,13 +16,14 @@
 
 package pages
 
-import java.time.LocalDate
+import models.Index
 
+import java.time.LocalDate
 import play.api.libs.json.JsPath
 
-case object WhenDidYouStopWorkingForPreviousEmployerPage extends QuestionPage[LocalDate] {
+final case class WhenDidYouStopWorkingForPreviousEmployerPage(index: Index) extends QuestionPage[LocalDate] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "previousEmployer" \ index.position \ toString
 
   override def toString: String = "whenDidYouStopWorkingForPreviousEmployer"
 }
