@@ -450,3 +450,19 @@ doYouKnowYourNationalInsuranceNumber.hint = It’s on your National Insurance ca
 doYouKnowYourNationalInsuranceNumber.checkYourAnswersLabel = Do you know your National Insurance number?
 doYouKnowYourNationalInsuranceNumber.error.required = Select yes if you know your National Insurance number
 doYouKnowYourNationalInsuranceNumber.change.hidden = whether you know your National Insurance number
+
+areYouStillEmployed.title = areYouStillEmployed
+areYouStillEmployed.heading = areYouStillEmployed
+areYouStillEmployed.checkYourAnswersLabel = areYouStillEmployed
+areYouStillEmployed.error.required = Select yes if areYouStillEmployed
+areYouStillEmployed.change.hidden = AreYouStillEmployed
+
+whenDidYouFinishYourEmployment.title = WhenDidYouFinishYourEmployment
+whenDidYouFinishYourEmployment.heading = WhenDidYouFinishYourEmployment
+whenDidYouFinishYourEmployment.hint = For example, 12 11 2007
+whenDidYouFinishYourEmployment.checkYourAnswersLabel = WhenDidYouFinishYourEmployment
+whenDidYouFinishYourEmployment.error.required.all = Enter the whenDidYouFinishYourEmployment
+whenDidYouFinishYourEmployment.error.required.two = The whenDidYouFinishYourEmployment must include {0} and {1}
+whenDidYouFinishYourEmployment.error.required = The whenDidYouFinishYourEmployment must include {0}
+whenDidYouFinishYourEmployment.error.invalid = Enter a real WhenDidYouFinishYourEmployment
+whenDidYouFinishYourEmployment.change.hidden = WhenDidYouFinishYourEmployment

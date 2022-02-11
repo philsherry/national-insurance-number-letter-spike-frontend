@@ -300,8 +300,9 @@ class NavigatorSpec extends SpecBase {
 
       "go from the have you worked in the uk page" - {
 
-        "to the employer details page when the user selects yes" ignore {
-          // TODO
+        "to the what is your employers name page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(HaveYouEverWorkedInUkPage, true).success.value
+          navigator.nextPage(HaveYouEverWorkedInUkPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(NormalMode)
         }
 
         "to the do you have a primary document page when the user selects no" in {
@@ -312,6 +313,39 @@ class NavigatorSpec extends SpecBase {
         "to the journey recovery page when the user has no selection" in {
           navigator.nextPage(HaveYouEverWorkedInUkPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
+      }
+
+      "go from the what is your employers name page to the what is your employers address page" in {
+        navigator.nextPage(WhatIsYourEmployersNamePage, NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourEmployersAddressController.onPageLoad(NormalMode)
+      }
+
+      "go from the what is your employers address page to the when did you start working for your employer page" in {
+        navigator.nextPage(WhatIsYourEmployersAddressPage, NormalMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(NormalMode)
+      }
+
+      "go from the when did you start working for your employer to the are you still employed page" in {
+        navigator.nextPage(WhenDidYouStartWorkingForEmployerPage, NormalMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(NormalMode)
+      }
+
+      "go from the are you still employed page" - {
+
+        "to the do you have any previous employers page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(AreYouStillEmployedPage, true).success.value
+          navigator.nextPage(AreYouStillEmployedPage, NormalMode, answers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+        }
+
+        "to the when did your employment end page when the user selects no" in {
+          val answers = emptyUserAnswers.set(AreYouStillEmployedPage, false).success.value
+          navigator.nextPage(AreYouStillEmployedPage, NormalMode, answers) mustBe routes.WhenDidYouFinishYourEmploymentController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(AreYouStillEmployedPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "go from the when did you finish your employment page to the do you have any previous employers page" in {
+        navigator.nextPage(WhenDidYouFinishYourEmploymentPage, NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
       }
 
       "go from the do you have a primary document page" - {
