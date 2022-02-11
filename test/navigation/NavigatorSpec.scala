@@ -240,6 +240,10 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
+      "go from the when previous marriage or civil partnership details page to the have you claimed child benefit page" in {
+        navigator.nextPage(PreviousMarriageOrPartnershipDetailsPage, NormalMode, emptyUserAnswers) mustBe routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
+      }
+
       "go from the have you claimed child benefit page" - {
 
         "to the do you know your child benefit number page when the user selects yes" in {

@@ -47,7 +47,7 @@ class Navigator @Inject()() {
     case AreYouInACivilPartnershipPage                          => areYouInACivilPartnershipRoutes
     case WhenDidYouEnterACivilPartnershipPage                   => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes
-    // TODO When were you previously in a marriage or civil partnership
+    case PreviousMarriageOrPartnershipDetailsPage               => _ => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
     case HaveYouEverClaimedChildBenefitPage                     => haveYouEverClaimedChildBenefitRoutes
     case DoYouKnowYourChildBenefitNumberPage                    => doYouKnowYourChildBenefitNumberRoutes
     case WhatIsYourChildBenefitNumberPage                       => _ => routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
