@@ -5,3 +5,24 @@ leakDetectionExemptions:
     filePaths:
       - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
       - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+    text: 'invalidKey'
+  - ruleId: 'aws_secret_access_key'
+    filePaths:
+      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
+      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+    text: 'allRequiredKey'
+  - ruleId: 'aws_secret_access_key'
+    filePaths:
+      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
+      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+    text: 'twoRequiredKey'
+  - ruleId: 'aws_secret_access_key'
+    filePaths:
+      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
+      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+    text: 'requiredKey'
+  - ruleId: 'aws_secret_access_key'
+    filePaths:
+      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
+      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+    text: 'whenDidYouStopWorkingForPreviousEmployer'
