@@ -58,6 +58,11 @@ class Navigator @Inject()() {
     case WhenDidYouStartWorkingForEmployerPage                  => _ => routes.AreYouStillEmployedController.onPageLoad(NormalMode)
     case AreYouStillEmployedPage                                => areYouStillEmployedRoutes
     case WhenDidYouFinishYourEmploymentPage                     => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+    case DoYouHaveAnyPreviousEmployersPage                      => doYouHaveAnyPreviousEmployersRoutes
+    case WhatIsYourPreviousEmployersNamePage(index)             => _ => routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(index, NormalMode)
+    case WhatIsYourPreviousEmployersAddressPage(index)          => _ => routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
+    case WhenDidYouStartWorkingForPreviousEmployerPage(index)   => _ => routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
+    case WhenDidYouStopWorkingForPreviousEmployerPage(_)        => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
     case DoYouHavePrimaryDocumentPage                           => doYouHaveAPrimaryDocumentRoutes
     case WhichPrimaryDocumentPage                               => _ => routes.CheckYourAnswersController.onPageLoad
     case DoYouHaveTwoSecondaryDocumentsPage                     => doYouHaveTwoSecondaryDocumentsRoutes
@@ -143,6 +148,14 @@ class Navigator @Inject()() {
     answers.get(AreYouStillEmployedPage).map {
       case true  => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
       case false => routes.WhenDidYouFinishYourEmploymentController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def doYouHaveAnyPreviousEmployersRoutes(answers: UserAnswers): Call =
+    answers.get(DoYouHaveAnyPreviousEmployersPage).map {
+      case true  =>
+        val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty)
+        routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(previousEmployers.length), NormalMode)
+      case false => routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def doYouHaveAPrimaryDocumentRoutes(answers: UserAnswers): Call =
