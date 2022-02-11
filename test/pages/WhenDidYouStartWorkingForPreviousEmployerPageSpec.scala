@@ -16,8 +16,9 @@
 
 package pages
 
-import java.time.LocalDate
+import models.Index
 
+import java.time.LocalDate
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
 
@@ -29,10 +30,10 @@ class WhenDidYouStartWorkingForPreviousEmployerPageSpec extends PageBehaviours {
       datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
     }
 
-    beRetrievable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage)
+    beRetrievable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))
 
-    beSettable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage)
+    beSettable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))
 
-    beRemovable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage)
+    beRemovable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))
   }
 }

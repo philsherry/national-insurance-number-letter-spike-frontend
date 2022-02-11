@@ -180,10 +180,10 @@ POST       /whenDidYouStartWorkingForEmployer                  controllers.WhenD
 GET        /changeWhenDidYouStartWorkingForEmployer                        controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhenDidYouStartWorkingForEmployer                        controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = CheckMode)
 
-GET        /whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(mode: Mode = NormalMode)
-POST       /whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)
-GET        /changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/whenDidYouStartWorkingForPreviousEmployer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeWhenDidYouStartWorkingForPreviousEmployer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(mode: Mode = NormalMode)
 POST       /whenDidYouStopWorkingForPreviousEmployer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(mode: Mode = NormalMode)

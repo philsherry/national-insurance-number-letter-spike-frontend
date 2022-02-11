@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.WhenDidYouStartWorkingForPreviousEmployerFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.WhenDidYouStartWorkingForPreviousEmployerPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -44,29 +45,29 @@ class WhenDidYouStartWorkingForPreviousEmployerController @Inject()(
 
   def form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage) match {
+      val preparedForm = request.userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, index, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStartWorkingForPreviousEmployerPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStartWorkingForPreviousEmployerPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhenDidYouStartWorkingForPreviousEmployerPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenDidYouStartWorkingForPreviousEmployerPage(index), mode, updatedAnswers))
       )
   }
 }
