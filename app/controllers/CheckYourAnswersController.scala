@@ -21,6 +21,7 @@ import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierA
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -35,9 +36,51 @@ class CheckYourAnswersController @Inject()(
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      
+      val answers = request.userAnswers
 
       val list = SummaryListViewModel(
-        rows = Seq.empty
+        rows = Seq(
+          WhatIsYourNameSummary.row(answers),
+          DoYouHaveAPreviousNameSummary.row(answers),
+          WhatIsYourPreviousNameSummary.row(answers),
+          WhatIsYourDateOfBirthSummary.row(answers),
+          IsYourCurrentAddressInUkSummary.row(answers),
+          WhatIsYourCurrentAddressUkSummary.row(answers),
+          WhatIsYourCurrentAddressInternationalSummary.row(answers),
+          DoYouHaveAnyPreviousAddressesSummary.row(answers),
+          IsYourPreviousAddressInUkSummary.row(answers, 0),
+          WhatIsYourPreviousAddressUkSummary.row(answers, 0),
+          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0),
+          AreYouReturningFromLivingAbroadSummary.row(answers),
+          WhatIsYourTelephoneNumberSummary.row(answers),
+          DoYouKnowYourNationalInsuranceNumberSummary.row(answers),
+          WhatIsYourNationalInsuranceNumberSummary.row(answers),
+          AreYouMarriedSummary.row(answers),
+          WhenDidYouGetMarriedSummary.row(answers),
+          HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers),
+          PreviousMarriageOrPartnershipDetailsSummary.row(answers),
+          HaveYouEverClaimedChildBenefitSummary.row(answers),
+          DoYouKnowYourChildBenefitNumberSummary.row(answers),
+          WhatIsYourChildBenefitNumberSummary.row(answers),
+          HaveYouEverReceivedOtherUkBenefitsSummary.row(answers),
+          WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers),
+          HaveYouEverWorkedInUkSummary.row(answers),
+          WhatIsYourEmployersNameSummary.row(answers),
+          WhatIsYourEmployersAddressSummary.row(answers),
+          WhenDidYouStartWorkingForEmployerSummary.row(answers),
+          AreYouStillEmployedSummary.row(answers),
+          WhenDidYouFinishYourEmploymentSummary.row(answers),
+          DoYouHaveAnyPreviousEmployersSummary.row(answers),
+          WhatIsYourPreviousEmployersNameSummary.row(answers, 0),
+          WhatIsYourPreviousEmployersAddressSummary.row(answers, 0),
+          WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, 0),
+          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0),
+          DoYouHavePrimaryDocumentSummary.row(answers),
+          WhichPrimaryDocumentSummary.row(answers),
+          DoYouHaveTwoSecondaryDocumentsSummary.row(answers),
+          WhichAlternativeDocumentsSummary.row(answers)
+        ).flatten
       )
 
       Ok(view(list))

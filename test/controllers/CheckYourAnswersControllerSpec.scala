@@ -17,10 +17,16 @@
 package controllers
 
 import base.SpecBase
+import models._
+import pages._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.domain.Nino
+import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
+
+import java.time.LocalDate
 
 class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
@@ -28,7 +34,50 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val answers = emptyUserAnswers
+        .set(WhatIsYourNamePage, WhatIsYourName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+        .set(DoYouHaveAPreviousNamePage, true).success.value
+        .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+        .set(WhatIsYourDateOfBirthPage, LocalDate.now).success.value
+        .set(IsYourCurrentAddressInUkPage, true).success.value
+        .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
+        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, "country")).success.value
+        .set(DoYouHaveAnyPreviousAddressesPage, true).success.value
+        .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
+        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.now, to = LocalDate.now)).success.value
+        .set(WhatIsYourPreviousAddressInternationalPage(Index(0)), PreviousAddressInternational(addressLine1 = "line 1", None, None, "country", from = LocalDate.now, to = LocalDate.now)).success.value
+        .set(AreYouReturningFromLivingAbroadPage, true).success.value
+        .set(WhatIsYourTelephoneNumberPage, "tel").success.value
+        .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
+        .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).success.value
+        .set(AreYouMarriedPage, true).success.value
+        .set(WhenDidYouGetMarriedPage, LocalDate.now).success.value
+        .set(AreYouInACivilPartnershipPage, true).success.value
+        .set(WhenDidYouEnterACivilPartnershipPage, LocalDate.now).success.value
+        .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+        .set(PreviousMarriageOrPartnershipDetailsPage, PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya")).success.value
+        .set(HaveYouEverClaimedChildBenefitPage, true).success.value
+        .set(DoYouKnowYourChildBenefitNumberPage, true).success.value
+        .set(WhatIsYourChildBenefitNumberPage, "cbn").success.value
+        .set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
+        .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").success.value
+        .set(HaveYouEverWorkedInUkPage, true).success.value
+        .set(WhatIsYourEmployersNamePage, "employer").success.value
+        .set(WhatIsYourEmployersAddressPage, WhatIsYourEmployersAddress("line 1", "line 2")).success.value
+        .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.now).success.value
+        .set(AreYouStillEmployedPage, false).success.value
+        .set(WhenDidYouFinishYourEmploymentPage, LocalDate.now).success.value
+        .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
+        .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "previous employers name").success.value
+        .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("line 1", None, None)).success.value
+        .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
+        .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
+        .set(DoYouHavePrimaryDocumentPage, true).success.value
+        .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).success.value
+        .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
+        .set(WhichAlternativeDocumentsPage, AlternativeDocuments.values.toSet).success.value
+
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad.url)
@@ -36,7 +85,47 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[CheckYourAnswersView]
-        val list = SummaryListViewModel(Seq.empty)
+        val list = SummaryListViewModel(Seq(
+          WhatIsYourNameSummary.row(answers)(messages(application)),
+          DoYouHaveAPreviousNameSummary.row(answers)(messages(application)),
+          WhatIsYourPreviousNameSummary.row(answers)(messages(application)),
+          WhatIsYourDateOfBirthSummary.row(answers)(messages(application)),
+          IsYourCurrentAddressInUkSummary.row(answers)(messages(application)),
+          WhatIsYourCurrentAddressUkSummary.row(answers)(messages(application)),
+          WhatIsYourCurrentAddressInternationalSummary.row(answers)(messages(application)),
+          DoYouHaveAnyPreviousAddressesSummary.row(answers)(messages(application)),
+          IsYourPreviousAddressInUkSummary.row(answers, 0)(messages(application)),
+          WhatIsYourPreviousAddressUkSummary.row(answers, 0)(messages(application)),
+          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0)(messages(application)),
+          AreYouReturningFromLivingAbroadSummary.row(answers)(messages(application)),
+          WhatIsYourTelephoneNumberSummary.row(answers)(messages(application)),
+          DoYouKnowYourNationalInsuranceNumberSummary.row(answers)(messages(application)),
+          WhatIsYourNationalInsuranceNumberSummary.row(answers)(messages(application)),
+          AreYouMarriedSummary.row(answers)(messages(application)),
+          WhenDidYouGetMarriedSummary.row(answers)(messages(application)),
+          HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers)(messages(application)),
+          PreviousMarriageOrPartnershipDetailsSummary.row(answers)(messages(application)),
+          HaveYouEverClaimedChildBenefitSummary.row(answers)(messages(application)),
+          DoYouKnowYourChildBenefitNumberSummary.row(answers)(messages(application)),
+          WhatIsYourChildBenefitNumberSummary.row(answers)(messages(application)),
+          HaveYouEverReceivedOtherUkBenefitsSummary.row(answers)(messages(application)),
+          WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers)(messages(application)),
+          HaveYouEverWorkedInUkSummary.row(answers)(messages(application)),
+          WhatIsYourEmployersNameSummary.row(answers)(messages(application)),
+          WhatIsYourEmployersAddressSummary.row(answers)(messages(application)),
+          WhenDidYouStartWorkingForEmployerSummary.row(answers)(messages(application)),
+          AreYouStillEmployedSummary.row(answers)(messages(application)),
+          WhenDidYouFinishYourEmploymentSummary.row(answers)(messages(application)),
+          DoYouHaveAnyPreviousEmployersSummary.row(answers)(messages(application)),
+          WhatIsYourPreviousEmployersNameSummary.row(answers, 0)(messages(application)),
+          WhatIsYourPreviousEmployersAddressSummary.row(answers, 0)(messages(application)),
+          WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application)),
+          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application)),
+          DoYouHavePrimaryDocumentSummary.row(answers)(messages(application)),
+          WhichPrimaryDocumentSummary.row(answers)(messages(application)),
+          DoYouHaveTwoSecondaryDocumentsSummary.row(answers)(messages(application)),
+          WhichAlternativeDocumentsSummary.row(answers)(messages(application))
+        ).flatten)
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(list)(request, messages(application)).toString
