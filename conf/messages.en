@@ -35,9 +35,19 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 
-index.title = national-insurance-number-letter-spike-frontend
-index.heading = national-insurance-number-letter-spike-frontend
-index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
+index.title = Get your national insurance number by post
+index.heading = Get your national insurance number by post
+index.p1 = Use this service to get a letter with your National Insurance number sent to your home address.
+index.p2 = The letter will arrive within 15 working days.
+index.p3 = This service is also available in Welsh (Cymraeg).
+index.h2 = Other ways to get your National Insurance number
+index.p4 = You may be able to find your National Insurance number on:
+index.li.1 = your online
+index.li.1.link = Personal Tax Account
+index.li.2 = your P60 End of Year Certificate (given to you by your employer)
+index.li.3 = your payslip
+index.li.4 = a copy of your Self Assessment tax return
+index.li.5 = a letter from HMRC or the Department for Work and Pensions
 
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
