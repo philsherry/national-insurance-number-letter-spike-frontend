@@ -32,7 +32,7 @@ object WhatIsYourPreviousEmployersAddressSummary  {
     answers.get(WhatIsYourPreviousEmployersAddressPage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2).toString
+      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2.toString).toString
 
         SummaryListRowViewModel(
           key     = "whatIsYourPreviousEmployersAddress.checkYourAnswersLabel",

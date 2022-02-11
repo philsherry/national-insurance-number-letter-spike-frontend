@@ -71,12 +71,6 @@ class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBeha
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
   }
 
   ".addressLine3" - {
@@ -97,33 +91,5 @@ class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBeha
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
-  }
-
-  ".from" - {
-
-    val validData = datesBetween(
-      min = LocalDate.of(2000, 1, 1),
-      max = LocalDate.now(ZoneOffset.UTC)
-    )
-
-    behave like dateField(form, "from", validData)
-
-    behave like mandatoryDateField(form, "from", "whatIsYourPreviousEmployersAddress.error.from.required.all")
-
-    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousEmployersAddress.error.from.past"))
-  }
-
-  ".to" - {
-
-    val validData = datesBetween(
-      min = LocalDate.of(2000, 1, 1),
-      max = LocalDate.now(ZoneOffset.UTC)
-    )
-
-    behave like dateField(form, "to", validData)
-
-    behave like mandatoryDateField(form, "to", "whatIsYourPreviousEmployersAddress.error.to.required.all")
-
-    behave like dateFieldWithMax(form, "to", LocalDate.now, FormError("to", "whatIsYourPreviousEmployersAddress.error.to.past"))
   }
 }
