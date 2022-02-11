@@ -56,14 +56,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhichSecondaryDocumentsUserAnswersEntry: Arbitrary[(WhichSecondaryDocumentsPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhichSecondaryDocumentsPage.type]
-        value <- arbitrary[SecondaryDocument].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
   implicit lazy val arbitraryWhichPrimaryDocumentUserAnswersEntry: Arbitrary[(WhichPrimaryDocumentPage.type, JsValue)] =
     Arbitrary {
       for {
