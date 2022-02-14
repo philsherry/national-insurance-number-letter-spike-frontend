@@ -73,9 +73,10 @@ journeyRecovery.startAgain.title = Sorry, there is a problem with the service
 journeyRecovery.startAgain.heading = Sorry, there is a problem with the service
 journeyRecovery.startAgain.guidance = [Add content to explain why the user needs to start again.]
 
-signedOut.title = For your security, we signed you out
-signedOut.heading = For your security, we signed you out
+signedOut.title = For your security, the application form has been reset
+signedOut.heading = For your security, the application form has been reset
 signedOut.guidance = We did not save your answers.
+signedOut.restart = Start again
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
