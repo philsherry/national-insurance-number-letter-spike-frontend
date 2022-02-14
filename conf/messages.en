@@ -59,6 +59,12 @@ index.p7.2 = if you live in the UK and have the right to work in the UK.
 
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
+checkYourAnswers.personalDetails = Personal details
+checkYourAnswers.addressHistory = Address history
+checkYourAnswers.relationshipHistory = Relationship history
+checkYourAnswers.benefitHistory = Benefit history
+checkYourAnswers.employmentHistory = Employment history
+checkYourAnswers.supportingDocuments = Supporting documents
 
 journeyRecovery.continue.title = Sorry, there is a problem with the service
 journeyRecovery.continue.heading = Sorry, there is a problem with the service
@@ -453,9 +459,9 @@ whichPrimaryDocument.hint = You will need to send a copy of this document to HMR
 whichPrimaryDocument.passport = Passport
 whichPrimaryDocument.driving-license = Driving license
 whichPrimaryDocument.birth-certificate = Birth certificate
-whichPrimaryDocument.checkYourAnswersLabel = whichPrimaryDocument
-whichPrimaryDocument.error.required = Select whichPrimaryDocument
-whichPrimaryDocument.change.hidden = WhichPrimaryDocument
+whichPrimaryDocument.checkYourAnswersLabel = Which identity document do you have?
+whichPrimaryDocument.error.required = Select identity document you have
+whichPrimaryDocument.change.hidden = which identity document you have
 
 whichAlternativeDocuments.title = Which alternative documents do you have?
 whichAlternativeDocuments.heading = Which alternative documents do you have?

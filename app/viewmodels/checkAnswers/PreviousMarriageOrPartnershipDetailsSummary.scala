@@ -26,14 +26,19 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+
 object PreviousMarriageOrPartnershipDetailsSummary  {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(PreviousMarriageOrPartnershipDetailsPage).map {
       answer =>
 
-        // TODO
-      val value = HtmlFormat.escape(answer.startDate.toString).toString + "<br/>" + HtmlFormat.escape(answer.endDate.toString).toString
+        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+
+        val value = List(answer.startDate.format(dateFormatter), answer.endDate.format(dateFormatter), answer.endingReason)
+          .map(HtmlFormat.escape(_).toString)
+          .mkString("<br/>")
 
         SummaryListRowViewModel(
           key     = "previousMarriageOrPartnershipDetails.checkYourAnswersLabel",

@@ -32,7 +32,10 @@ object WhatIsYourPreviousEmployersAddressSummary  {
     answers.get(WhatIsYourPreviousEmployersAddressPage(Index(index))).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2.toString).toString
+        // TODO missing postcode
+        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3)
+          .flatten.map(HtmlFormat.escape(_).toString)
+          .mkString("<br/>")
 
         SummaryListRowViewModel(
           key     = "whatIsYourPreviousEmployersAddress.checkYourAnswersLabel",

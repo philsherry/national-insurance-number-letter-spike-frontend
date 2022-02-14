@@ -18,6 +18,7 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import pages.{PreviousAddressesQuery, PreviousEmployersQuery}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -34,55 +35,89 @@ class CheckYourAnswersController @Inject()(
                                             view: CheckYourAnswersView
                                           ) extends FrontendBaseController with I18nSupport {
 
+  // scalastyle:off
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       
       val answers = request.userAnswers
 
-      val list = SummaryListViewModel(
-        rows = Seq(
-          WhatIsYourNameSummary.row(answers),
-          DoYouHaveAPreviousNameSummary.row(answers),
-          WhatIsYourPreviousNameSummary.row(answers),
-          WhatIsYourDateOfBirthSummary.row(answers),
+      val personalDetails = SummaryListViewModel(Seq(
+        WhatIsYourNameSummary.row(answers),
+        DoYouHaveAPreviousNameSummary.row(answers),
+        WhatIsYourPreviousNameSummary.row(answers),
+        WhatIsYourDateOfBirthSummary.row(answers),
+        AreYouReturningFromLivingAbroadSummary.row(answers),
+        WhatIsYourTelephoneNumberSummary.row(answers),
+        DoYouKnowYourNationalInsuranceNumberSummary.row(answers),
+        WhatIsYourNationalInsuranceNumberSummary.row(answers)
+      ).flatten)
+
+      val addressHistory = {
+
+        val previousAddressRows = {
+          val numberOfAddresses = answers.get(PreviousAddressesQuery).getOrElse(List.empty).length
+          (0 until numberOfAddresses).flatMap { index =>
+            Seq(
+              IsYourPreviousAddressInUkSummary.row(answers, index),
+              WhatIsYourPreviousAddressUkSummary.row(answers, index),
+              WhatIsYourPreviousAddressInternationalSummary.row(answers, index)
+            ).flatten
+          }
+        }
+
+        SummaryListViewModel(Seq(
           IsYourCurrentAddressInUkSummary.row(answers),
           WhatIsYourCurrentAddressUkSummary.row(answers),
-          WhatIsYourCurrentAddressInternationalSummary.row(answers),
-          DoYouHaveAnyPreviousAddressesSummary.row(answers),
-          IsYourPreviousAddressInUkSummary.row(answers, 0),
-          WhatIsYourPreviousAddressUkSummary.row(answers, 0),
-          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0),
-          AreYouReturningFromLivingAbroadSummary.row(answers),
-          WhatIsYourTelephoneNumberSummary.row(answers),
-          DoYouKnowYourNationalInsuranceNumberSummary.row(answers),
-          WhatIsYourNationalInsuranceNumberSummary.row(answers),
-          AreYouMarriedSummary.row(answers),
-          WhenDidYouGetMarriedSummary.row(answers),
-          HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers),
-          PreviousMarriageOrPartnershipDetailsSummary.row(answers),
-          HaveYouEverClaimedChildBenefitSummary.row(answers),
-          DoYouKnowYourChildBenefitNumberSummary.row(answers),
-          WhatIsYourChildBenefitNumberSummary.row(answers),
-          HaveYouEverReceivedOtherUkBenefitsSummary.row(answers),
-          WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers),
+          WhatIsYourCurrentAddressInternationalSummary.row(answers)
+        ).flatten ++ previousAddressRows)
+      }
+
+      val relationshipHistory = SummaryListViewModel(Seq(
+        AreYouMarriedSummary.row(answers),
+        WhenDidYouGetMarriedSummary.row(answers),
+        HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers),
+        PreviousMarriageOrPartnershipDetailsSummary.row(answers)
+      ).flatten)
+
+      val benefitHistory = SummaryListViewModel(Seq(
+        HaveYouEverClaimedChildBenefitSummary.row(answers),
+        DoYouKnowYourChildBenefitNumberSummary.row(answers),
+        WhatIsYourChildBenefitNumberSummary.row(answers),
+        HaveYouEverReceivedOtherUkBenefitsSummary.row(answers),
+        WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers)
+      ).flatten)
+
+      val employmentHistory = {
+
+        val previousEmployerRows = {
+          val numberOfPreviousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty).length
+          (0 until numberOfPreviousEmployers).flatMap { index =>
+            Seq(
+              WhatIsYourPreviousEmployersNameSummary.row(answers, index),
+              WhatIsYourPreviousEmployersAddressSummary.row(answers, index),
+              WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, index),
+              WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, index)
+            ).flatten
+          }
+        }
+
+        SummaryListViewModel(Seq(
           HaveYouEverWorkedInUkSummary.row(answers),
           WhatIsYourEmployersNameSummary.row(answers),
           WhatIsYourEmployersAddressSummary.row(answers),
           WhenDidYouStartWorkingForEmployerSummary.row(answers),
           AreYouStillEmployedSummary.row(answers),
-          WhenDidYouFinishYourEmploymentSummary.row(answers),
-          DoYouHaveAnyPreviousEmployersSummary.row(answers),
-          WhatIsYourPreviousEmployersNameSummary.row(answers, 0),
-          WhatIsYourPreviousEmployersAddressSummary.row(answers, 0),
-          WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, 0),
-          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0),
-          DoYouHavePrimaryDocumentSummary.row(answers),
-          WhichPrimaryDocumentSummary.row(answers),
-          DoYouHaveTwoSecondaryDocumentsSummary.row(answers),
-          WhichAlternativeDocumentsSummary.row(answers)
-        ).flatten
-      )
+          WhenDidYouFinishYourEmploymentSummary.row(answers)
+        ).flatten ++ previousEmployerRows)
+      }
 
-      Ok(view(list))
+      val supportingDocuments = SummaryListViewModel(Seq(
+        DoYouHavePrimaryDocumentSummary.row(answers),
+        WhichPrimaryDocumentSummary.row(answers),
+        DoYouHaveTwoSecondaryDocumentsSummary.row(answers),
+        WhichAlternativeDocumentsSummary.row(answers)
+      ).flatten)
+
+      Ok(view(personalDetails, addressHistory, relationshipHistory, benefitHistory, employmentHistory, supportingDocuments))
   }
 }

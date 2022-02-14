@@ -26,14 +26,19 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+
 object WhatIsYourPreviousAddressInternationalSummary  {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(WhatIsYourPreviousAddressInternationalPage(Index(index))).map {
       answer =>
 
-        // TODO
-      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2.toString).toString
+        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+
+        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, Some(answer.country), Some(answer.from.format(dateFormatter)), Some(answer.to.format(dateFormatter)))
+          .flatten.map(HtmlFormat.escape(_).toString)
+          .mkString("<br/>")
 
         SummaryListRowViewModel(
           key     = "whatIsYourPreviousAddressInternational.checkYourAnswersLabel",

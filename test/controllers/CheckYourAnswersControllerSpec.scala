@@ -85,50 +85,66 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[CheckYourAnswersView]
-        val list = SummaryListViewModel(Seq(
+
+        val personalDetails = SummaryListViewModel(Seq(
           WhatIsYourNameSummary.row(answers)(messages(application)),
           DoYouHaveAPreviousNameSummary.row(answers)(messages(application)),
           WhatIsYourPreviousNameSummary.row(answers)(messages(application)),
           WhatIsYourDateOfBirthSummary.row(answers)(messages(application)),
-          IsYourCurrentAddressInUkSummary.row(answers)(messages(application)),
-          WhatIsYourCurrentAddressUkSummary.row(answers)(messages(application)),
-          WhatIsYourCurrentAddressInternationalSummary.row(answers)(messages(application)),
-          DoYouHaveAnyPreviousAddressesSummary.row(answers)(messages(application)),
-          IsYourPreviousAddressInUkSummary.row(answers, 0)(messages(application)),
-          WhatIsYourPreviousAddressUkSummary.row(answers, 0)(messages(application)),
-          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0)(messages(application)),
           AreYouReturningFromLivingAbroadSummary.row(answers)(messages(application)),
           WhatIsYourTelephoneNumberSummary.row(answers)(messages(application)),
           DoYouKnowYourNationalInsuranceNumberSummary.row(answers)(messages(application)),
-          WhatIsYourNationalInsuranceNumberSummary.row(answers)(messages(application)),
+          WhatIsYourNationalInsuranceNumberSummary.row(answers)(messages(application))
+        ).flatten)
+
+        val addressHistory = SummaryListViewModel(Seq(
+          IsYourCurrentAddressInUkSummary.row(answers)(messages(application)),
+          WhatIsYourCurrentAddressUkSummary.row(answers)(messages(application)),
+          WhatIsYourCurrentAddressInternationalSummary.row(answers)(messages(application)),
+          IsYourPreviousAddressInUkSummary.row(answers, 0)(messages(application)),
+          WhatIsYourPreviousAddressUkSummary.row(answers, 0)(messages(application)),
+          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0)(messages(application))
+        ).flatten)
+
+        val relationshipHistory = SummaryListViewModel(Seq(
           AreYouMarriedSummary.row(answers)(messages(application)),
           WhenDidYouGetMarriedSummary.row(answers)(messages(application)),
           HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers)(messages(application)),
-          PreviousMarriageOrPartnershipDetailsSummary.row(answers)(messages(application)),
+          PreviousMarriageOrPartnershipDetailsSummary.row(answers)(messages(application))
+        ).flatten)
+
+        val benefitHistory = SummaryListViewModel(Seq(
           HaveYouEverClaimedChildBenefitSummary.row(answers)(messages(application)),
           DoYouKnowYourChildBenefitNumberSummary.row(answers)(messages(application)),
           WhatIsYourChildBenefitNumberSummary.row(answers)(messages(application)),
           HaveYouEverReceivedOtherUkBenefitsSummary.row(answers)(messages(application)),
-          WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers)(messages(application)),
+          WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers)(messages(application))
+        ).flatten)
+
+        val employmentHistory = SummaryListViewModel(Seq(
           HaveYouEverWorkedInUkSummary.row(answers)(messages(application)),
           WhatIsYourEmployersNameSummary.row(answers)(messages(application)),
           WhatIsYourEmployersAddressSummary.row(answers)(messages(application)),
           WhenDidYouStartWorkingForEmployerSummary.row(answers)(messages(application)),
           AreYouStillEmployedSummary.row(answers)(messages(application)),
           WhenDidYouFinishYourEmploymentSummary.row(answers)(messages(application)),
-          DoYouHaveAnyPreviousEmployersSummary.row(answers)(messages(application)),
           WhatIsYourPreviousEmployersNameSummary.row(answers, 0)(messages(application)),
           WhatIsYourPreviousEmployersAddressSummary.row(answers, 0)(messages(application)),
           WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application)),
-          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application)),
+          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application))
+        ).flatten)
+
+        val supportingDocuments = SummaryListViewModel(Seq(
           DoYouHavePrimaryDocumentSummary.row(answers)(messages(application)),
           WhichPrimaryDocumentSummary.row(answers)(messages(application)),
           DoYouHaveTwoSecondaryDocumentsSummary.row(answers)(messages(application)),
           WhichAlternativeDocumentsSummary.row(answers)(messages(application))
         ).flatten)
 
+        val renderedView = view(personalDetails, addressHistory, relationshipHistory, benefitHistory, employmentHistory, supportingDocuments)(request, messages(application))
+
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list)(request, messages(application)).toString
+        contentAsString(result) mustEqual renderedView.toString
       }
     }
 
