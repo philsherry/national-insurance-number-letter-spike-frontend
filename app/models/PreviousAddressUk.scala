@@ -27,7 +27,11 @@ final case class PreviousAddressUk(
                                     postcode: String,
                                     from: LocalDate,
                                     to: LocalDate
-                                  )
+                                  ) {
+
+  def lines: List[String] =
+    List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
+}
 
 object PreviousAddressUk {
   implicit val format = Json.format[PreviousAddressUk]

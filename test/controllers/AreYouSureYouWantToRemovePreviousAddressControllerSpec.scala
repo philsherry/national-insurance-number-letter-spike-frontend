@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.AreYouSureYouWantToRemovePreviousAddressFormProvider
-import models.{Index, NormalMode, UserAnswers}
+import models.{Index, NormalMode, PreviousAddressUk, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{never, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AreYouSureYouWantToRemovePreviousAddressPage
+import pages.{AreYouSureYouWantToRemovePreviousAddressPage, WhatIsYourPreviousAddressUkPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -31,6 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.AreYouSureYouWantToRemovePreviousAddressView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase with MockitoSugar {
@@ -42,11 +43,15 @@ class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase wi
 
   lazy val areYouSureYouWantToRemovePreviousAddressRoute = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), NormalMode).url
 
+  val answers = emptyUserAnswers.set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk("line 1", None, None, "postcode", LocalDate.now, LocalDate.now)).success.value
+
+  val lines = List("line 1", "postcode")
+
   "AreYouSureYouWantToRemovePreviousAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
         val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousAddressRoute)
@@ -56,25 +61,7 @@ class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase wi
         val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousAddressView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouSureYouWantToRemovePreviousAddressPage(Index(0)), true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousAddressRoute)
-
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousAddressView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, lines, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -85,7 +72,7 @@ class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase wi
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(answers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -104,9 +91,57 @@ class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase wi
       }
     }
 
+    "must remove the previous address if the user submits yes" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(answers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousAddressRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        route(application, request).value.futureValue
+
+        verify(mockSessionRepository, times(1)).set(any())
+      }
+    }
+
+    "must not remove the previous address if the user submits no" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      val application =
+        applicationBuilder(userAnswers = Some(answers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousAddressRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        route(application, request).value.futureValue
+
+        verify(mockSessionRepository, never()).set(any())
+      }
+    }
+
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
         val request =
@@ -120,7 +155,7 @@ class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase wi
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, lines, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

@@ -20,9 +20,9 @@ import controllers.actions._
 import forms.AreYouSureYouWantToRemovePreviousAddressFormProvider
 
 import javax.inject.Inject
-import models.{Index, Mode}
+import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.AreYouSureYouWantToRemovePreviousAddressPage
+import pages.{AreYouSureYouWantToRemovePreviousAddressPage, PreviousAddressQuery, WhatIsYourPreviousAddressInternationalPage, WhatIsYourPreviousAddressUkPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -45,28 +45,37 @@ class AreYouSureYouWantToRemovePreviousAddressController @Inject()(
 
   val form = formProvider()
 
+  private def getLines(answers: UserAnswers, index: Index): Option[List[String]] = {
+    val ukLines = answers.get(WhatIsYourPreviousAddressUkPage(index)).map(_.lines)
+    val internationalLines = answers.get(WhatIsYourPreviousAddressInternationalPage(index)).map(_.lines)
+    ukLines orElse internationalLines
+  }
+
+  private def removeAddress(answers: UserAnswers, index: Index): Future[Unit] = for {
+    updatedAnswers <- Future.fromTry(answers.remove(PreviousAddressQuery(index)))
+    _              <- sessionRepository.set(updatedAnswers)
+  } yield ()
+
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(AreYouSureYouWantToRemovePreviousAddressPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, index, mode))
+      getLines(request.userAnswers, index)
+        .map(lines => Ok(view(form, lines, index, mode)))
+        .getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => Future.successful {
+          getLines(request.userAnswers, index)
+            .map(lines => BadRequest(view(formWithErrors, lines, index, mode)))
+            .getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousAddressPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
+            _              <- if (value) removeAddress(request.userAnswers, index) else Future.successful(())
           } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousAddressPage(index), mode, updatedAnswers))
       )
   }
