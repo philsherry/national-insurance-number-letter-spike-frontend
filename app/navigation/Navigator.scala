@@ -38,6 +38,7 @@ class Navigator @Inject()() {
     case IsYourPreviousAddressInUkPage(index)                   => isYourPreviousAddressInUkRoutes(_, index)
     case WhatIsYourPreviousAddressUkPage(_)                     => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case WhatIsYourPreviousAddressInternationalPage(_)          => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
+    case AreYouSureYouWantToRemovePreviousAddressPage(_)        => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case AreYouReturningFromLivingAbroadPage                    => _ => routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
     case WhatIsYourTelephoneNumberPage                          => _ => routes.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(NormalMode)
     case DoYouKnowYourNationalInsuranceNumberPage               => doYouKnowYourNationalInsuranceNumberRoutes
