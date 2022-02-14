@@ -46,13 +46,7 @@ class DoYouHaveAnyPreviousAddressesController @Inject()(
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(DoYouHaveAnyPreviousAddressesPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+      Ok(view(form, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -65,7 +59,6 @@ class DoYouHaveAnyPreviousAddressesController @Inject()(
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(DoYouHaveAnyPreviousAddressesPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, mode, updatedAnswers))
       )
   }

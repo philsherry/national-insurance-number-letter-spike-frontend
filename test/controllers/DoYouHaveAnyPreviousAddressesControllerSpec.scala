@@ -60,24 +60,6 @@ class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoS
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(DoYouHaveAnyPreviousAddressesPage, true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, doYouHaveAnyPreviousAddressesRoute)
-
-        val view = application.injector.instanceOf[DoYouHaveAnyPreviousAddressesView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
-      }
-    }
-
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
