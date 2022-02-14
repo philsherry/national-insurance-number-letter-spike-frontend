@@ -499,3 +499,9 @@ whenDidYouFinishYourEmployment.error.required.two = The date must include {0} an
 whenDidYouFinishYourEmployment.error.required = The date must include {0}
 whenDidYouFinishYourEmployment.error.invalid = Enter a real date
 whenDidYouFinishYourEmployment.change.hidden = when you stopped being employed by your most recent employer
+
+areYouSureYouWantToRemovePreviousAddress.title = areYouSureYouWantToRemovePreviousAddress
+areYouSureYouWantToRemovePreviousAddress.heading = areYouSureYouWantToRemovePreviousAddress
+areYouSureYouWantToRemovePreviousAddress.checkYourAnswersLabel = areYouSureYouWantToRemovePreviousAddress
+areYouSureYouWantToRemovePreviousAddress.error.required = Select yes if areYouSureYouWantToRemovePreviousAddress
+areYouSureYouWantToRemovePreviousAddress.change.hidden = AreYouSureYouWantToRemovePreviousAddress

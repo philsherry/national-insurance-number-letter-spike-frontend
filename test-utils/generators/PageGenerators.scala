@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryAreYouSureYouWantToRemovePreviousAddressPage: Arbitrary[AreYouSureYouWantToRemovePreviousAddressPage.type] =
+    Arbitrary(AreYouSureYouWantToRemovePreviousAddressPage)
+
   implicit lazy val arbitraryWhichAlternativeDocumentsPage: Arbitrary[WhichAlternativeDocumentsPage.type] =
     Arbitrary(WhichAlternativeDocumentsPage)
 

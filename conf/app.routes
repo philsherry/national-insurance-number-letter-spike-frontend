@@ -224,3 +224,8 @@ GET        /whichAlternativeDocuments                        controllers.WhichAl
 POST       /whichAlternativeDocuments                        controllers.WhichAlternativeDocumentsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhichAlternativeDocuments                  controllers.WhichAlternativeDocumentsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhichAlternativeDocuments                  controllers.WhichAlternativeDocumentsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouSureYouWantToRemovePreviousAddress                        controllers.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouSureYouWantToRemovePreviousAddress                        controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(mode: Mode = CheckMode)
