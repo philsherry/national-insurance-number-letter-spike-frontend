@@ -68,7 +68,7 @@ class CheckYourAnswersController @Inject()(
         SummaryListViewModel(Seq(
           IsYourCurrentAddressInUkSummary.row(answers),
           WhatIsYourCurrentAddressUkSummary.row(answers),
-          WhatIsYourCurrentAddressInternationalSummary.row(answers),
+          WhatIsYourCurrentAddressInternationalSummary.row(answers)
         ).flatten ++ previousAddressRows)
       }
 

@@ -94,7 +94,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           AreYouReturningFromLivingAbroadSummary.row(answers)(messages(application)),
           WhatIsYourTelephoneNumberSummary.row(answers)(messages(application)),
           DoYouKnowYourNationalInsuranceNumberSummary.row(answers)(messages(application)),
-          WhatIsYourNationalInsuranceNumberSummary.row(answers)(messages(application)),
+          WhatIsYourNationalInsuranceNumberSummary.row(answers)(messages(application))
         ).flatten)
 
         val addressHistory = SummaryListViewModel(Seq(
@@ -103,14 +103,14 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhatIsYourCurrentAddressInternationalSummary.row(answers)(messages(application)),
           IsYourPreviousAddressInUkSummary.row(answers, 0)(messages(application)),
           WhatIsYourPreviousAddressUkSummary.row(answers, 0)(messages(application)),
-          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0)(messages(application)),
+          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0)(messages(application))
         ).flatten)
 
         val relationshipHistory = SummaryListViewModel(Seq(
           AreYouMarriedSummary.row(answers)(messages(application)),
           WhenDidYouGetMarriedSummary.row(answers)(messages(application)),
           HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers)(messages(application)),
-          PreviousMarriageOrPartnershipDetailsSummary.row(answers)(messages(application)),
+          PreviousMarriageOrPartnershipDetailsSummary.row(answers)(messages(application))
         ).flatten)
 
         val benefitHistory = SummaryListViewModel(Seq(
@@ -118,7 +118,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           DoYouKnowYourChildBenefitNumberSummary.row(answers)(messages(application)),
           WhatIsYourChildBenefitNumberSummary.row(answers)(messages(application)),
           HaveYouEverReceivedOtherUkBenefitsSummary.row(answers)(messages(application)),
-          WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers)(messages(application)),
+          WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers)(messages(application))
         ).flatten)
 
         val employmentHistory = SummaryListViewModel(Seq(
@@ -131,7 +131,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhatIsYourPreviousEmployersNameSummary.row(answers, 0)(messages(application)),
           WhatIsYourPreviousEmployersAddressSummary.row(answers, 0)(messages(application)),
           WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application)),
-          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application)),
+          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application))
         ).flatten)
 
         val supportingDocuments = SummaryListViewModel(Seq(
