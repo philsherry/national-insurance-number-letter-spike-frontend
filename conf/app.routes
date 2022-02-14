@@ -225,7 +225,7 @@ POST       /whichAlternativeDocuments                        controllers.WhichAl
 GET        /changeWhichAlternativeDocuments                  controllers.WhichAlternativeDocumentsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhichAlternativeDocuments                  controllers.WhichAlternativeDocumentsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /areYouSureYouWantToRemovePreviousAddress                        controllers.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(mode: Mode = NormalMode)
-POST       /areYouSureYouWantToRemovePreviousAddress                        controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(mode: Mode = NormalMode)
-GET        /changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/areYouSureYouWantToRemovePreviousAddress                        controllers.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/areYouSureYouWantToRemovePreviousAddress                        controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(index: Index, mode: Mode = CheckMode)

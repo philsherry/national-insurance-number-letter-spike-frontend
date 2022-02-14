@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.AreYouSureYouWantToRemovePreviousAddressFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.AreYouSureYouWantToRemovePreviousAddressPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -44,29 +45,29 @@ class AreYouSureYouWantToRemovePreviousAddressController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(AreYouSureYouWantToRemovePreviousAddressPage) match {
+      val preparedForm = request.userAnswers.get(AreYouSureYouWantToRemovePreviousAddressPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, index, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousAddressPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousAddressPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousAddressPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousAddressPage(index), mode, updatedAnswers))
       )
   }
 }
