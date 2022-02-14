@@ -29,7 +29,6 @@ import scala.concurrent.ExecutionContext
 
 class AuthController @Inject()(
                                 val controllerComponents: MessagesControllerComponents,
-                                config: FrontendAppConfig,
                                 sessionRepository: SessionRepository,
                                 identify: IdentifierAction
                               )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
@@ -40,7 +39,7 @@ class AuthController @Inject()(
         .clear(request.userId)
         .map {
           _ =>
-            Redirect(config.signOutUrl, Map("continue" -> Seq(config.exitSurveyUrl)))
+            Redirect(routes.SignedOutController.onPageLoad)
       }
   }
 
@@ -50,7 +49,7 @@ class AuthController @Inject()(
       .clear(request.userId)
       .map {
         _ =>
-        Redirect(config.signOutUrl, Map("continue" -> Seq(routes.SignedOutController.onPageLoad.url)))
+          Redirect(routes.SignedOutController.onPageLoad)
       }
   }
 }
