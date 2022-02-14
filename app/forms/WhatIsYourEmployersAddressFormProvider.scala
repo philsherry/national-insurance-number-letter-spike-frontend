@@ -16,21 +16,25 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
+import models.WhatIsYourEmployersAddress
 import play.api.data.Form
 import play.api.data.Forms._
-import models.WhatIsYourEmployersAddress
+
+import javax.inject.Inject
 
 class WhatIsYourEmployersAddressFormProvider @Inject() extends Mappings {
 
    def apply(): Form[WhatIsYourEmployersAddress] = Form(
      mapping(
-      "addressLine1" -> text("whatIsYourEmployersAddress.error.addressLine1.required")
-        .verifying(maxLength(100, "whatIsYourEmployersAddress.error.addressLine1.length")),
-      "addressLine2" -> text("whatIsYourEmployersAddress.error.addressLine2.required")
-        .verifying(maxLength(100, "whatIsYourEmployersAddress.error.addressLine2.length"))
+       "addressLine1" -> text("whatIsYourEmployersAddress.error.addressLine1.required")
+         .verifying(maxLength(100, "whatIsYourEmployersAddress.error.addressLine1.length")),
+       "addressLine2" -> optional(text("whatIsYourEmployersAddress.error.addressLine2.required")
+         .verifying(maxLength(100, "whatIsYourEmployersAddress.error.addressLine2.length"))),
+       "addressLine3" -> optional(text("whatIsYourEmployersAddress.error.addressLine3.required")
+         .verifying(maxLength(100, "whatIsYourEmployersAddress.error.addressLine3.length"))),
+       "postcode" -> text("whatIsYourEmployersAddress.error.postcode.required")
+         .verifying(maxLength(100, "whatIsYourEmployersAddress.error.postcode.length"))
     )(WhatIsYourEmployersAddress.apply)(WhatIsYourEmployersAddress.unapply)
    )
  }

@@ -32,8 +32,7 @@ object WhatIsYourEmployersAddressSummary  {
     answers.get(WhatIsYourEmployersAddressPage).map {
       answer =>
 
-        // TODO missing fields
-        val value = List(Some(answer.addressLine1), Some(answer.addressLine2))
+        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, Some(answer.postcode))
           .flatten.map(HtmlFormat.escape(_).toString)
           .mkString("<br/>")
 
