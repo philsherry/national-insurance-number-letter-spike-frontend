@@ -48,7 +48,9 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
     Json.obj(
       WhatIsYourEmployersAddressPage.toString -> Json.obj(
         "addressLine1" -> "value 1",
-        "addressLine2" -> "value 2"
+        "addressLine2" -> "value 2",
+        "addressLine3" -> "value 3",
+        "postcode" -> "value 4"
       )
     )
   )
@@ -83,7 +85,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourEmployersAddress("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhatIsYourEmployersAddress("value 1", Some("value 2"), Some("value 3"), "value 4")), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -104,7 +106,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourEmployersAddressRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"), ("addressLine3", "value 3"), ("postcode", "value 4"))
 
         val result = route(application, request).value
 
@@ -154,7 +156,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourEmployersAddressRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"), ("addressLine3", "value 3"), ("postcode", "value 4"))
 
         val result = route(application, request).value
 

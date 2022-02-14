@@ -63,7 +63,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").success.value
         .set(HaveYouEverWorkedInUkPage, true).success.value
         .set(WhatIsYourEmployersNamePage, "employer").success.value
-        .set(WhatIsYourEmployersAddressPage, WhatIsYourEmployersAddress("line 1", "line 2")).success.value
+        .set(WhatIsYourEmployersAddressPage, WhatIsYourEmployersAddress("line 1", Some("line 2"), Some("line 3"), "postcode")).success.value
         .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.now).success.value
         .set(AreYouStillEmployedPage, false).success.value
         .set(WhenDidYouFinishYourEmploymentPage, LocalDate.now).success.value
