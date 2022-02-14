@@ -17,7 +17,6 @@
 package controllers.auth
 
 import base.SpecBase
-import config.FrontendAppConfig
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
@@ -26,15 +25,13 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
 
-import java.net.URLEncoder
-
 import scala.concurrent.Future
 
 class AuthControllerSpec extends SpecBase with MockitoSugar {
 
   "signOut" - {
 
-    "must clear user answers and redirect to sign out" in {
+    "must clear user answers and redirect to sign out from survey route" in {
 
       val mockSessionRepository = mock[SessionRepository]
       when(mockSessionRepository.clear(any())) thenReturn Future.successful(true)
@@ -46,7 +43,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
 
-        val request   = FakeRequest(GET, routes.AuthController.signOut.url)
+        val request = FakeRequest(GET, routes.AuthController.signOut.url)
 
         val result = route(application, request).value
 
@@ -61,7 +58,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
   "signOutNoSurvey" - {
 
-    "must clear users answers and redirect to sign out" in {
+    "must clear users answers and redirect to sign out from no survey route" in {
 
       val mockSessionRepository = mock[SessionRepository]
       when(mockSessionRepository.clear(any())) thenReturn Future.successful(true)
@@ -73,7 +70,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
 
-        val request   = FakeRequest(GET, routes.AuthController.signOutNoSurvey.url)
+        val request = FakeRequest(GET, routes.AuthController.signOutNoSurvey.url)
 
         val result = route(application, request).value
 
