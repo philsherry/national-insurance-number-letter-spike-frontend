@@ -21,7 +21,6 @@ import play.api.data.FormError
 
 class AreYouStillEmployedFormProviderSpec extends BooleanFieldBehaviours {
 
-  //LDS ignore
   val requiredKey = "areYouStillEmployed.error.required"
   val invalidKey = "error.boolean"
 
