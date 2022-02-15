@@ -21,6 +21,7 @@ import play.api.data.FormError
 
 class AreYouSureYouWantToRemovePreviousAddressFormProviderSpec extends BooleanFieldBehaviours {
 
+  // LDS ignore
   val requiredKey = "areYouSureYouWantToRemovePreviousAddress.error.required"
   val invalidKey = "error.boolean"
 
