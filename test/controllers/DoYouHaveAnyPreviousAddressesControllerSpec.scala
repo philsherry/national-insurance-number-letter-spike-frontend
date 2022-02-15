@@ -18,19 +18,22 @@ package controllers
 
 import base.SpecBase
 import forms.DoYouHaveAnyPreviousAddressesFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, PreviousAddressUk, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.DoYouHaveAnyPreviousAddressesPage
+import pages.{DoYouHaveAnyPreviousAddressesPage, IsYourPreviousAddressInUkPage, WhatIsYourPreviousAddressUkPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import views.html.DoYouHaveAnyPreviousAddressesView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoSugar {
@@ -44,7 +47,7 @@ class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoS
 
   "DoYouHaveAnyPreviousAddresses Controller" - {
 
-    "must return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET when there are no previous addresses" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
@@ -56,25 +59,39 @@ class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoS
         val view = application.injector.instanceOf[DoYouHaveAnyPreviousAddressesView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, List.empty, NormalMode)(request, messages(application)).toString
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
+    "must return OK and the correct view for a GET when there are already previous addresses" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DoYouHaveAnyPreviousAddressesPage, true).success.value
+      val address = PreviousAddressUk("line 1", None, None, "postcode", LocalDate.now, LocalDate.now)
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val answers = emptyUserAnswers
+        .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
+        .set(WhatIsYourPreviousAddressUkPage(Index(0)), address).success.value
+
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
+
+      val expectedItems = List(
+        ListWithActionsItem(
+          name = Text("line 1, postcode"),
+          actions = Seq(
+            ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), NormalMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), NormalMode).url)
+          )
+        )
+      )
 
       running(application) {
         val request = FakeRequest(GET, doYouHaveAnyPreviousAddressesRoute)
 
-        val view = application.injector.instanceOf[DoYouHaveAnyPreviousAddressesView]
-
         val result = route(application, request).value
 
+        val view = application.injector.instanceOf[DoYouHaveAnyPreviousAddressesView]
+
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, expectedItems, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -120,7 +137,7 @@ class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoS
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, List.empty, NormalMode)(request, messages(application)).toString
       }
     }
 

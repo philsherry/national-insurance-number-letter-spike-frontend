@@ -19,13 +19,12 @@ package forms
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class AreYouStillEmployedFormProviderSpec extends BooleanFieldBehaviours {
+class AreYouSureYouWantToRemovePreviousAddressFormProviderSpec extends BooleanFieldBehaviours {
 
-  //LDS ignore
-  val requiredKey = "areYouStillEmployed.error.required"
+  val requiredKey = "areYouSureYouWantToRemovePreviousAddress.error.required"
   val invalidKey = "error.boolean"
 
-  val form = new AreYouStillEmployedFormProvider()()
+  val form = new AreYouSureYouWantToRemovePreviousAddressFormProvider()()
 
   ".value" - {
 

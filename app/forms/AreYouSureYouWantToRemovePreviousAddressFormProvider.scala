@@ -16,31 +16,15 @@
 
 package forms
 
-import forms.behaviours.BooleanFieldBehaviours
-import play.api.data.FormError
+import javax.inject.Inject
 
-class AreYouStillEmployedFormProviderSpec extends BooleanFieldBehaviours {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  //LDS ignore
-  val requiredKey = "areYouStillEmployed.error.required"
-  val invalidKey = "error.boolean"
+class AreYouSureYouWantToRemovePreviousAddressFormProvider @Inject() extends Mappings {
 
-  val form = new AreYouStillEmployedFormProvider()()
-
-  ".value" - {
-
-    val fieldName = "value"
-
-    behave like booleanField(
-      form,
-      fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("areYouSureYouWantToRemovePreviousAddress.error.required")
     )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
-  }
 }

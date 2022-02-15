@@ -175,10 +175,15 @@ whatIsYourCurrentAddressUk.addressLine3.change.hidden = address line 3
 whatIsYourCurrentAddressUk.postcode.change.hidden = postcode
 
 doYouHaveAnyPreviousAddresses.title = Do you have any previous home addresses?
+doYouHaveAnyPreviousAddresses.add.title = You have added 1 previous home address
+doYouHaveAnyPreviousAddresses.add.title.plural = You have added {0} previous home addresses
 doYouHaveAnyPreviousAddresses.heading = Do you have any previous home addresses?
+doYouHaveAnyPreviousAddresses.add.heading = You have added 1 previous home address
+doYouHaveAnyPreviousAddresses.add.heading.plural = You have added {0} previous home addresses
+doYouHaveAnyPreviousAddresses.add.legend = Do you want to add another previous home address?
 doYouHaveAnyPreviousAddresses.checkYourAnswersLabel = Do you have any previous home addresses?
 doYouHaveAnyPreviousAddresses.error.required = Select yes if have any previous home addresses
-doYouHaveAnyPreviousAddresses.change.hidden = whether you have any previous home addresses
+doYouHaveAnyPreviousAddresses.change.hidden = do you have any previous home addresses
 
 isYourPreviousAddressInUk.title = Is your previous home address in the UK?
 isYourPreviousAddressInUk.heading = Is your previous home address in the UK?
@@ -499,3 +504,7 @@ whenDidYouFinishYourEmployment.error.required.two = The date must include {0} an
 whenDidYouFinishYourEmployment.error.required = The date must include {0}
 whenDidYouFinishYourEmployment.error.invalid = Enter a real date
 whenDidYouFinishYourEmployment.change.hidden = when you stopped being employed by your most recent employer
+
+areYouSureYouWantToRemovePreviousAddress.title = Are you sure you want to remove this previous address?
+areYouSureYouWantToRemovePreviousAddress.heading = Are you sure you want to remove this previous address?
+areYouSureYouWantToRemovePreviousAddress.error.required = Select yes if you want to remove this previous address

@@ -18,13 +18,16 @@ package controllers
 
 import controllers.actions._
 import forms.DoYouHaveAnyPreviousAddressesFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.DoYouHaveAnyPreviousAddressesPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import pages.{DoYouHaveAnyPreviousAddressesPage, PreviousAddressesQuery, WhatIsYourPreviousAddressInternationalPage, WhatIsYourPreviousAddressUkPage}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.DoYouHaveAnyPreviousAddressesView
 
@@ -32,7 +35,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DoYouHaveAnyPreviousAddressesController @Inject()(
                                          override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
                                          navigator: Navigator,
                                          identify: IdentifierAction,
                                          getData: DataRetrievalAction,
@@ -44,15 +46,27 @@ class DoYouHaveAnyPreviousAddressesController @Inject()(
 
   val form = formProvider()
 
+  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] = {
+
+    val previousAddresses = answers.get(PreviousAddressesQuery).getOrElse(Seq.empty)
+
+    previousAddresses.indices.flatMap { i =>
+      answers.get(WhatIsYourPreviousAddressUkPage(Index(i))).map(_.lines) orElse
+        answers.get(WhatIsYourPreviousAddressInternationalPage(Index(i))).map(_.lines)
+    }.zipWithIndex.map { case (lines, i) =>
+      ListWithActionsItem(
+        name = Text(lines.mkString(", ")),
+        actions = List(
+          ListWithActionsAction(content = Text(messages("site.change")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(i), mode).url),
+          ListWithActionsAction(content = Text(messages("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(i), mode).url)
+        )
+      )
+    }
+  }
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(DoYouHaveAnyPreviousAddressesPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+      Ok(view(form, listItems(request.userAnswers, mode), mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -60,12 +74,10 @@ class DoYouHaveAnyPreviousAddressesController @Inject()(
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
+          Future.successful(BadRequest(view(formWithErrors, listItems(request.userAnswers, mode), mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(DoYouHaveAnyPreviousAddressesPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, mode, updatedAnswers))
       )
   }

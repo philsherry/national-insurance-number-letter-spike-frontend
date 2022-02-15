@@ -152,6 +152,10 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(WhatIsYourPreviousAddressInternationalPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
       }
 
+      "must go from the are you sure you want to remove your previous address page to the do you have a previous address page" in {
+        navigator.nextPage(AreYouSureYouWantToRemovePreviousAddressPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
+      }
+
       "must go from the returning from living abroad page to the telephone number page" in {
         navigator.nextPage(AreYouReturningFromLivingAbroadPage, NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
       }

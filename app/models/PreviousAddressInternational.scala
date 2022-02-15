@@ -27,7 +27,10 @@ final case class PreviousAddressInternational(
                                                country: String,
                                                from: LocalDate,
                                                to: LocalDate
-                                             )
+                                             ) {
+
+  def lines: List[String] = List(Some(addressLine1), addressLine2, addressLine3, Some(country)).flatten
+}
 
 object PreviousAddressInternational {
   implicit val format = Json.format[PreviousAddressInternational]
