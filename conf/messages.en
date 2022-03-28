@@ -509,3 +509,10 @@ whenDidYouFinishYourEmployment.change.hidden = when you stopped being employed b
 areYouSureYouWantToRemovePreviousAddress.title = Are you sure you want to remove this previous address?
 areYouSureYouWantToRemovePreviousAddress.heading = Are you sure you want to remove this previous address?
 areYouSureYouWantToRemovePreviousAddress.error.required = Select yes if you want to remove this previous address
+
+pdf.title = Get your National Insurance Number by post
+pdf.page = Page
+pdf.personalDetails = Personal details
+pdf.personalDetails.firstName = First name
+pdf.personalDetails.middleNames = Middle names
+pdf.personalDetails.lastName = Last name
