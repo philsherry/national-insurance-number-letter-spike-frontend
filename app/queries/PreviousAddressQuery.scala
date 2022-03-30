@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package pages
+package queries
 
-import models.Index
 import play.api.libs.json.{JsPath, JsValue}
-import queries.{Gettable, Settable}
 
-final case class PreviousAddressQuery(index: Index) extends Settable[JsValue] with Gettable[JsValue] {
+case object PreviousAddressListQuery extends Gettable[List[JsValue]] {
 
-  override def path: JsPath = JsPath \ "previousAddress" \ index.position
+  override def path: JsPath = JsPath \ "previousAddress"
 }

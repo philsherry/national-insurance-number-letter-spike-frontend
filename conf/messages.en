@@ -512,7 +512,11 @@ areYouSureYouWantToRemovePreviousAddress.error.required = Select yes if you want
 
 pdf.title = Get your National Insurance Number by post
 pdf.page = Page
+
 pdf.personalDetails = Personal details
 pdf.personalDetails.firstName = First name
 pdf.personalDetails.middleNames = Middle names
 pdf.personalDetails.lastName = Last name
+pdf.personalDetails.previousFirstName = Previous first name
+pdf.personalDetails.previousMiddleNames = Previous middle names
+pdf.personalDetails.previousLastName = Previous last name
