@@ -54,37 +54,32 @@ object PrintModel {
   }
 
   private def getCurrentAddress(userAnswers: UserAnswers): Option[List[String]] = {
-    userAnswers.get(WhatIsYourCurrentAddressUkPage).map { address =>
-      List(
-        Some(address.addressLine1), address.addressLine2, address.addressLine3, Some(address.postcode))
-    }.orElse { userAnswers.get(WhatIsYourCurrentAddressInternationalPage).map { address =>
-        List(Some(address.addressLine1), address.addressLine2, address.addressLine3, Some(address.country)
-        )
+    userAnswers.get(WhatIsYourCurrentAddressUkPage).map { ukAddr =>
+      ukAddr.lines
+    }.orElse { userAnswers.get(WhatIsYourCurrentAddressInternationalPage).map { intAddr =>
+        intAddr.lines
       }
-    }.map(_.flatten)
+    }
   }
 
   private def getPreviousAddresses(userAnswers: UserAnswers): List[PreviousAddressPrintModel] = {
     val count = userAnswers.get(PreviousAddressListQuery).getOrElse(List.empty).length
-    (0 until count).flatMap { index =>
-      userAnswers.get(PreviousAddressQuery(Index(index))).flatMap { jsValue =>
-        Json.fromJson(jsValue)(PreviousAddressUk.format).asOpt.map { ukAddr =>
-          PreviousAddressPrintModel(
-            List(Some(ukAddr.addressLine1), ukAddr.addressLine2, ukAddr.addressLine3, Some(ukAddr.postcode)).flatten,
-            ukAddr.from,
-            ukAddr.to
-          )
-        }.orElse {
-          Json.fromJson(jsValue)(PreviousAddressInternational.format).asOpt.map { intAddr =>
-            PreviousAddressPrintModel(
-              List(Some(intAddr.addressLine1), intAddr.addressLine2, intAddr.addressLine3, Some(intAddr.country)).flatten,
-              intAddr.from,
-              intAddr.to
-            )
-          }
+    (0 until count).toList.flatMap { index =>
+      userAnswers.get(WhatIsYourPreviousAddressUkPage(Index(index))).map { prevUk =>
+        PreviousAddressPrintModel(
+          prevUk.lines,
+          prevUk.from,
+          prevUk.to
+        )
+      }.orElse { userAnswers.get(WhatIsYourPreviousAddressInternationalPage(Index(index))).map { prevInt =>
+        PreviousAddressPrintModel(
+          prevInt.lines,
+          prevInt.from,
+          prevInt.to
+        )
         }
       }
-    }.toList
+    }
   }
 
 }
