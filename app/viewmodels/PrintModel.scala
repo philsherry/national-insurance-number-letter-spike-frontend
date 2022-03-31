@@ -52,12 +52,10 @@ final case class PreviousMarriageOrPartnershipPrintModel(from: String, to: Strin
 
 object PreviousMarriageOrPartnershipPrintModel {
 
-  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-
   def from(model: PreviousMarriageOrPartnershipDetails): PreviousMarriageOrPartnershipPrintModel = {
     PreviousMarriageOrPartnershipPrintModel(
-      model.startDate.format(formatter),
-      model.endDate.format(formatter),
+      model.startDate.format(PrintModel.formatter),
+      model.endDate.format(PrintModel.formatter),
       model.endingReason
     )
   }
