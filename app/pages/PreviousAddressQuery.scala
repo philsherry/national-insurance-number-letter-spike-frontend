@@ -20,7 +20,7 @@ import models.Index
 import play.api.libs.json.{JsPath, JsValue}
 import queries.{Gettable, Settable}
 
-final case class PreviousAddressQuery(index: Index) extends Settable[JsValue] with Gettable[JsValue] {
+final case class PreviousAddressQuery(index: Index) extends Settable[JsValue] {
 
   override def path: JsPath = JsPath \ "previousAddress" \ index.position
 }
