@@ -52,7 +52,7 @@ final case class PreviousMarriageOrPartnershipPrintModel(from: String, to: Strin
 
 object PreviousMarriageOrPartnershipPrintModel {
 
-  def from(model: PreviousMarriageOrPartnershipDetails): PreviousMarriageOrPartnershipPrintModel = {
+  def apply(model: PreviousMarriageOrPartnershipDetails): PreviousMarriageOrPartnershipPrintModel = {
     PreviousMarriageOrPartnershipPrintModel(
       model.startDate.format(PrintModel.formatter),
       model.endDate.format(PrintModel.formatter),
@@ -97,7 +97,7 @@ object PrintModel {
         nino,
         marriage.map(_.format(formatter)),
         civilPartnership.map(_.format(formatter)),
-        previousMarriageOrPartnership.map(PreviousMarriageOrPartnershipPrintModel.from),
+        previousMarriageOrPartnership.map(PreviousMarriageOrPartnershipPrintModel(_)),
         claimedChildBenefit,
         childBenefitNumber,
         otherBenefits,
@@ -109,7 +109,7 @@ object PrintModel {
     }
   }
 
-  private def getCurrentAddress(userAnswers: UserAnswers): Option[List[String]] = {
+  private[viewmodels] def getCurrentAddress(userAnswers: UserAnswers): Option[List[String]] = {
     userAnswers.get(WhatIsYourCurrentAddressUkPage).map { ukAddr =>
       ukAddr.lines
     }.orElse { userAnswers.get(WhatIsYourCurrentAddressInternationalPage).map { intAddr =>
@@ -118,7 +118,7 @@ object PrintModel {
     }
   }
 
-  private def getPreviousAddresses(userAnswers: UserAnswers): List[PreviousAddressPrintModel] = {
+  private[viewmodels] def getPreviousAddresses(userAnswers: UserAnswers): List[PreviousAddressPrintModel] = {
     val count = userAnswers.get(PreviousAddressListQuery).getOrElse(List.empty).length
     (0 until count).toList.flatMap { index =>
       userAnswers.get(WhatIsYourPreviousAddressUkPage(Index(index))).map { prevUk =>
@@ -138,7 +138,7 @@ object PrintModel {
     }
   }
 
-  private def getMostRecentUkEmployer(userAnswers: UserAnswers): Option[MostRecentUkEmployerPrintModel] = {
+  private[viewmodels] def getMostRecentUkEmployer(userAnswers: UserAnswers): Option[MostRecentUkEmployerPrintModel] = {
     for {
       name <- userAnswers.get(WhatIsYourEmployersNamePage)
       address <- userAnswers.get(WhatIsYourEmployersAddressPage)
@@ -154,7 +154,7 @@ object PrintModel {
     }
   }
 
-  private def getPreviousEmployers(userAnswers: UserAnswers): List[PreviousEmployerPrintModel] = {
+  private[viewmodels] def getPreviousEmployers(userAnswers: UserAnswers): List[PreviousEmployerPrintModel] = {
     val count = userAnswers.get(PreviousEmployersQuery).getOrElse(List.empty).length
     (0 until count).toList.flatMap { index =>
       for {
