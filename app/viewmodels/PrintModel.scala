@@ -19,21 +19,20 @@ package viewmodels
 import models._
 import pages._
 import queries._
-
-import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 final case class PrintModel(
                            name: WhatIsYourName,
                            previousName: Option[WhatIsYourPreviousName],
-                           dob: LocalDate,
+                           dob: String,
                            currentAddress: List[String],
                            previousAddresses: List[PreviousAddressPrintModel],
                            returningFromLivingAbroad: Boolean,
                            telephoneNumber: String,
                            nino: Option[String],
-                           marriage: Option[LocalDate],
-                           civilPartnership: Option[LocalDate],
-                           previousMarriageOrPartnership: Option[PreviousMarriageOrPartnershipDetails],
+                           marriage: Option[String],
+                           civilPartnership: Option[String],
+                           previousMarriageOrPartnership: Option[PreviousMarriageOrPartnershipPrintModel],
                            claimedChildBenefit: Boolean,
                            childBenefitNumber: Option[String],
                            otherBenefits: Option[String],
@@ -43,13 +42,30 @@ final case class PrintModel(
                            secondaryDocuments: Option[Set[AlternativeDocuments]]
                            )
 
-final case class PreviousAddressPrintModel(address: List[String], from: LocalDate, to: LocalDate)
+final case class PreviousAddressPrintModel(address: List[String], from: String, to: String)
 
-final case class MostRecentUkEmployerPrintModel(name: String, address: List[String], from: LocalDate, to: Option[LocalDate])
+final case class MostRecentUkEmployerPrintModel(name: String, address: List[String], from: String, to: Option[String])
 
-final case class PreviousEmployerPrintModel(name: String, address: List[String], from: LocalDate, to: LocalDate)
+final case class PreviousEmployerPrintModel(name: String, address: List[String], from: String, to: String)
+
+final case class PreviousMarriageOrPartnershipPrintModel(from: String, to: String, reason: String)
+
+object PreviousMarriageOrPartnershipPrintModel {
+
+  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+
+  def from(model: PreviousMarriageOrPartnershipDetails): PreviousMarriageOrPartnershipPrintModel = {
+    PreviousMarriageOrPartnershipPrintModel(
+      model.startDate.format(formatter),
+      model.endDate.format(formatter),
+      model.endingReason
+    )
+  }
+}
 
 object PrintModel {
+
+  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
   def from(userAnswers: UserAnswers): Option[PrintModel] = {
     for {
@@ -75,15 +91,15 @@ object PrintModel {
       PrintModel(
         name,
         previousName,
-        dob,
+        dob.format(formatter),
         currentAddress,
         previousAddresses,
         returningFromWorkingAbroad,
         telephoneNumber,
         nino,
-        marriage,
-        civilPartnership,
-        previousMarriageOrPartnership,
+        marriage.map(_.format(formatter)),
+        civilPartnership.map(_.format(formatter)),
+        previousMarriageOrPartnership.map(PreviousMarriageOrPartnershipPrintModel.from),
         claimedChildBenefit,
         childBenefitNumber,
         otherBenefits,
@@ -110,14 +126,14 @@ object PrintModel {
       userAnswers.get(WhatIsYourPreviousAddressUkPage(Index(index))).map { prevUk =>
         PreviousAddressPrintModel(
           prevUk.lines,
-          prevUk.from,
-          prevUk.to
+          prevUk.from.format(formatter),
+          prevUk.to.format(formatter)
         )
       }.orElse { userAnswers.get(WhatIsYourPreviousAddressInternationalPage(Index(index))).map { prevInt =>
         PreviousAddressPrintModel(
           prevInt.lines,
-          prevInt.from,
-          prevInt.to
+          prevInt.from.format(formatter),
+          prevInt.to.format(formatter)
         )
         }
       }
@@ -134,8 +150,8 @@ object PrintModel {
       MostRecentUkEmployerPrintModel(
         name,
         address.lines,
-        from,
-        to
+        from.format(formatter),
+        to.map(_.format(formatter))
       )
     }
   }
@@ -152,8 +168,8 @@ object PrintModel {
         PreviousEmployerPrintModel(
           name,
           address.lines,
-          from,
-          to
+          from.format(formatter),
+          to.format(formatter)
         )
       }
     }

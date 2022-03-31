@@ -520,3 +520,37 @@ pdf.personalDetails.lastName = Last name
 pdf.personalDetails.previousFirstName = Previous first name
 pdf.personalDetails.previousMiddleNames = Previous middle names
 pdf.personalDetails.previousLastName = Previous last name
+pdf.personalDetails.returningFromLivingAbroad = Returning from living abroad
+pdf.personalDetails.returningFromLivingAbroad.yes = Yes
+pdf.personalDetails.returningFromLivingAbroad.no = No
+pdf.personalDetails.telephoneNumber = Telephone number
+pdf.personalDetails.nino = National Insurance Number
+pdf.personalDetails.dob = Date of birth
+pdf.personalDetails.maritalStatus = Marital or partnership status
+pdf.personalDetails.maritalStatus.married = Currently married (since {0})
+pdf.personalDetails.maritalStatus.civilPartnership = Currently in a civil partnership (since {0})
+pdf.personalDetails.previousMaritalStatus = Previous marital or partnership status
+pdf.personalDetails.previousMaritalStatus.tofrom = From {0} to {1} (reason: {2})
+
+pdf.addressHistory = Address history
+pdf.addressHistory.current = Current address
+pdf.addressHistory.previous = Previous addresses
+pdf.addressHistory.previous.fromto = From {0} to {1}:
+
+pdf.benefits = Your UK benefits
+pdf.benefits.childBenefit = Child benefit claimed
+pdf.benefits.childBenefit.yes = Yes
+pdf.benefits.childBenefit.no = No
+pdf.benefits.childBenefitNumber = Child benefit number
+pdf.benefits.childBenefitNumber.unknown = Not known
+pdf.benefits.otherBenefits = Other benefits
+pdf.benefits.otherBenefits.none = None
+
+pdf.employment = Employment
+pdf.employment.notWorked = You have never worked in the UK
+pdf.employment.mostRecentEmployer = Most recent employer
+pdf.employment.mostRecentEmployer.name = Name
+pdf.employment.mostRecentEmployer.address = Address
+pdf.employment.mostRecentEmployer.duration = Duration
+pdf.employment.mostRecentEmployer.from = From {0} (on-going)
+pdf.employment.mostRecentEmployer.fromto = {0} to {1}
