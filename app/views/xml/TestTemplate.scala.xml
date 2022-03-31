@@ -157,6 +157,22 @@
                 }
                 </fo:block-container>
 
+                @if(model.previousEmployers.nonEmpty) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.employment.previousEmployers"): </fo:inline></fo:block>
+                    @for(employer <- model.previousEmployers) {
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.previousEmployers.name"): </fo:inline>@employer.name</fo:block>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm">
+                        <fo:inline>@messages("pdf.employment.previousEmployers.address"): </fo:inline>
+                        @for(line <- employer.address) {
+                        <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
+                        }
+                    </fo:block>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.previousEmployers.duration"): </fo:inline>@messages("pdf.employment.previousEmployers.fromto", employer.from, employer.to)</fo:block>
+                    }
+                </fo:block-container>
+                }
+
             </fo:block></fo:block-container>
 
         </fo:flow>
