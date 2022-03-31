@@ -173,6 +173,20 @@
                 </fo:block-container>
                 }
 
+                <!-- Documents -->
+                <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.documents")</fo:block>
+                @for(primaryDocument <- model.primaryDocument) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.documents.primaryDocument"): </fo:inline>@messages(primaryDocument)</fo:block>
+                </fo:block-container>
+                }
+
+                @for(secondaryDocuments <- model.secondaryDocuments) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.documents.secondaryDocuments"): </fo:inline>@secondaryDocuments.map(key => messages(key)).mkString(" " + messages("pdf.documents.secondaryDocuments.and") + " ")</fo:block>
+                </fo:block-container>
+                }
+
             </fo:block></fo:block-container>
 
         </fo:flow>

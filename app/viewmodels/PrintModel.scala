@@ -38,8 +38,8 @@ final case class PrintModel(
                            otherBenefits: Option[String],
                            mostRecentUkEmployer: Option[MostRecentUkEmployerPrintModel],
                            previousEmployers: List[PreviousEmployerPrintModel],
-                           primaryDocument: Option[PrimaryDocument],
-                           secondaryDocuments: Option[Set[AlternativeDocuments]]
+                           primaryDocument: Option[String],
+                           secondaryDocuments: Option[List[String]]
                            )
 
 final case class PreviousAddressPrintModel(address: List[String], from: String, to: String)
@@ -85,8 +85,8 @@ object PrintModel {
       otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
       mostRecentUkEmployer = getMostRecentUkEmployer(userAnswers)
       previousEmployers = getPreviousEmployers(userAnswers)
-      primaryDocument = userAnswers.get(WhichPrimaryDocumentPage)
-      secondaryDocuments = userAnswers.get(WhichAlternativeDocumentsPage)
+      primaryDocument = userAnswers.get(WhichPrimaryDocumentPage).map(key => s"whichPrimaryDocument.$key")
+      secondaryDocuments = userAnswers.get(WhichAlternativeDocumentsPage).map(_.toList.map(key => s"whichAlternativeDocuments.$key"))
     } yield {
       PrintModel(
         name,

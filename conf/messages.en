@@ -559,3 +559,8 @@ pdf.employment.previousEmployers.name = Name
 pdf.employment.previousEmployers.address = Address
 pdf.employment.previousEmployers.duration = Dates
 pdf.employment.previousEmployers.fromto = {0} to {1}
+
+pdf.documents = Documents to send
+pdf.documents.primaryDocument = Document
+pdf.documents.secondaryDocuments = Documents
+pdf.documents.secondaryDocuments.and = and
