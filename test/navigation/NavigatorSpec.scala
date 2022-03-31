@@ -368,7 +368,7 @@ class NavigatorSpec extends SpecBase {
 
           "at index 1 when there is a previous address" in {
             val address = PreviousEmployersAddress(
-              addressLine1 = "line 1", addressLine2 = Some("line 2"), addressLine3 = None
+              addressLine1 = "line 1", addressLine2 = Some("line 2"), addressLine3 = None, postcode = "postcode"
             )
             val answers = emptyUserAnswers
               .set(DoYouHaveAnyPreviousEmployersPage, true).success.value

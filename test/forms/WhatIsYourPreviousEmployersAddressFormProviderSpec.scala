@@ -19,8 +19,6 @@ package forms
 import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
 import play.api.data.FormError
 
-import java.time.{LocalDate, ZoneOffset}
-
 class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
 
   val form = new WhatIsYourPreviousEmployersAddressFormProvider()()
@@ -55,7 +53,6 @@ class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBeha
   ".addressLine2" - {
 
     val fieldName = "addressLine2"
-    val requiredKey = "whatIsYourPreviousEmployersAddress.error.addressLine2.required"
     val lengthKey = "whatIsYourPreviousEmployersAddress.error.addressLine2.length"
     val maxLength = 100
 
@@ -77,6 +74,26 @@ class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBeha
 
     val fieldName = "addressLine3"
     val lengthKey = "whatIsYourPreviousEmployersAddress.error.addressLine3.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+
+  ".postcode" - {
+
+    val fieldName = "postcode"
+    val lengthKey = "whatIsYourPreviousEmployersAddress.error.postcode.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(

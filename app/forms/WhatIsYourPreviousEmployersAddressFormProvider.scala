@@ -16,13 +16,12 @@
 
 package forms
 
-import javax.inject.Inject
 import forms.mappings.Mappings
+import models.PreviousEmployersAddress
 import play.api.data.Form
 import play.api.data.Forms._
-import models.PreviousEmployersAddress
 
-import java.time.LocalDate
+import javax.inject.Inject
 
 class WhatIsYourPreviousEmployersAddressFormProvider @Inject() extends Mappings {
 
@@ -33,7 +32,9 @@ class WhatIsYourPreviousEmployersAddressFormProvider @Inject() extends Mappings 
        "addressLine2" -> optional(text("whatIsYourPreviousEmployersAddress.error.addressLine2.required")
          .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine2.length"))),
        "addressLine3" -> optional(text("whatIsYourPreviousEmployersAddress.error.addressLine3.required")
-         .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine3.length")))
-     )(PreviousEmployersAddress.apply)(PreviousEmployersAddress.unapply)
+         .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.addressLine3.length"))),
+       "postcode" -> text("whatIsYourPreviousEmployersAddress.error.postcode.required")
+         .verifying(maxLength(100, "whatIsYourPreviousEmployersAddress.error.postcode.length"))
+    )(PreviousEmployersAddress.apply)(PreviousEmployersAddress.unapply)
    )
  }

@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.AreYouSureYouWantToRemovePreviousAddressFormProvider
-import models.{Index, NormalMode, PreviousAddressUk, UserAnswers}
+import models.{Index, NormalMode, PreviousAddressUk}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{never, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{AreYouSureYouWantToRemovePreviousAddressPage, WhatIsYourPreviousAddressUkPage}
+import pages.WhatIsYourPreviousAddressUkPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
