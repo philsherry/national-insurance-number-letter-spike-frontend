@@ -45,7 +45,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
   lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(Index(0), NormalMode).url
 
   val userAnswers = UserAnswers(userAnswersId)
-    .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("value 1", Some("value 2"), None))
+    .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("value 1", Some("value 2"), None, "postcode"))
     .success.value
 
   "WhatIsYourPreviousEmployersAddress Controller" - {
@@ -78,7 +78,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PreviousEmployersAddress("value 1", Some("value 2"), None)), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(PreviousEmployersAddress("value 1", Some("value 2"), None, "postcode")), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -97,7 +97,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
           .build()
 
       val validData = List(
-        "addressLine1" -> "value 1", "addressLine2" -> "value 2",
+        "addressLine1" -> "value 1", "addressLine2" -> "value 2", "postcode" -> "postcode",
         "from.day" -> LocalDate.now.getDayOfMonth.toString, "from.month" -> LocalDate.now.getMonthValue.toString, "from.year" -> LocalDate.now.getYear.toString,
         "to.day" -> LocalDate.now.getDayOfMonth.toString, "to.month" -> LocalDate.now.getMonthValue.toString, "to.year" -> LocalDate.now.getYear.toString
       )

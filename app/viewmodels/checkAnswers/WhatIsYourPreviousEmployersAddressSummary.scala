@@ -32,8 +32,7 @@ object WhatIsYourPreviousEmployersAddressSummary  {
     answers.get(WhatIsYourPreviousEmployersAddressPage(Index(index))).map {
       answer =>
 
-        // TODO missing postcode
-        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3)
+        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, Some(answer.postcode))
           .flatten.map(HtmlFormat.escape(_).toString)
           .mkString("<br/>")
 

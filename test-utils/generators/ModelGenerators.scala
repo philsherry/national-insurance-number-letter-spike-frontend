@@ -41,7 +41,8 @@ trait ModelGenerators { this: Generators =>
         addressLine1 <- arbitrary[String]
         addressLine2 <- arbitrary[Option[String]]
         addressLine3 <- arbitrary[Option[String]]
-      } yield PreviousEmployersAddress(addressLine1, addressLine2, addressLine3)
+        postcode     <- arbitrary[String]
+      } yield PreviousEmployersAddress(addressLine1, addressLine2, addressLine3, postcode)
     }
 
   implicit lazy val arbitraryWhatIsYourEmployersAddress: Arbitrary[WhatIsYourEmployersAddress] =
