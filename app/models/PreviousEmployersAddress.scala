@@ -18,8 +18,6 @@ package models
 
 import play.api.libs.json._
 
-import java.time.LocalDate
-
 final case class PreviousEmployersAddress(
                                            addressLine1: String,
                                            addressLine2: Option[String],

@@ -16,13 +16,12 @@
 
 package forms
 
-import javax.inject.Inject
 import forms.mappings.Mappings
+import models.PreviousEmployersAddress
 import play.api.data.Form
 import play.api.data.Forms._
-import models.PreviousEmployersAddress
 
-import java.time.LocalDate
+import javax.inject.Inject
 
 class WhatIsYourPreviousEmployersAddressFormProvider @Inject() extends Mappings {
 

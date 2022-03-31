@@ -19,8 +19,6 @@ package forms
 import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
 import play.api.data.FormError
 
-import java.time.{LocalDate, ZoneOffset}
-
 class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
 
   val form = new WhatIsYourPreviousEmployersAddressFormProvider()()
