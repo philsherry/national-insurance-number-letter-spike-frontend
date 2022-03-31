@@ -18,8 +18,7 @@ package viewmodels
 
 import models._
 import pages._
-import play.api.libs.json.Json
-import queries.PreviousAddressListQuery
+import queries._
 
 import java.time.LocalDate
 
@@ -28,10 +27,27 @@ final case class PrintModel(
                            previousName: Option[WhatIsYourPreviousName],
                            dob: LocalDate,
                            currentAddress: List[String],
-                           previousAddresses: List[PreviousAddressPrintModel]
+                           previousAddresses: List[PreviousAddressPrintModel],
+                           returningFromLivingAbroad: Boolean,
+                           telephoneNumber: String,
+                           nino: Option[String],
+                           marriage: Option[LocalDate],
+                           civilPartnership: Option[LocalDate],
+                           previousMarriageOrPartnership: Option[PreviousMarriageOrPartnershipDetails],
+                           claimedChildBenefit: Boolean,
+                           childBenefitNumber: Option[String],
+                           otherBenefits: Option[String],
+                           mostRecentUkEmployer: Option[MostRecentUkEmployerPrintModel],
+                           previousEmployers: List[PreviousEmployerPrintModel],
+                           primaryDocument: Option[PrimaryDocument],
+                           secondaryDocuments: Option[Set[AlternativeDocuments]]
                            )
 
 final case class PreviousAddressPrintModel(address: List[String], from: LocalDate, to: LocalDate)
+
+final case class MostRecentUkEmployerPrintModel(name: String, address: List[String], from: LocalDate, to: Option[LocalDate])
+
+final case class PreviousEmployerPrintModel(name: String, address: List[String], from: LocalDate, to: LocalDate)
 
 object PrintModel {
 
@@ -42,13 +58,39 @@ object PrintModel {
       dob <- userAnswers.get(WhatIsYourDateOfBirthPage)
       currentAddress <- getCurrentAddress(userAnswers)
       previousAddresses = getPreviousAddresses(userAnswers)
+      returningFromWorkingAbroad <- userAnswers.get(AreYouReturningFromLivingAbroadPage)
+      telephoneNumber <- userAnswers.get(WhatIsYourTelephoneNumberPage)
+      nino = userAnswers.get(WhatIsYourNationalInsuranceNumberPage).map(_.nino)
+      marriage = userAnswers.get(WhenDidYouGetMarriedPage)
+      civilPartnership = userAnswers.get(WhenDidYouEnterACivilPartnershipPage)
+      previousMarriageOrPartnership = userAnswers.get(PreviousMarriageOrPartnershipDetailsPage)
+      claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
+      childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
+      otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
+      mostRecentUkEmployer = getMostRecentUkEmployer(userAnswers)
+      previousEmployers = getPreviousEmployers(userAnswers)
+      primaryDocument = userAnswers.get(WhichPrimaryDocumentPage)
+      secondaryDocuments = userAnswers.get(WhichAlternativeDocumentsPage)
     } yield {
       PrintModel(
         name,
         previousName,
         dob,
         currentAddress,
-        previousAddresses
+        previousAddresses,
+        returningFromWorkingAbroad,
+        telephoneNumber,
+        nino,
+        marriage,
+        civilPartnership,
+        previousMarriageOrPartnership,
+        claimedChildBenefit,
+        childBenefitNumber,
+        otherBenefits,
+        mostRecentUkEmployer,
+        previousEmployers,
+        primaryDocument,
+        secondaryDocuments
       )
     }
   }
@@ -78,6 +120,41 @@ object PrintModel {
           prevInt.to
         )
         }
+      }
+    }
+  }
+
+  private def getMostRecentUkEmployer(userAnswers: UserAnswers): Option[MostRecentUkEmployerPrintModel] = {
+    for {
+      name <- userAnswers.get(WhatIsYourEmployersNamePage)
+      address <- userAnswers.get(WhatIsYourEmployersAddressPage)
+      from <- userAnswers.get(WhenDidYouStartWorkingForEmployerPage)
+      to = userAnswers.get(WhenDidYouFinishYourEmploymentPage)
+    } yield {
+      MostRecentUkEmployerPrintModel(
+        name,
+        address.lines,
+        from,
+        to
+      )
+    }
+  }
+
+  private def getPreviousEmployers(userAnswers: UserAnswers): List[PreviousEmployerPrintModel] = {
+    val count = userAnswers.get(PreviousEmployersQuery).getOrElse(List.empty).length
+    (0 until count).toList.flatMap { index =>
+      for {
+        name <- userAnswers.get(WhatIsYourPreviousEmployersNamePage(Index(index)))
+        address <- userAnswers.get(WhatIsYourPreviousEmployersAddressPage(Index(index)))
+        from <- userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(index)))
+        to <- userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(index)))
+      } yield {
+        PreviousEmployerPrintModel(
+          name,
+          address.lines,
+          from,
+          to
+        )
       }
     }
   }
