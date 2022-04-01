@@ -65,6 +65,7 @@ class Navigator @Inject()() {
     case WhatIsYourPreviousEmployersAddressPage(index)          => _ => routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
     case WhenDidYouStartWorkingForPreviousEmployerPage(index)   => _ => routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
     case WhenDidYouStopWorkingForPreviousEmployerPage(_)        => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+    case AreYouSureYouWantToRemovePreviousEmployerPage(_)       => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
     case DoYouHavePrimaryDocumentPage                           => doYouHaveAPrimaryDocumentRoutes
     case WhichPrimaryDocumentPage                               => _ => routes.CheckYourAnswersController.onPageLoad
     case DoYouHaveTwoSecondaryDocumentsPage                     => doYouHaveTwoSecondaryDocumentsRoutes
