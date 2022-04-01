@@ -18,7 +18,7 @@ package pages
 
 import models.Index
 import play.api.libs.json.{JsPath, JsValue}
-import queries.{Gettable, Settable}
+import queries.Settable
 
 final case class PreviousAddressQuery(index: Index) extends Settable[JsValue] {
 
