@@ -22,7 +22,7 @@ import forms.AreYouSureYouWantToRemovePreviousEmployerFormProvider
 import javax.inject.Inject
 import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.{AreYouSureYouWantToRemovePreviousEmployerPage, PreviousAddressQuery, PreviousEmployerQuery}
+import pages.{AreYouSureYouWantToRemovePreviousEmployerPage, PreviousAddressQuery, PreviousEmployerQuery, WhatIsYourPreviousEmployersNamePage, WhenDidYouStartWorkingForPreviousEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -52,22 +52,22 @@ class AreYouSureYouWantToRemovePreviousEmployerController @Inject()(
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(AreYouSureYouWantToRemovePreviousEmployerPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode, index))
+      val employerName = request.userAnswers.get(WhatIsYourPreviousEmployersNamePage(index))
+      val from = request.userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(index))
+      val to = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(index))
+      Ok(view(form, employerName, from, to, mode, index))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, index))),
-
+        formWithErrors => {
+          val employerName = request.userAnswers.get(WhatIsYourPreviousEmployersNamePage(index))
+          val from = request.userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(index))
+          val to = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(index))
+          Future.successful(BadRequest(view(formWithErrors, employerName, from, to, mode, index))),
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousEmployerPage(index), value))

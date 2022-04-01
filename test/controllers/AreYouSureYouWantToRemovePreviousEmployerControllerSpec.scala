@@ -56,25 +56,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
         val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Index(0))(request, messages(application)).toString
-      }
-    }
-
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouSureYouWantToRemovePreviousEmployerPage(Index(0)), true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousEmployerRoute)
-
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousEmployerView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, None, None, None, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -104,7 +86,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
       }
     }
 
-    "must remove the previous enployer if the user selects yes" in {
+    "must remove the previous employer if the user selects yes" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -170,7 +152,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, None, None, None, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
