@@ -406,6 +406,10 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
       }
 
+      "go from are you sure you want to remove your previous employer page to the do you have any previous employers page" in {
+        navigator.nextPage(AreYouSureYouWantToRemovePreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+      }
+
       "go from the do you have a primary document page" - {
 
         "to the which primary document page when the user selects yes" in {

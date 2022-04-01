@@ -343,10 +343,17 @@ whatOtherUkBenefitsHaveYouReceived.error.length = The other UK benefits you have
 whatOtherUkBenefitsHaveYouReceived.change.hidden = what other UK benefits you have received
 
 doYouHaveAnyPreviousEmployers.title = Do you have any previous employers?
+doYouHaveAnyPreviousEmployers.add.title = You have added 1 previous employers
+doYouHaveAnyPreviousEmployers.add.title.plural = You have added {0} previous employers
 doYouHaveAnyPreviousEmployers.heading = Do you have any previous employers?
+doYouHaveAnyPreviousEmployers.add.heading = You have added 1 previous employers
+doYouHaveAnyPreviousEmployers.add.heading.plural = You have added {0} previous employers
+doYouHaveAnyPreviousEmployers.add.legend = Do you want to add another previous employer?
 doYouHaveAnyPreviousEmployers.checkYourAnswersLabel = Do you have any previous employers?
 doYouHaveAnyPreviousEmployers.error.required = Select yes if you have any previous employers
 doYouHaveAnyPreviousEmployers.change.hidden = whether you have any previous employers
+doYouHaveAnyPreviousEmployers.from = from
+doYouHaveAnyPreviousEmployers.to = to
 
 haveYouEverWorkedInUk.title = Have you ever worked in the UK?
 haveYouEverWorkedInUk.heading = Have you ever worked in the UK?
@@ -569,3 +576,8 @@ insufficientDocuments.title = You do not have the required documents
 insufficientDocuments.heading = You do not have the required documents
 insufficientDocuments.p1 = Based on your answers, you do not have the documents needed to request your National Insurance number using this form.
 insufficientDocuments.p2 = You may need to telephone our National Insurance Registrations helpline on 0300 200 3500, or if you live outside the UK telephone +44 (0) 191 203 7010.
+
+areYouSureYouWantToRemovePreviousEmployer.title = Are you sure you want to remove this previous employer?
+areYouSureYouWantToRemovePreviousEmployer.heading = Are you sure you want to remove this previous employer?
+areYouSureYouWantToRemovePreviousEmployer.error.required = Select yes if you want to remove this previous employer
+areYouSureYouWantToRemovePreviousEmployer.range = From {0} to {1}

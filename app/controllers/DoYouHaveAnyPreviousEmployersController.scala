@@ -18,21 +18,22 @@ package controllers
 
 import controllers.actions._
 import forms.DoYouHaveAnyPreviousEmployersFormProvider
-import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.DoYouHaveAnyPreviousEmployersPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import pages._
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.DoYouHaveAnyPreviousEmployersView
 
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class DoYouHaveAnyPreviousEmployersController @Inject()(
                                          override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
                                          navigator: Navigator,
                                          identify: IdentifierAction,
                                          getData: DataRetrievalAction,
@@ -44,6 +45,30 @@ class DoYouHaveAnyPreviousEmployersController @Inject()(
 
   val form = formProvider()
 
+  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+
+  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] = {
+
+    val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(Seq.empty)
+
+    previousEmployers.indices.map { i =>
+
+      val name = answers.get(WhatIsYourPreviousEmployersNamePage(Index(i)))
+      val range = for {
+        from <- answers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
+        to <- answers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
+      } yield s"${messages("doYouHaveAnyPreviousEmployers.from")} $from ${messages("doYouHaveAnyPreviousEmployers.to")} $to"
+
+      ListWithActionsItem(
+        name = Text(List(name, range).flatten.mkString(", ")),
+        actions = List(
+          ListWithActionsAction(content = Text(messages("site.change")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(i), mode).url),
+          ListWithActionsAction(content = Text(messages("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(i), mode).url)
+        )
+      )
+    }
+  }
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
@@ -52,7 +77,7 @@ class DoYouHaveAnyPreviousEmployersController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, listItems(request.userAnswers, mode), mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -60,12 +85,11 @@ class DoYouHaveAnyPreviousEmployersController @Inject()(
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, listItems(request.userAnswers, mode), mode))),
 
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(DoYouHaveAnyPreviousEmployersPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, mode, updatedAnswers))
       )
   }

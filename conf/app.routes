@@ -233,3 +233,8 @@ GET        /:index/change-if-you-want-to-remove-previous-address                
 POST       /:index/change-if-you-want-to-remove-previous-address                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /insufficient-documents                       controllers.InsufficientDocumentsController.onPageLoad()
+
+GET        /:index/are-you-sure-you-want-to-remove-previous-employer                        controllers.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/are-you-sure-you-want-to-remove-previous-employer                        controllers.AreYouSureYouWantToRemovePreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-if-you-want-to-remove-previous-employer                  controllers.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-if-you-want-to-remove-previous-employer                  controllers.AreYouSureYouWantToRemovePreviousEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
