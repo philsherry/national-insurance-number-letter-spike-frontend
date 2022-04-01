@@ -21,7 +21,7 @@ import forms.AreYouSureYouWantToRemovePreviousEmployerFormProvider
 import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{never, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import pages.AreYouSureYouWantToRemovePreviousEmployerPage
 import play.api.inject.bind
@@ -101,6 +101,56 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
+      }
+    }
+
+    "must remove the previous enployer if the user selects yes" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousEmployerRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        route(application, request).value.futureValue
+
+        verify(mockSessionRepository, times(1)).set(any())
+      }
+    }
+
+    "must not remove the previous employer if the user selects no" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousEmployerRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        route(application, request).value.futureValue
+
+        verify(mockSessionRepository, never()).set(any())
       }
     }
 

@@ -20,9 +20,9 @@ import controllers.actions._
 import forms.AreYouSureYouWantToRemovePreviousEmployerFormProvider
 
 import javax.inject.Inject
-import models.{Index, Mode}
+import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.AreYouSureYouWantToRemovePreviousEmployerPage
+import pages.{AreYouSureYouWantToRemovePreviousEmployerPage, PreviousAddressQuery, PreviousEmployerQuery}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -45,6 +45,11 @@ class AreYouSureYouWantToRemovePreviousEmployerController @Inject()(
 
   val form = formProvider()
 
+  private def removeEmployer(answers: UserAnswers, index: Index): Future[Unit] = for {
+    updatedAnswers <- Future.fromTry(answers.remove(PreviousEmployerQuery(index)))
+    _              <- sessionRepository.set(updatedAnswers)
+  } yield ()
+
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
@@ -66,7 +71,7 @@ class AreYouSureYouWantToRemovePreviousEmployerController @Inject()(
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousEmployerPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
+            _              <- if (value) removeEmployer(updatedAnswers, index: Index) else Future.unit
           } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousEmployerPage(index), mode, updatedAnswers))
       )
   }
