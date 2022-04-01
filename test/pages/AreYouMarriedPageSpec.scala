@@ -16,7 +16,10 @@
 
 package pages
 
+import models.UserAnswers
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class AreYouMarriedPageSpec extends PageBehaviours {
 
@@ -27,5 +30,23 @@ class AreYouMarriedPageSpec extends PageBehaviours {
     beSettable[Boolean](AreYouMarriedPage)
 
     beRemovable[Boolean](AreYouMarriedPage)
+
+    "must remove marriage date when false" in {
+      val answers = UserAnswers("id")
+        .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 1, 1)).get
+
+      val result = answers.set(AreYouMarriedPage, false).success.value
+
+      result.get(WhenDidYouGetMarriedPage) must not be defined
+    }
+
+    "must not remove marriage date when true" in {
+      val answers = UserAnswers("id")
+        .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 1, 1)).get
+
+      val result = answers.set(AreYouMarriedPage, true).success.value
+
+      result.get(WhenDidYouGetMarriedPage).value mustEqual LocalDate.of(2000, 1, 1)
+    }
   }
 }
