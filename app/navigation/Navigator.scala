@@ -174,6 +174,7 @@ class Navigator @Inject()() {
 
   private val checkRouteMap: Page => UserAnswers => Call = {
     case AreYouInACivilPartnershipPage => areYouInACivilPartnershipCheckRoutes
+    case AreYouMarriedPage => areYouMarriedCheckRoutes
     case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
@@ -182,6 +183,12 @@ class Navigator @Inject()() {
   private def areYouInACivilPartnershipCheckRoutes(answers: UserAnswers): Call =
     (answers.get(AreYouInACivilPartnershipPage), answers.get(WhenDidYouEnterACivilPartnershipPage)) match {
       case (Some(true), None) => routes.WhenDidYouEnterACivilPartnershipController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def areYouMarriedCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(AreYouMarriedPage), answers.get(WhenDidYouGetMarriedPage)) match {
+      case (Some(true), None) => routes.WhenDidYouGetMarriedController.onPageLoad(CheckMode)
       case (_, _) => routes.CheckYourAnswersController.onPageLoad
     }
 

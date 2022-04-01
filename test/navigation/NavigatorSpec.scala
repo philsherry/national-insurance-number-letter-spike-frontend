@@ -470,6 +470,25 @@ class NavigatorSpec extends SpecBase {
 
       }
 
+      "go from the are you married page" - {
+
+        "to the check your answers page if yes and marriage date is set" in {
+          val answers = emptyUserAnswers
+            .set(AreYouMarriedPage, true).get
+            .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 1, 1)).get
+
+          navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the civil partnership date page if answer is no and civil partnership date is not set" in {
+          val answers = emptyUserAnswers
+            .set(AreYouMarriedPage, true).get
+
+          navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.WhenDidYouGetMarriedController.onPageLoad(CheckMode)
+        }
+
+      }
+
       "go from the do you have primary document page" - {
 
         "to the check your answers page when the user selects yes and which primary document is set" in {
