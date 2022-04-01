@@ -169,7 +169,7 @@ class Navigator @Inject()() {
   private def doYouHaveTwoSecondaryDocumentsRoutes(answers: UserAnswers): Call =
     answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
       case true  => routes.WhichAlternativeDocumentsController.onPageLoad(NormalMode)
-      case false => ???
+      case false => routes.InsufficientDocumentsController.onPageLoad()
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -188,7 +188,7 @@ class Navigator @Inject()() {
   private def doYouHaveTwoSecondaryDocumentsCheckRoutes(answers: UserAnswers): Call =
     answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
       case true => routes.WhichAlternativeDocumentsController.onPageLoad(CheckMode)
-      case false => ???
+      case false => routes.InsufficientDocumentsController.onPageLoad()
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {

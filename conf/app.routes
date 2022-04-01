@@ -231,3 +231,5 @@ GET        /:index/areYouSureYouWantToRemovePreviousAddress                     
 POST       /:index/areYouSureYouWantToRemovePreviousAddress                        controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/changeAreYouSureYouWantToRemovePreviousAddress                  controllers.AreYouSureYouWantToRemovePreviousAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /insufficientDocuments                       controllers.InsufficientDocumentsController.onPageLoad()

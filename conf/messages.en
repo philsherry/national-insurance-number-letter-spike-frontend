@@ -564,3 +564,8 @@ pdf.documents = Documents to send
 pdf.documents.primaryDocument = Document
 pdf.documents.secondaryDocuments = Documents
 pdf.documents.secondaryDocuments.and = and
+
+insufficientDocuments.title = You do not have the required documents
+insufficientDocuments.heading = You do not have the required documents
+insufficientDocuments.p1 = Based on your answers, you do not have the documents needed to request your National Insurance number using this form.
+insufficientDocuments.p2 = You may need to telephone our National Insurance Registrations helpline on 0300 200 3500, or if you live outside the UK telephone +44 (0) 191 203 7010.
