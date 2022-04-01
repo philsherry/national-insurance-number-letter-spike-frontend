@@ -16,7 +16,10 @@
 
 package pages
 
+import models.UserAnswers
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class AreYouInACivilPartnershipPageSpec extends PageBehaviours {
 
@@ -27,5 +30,23 @@ class AreYouInACivilPartnershipPageSpec extends PageBehaviours {
     beSettable[Boolean](AreYouInACivilPartnershipPage)
 
     beRemovable[Boolean](AreYouInACivilPartnershipPage)
+
+    "must remove civil partnership date when false" in {
+      val answers = UserAnswers("id")
+        .set(WhenDidYouEnterACivilPartnershipPage, LocalDate.of(2000, 1, 1)).get
+
+      val result = answers.set(AreYouInACivilPartnershipPage, false).success.value
+
+      result.get(WhenDidYouEnterACivilPartnershipPage) must not be defined
+    }
+
+    "must not remove civil partnership date when true" in {
+      val answers = UserAnswers("id")
+        .set(WhenDidYouEnterACivilPartnershipPage, LocalDate.of(2000, 1, 1)).get
+
+      val result = answers.set(AreYouInACivilPartnershipPage, true).success.value
+
+      result.get(WhenDidYouEnterACivilPartnershipPage).value must equal (LocalDate.of(2000, 1, 1))
+    }
   }
 }
