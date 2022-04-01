@@ -30,6 +30,7 @@ case object AreYouInACivilPartnershipPage extends QuestionPage[Boolean] {
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
     value match {
       case Some(false) => userAnswers.remove(WhenDidYouEnterACivilPartnershipPage)
+      case Some(true) => userAnswers.remove(WhenDidYouGetMarriedPage)
       case _ => super.cleanup(value, userAnswers)
     }
   }
