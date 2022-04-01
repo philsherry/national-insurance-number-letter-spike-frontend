@@ -48,5 +48,14 @@ class AreYouMarriedPageSpec extends PageBehaviours {
 
       result.get(WhenDidYouGetMarriedPage).value mustEqual LocalDate.of(2000, 1, 1)
     }
+
+    "must remove civil partnership date when true" in {
+      val answers = UserAnswers("id")
+        .set(WhenDidYouEnterACivilPartnershipPage, LocalDate.of(2000, 1, 1)).get
+
+      val result = answers.set(AreYouMarriedPage, true).success.value
+
+      result.get(WhenDidYouEnterACivilPartnershipPage) must not be defined
+    }
   }
 }
