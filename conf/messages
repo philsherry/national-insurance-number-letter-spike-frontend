@@ -343,10 +343,17 @@ whatOtherUkBenefitsHaveYouReceived.error.length = The other UK benefits you have
 whatOtherUkBenefitsHaveYouReceived.change.hidden = what other UK benefits you have received
 
 doYouHaveAnyPreviousEmployers.title = Do you have any previous employers?
+doYouHaveAnyPreviousEmployers.add.title = You have added 1 previous employers
+doYouHaveAnyPreviousEmployers.add.title.plural = You have added {0} previous employers
 doYouHaveAnyPreviousEmployers.heading = Do you have any previous employers?
+doYouHaveAnyPreviousEmployers.add.heading = You have added 1 previous employers
+doYouHaveAnyPreviousEmployers.add.heading.plural = You have added {0} previous employers
+doYouHaveAnyPreviousEmployers.add.legend = Do you want to add another previous employer?
 doYouHaveAnyPreviousEmployers.checkYourAnswersLabel = Do you have any previous employers?
 doYouHaveAnyPreviousEmployers.error.required = Select yes if you have any previous employers
 doYouHaveAnyPreviousEmployers.change.hidden = whether you have any previous employers
+doYouHaveAnyPreviousEmployers.from = from
+doYouHaveAnyPreviousEmployers.to = to
 
 haveYouEverWorkedInUk.title = Have you ever worked in the UK?
 haveYouEverWorkedInUk.heading = Have you ever worked in the UK?

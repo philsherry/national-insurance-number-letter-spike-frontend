@@ -20,21 +20,17 @@ import base.SpecBase
 import forms.DoYouHaveAnyPreviousAddressesFormProvider
 import models.{Index, NormalMode, PreviousAddressUk}
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.{IsYourPreviousAddressInUkPage, WhatIsYourPreviousAddressUkPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import views.html.DoYouHaveAnyPreviousAddressesView
 
 import java.time.LocalDate
-import scala.concurrent.Future
 
 class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoSugar {
 
