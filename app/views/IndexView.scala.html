@@ -18,7 +18,7 @@
     layout: templates.Layout
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(welshEnabled: Boolean)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageTitle    = titleNoForm(messages("index.title")),
@@ -29,7 +29,10 @@
     <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
 
     <p class="govuk-body">@messages("index.p1") @messages("index.p2")</p>
+
+    @if(welshEnabled) {
     <p class="govuk-body">@messages("index.p3") <a href="@routes.LanguageSwitchController.switchToLanguage("cy")" class="govuk-link">@messages("index.p3.link")</a></p>
+    }
 
     <h2 class="govuk-heading-m">@messages("index.h2")</h2>
 
