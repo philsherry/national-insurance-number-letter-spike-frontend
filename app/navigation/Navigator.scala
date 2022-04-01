@@ -173,10 +173,17 @@ class Navigator @Inject()() {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
+    case AreYouInACivilPartnershipPage => areYouInACivilPartnershipCheckRoutes
     case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
+
+  private def areYouInACivilPartnershipCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(AreYouInACivilPartnershipPage), answers.get(WhenDidYouEnterACivilPartnershipPage)) match {
+      case (Some(true), None) => routes.WhenDidYouEnterACivilPartnershipController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
 
   private def doYouHavePrimaryDocumentCheckRoutes(answers: UserAnswers): Call =
     (answers.get(DoYouHavePrimaryDocumentPage), answers.get(WhichPrimaryDocumentPage)) match {
