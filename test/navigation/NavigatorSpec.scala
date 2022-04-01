@@ -461,7 +461,14 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(AreYouInACivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
-        "to the civil partnership date page if answer is no and civil partnership date is not set" in {
+        "to the check your answers page if no" in {
+          val answers = emptyUserAnswers
+            .set(AreYouInACivilPartnershipPage, false).get
+
+          navigator.nextPage(AreYouInACivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the civil partnership date page if answer is yes and civil partnership date is not set" in {
           val answers = emptyUserAnswers
             .set(AreYouInACivilPartnershipPage, true).get
 
@@ -480,7 +487,14 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
-        "to the civil partnership date page if answer is no and civil partnership date is not set" in {
+        "to the check your answers page if no" in {
+          val answers = emptyUserAnswers
+            .set(AreYouMarriedPage, false).get
+
+          navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the civil partnership date page if answer is yes and civil partnership date is not set" in {
           val answers = emptyUserAnswers
             .set(AreYouMarriedPage, true).get
 
@@ -489,12 +503,47 @@ class NavigatorSpec extends SpecBase {
 
       }
 
+      "go from the previous marriage or civil partnership page" - {
+
+        "to the check your answers page if answer is yes and previous details are set" in {
+          val previous = PreviousMarriageOrPartnershipDetails(LocalDate.of(2000,1,1), LocalDate.of(2001, 1, 1), "reason")
+
+          val answers = emptyUserAnswers
+            .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).get
+            .set(PreviousMarriageOrPartnershipDetailsPage, previous).get
+
+          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page if answer is no" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, false).get
+
+          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the previous details page if answer is yes and civil partnership date is not set" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).get
+
+          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(CheckMode)
+        }
+
+      }
+
       "go from the do you have previous name page" - {
 
-        "to the check your answers page if yes and previous name is set" in {
+        "to the check your answers page if answer is yes and previous name is set" in {
           val answers = emptyUserAnswers
             .set(DoYouHaveAPreviousNamePage, true).get
             .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName("first", None, "last")).get
+
+          navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page if answer is no" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHaveAPreviousNamePage, false).get
 
           navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
