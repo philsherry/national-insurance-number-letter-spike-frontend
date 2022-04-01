@@ -16,6 +16,7 @@
 
 package pages
 
+import models.{UserAnswers, WhatIsYourPreviousName}
 import pages.behaviours.PageBehaviours
 
 class DoYouHaveAPreviousNamePageSpec extends PageBehaviours {
@@ -27,5 +28,23 @@ class DoYouHaveAPreviousNamePageSpec extends PageBehaviours {
     beSettable[Boolean](DoYouHaveAPreviousNamePage)
 
     beRemovable[Boolean](DoYouHaveAPreviousNamePage)
+
+    "must previous name when false" in {
+      val answers = UserAnswers("id")
+        .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName("first", None, "last")).get
+
+      val result = answers.set(DoYouHaveAPreviousNamePage, false).success.value
+
+      result.get(WhatIsYourPreviousNamePage) must not be defined
+    }
+
+    "must not remove previous name when true" in {
+      val answers = UserAnswers("id")
+        .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName("first", None, "last")).get
+
+      val result = answers.set(DoYouHaveAPreviousNamePage, true).success.value
+
+      result.get(WhatIsYourPreviousNamePage).value mustEqual WhatIsYourPreviousName("first", None, "last")
+    }
   }
 }

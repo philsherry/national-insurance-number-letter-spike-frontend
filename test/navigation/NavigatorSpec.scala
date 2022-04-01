@@ -489,6 +489,25 @@ class NavigatorSpec extends SpecBase {
 
       }
 
+      "go from the do you have previous name page" - {
+
+        "to the check your answers page if yes and previous name is set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHaveAPreviousNamePage, true).get
+            .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName("first", None, "last")).get
+
+          navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the what is your previous name page if answer is no and previous name is not set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHaveAPreviousNamePage, true).get
+
+          navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode)
+        }
+
+      }
+
       "go from the do you have primary document page" - {
 
         "to the check your answers page when the user selects yes and which primary document is set" in {
