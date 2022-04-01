@@ -16,7 +16,10 @@
 
 package pages
 
+import models.{PreviousMarriageOrPartnershipDetails, UserAnswers}
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPageSpec extends PageBehaviours {
 
@@ -27,5 +30,27 @@ class HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPageSpec extends PageBeh
     beSettable[Boolean](HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage)
 
     beRemovable[Boolean](HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage)
+
+    "must previous name when false" in {
+      val previous = PreviousMarriageOrPartnershipDetails(LocalDate.of(2000,1,1), LocalDate.of(2001, 1, 1), "reason")
+
+      val answers = UserAnswers("id")
+        .set(PreviousMarriageOrPartnershipDetailsPage, previous).get
+
+      val result = answers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, false).success.value
+
+      result.get(PreviousMarriageOrPartnershipDetailsPage) must not be defined
+    }
+
+    "must not remove previous name when true" in {
+      val previous = PreviousMarriageOrPartnershipDetails(LocalDate.of(2000,1,1), LocalDate.of(2001, 1, 1), "reason")
+
+      val answers = UserAnswers("id")
+        .set(PreviousMarriageOrPartnershipDetailsPage, previous).get
+
+      val result = answers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+
+      result.get(PreviousMarriageOrPartnershipDetailsPage).value mustEqual previous
+    }
   }
 }

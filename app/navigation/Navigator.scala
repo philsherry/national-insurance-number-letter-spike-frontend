@@ -174,10 +174,38 @@ class Navigator @Inject()() {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
+    case AreYouInACivilPartnershipPage => areYouInACivilPartnershipCheckRoutes
+    case AreYouMarriedPage => areYouMarriedCheckRoutes
+    case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes
+    case DoYouHaveAPreviousNamePage => doYouHaveAPreviousNameCheckRoutes
     case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
+
+  private def areYouInACivilPartnershipCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(AreYouInACivilPartnershipPage), answers.get(WhenDidYouEnterACivilPartnershipPage)) match {
+      case (Some(true), None) => routes.WhenDidYouEnterACivilPartnershipController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def areYouMarriedCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(AreYouMarriedPage), answers.get(WhenDidYouGetMarriedPage)) match {
+      case (Some(true), None) => routes.WhenDidYouGetMarriedController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage), answers.get(PreviousMarriageOrPartnershipDetailsPage)) match {
+      case (Some(true), None) => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def doYouHaveAPreviousNameCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(DoYouHaveAPreviousNamePage), answers.get(WhatIsYourPreviousNamePage)) match {
+      case (Some(true), None) => routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
 
   private def doYouHavePrimaryDocumentCheckRoutes(answers: UserAnswers): Call =
     (answers.get(DoYouHavePrimaryDocumentPage), answers.get(WhichPrimaryDocumentPage)) match {
