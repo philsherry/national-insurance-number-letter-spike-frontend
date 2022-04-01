@@ -16,6 +16,7 @@
 
 package pages
 
+import models.UserAnswers
 import pages.behaviours.PageBehaviours
 
 class DoYouKnowYourChildBenefitNumberPageSpec extends PageBehaviours {
@@ -27,5 +28,23 @@ class DoYouKnowYourChildBenefitNumberPageSpec extends PageBehaviours {
     beSettable[Boolean](DoYouKnowYourChildBenefitNumberPage)
 
     beRemovable[Boolean](DoYouKnowYourChildBenefitNumberPage)
+
+    "must remove child benefit number when false" in {
+      val answers = UserAnswers("id")
+        .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
+
+      val result = answers.set(HaveYouEverClaimedChildBenefitPage, false).success.value
+
+      result.get(WhatIsYourChildBenefitNumberPage) must not be defined
+    }
+
+    "must not remove child benefit number when true" in {
+      val answers = UserAnswers("id")
+        .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
+
+      val result = answers.set(DoYouHaveAPreviousNamePage, true).success.value
+
+      result.get(WhatIsYourChildBenefitNumberPage).value mustEqual "CHB12345678"
+    }
   }
 }

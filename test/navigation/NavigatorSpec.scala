@@ -21,6 +21,7 @@ import controllers.routes
 import models.PrimaryDocument.BirthCertificate
 import pages._
 import models._
+import uk.gov.hmrc.domain.Nino
 
 import java.time.LocalDate
 
@@ -535,6 +536,59 @@ class NavigatorSpec extends SpecBase {
 
       }
 
+      "go from the have you ever claimed child benefit page" - {
+
+        "to the check your answers page if answer is yes and child benefit number is set" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouEverClaimedChildBenefitPage, true).get
+            .set(DoYouKnowYourChildBenefitNumberPage, true).get
+            .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
+
+          navigator.nextPage(HaveYouEverClaimedChildBenefitPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page if answer is no" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouEverClaimedChildBenefitPage, false).get
+
+          navigator.nextPage(HaveYouEverClaimedChildBenefitPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the do you know your child benefit number page if answer is yes and do you know your child benefit number is not set" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouEverClaimedChildBenefitPage, true).get
+
+          navigator.nextPage(HaveYouEverClaimedChildBenefitPage, CheckMode, answers) mustBe routes.DoYouKnowYourChildBenefitNumberController.onPageLoad(CheckMode)
+        }
+
+      }
+
+      "go from the do you know your child benefit number page" - {
+
+        "to the check your answers page if answer is yes and child benefit number is set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouKnowYourChildBenefitNumberPage, true).get
+            .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
+
+          navigator.nextPage(DoYouKnowYourChildBenefitNumberPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page if answer is no" in {
+          val answers = emptyUserAnswers
+            .set(DoYouKnowYourChildBenefitNumberPage, false).get
+
+          navigator.nextPage(DoYouKnowYourChildBenefitNumberPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the what is your child benefit number page if answer is yes and child benefit number is not set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouKnowYourChildBenefitNumberPage, true).get
+
+          navigator.nextPage(DoYouKnowYourChildBenefitNumberPage, CheckMode, answers) mustBe routes.WhatIsYourChildBenefitNumberController.onPageLoad(CheckMode)
+        }
+
+      }
+
       "go from the do you have previous name page" - {
 
         "to the check your answers page if answer is yes and previous name is set" in {
@@ -557,6 +611,32 @@ class NavigatorSpec extends SpecBase {
             .set(DoYouHaveAPreviousNamePage, true).get
 
           navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode)
+        }
+
+      }
+
+      "go from the do you have know your national insurance number page" - {
+
+        "to the check your answers page if answer is yes and national insurance number is set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouKnowYourNationalInsuranceNumberPage, true).get
+            .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).get
+
+          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page if answer is no" in {
+          val answers = emptyUserAnswers
+            .set(DoYouKnowYourNationalInsuranceNumberPage, false).get
+
+          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the what is your national insurance number page if answer is no and national insurance number is not set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouKnowYourNationalInsuranceNumberPage, true).get
+
+          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, CheckMode, answers) mustBe routes.WhatIsYourNationalInsuranceNumberController.onPageLoad(CheckMode)
         }
 
       }

@@ -16,7 +16,9 @@
 
 package pages
 
+import models.UserAnswers
 import pages.behaviours.PageBehaviours
+import uk.gov.hmrc.domain.Nino
 
 class DoYouKnowYourNationalInsuranceNumberPageSpec extends PageBehaviours {
 
@@ -27,5 +29,23 @@ class DoYouKnowYourNationalInsuranceNumberPageSpec extends PageBehaviours {
     beSettable[Boolean](DoYouKnowYourNationalInsuranceNumberPage)
 
     beRemovable[Boolean](DoYouKnowYourNationalInsuranceNumberPage)
+
+    "must remove national insurance number when false" in {
+      val answers = UserAnswers("id")
+        .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).get
+
+      val result = answers.set(DoYouKnowYourNationalInsuranceNumberPage, false).success.value
+
+      result.get(WhatIsYourNationalInsuranceNumberPage) must not be defined
+    }
+
+    "must not remove national insurance number when true" in {
+      val answers = UserAnswers("id")
+        .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).get
+
+      val result = answers.set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
+
+      result.get(WhatIsYourNationalInsuranceNumberPage).value mustEqual Nino("AA123456A")
+    }
   }
 }
