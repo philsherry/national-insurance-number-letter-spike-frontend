@@ -27,7 +27,7 @@ final case class PreviousEmployersAddress(
 
   def lines: List[String] =
     List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
-    
+
 }
 
 object PreviousEmployersAddress {

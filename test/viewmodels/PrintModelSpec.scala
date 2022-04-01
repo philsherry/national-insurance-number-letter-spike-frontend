@@ -35,7 +35,7 @@ class PrintModelSpec extends SpecBase {
     val previousAddressInternational = PreviousAddressInternational(addressLine1 = "line 1", None, None, country = "France",
       LocalDate.of(2002, 1, 1), LocalDate.of(2003, 1, 1))
     val employerAddress = WhatIsYourEmployersAddress(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
-    val previousEmployerAddress = PreviousEmployersAddress("line 1", None, None)
+    val previousEmployerAddress = PreviousEmployersAddress("line 1", None, None, "AA1 1AA")
 
     "get current address" - {
 
@@ -174,7 +174,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
 
         val expected = List(
-          PreviousEmployerPrintModel("emp 1", List("line 1"), "2 March 2013", "3 March 2013")
+          PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")
         )
 
         getPreviousEmployers(userAnswers) mustBe expected
@@ -192,8 +192,8 @@ class PrintModelSpec extends SpecBase {
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(1)), LocalDate.of(2016, 3, 3)).get
 
         val expected = List(
-          PreviousEmployerPrintModel("emp 1", List("line 1"), "2 March 2013", "3 March 2013"),
-          PreviousEmployerPrintModel("emp 2", List("line 1"), "2 March 2015", "3 March 2016")
+          PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013"),
+          PreviousEmployerPrintModel("emp 2", List("line 1", "AA1 1AA"), "2 March 2015", "3 March 2016")
         )
 
         getPreviousEmployers(userAnswers) mustBe expected
@@ -250,7 +250,7 @@ class PrintModelSpec extends SpecBase {
           Some("CHB12345678"),
           Some("other benefits"),
           Some(MostRecentUkEmployerPrintModel("employer name", List("line 1", "AA1 1AA"), "28 February 2001", None)),
-          List(PreviousEmployerPrintModel("emp 1", List("line 1"), "2 March 2013", "3 March 2013")),
+          List(PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")),
           Some("whichPrimaryDocument.passport"),
           None
         ))
@@ -305,7 +305,7 @@ class PrintModelSpec extends SpecBase {
           Some("CHB12345678"),
           Some("other benefits"),
           Some(MostRecentUkEmployerPrintModel("employer name", List("line 1", "AA1 1AA"), "28 February 2001", None)),
-          List(PreviousEmployerPrintModel("emp 1", List("line 1"), "2 March 2013", "3 March 2013")),
+          List(PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")),
           None,
           Some(List("whichAlternativeDocuments.adoption-certificate", "whichAlternativeDocuments.work-permit"))
         ))
