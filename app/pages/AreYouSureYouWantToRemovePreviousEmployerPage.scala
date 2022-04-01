@@ -16,11 +16,12 @@
 
 package pages
 
+import models.Index
 import play.api.libs.json.JsPath
 
-case object AreYouSureYouWantToRemovePreviousEmployerPage extends QuestionPage[Boolean] {
+final case class AreYouSureYouWantToRemovePreviousEmployerPage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "previousEmployer" \ index.position \ toString
 
   override def toString: String = "areYouSureYouWantToRemovePreviousEmployer"
 }

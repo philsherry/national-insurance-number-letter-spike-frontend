@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.AreYouSureYouWantToRemovePreviousEmployerFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -40,7 +40,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
   val formProvider = new AreYouSureYouWantToRemovePreviousEmployerFormProvider()
   val form = formProvider()
 
-  lazy val areYouSureYouWantToRemovePreviousEmployerRoute = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(NormalMode).url
+  lazy val areYouSureYouWantToRemovePreviousEmployerRoute = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), NormalMode).url
 
   "AreYouSureYouWantToRemovePreviousEmployer Controller" - {
 
@@ -56,13 +56,13 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
         val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouSureYouWantToRemovePreviousEmployerPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(AreYouSureYouWantToRemovePreviousEmployerPage(Index(0)), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +74,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -120,7 +120,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
