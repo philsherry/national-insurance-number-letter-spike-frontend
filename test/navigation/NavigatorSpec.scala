@@ -434,9 +434,9 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.WhichAlternativeDocumentsController.onPageLoad(NormalMode)
         }
 
-        "to ... when the user selects no" ignore {
+        "to insufficient documents page when the user selects no" in {
           val answers = emptyUserAnswers.set(DoYouHaveTwoSecondaryDocumentsPage, false).success.value
-          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe ???
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.InsufficientDocumentsController.onPageLoad()
         }
 
         "to the journey recovery page when the user has no selection" in {
