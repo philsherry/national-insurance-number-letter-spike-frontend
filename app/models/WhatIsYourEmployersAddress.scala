@@ -23,7 +23,11 @@ case class WhatIsYourEmployersAddress (
                                         addressLine2: Option[String],
                                         addressLine3: Option[String],
                                         postcode: String
-                                      )
+                                      ) {
+
+  def lines: List[String] =
+    List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
+}
 
 object WhatIsYourEmployersAddress {
   implicit val format = Json.format[WhatIsYourEmployersAddress]

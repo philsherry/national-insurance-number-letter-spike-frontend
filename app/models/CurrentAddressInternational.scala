@@ -23,7 +23,11 @@ final case class CurrentAddressInternational(
                                               addressLine2: Option[String],
                                               addressLine3: Option[String],
                                               country: String
-                                            )
+                                            ) {
+
+  def lines: List[String] =
+    List(Some(addressLine1), addressLine2, addressLine3, Some(country)).flatten
+}
 
 object CurrentAddressInternational {
   implicit val format = Json.format[CurrentAddressInternational]

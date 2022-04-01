@@ -1,0 +1,194 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.PrintModel
+
+@this()
+
+@(model: PrintModel)(implicit messages: Messages)
+
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="sans-serif">
+    <fo:layout-master-set>
+        <fo:simple-page-master master-name="main" page-height="297mm" page-width="210mm" margin-top="2cm" margin-bottom="2cm" margin-left="2cm" margin-right="2cm">
+            <fo:region-body region-name="xsl-region-body" margin-top="1.5cm" margin-bottom="1.5cm"/>
+            <fo:region-before region-name="xsl-region-before"/>
+            <fo:region-after region-name="xsl-region-after"/>
+        </fo:simple-page-master>
+    </fo:layout-master-set>
+    <fo:page-sequence master-reference="main">
+
+        <fo:static-content flow-name="xsl-region-before">
+            <fo:block text-align="center" font-size="20pt" font-weight="bold">@messages("pdf.title")</fo:block>
+        </fo:static-content>
+
+        <fo:static-content flow-name="xsl-region-after">
+            <fo:block text-align="center" font-size="12pt">@messages("pdf.page") <fo:page-number/></fo:block>
+        </fo:static-content>
+
+        <fo:flow flow-name="xsl-region-body" font-size="12pt" text-align="left">
+
+            <fo:block-container width="80%"><fo:block>
+                <!-- Personal details -->
+                <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.personalDetails")</fo:block>
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.firstName"): </fo:inline>@model.name.firstName</fo:block>
+                    @if(model.name.middleNames.isDefined) {<fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.middleNames"): </fo:inline>@model.name.middleNames</fo:block>}
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.lastName"): </fo:inline>@model.name.lastName</fo:block>
+                </fo:block-container>
+
+                @for(previousName <- model.previousName) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.previousFirstName"): </fo:inline>@previousName.firstName</fo:block>
+                    @if(previousName.middleNames.isDefined) {<fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.previousMiddleNames"): </fo:inline>@previousName.middleNames</fo:block>}
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.previousLastName"): </fo:inline>@previousName.lastName</fo:block>
+                </fo:block-container>
+                }
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.returningFromLivingAbroad"): </fo:inline>@if(model.returningFromLivingAbroad) {@messages("pdf.personalDetails.returningFromLivingAbroad.yes")} else {@messages("pdf.personalDetails.returningFromLivingAbroad.no")}</fo:block>
+                </fo:block-container>
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.telephoneNumber"): </fo:inline>@(model.telephoneNumber)</fo:block>
+                </fo:block-container>
+
+                @for(nino <- model.nino) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.nino"): </fo:inline>@(nino)</fo:block>
+                </fo:block-container>
+                }
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.dob"): </fo:inline>@(model.dob)</fo:block>
+                </fo:block-container>
+
+                @for(marriage <- model.marriage) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.maritalStatus"): </fo:inline>@messages("pdf.personalDetails.maritalStatus.married", marriage)</fo:block>
+                </fo:block-container>
+                }
+
+                @for(partnership <- model.civilPartnership) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.maritalStatus"): </fo:inline>@messages("pdf.personalDetails.maritalStatus.civilPartnership", partnership)</fo:block>
+                </fo:block-container>
+                }
+
+                @for(previous <- model.previousMarriageOrPartnership) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.previousMaritalStatus"): </fo:inline>@messages("pdf.personalDetails.previousMaritalStatus.tofrom", previous.from, previous.to, previous.reason)</fo:block>
+                </fo:block-container>
+                }
+
+                <!-- Address history -->
+                <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.addressHistory")</fo:block>
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.addressHistory.current"): </fo:inline></fo:block>
+                    @for(line <- model.currentAddress) {
+                        <fo:block margin-left="0.5cm"><fo:inline>@(line)</fo:inline></fo:block>
+                    }
+                </fo:block-container>
+
+                @if(model.previousAddresses.nonEmpty) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.addressHistory.previous"): </fo:inline></fo:block>
+                    @for(addr <- model.previousAddresses) {
+                        <fo:block margin-left="0.5cm" margin-bottom="2mm"><fo:inline>@messages("pdf.addressHistory.previous.fromto", addr.from, addr.to)</fo:inline></fo:block>
+                        @for(line <- addr.address) {
+                        <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
+                        }
+                        <fo:block margin-bottom="0.5cm"/>
+                    }
+                </fo:block-container>
+                }
+
+                <!-- Benefits -->
+                <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.benefits")</fo:block>
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.benefits.childBenefit"): </fo:inline>@if(model.claimedChildBenefit) {@messages("pdf.benefits.childBenefit.yes")} else {@messages("pdf.benefits.childBenefit.no")}</fo:block>
+                    @model.childBenefitNumber.fold {
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.benefits.childBenefitNumber"): </fo:inline>@messages("pdf.benefits.childBenefitNumber.unknown")</fo:block>
+                    }{ childBenefitNumber =>
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.benefits.childBenefitNumber"): </fo:inline>@(childBenefitNumber)</fo:block>
+                    }
+                </fo:block-container>
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm">Other benefits:</fo:block>
+                    @model.otherBenefits.fold {
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm">@messages("pdf.benefits.otherBenefits.none")</fo:block>
+                    }{ otherBenefits =>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm">@otherBenefits</fo:block>
+                    }
+                </fo:block-container>
+
+                <!-- Employment -->
+                <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.employment")</fo:block>
+
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                @model.mostRecentUkEmployer.fold {
+                <fo:block margin-bottom="2mm">@messages("pdf.employment.notWorked")</fo:block>
+                }{ mostRecentUkEmployer =>
+                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.employment.mostRecentEmployer"): </fo:inline></fo:block>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.mostRecentEmployer.name"): </fo:inline>@mostRecentUkEmployer.name</fo:block>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm">
+                        <fo:inline>@messages("pdf.employment.mostRecentEmployer.address"): </fo:inline>
+                        @for(line <- mostRecentUkEmployer.address) {
+                        <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
+                        }
+                    </fo:block>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.mostRecentEmployer.duration"): </fo:inline>@{mostRecentUkEmployer.to.fold{messages("pdf.employment.mostRecentEmployer.from", mostRecentUkEmployer.from)}{to => messages("pdf.employment.mostRecentEmployer.fromto", mostRecentUkEmployer.from, to)}}</fo:block>
+                }
+                </fo:block-container>
+
+                @if(model.previousEmployers.nonEmpty) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.employment.previousEmployers"): </fo:inline></fo:block>
+                    @for(employer <- model.previousEmployers) {
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.previousEmployers.name"): </fo:inline>@employer.name</fo:block>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm">
+                        <fo:inline>@messages("pdf.employment.previousEmployers.address"): </fo:inline>
+                        @for(line <- employer.address) {
+                        <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
+                        }
+                    </fo:block>
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.previousEmployers.duration"): </fo:inline>@messages("pdf.employment.previousEmployers.fromto", employer.from, employer.to)</fo:block>
+                    }
+                </fo:block-container>
+                }
+
+                <!-- Documents -->
+                <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.documents")</fo:block>
+                @for(primaryDocument <- model.primaryDocument) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.documents.primaryDocument"): </fo:inline>@messages(primaryDocument)</fo:block>
+                </fo:block-container>
+                }
+
+                @for(secondaryDocuments <- model.secondaryDocuments) {
+                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.documents.secondaryDocuments"): </fo:inline>@secondaryDocuments.map(key => messages(key)).mkString(" " + messages("pdf.documents.secondaryDocuments.and") + " ")</fo:block>
+                </fo:block-container>
+                }
+
+            </fo:block></fo:block-container>
+
+        </fo:flow>
+    </fo:page-sequence>
+</fo:root>

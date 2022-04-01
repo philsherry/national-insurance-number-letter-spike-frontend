@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-package models
+package queries
 
-import play.api.libs.json._
+import play.api.libs.json.{JsPath, JsValue}
 
-final case class CurrentAddressUk(
-                                   addressLine1: String,
-                                   addressLine2: Option[String],
-                                   addressLine3: Option[String],
-                                   postcode: String
-                                 ) {
+case object PreviousAddressListQuery extends Gettable[List[JsValue]] {
 
-  def lines: List[String] =
-    List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
-
-}
-
-object CurrentAddressUk {
-  implicit val format = Json.format[CurrentAddressUk]
+  override def path: JsPath = JsPath \ "previousAddress"
 }
