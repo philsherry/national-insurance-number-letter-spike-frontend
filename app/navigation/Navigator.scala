@@ -178,6 +178,8 @@ class Navigator @Inject()() {
     case AreYouMarriedPage => areYouMarriedCheckRoutes
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes
     case DoYouHaveAPreviousNamePage => doYouHaveAPreviousNameCheckRoutes
+    case HaveYouEverClaimedChildBenefitPage => haveYouEverClaimedChildBenefitCheckRoutes
+    case DoYouKnowYourChildBenefitNumberPage => doYouKnowYourChildBenefitNumberCheckRoutes
     case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
@@ -204,6 +206,18 @@ class Navigator @Inject()() {
   private def doYouHaveAPreviousNameCheckRoutes(answers: UserAnswers): Call =
     (answers.get(DoYouHaveAPreviousNamePage), answers.get(WhatIsYourPreviousNamePage)) match {
       case (Some(true), None) => routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def haveYouEverClaimedChildBenefitCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(HaveYouEverClaimedChildBenefitPage), answers.get(DoYouKnowYourChildBenefitNumberPage)) match {
+      case (Some(true), None) => routes.DoYouKnowYourChildBenefitNumberController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def doYouKnowYourChildBenefitNumberCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(DoYouKnowYourChildBenefitNumberPage), answers.get(WhatIsYourChildBenefitNumberPage)) match {
+      case (Some(true), None) => routes.WhatIsYourChildBenefitNumberController.onPageLoad(CheckMode)
       case (_, _) => routes.CheckYourAnswersController.onPageLoad
     }
 
