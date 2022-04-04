@@ -42,4 +42,6 @@
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.supportingDocuments")</h2>
     @govukSummaryList(supportingDocuments.withCssClass("govuk-!-margin-bottom-9"))
+
+    <a href="@routes.PrintController.onPageLoad" class="govuk-button">@messages("site.continue")</a>
 }

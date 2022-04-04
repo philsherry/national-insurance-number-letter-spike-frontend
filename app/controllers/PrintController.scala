@@ -33,14 +33,21 @@ class PrintController @Inject()(
                                  getData: DataRetrievalAction,
                                  requireData: DataRequiredAction,
                                  fop: PlayFop,
-                                 template: TestTemplate
+                                 template: TestTemplate,
+                                 view: views.html.PrintView
                                ) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+  def onDownload: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     PrintModel.from(request.userAnswers).map { model =>
       val pdf = fop.processTwirlXml(template.render(model, implicitly), MimeConstants.MIME_PDF)
 
-      Ok(pdf).as(MimeConstants.MIME_PDF).withHeaders(CONTENT_DISPOSITION -> "filename=HMRCForm")
-    }.getOrElse(BadRequest("Missing user answers items"))
+      Ok(pdf).as(MimeConstants.MIME_PDF).withHeaders(CONTENT_DISPOSITION -> "filename=get-your-national-insurance-number-by-post.pdf")
+    }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+  }
+
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    PrintModel.from(request.userAnswers).map { model =>
+      Ok(view(model))
+    }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
 }
