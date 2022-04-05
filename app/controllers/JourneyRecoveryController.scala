@@ -52,4 +52,9 @@ class JourneyRecoveryController @Inject()(
         .map(url => Ok(continueView(url)))
         .getOrElse(Ok(startAgainView()))
   }
+
+  def onStartAgain(): Action[AnyContent] = identify {
+    implicit request =>
+      Redirect(routes.IndexController.onPageLoad).withNewSession
+  }
 }
