@@ -68,9 +68,8 @@ class AreYouSureYouWantToRemovePreviousAddressController @Inject()(
 
       form.bindFromRequest().fold(
         formWithErrors => Future.successful {
-          getLines(request.userAnswers, index)
-            .map(lines => BadRequest(view(formWithErrors, lines, index, mode)))
-            .getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+          val lines = getLines(request.userAnswers, index).getOrElse(List.empty)
+          BadRequest(view(formWithErrors, lines, index, mode))
         },
         value =>
           for {

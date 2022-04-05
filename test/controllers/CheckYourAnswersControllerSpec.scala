@@ -22,6 +22,8 @@ import pages._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.domain.Nino
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
@@ -45,7 +47,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(DoYouHaveAnyPreviousAddressesPage, true).success.value
         .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
         .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.now, to = LocalDate.now)).success.value
-        .set(WhatIsYourPreviousAddressInternationalPage(Index(0)), PreviousAddressInternational(addressLine1 = "line 1", None, None, "country", from = LocalDate.now, to = LocalDate.now)).success.value
         .set(AreYouReturningFromLivingAbroadPage, true).success.value
         .set(WhatIsYourTelephoneNumberPage, "tel").success.value
         .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
@@ -101,10 +102,15 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           IsYourCurrentAddressInUkSummary.row(answers)(messages(application)),
           WhatIsYourCurrentAddressUkSummary.row(answers)(messages(application)),
           WhatIsYourCurrentAddressInternationalSummary.row(answers)(messages(application)),
-          IsYourPreviousAddressInUkSummary.row(answers, 0)(messages(application)),
-          WhatIsYourPreviousAddressUkSummary.row(answers, 0)(messages(application)),
-          WhatIsYourPreviousAddressInternationalSummary.row(answers, 0)(messages(application))
         ).flatten)
+
+        val previousAddresses = List(ListWithActionsItem(
+          name = Text("line 1, postcode"),
+          actions = List(
+            ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), CheckMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), CheckMode).url)
+          )
+        ))
 
         val relationshipHistory = SummaryListViewModel(Seq(
           AreYouMarriedSummary.row(answers)(messages(application)),
@@ -141,7 +147,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhichAlternativeDocumentsSummary.row(answers)(messages(application))
         ).flatten)
 
-        val renderedView = view(personalDetails, addressHistory, relationshipHistory, benefitHistory, employmentHistory, supportingDocuments)(request, messages(application))
+        val renderedView = view(personalDetails, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, supportingDocuments)(request, messages(application))
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual renderedView.toString

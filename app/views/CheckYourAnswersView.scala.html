@@ -16,10 +16,11 @@
 
 @this(
     layout: templates.Layout,
-    govukSummaryList: GovukSummaryList
+    govukSummaryList: GovukSummaryList,
+    hmrcListWithActions: HmrcListWithActions
 )
 
-@(personalDetails: SummaryList, addressHistory: SummaryList, relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
+@(personalDetails: SummaryList, currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -29,7 +30,19 @@
     @govukSummaryList(personalDetails.withCssClass("govuk-!-margin-bottom-9"))
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.addressHistory")</h2>
-    @govukSummaryList(addressHistory.withCssClass("govuk-!-margin-bottom-9"))
+    @govukSummaryList(currentAddress)
+    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousAddresses")</h3>
+    @if(previousAddresses.nonEmpty) {
+        @hmrcListWithActions(ListWithActions(items = previousAddresses))
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <a class="govuk-link" href="@routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousAddress")</a>
+        </p>
+    } else {
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <span>@messages("checkYourAnswers.noPreviousAddresses")</span><br/>
+            <a class="govuk-link" href="@routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousAddress")</a>
+        </p>
+    }
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.relationshipHistory")</h2>
     @govukSummaryList(relationshipHistory.withCssClass("govuk-!-margin-bottom-9"))

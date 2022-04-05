@@ -35,7 +35,7 @@ class Navigator @Inject()() {
     case WhatIsYourCurrentAddressUkPage                         => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case WhatIsYourCurrentAddressInternationalPage              => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case DoYouHaveAnyPreviousAddressesPage                      => doYouHaveAnyPreviousAddressesRoutes
-    case IsYourPreviousAddressInUkPage(index)                   => isYourPreviousAddressInUkRoutes(_, index)
+    case IsYourPreviousAddressInUkPage(index)                   => isYourPreviousAddressInUkRoutes(_, index, NormalMode)
     case WhatIsYourPreviousAddressUkPage(_)                     => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case WhatIsYourPreviousAddressInternationalPage(_)          => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case AreYouSureYouWantToRemovePreviousAddressPage(_)        => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
@@ -93,10 +93,10 @@ class Navigator @Inject()() {
       case false => routes.AreYouReturningFromLivingAbroadController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def isYourPreviousAddressInUkRoutes(answers: UserAnswers, index: Index): Call =
+  private def isYourPreviousAddressInUkRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(IsYourPreviousAddressInUkPage(index)).map {
-      case true  => routes.WhatIsYourPreviousAddressUkController.onPageLoad(index, NormalMode)
-      case false => routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(index, NormalMode)
+      case true  => routes.WhatIsYourPreviousAddressUkController.onPageLoad(index, mode)
+      case false => routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(index, mode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def doYouKnowYourNationalInsuranceNumberRoutes(answers: UserAnswers): Call =
@@ -174,6 +174,7 @@ class Navigator @Inject()() {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
+    case IsYourPreviousAddressInUkPage(index) => isYourPreviousAddressInUkRoutes(_, index, CheckMode)
     case AreYouInACivilPartnershipPage => areYouInACivilPartnershipCheckRoutes
     case AreYouMarriedPage => areYouMarriedCheckRoutes
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes
