@@ -16,8 +16,10 @@
 
 package pages
 
-import models.Index
+import models.{Index, PreviousAddressInternational, PreviousAddressUk, UserAnswers}
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class IsYourPreviousAddressInUkPageSpec extends PageBehaviours {
 
@@ -28,5 +30,36 @@ class IsYourPreviousAddressInUkPageSpec extends PageBehaviours {
     beSettable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
 
     beRemovable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
+
+    "must remove what is your previous address uk when set to false" in {
+      val answer = PreviousAddressUk(
+        "line 1",
+        None,
+        None,
+        "postcode",
+        LocalDate.of(2000, 1, 1),
+        LocalDate.of(2000, 2, 2)
+      )
+      val answers = UserAnswers("id")
+        .set(WhatIsYourPreviousAddressUkPage(Index(0)), answer)
+        .success.value
+      val result = answers.set(IsYourPreviousAddressInUkPage(Index(0)), false).success.value
+      result.get(WhatIsYourPreviousAddressUkPage(Index(0))) must not be defined
+    }
+
+    "must remove what is your previous address international when set to true" in {
+      val answer = PreviousAddressInternational(
+        "line 1",
+        None,
+        None,
+        "country",
+        LocalDate.of(2000, 1, 1),
+        LocalDate.of(2000, 2, 2)
+      )
+      val answers = UserAnswers("id")
+        .set(WhatIsYourPreviousAddressInternationalPage(Index(0)), answer).success.value
+      val result = answers.set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
+      result.get(WhatIsYourPreviousAddressInternationalPage(Index(0))) must not be defined
+    }
   }
 }

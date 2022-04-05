@@ -16,12 +16,22 @@
 
 package pages
 
-import models.Index
+import models.{Index, UserAnswers}
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 final case class IsYourPreviousAddressInUkPage(index: Index) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "previousAddress" \ index.position \ toString
 
   override def toString: String = "isYourPreviousAddressInUk"
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(true)  => userAnswers.remove(WhatIsYourPreviousAddressInternationalPage(index))
+      case Some(false) => userAnswers.remove(WhatIsYourPreviousAddressUkPage(index))
+      case _           => super.cleanup(value, userAnswers)
+    }
+  }
 }

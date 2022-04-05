@@ -690,6 +690,25 @@ class NavigatorSpec extends SpecBase {
 
       }
 
+      "go from the is your previous address in the uk" - {
+
+        "to the what is your previous address uk page when the user selects yes" in {
+          val answers = emptyUserAnswers
+            .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
+          navigator.nextPage(IsYourPreviousAddressInUkPage(Index(0)), CheckMode, answers) mustBe routes.WhatIsYourPreviousAddressUkController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the what is your previous address international page when the user selects no" in {
+          val answers = emptyUserAnswers
+            .set(IsYourPreviousAddressInUkPage(Index(0)), false).success.value
+          navigator.nextPage(IsYourPreviousAddressInUkPage(Index(0)), CheckMode, answers) mustBe routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(IsYourPreviousAddressInUkPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
 
         case object UnknownPage extends Page
