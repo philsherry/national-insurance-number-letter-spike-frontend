@@ -16,6 +16,7 @@
 
 package pages
 
+import models.UserAnswers
 import pages.behaviours.PageBehaviours
 
 class HaveYouEverReceivedOtherUkBenefitsPageSpec extends PageBehaviours {
@@ -27,5 +28,23 @@ class HaveYouEverReceivedOtherUkBenefitsPageSpec extends PageBehaviours {
     beSettable[Boolean](HaveYouEverReceivedOtherUkBenefitsPage)
 
     beRemovable[Boolean](HaveYouEverReceivedOtherUkBenefitsPage)
+
+    "must remove other uk benefits when false" in {
+      val answers = UserAnswers("id")
+        .set(WhatOtherUkBenefitsHaveYouReceivedPage, "some other benefits").get
+
+      val result = answers.set(HaveYouEverReceivedOtherUkBenefitsPage, false).success.value
+
+      result.get(WhatOtherUkBenefitsHaveYouReceivedPage) must not be defined
+    }
+
+    "must not remove other uk benefits when true" in {
+      val answers = UserAnswers("id")
+        .set(WhatOtherUkBenefitsHaveYouReceivedPage, "some other benefits").get
+
+      val result = answers.set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
+
+      result.get(WhatOtherUkBenefitsHaveYouReceivedPage).value mustEqual "some other benefits"
+    }
   }
 }

@@ -180,6 +180,7 @@ class Navigator @Inject()() {
     case DoYouHaveAPreviousNamePage => doYouHaveAPreviousNameCheckRoutes
     case HaveYouEverClaimedChildBenefitPage => haveYouEverClaimedChildBenefitCheckRoutes
     case DoYouKnowYourChildBenefitNumberPage => doYouKnowYourChildBenefitNumberCheckRoutes
+    case HaveYouEverReceivedOtherUkBenefitsPage => haveYouEverReceivedOtherUkBenefitsCheckRoutes
     case DoYouKnowYourNationalInsuranceNumberPage => doYouKnowYourNationalInsuranceNumberCheckRoutes
     case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
@@ -219,6 +220,12 @@ class Navigator @Inject()() {
   private def doYouKnowYourChildBenefitNumberCheckRoutes(answers: UserAnswers): Call =
     (answers.get(DoYouKnowYourChildBenefitNumberPage), answers.get(WhatIsYourChildBenefitNumberPage)) match {
       case (Some(true), None) => routes.WhatIsYourChildBenefitNumberController.onPageLoad(CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def haveYouEverReceivedOtherUkBenefitsCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(HaveYouEverReceivedOtherUkBenefitsPage), answers.get(WhatOtherUkBenefitsHaveYouReceivedPage)) match {
+      case (Some(true), None) => routes.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(CheckMode)
       case (_, _) => routes.CheckYourAnswersController.onPageLoad
     }
 
