@@ -615,6 +615,40 @@ class NavigatorSpec extends SpecBase {
 
       }
 
+      "go from the is your previous address in uk page" - {
+
+        "to the check your answers page if answer is yes and uk address is set" in {
+          val answers = emptyUserAnswers
+            .set(IsYourCurrentAddressInUkPage, true).get
+            .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk("line 1", None, None, "AA1 1AA")).get
+
+          navigator.nextPage(IsYourCurrentAddressInUkPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page if answer is no and international address is set" in {
+          val answers = emptyUserAnswers
+            .set(IsYourCurrentAddressInUkPage, false).get
+            .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational("line 1", None, None, "France")).get
+
+          navigator.nextPage(IsYourCurrentAddressInUkPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the uk address page if answer is yes and uk address is not set" in {
+          val answers = emptyUserAnswers
+            .set(IsYourCurrentAddressInUkPage, true).get
+
+          navigator.nextPage(IsYourCurrentAddressInUkPage, CheckMode, answers) mustBe routes.WhatIsYourCurrentAddressUkController.onPageLoad(CheckMode)
+        }
+
+        "to the international address page if answer is no and international address is not set" in {
+          val answers = emptyUserAnswers
+            .set(IsYourCurrentAddressInUkPage, false).get
+
+          navigator.nextPage(IsYourCurrentAddressInUkPage, CheckMode, answers) mustBe routes.WhatIsYourCurrentAddressInternationalController.onPageLoad(CheckMode)
+        }
+
+      }
+
       "go from the do you have know your national insurance number page" - {
 
         "to the check your answers page if answer is yes and national insurance number is set" in {
