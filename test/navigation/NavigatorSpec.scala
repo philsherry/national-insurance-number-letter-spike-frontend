@@ -641,6 +641,32 @@ class NavigatorSpec extends SpecBase {
 
       }
 
+      "go from the have you ever claimed any other uk benefits page" - {
+
+        "to the check your answers page if answer is yes and other uk benefits is set" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouEverReceivedOtherUkBenefitsPage, true).get
+            .set(WhatOtherUkBenefitsHaveYouReceivedPage, "some other benefits").get
+
+          navigator.nextPage(HaveYouEverReceivedOtherUkBenefitsPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page if answer is no" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouEverReceivedOtherUkBenefitsPage, false).get
+
+          navigator.nextPage(HaveYouEverReceivedOtherUkBenefitsPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the what other uk benefits page if answer is no and what other uk benefits is not set" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouEverReceivedOtherUkBenefitsPage, true).get
+
+          navigator.nextPage(HaveYouEverReceivedOtherUkBenefitsPage, CheckMode, answers) mustBe routes.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(CheckMode)
+        }
+
+      }
+
       "go from the do you have primary document page" - {
 
         "to the check your answers page when the user selects yes and which primary document is set" in {
