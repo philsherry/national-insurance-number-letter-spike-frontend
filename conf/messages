@@ -581,3 +581,17 @@ areYouSureYouWantToRemovePreviousEmployer.title = Are you sure you want to remov
 areYouSureYouWantToRemovePreviousEmployer.heading = Are you sure you want to remove this previous employer?
 areYouSureYouWantToRemovePreviousEmployer.error.required = Select yes if you want to remove this previous employer
 areYouSureYouWantToRemovePreviousEmployer.range = From {0} to {1}
+
+print.title = Print and post your form
+print.heading = Print and post your form
+print.p1 = You have completed the application form. Please download and print the form.
+print.button = Download form
+print.p2 = Once you have printed and checked your form you should post it and your identity documents to:
+print.address1 = National Insurance Contributions and Employer Office
+print.address2 = HM Revenue and Customs
+print.address3 = BX9 1AN
+print.p3 = You must include copies of the following documents, or we may not be able to process your application:
+print.p4.1 = If you notice a mistake before sending the form you can
+print.p4.change = change your answers
+print.p4.2 = You can also
+print.p4.restart = start the application form again
