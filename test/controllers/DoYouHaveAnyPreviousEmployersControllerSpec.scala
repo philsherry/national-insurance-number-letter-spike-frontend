@@ -20,21 +20,18 @@ import base.SpecBase
 import forms.DoYouHaveAnyPreviousEmployersFormProvider
 import models.{Index, NormalMode, PreviousEmployersAddress, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{DoYouHaveAnyPreviousEmployersPage, WhatIsYourPreviousEmployersAddressPage, WhatIsYourPreviousEmployersNamePage, WhenDidYouStartWorkingForPreviousEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
+import pages._
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import views.html.DoYouHaveAnyPreviousEmployersView
 
 import java.time.LocalDate
-import scala.concurrent.Future
 
 class DoYouHaveAnyPreviousEmployersControllerSpec extends SpecBase with MockitoSugar {
 
@@ -75,7 +72,7 @@ class DoYouHaveAnyPreviousEmployersControllerSpec extends SpecBase with MockitoS
 
       val expectedItems = List(
         ListWithActionsItem(
-          name = Text("foobar, from 1 February 2000 to 2 March 2000"),
+          name = HtmlContent("foobar<br/>line 1, postcode<br/>1 February 2000 to 2 March 2000"),
           actions = Seq(
             ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), NormalMode).url),
             ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), NormalMode).url)

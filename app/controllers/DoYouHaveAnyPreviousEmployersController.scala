@@ -18,17 +18,16 @@ package controllers
 
 import controllers.actions._
 import forms.DoYouHaveAnyPreviousEmployersFormProvider
-import models.{Index, Mode, UserAnswers}
+import models.{Mode, UserAnswers}
 import navigation.Navigator
 import pages._
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers.PreviousEmployerSummary
 import views.html.DoYouHaveAnyPreviousEmployersView
 
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -45,29 +44,8 @@ class DoYouHaveAnyPreviousEmployersController @Inject()(
 
   val form = formProvider()
 
-  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-
-  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] = {
-
-    val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(Seq.empty)
-
-    previousEmployers.indices.map { i =>
-
-      val name = answers.get(WhatIsYourPreviousEmployersNamePage(Index(i)))
-      val range = for {
-        from <- answers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
-        to <- answers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
-      } yield s"${messages("doYouHaveAnyPreviousEmployers.from")} $from ${messages("doYouHaveAnyPreviousEmployers.to")} $to"
-
-      ListWithActionsItem(
-        name = Text(List(name, range).flatten.mkString(", ")),
-        actions = List(
-          ListWithActionsAction(content = Text(messages("site.change")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(i), mode).url),
-          ListWithActionsAction(content = Text(messages("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(i), mode).url)
-        )
-      )
-    }
-  }
+  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
+    answers.get(PreviousEmployersQuery).getOrElse(Seq.empty).indices.map(PreviousEmployerSummary.item(answers, mode, _))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>

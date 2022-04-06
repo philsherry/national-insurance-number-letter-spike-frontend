@@ -10,6 +10,7 @@ site.start = Start now
 site.startAgain = Start again
 site.signIn = Sign in
 site.govuk = GOV.UK
+site.range = {0} to {1}
 
 date.day = Day
 date.month = Month
@@ -68,6 +69,10 @@ checkYourAnswers.addAnotherPreviousAddress = Add another previous address
 checkYourAnswers.relationshipHistory = Relationship history
 checkYourAnswers.benefitHistory = Benefit history
 checkYourAnswers.employmentHistory = Employment history
+checkYourAnswers.previousEmployers = Previous employers
+checkYourAnswers.noPreviousEmployers = You have not provided any previous employers
+checkYourAnswers.addAPreviousEmployer = Add a previous employer
+checkYourAnswers.addAnotherPreviousEmployer = Add another previous employer
 checkYourAnswers.supportingDocuments = Supporting documents
 
 journeyRecovery.continue.title = Sorry, there is a problem with the application form
@@ -356,8 +361,6 @@ doYouHaveAnyPreviousEmployers.add.legend = Do you want to add another previous e
 doYouHaveAnyPreviousEmployers.checkYourAnswersLabel = Do you have any previous employers?
 doYouHaveAnyPreviousEmployers.error.required = Select yes if you have any previous employers
 doYouHaveAnyPreviousEmployers.change.hidden = whether you have any previous employers
-doYouHaveAnyPreviousEmployers.from = from
-doYouHaveAnyPreviousEmployers.to = to
 
 haveYouEverWorkedInUk.title = Have you ever worked in the UK?
 haveYouEverWorkedInUk.heading = Have you ever worked in the UK?

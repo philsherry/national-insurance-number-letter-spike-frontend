@@ -20,7 +20,7 @@
     hmrcListWithActions: HmrcListWithActions
 )
 
-@(personalDetails: SummaryList, currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
+@(personalDetails: SummaryList, currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, previousEmployers: Seq[ListWithActionsItem], supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -51,7 +51,19 @@
     @govukSummaryList(benefitHistory.withCssClass("govuk-!-margin-bottom-9"))
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.employmentHistory")</h2>
-    @govukSummaryList(employmentHistory.withCssClass("govuk-!-margin-bottom-9"))
+    @govukSummaryList(employmentHistory)
+    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousEmployers")</h3>
+    @if(previousEmployers.nonEmpty) {
+        @hmrcListWithActions(ListWithActions(items = previousEmployers))
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <a class="govuk-link" href="@routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(previousEmployers.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousEmployer")</a>
+        </p>
+    } else {
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <span>@messages("checkYourAnswers.noPreviousEmployers")</span><br/>
+            <a class="govuk-link" href="@routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousEmployer")</a>
+        </p>
+    }
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.supportingDocuments")</h2>
     @govukSummaryList(supportingDocuments.withCssClass("govuk-!-margin-bottom-9"))

@@ -66,7 +66,7 @@ class AreYouSureYouWantToRemovePreviousEmployerController @Inject()(
           val employerName = request.userAnswers.get(WhatIsYourPreviousEmployersNamePage(index))
           val from = request.userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(index))
           val to = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(index))
-          Future.successful(BadRequest(view(formWithErrors, employerName, from, to, mode, index))),
+          Future.successful(BadRequest(view(formWithErrors, employerName, from, to, mode, index)))
         },
         value =>
           for {

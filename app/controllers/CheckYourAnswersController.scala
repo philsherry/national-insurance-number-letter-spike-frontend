@@ -95,20 +95,7 @@ class CheckYourAnswersController @Inject()(
         WhatOtherUkBenefitsHaveYouReceivedSummary.row(answers)
       ).flatten)
 
-      val employmentHistory = {
-
-        val previousEmployerRows = {
-          val numberOfPreviousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty).length
-          (0 until numberOfPreviousEmployers).flatMap { index =>
-            Seq(
-              WhatIsYourPreviousEmployersNameSummary.row(answers, index),
-              WhatIsYourPreviousEmployersAddressSummary.row(answers, index),
-              WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, index),
-              WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, index)
-            ).flatten
-          }
-        }
-
+      val employmentHistory =
         SummaryListViewModel(Seq(
           HaveYouEverWorkedInUkSummary.row(answers),
           WhatIsYourEmployersNameSummary.row(answers),
@@ -116,8 +103,10 @@ class CheckYourAnswersController @Inject()(
           WhenDidYouStartWorkingForEmployerSummary.row(answers),
           AreYouStillEmployedSummary.row(answers),
           WhenDidYouFinishYourEmploymentSummary.row(answers)
-        ).flatten ++ previousEmployerRows)
-      }
+        ).flatten)
+
+      val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty)
+        .indices.map(PreviousEmployerSummary.item(answers, CheckMode, _))
 
       val supportingDocuments = SummaryListViewModel(Seq(
         DoYouHavePrimaryDocumentSummary.row(answers),
@@ -126,6 +115,6 @@ class CheckYourAnswersController @Inject()(
         WhichAlternativeDocumentsSummary.row(answers)
       ).flatten)
 
-      Ok(view(personalDetails, currentAddress, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, supportingDocuments))
+      Ok(view(personalDetails, currentAddress, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, previousEmployers, supportingDocuments))
   }
 }

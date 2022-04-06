@@ -22,7 +22,7 @@ import pages._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.domain.Nino
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.Aliases.{HtmlContent, Text}
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
@@ -71,8 +71,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
         .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "previous employers name").success.value
         .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("line 1", None, None, "postcode")).success.value
-        .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
-        .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
+        .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
+        .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2001, 3, 2)).success.value
         .set(DoYouHavePrimaryDocumentPage, true).success.value
         .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).success.value
         .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
@@ -133,12 +133,16 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhatIsYourEmployersAddressSummary.row(answers)(messages(application)),
           WhenDidYouStartWorkingForEmployerSummary.row(answers)(messages(application)),
           AreYouStillEmployedSummary.row(answers)(messages(application)),
-          WhenDidYouFinishYourEmploymentSummary.row(answers)(messages(application)),
-          WhatIsYourPreviousEmployersNameSummary.row(answers, 0)(messages(application)),
-          WhatIsYourPreviousEmployersAddressSummary.row(answers, 0)(messages(application)),
-          WhenDidYouStartWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application)),
-          WhenDidYouStopWorkingForPreviousEmployerSummary.row(answers, 0)(messages(application))
+          WhenDidYouFinishYourEmploymentSummary.row(answers)(messages(application))
         ).flatten)
+
+        val previousEmployers = List(ListWithActionsItem(
+          name = HtmlContent("previous employers name<br/>line 1, postcode<br/>1 February 2000 to 2 March 2001"),
+          actions = List(
+            ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), CheckMode).url)
+          )
+        ))
 
         val supportingDocuments = SummaryListViewModel(Seq(
           DoYouHavePrimaryDocumentSummary.row(answers)(messages(application)),
@@ -147,7 +151,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhichAlternativeDocumentsSummary.row(answers)(messages(application))
         ).flatten)
 
-        val renderedView = view(personalDetails, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, supportingDocuments)(request, messages(application))
+        val renderedView = view(personalDetails, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, previousEmployers, supportingDocuments)(request, messages(application))
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual renderedView.toString
