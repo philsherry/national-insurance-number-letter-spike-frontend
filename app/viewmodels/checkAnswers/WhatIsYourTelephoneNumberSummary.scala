@@ -20,7 +20,7 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.WhatIsYourTelephoneNumberPage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
@@ -33,7 +33,7 @@ object WhatIsYourTelephoneNumberSummary  {
 
         SummaryListRowViewModel(
           key     = "whatIsYourTelephoneNumber.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
+          value   = ValueViewModel(Text(answer)),
           actions = Seq(
             ActionItemViewModel("site.change", routes.WhatIsYourTelephoneNumberController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("whatIsYourTelephoneNumber.change.hidden"))
