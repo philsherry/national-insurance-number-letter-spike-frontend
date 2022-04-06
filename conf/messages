@@ -507,7 +507,7 @@ areYouStillEmployed.checkYourAnswersLabel = Are you still employed by your most 
 areYouStillEmployed.error.required = Select yes if are still employed by your most recent employer
 areYouStillEmployed.change.hidden = whether you are still employed by your most recent employer
 
-whenDidYouFinishYourEmployment.title = When did you stop being by your most recent employer?
+whenDidYouFinishYourEmployment.title = When did you stop being employed by your most recent employer?
 whenDidYouFinishYourEmployment.heading = When did you stop being employed by your most recent employer?
 whenDidYouFinishYourEmployment.hint = For example, 12 11 2007
 whenDidYouFinishYourEmployment.checkYourAnswersLabel = When did you stop being employed by your most recent employer?
