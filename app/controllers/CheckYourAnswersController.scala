@@ -23,7 +23,6 @@ import pages.{PreviousAddressesQuery, PreviousEmployersQuery, WhatIsYourPrevious
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
@@ -80,8 +79,6 @@ class CheckYourAnswersController @Inject()(
           )
         }
       }
-
-//      val x: GovukSummaryList = ???
 
       val relationshipHistory = SummaryListViewModel(Seq(
         AreYouMarriedSummary.row(answers),
