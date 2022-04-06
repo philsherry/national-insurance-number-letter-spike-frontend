@@ -186,6 +186,9 @@ class Navigator @Inject()() {
     case DoYouKnowYourNationalInsuranceNumberPage => doYouKnowYourNationalInsuranceNumberCheckRoutes
     case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
+    case WhatIsYourPreviousEmployersNamePage(index) => _ => routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(index, CheckMode)
+    case WhatIsYourPreviousEmployersAddressPage(index) => _ => routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index, CheckMode)
+    case WhenDidYouStartWorkingForPreviousEmployerPage(index) => _ => routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index, CheckMode)
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 

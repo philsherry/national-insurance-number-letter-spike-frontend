@@ -743,6 +743,18 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
+      "go from the what is your previous employers name page to the what is your previous employers address page" in {
+        navigator.nextPage(WhatIsYourPreviousEmployersNamePage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(Index(0), CheckMode)
+      }
+
+      "go from the what is your previous employers address page to the when did you start working for previous employer page" in {
+        navigator.nextPage(WhatIsYourPreviousEmployersAddressPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(Index(0), CheckMode)
+      }
+
+      "go from when did you start working for your previous employer page to the when did you stop working for your previous employer page" in {
+        navigator.nextPage(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(Index(0), CheckMode)
+      }
+
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
 
         case object UnknownPage extends Page
