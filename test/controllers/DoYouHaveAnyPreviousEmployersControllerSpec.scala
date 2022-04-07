@@ -74,8 +74,8 @@ class DoYouHaveAnyPreviousEmployersControllerSpec extends SpecBase with MockitoS
         ListWithActionsItem(
           name = HtmlContent("foobar<br/>line 1, postcode<br/>1 February 2000 to 2 March 2000"),
           actions = Seq(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), NormalMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), NormalMode).url)
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "foobar")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), NormalMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "foobar")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), NormalMode).url)
           )
         )
       )

@@ -26,7 +26,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.Aliases.{Text, HtmlContent}
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import views.html.DoYouHaveAnyPreviousAddressesView
 
@@ -61,7 +61,7 @@ class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoS
 
     "must return OK and the correct view for a GET when there are already previous addresses" in {
 
-      val address = PreviousAddressUk("line 1", None, None, "postcode", LocalDate.now, LocalDate.now)
+      val address = PreviousAddressUk("line 1", None, None, "postcode", LocalDate.of(2000, 2, 1), LocalDate.of(2001, 3, 2))
 
       val answers = emptyUserAnswers
         .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
@@ -71,10 +71,10 @@ class DoYouHaveAnyPreviousAddressesControllerSpec extends SpecBase with MockitoS
 
       val expectedItems = List(
         ListWithActionsItem(
-          name = Text("line 1, postcode"),
+          name = HtmlContent("line 1, postcode<br/>1 February 2000 to 2 March 2001"),
           actions = Seq(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), NormalMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), NormalMode).url)
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousAddressHidden", "line 1, postcode")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), NormalMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousAddressHidden", "line 1, postcode")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), NormalMode).url)
           )
         )
       )

@@ -18,12 +18,10 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{CheckMode, Index}
-import pages.{PreviousAddressesQuery, PreviousEmployersQuery, WhatIsYourPreviousAddressInternationalPage, WhatIsYourPreviousAddressUkPage}
-import play.api.i18n.{I18nSupport, Messages, MessagesApi}
+import models.CheckMode
+import pages.{PreviousAddressesQuery, PreviousEmployersQuery}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
@@ -62,23 +60,8 @@ class CheckYourAnswersController @Inject()(
           WhatIsYourCurrentAddressInternationalSummary.row(answers)
         ).flatten)
 
-      val previousAddresses = {
-        val previousAddresses = answers.get(PreviousAddressesQuery).getOrElse(List.empty)
-        previousAddresses.indices.map { i =>
-
-          val lines = answers.get(WhatIsYourPreviousAddressUkPage(Index(i))).map(_.lines)
-            .orElse(answers.get(WhatIsYourPreviousAddressInternationalPage(Index(i))).map(_.lines))
-            .getOrElse(List.empty)
-
-          ListWithActionsItem(
-            name = Text(lines.mkString(", ")),
-            actions = List(
-              ListWithActionsAction(content = Text(Messages("site.change")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(i), CheckMode).url),
-              ListWithActionsAction(content = Text(Messages("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(i), CheckMode).url)
-            )
-          )
-        }
-      }
+      val previousAddresses = answers.get(PreviousAddressesQuery).getOrElse(List.empty)
+        .indices.map(PreviousAddressSummary.item(answers, CheckMode, _))
 
       val relationshipHistory = SummaryListViewModel(Seq(
         AreYouMarriedSummary.row(answers),

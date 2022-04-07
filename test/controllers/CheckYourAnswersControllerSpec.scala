@@ -46,7 +46,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, "country")).success.value
         .set(DoYouHaveAnyPreviousAddressesPage, true).success.value
         .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
-        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.now, to = LocalDate.now)).success.value
+        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))).success.value
         .set(AreYouReturningFromLivingAbroadPage, true).success.value
         .set(WhatIsYourTelephoneNumberPage, "tel").success.value
         .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
@@ -105,10 +105,10 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         ).flatten)
 
         val previousAddresses = List(ListWithActionsItem(
-          name = Text("line 1, postcode"),
+          name = HtmlContent("line 1, postcode<br/>1 February 2000 to 2 March 2001"),
           actions = List(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), CheckMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), CheckMode).url)
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousAddressHidden", "line 1, postcode")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), CheckMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousAddressHidden", "line 1, postcode")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), CheckMode).url)
           )
         ))
 
@@ -139,8 +139,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val previousEmployers = List(ListWithActionsItem(
           name = HtmlContent("previous employers name<br/>line 1, postcode<br/>1 February 2000 to 2 March 2001"),
           actions = List(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), CheckMode).url)
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "previous employers name")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "previous employers name")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), CheckMode).url)
           )
         ))
 
