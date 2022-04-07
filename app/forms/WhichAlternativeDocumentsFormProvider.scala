@@ -27,6 +27,7 @@ class WhichAlternativeDocumentsFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Set[AlternativeDocuments]] =
     Form(
-      "value" -> set(enumerable[AlternativeDocuments]("whichAlternativeDocuments.error.required")).verifying(nonEmptySet("whichAlternativeDocuments.error.required"))
+      "value" -> set(enumerable[AlternativeDocuments]("whichAlternativeDocuments.error.exactlyTwo", "whichAlternativeDocuments.error.exactlyTwo"))
+        .verifying("whichAlternativeDocuments.error.exactlyTwo", _.size == 2)
     )
 }

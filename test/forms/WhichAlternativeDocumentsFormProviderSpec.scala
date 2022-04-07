@@ -18,6 +18,7 @@ package forms
 
 import forms.behaviours.CheckboxFieldBehaviours
 import models.AlternativeDocuments
+import org.scalacheck.Gen
 import play.api.data.FormError
 
 class WhichAlternativeDocumentsFormProviderSpec extends CheckboxFieldBehaviours {
@@ -27,14 +28,45 @@ class WhichAlternativeDocumentsFormProviderSpec extends CheckboxFieldBehaviours 
   ".value" - {
 
     val fieldName = "value"
-    val requiredKey = "whichAlternativeDocuments.error.required"
+    val requiredKey = "whichAlternativeDocuments.error.exactlyTwo"
+    val invalidError = FormError(s"$fieldName[0]", "whichAlternativeDocuments.error.exactlyTwo")
 
-    behave like checkboxField[AlternativeDocuments](
-      form,
-      fieldName,
-      validValues  = AlternativeDocuments.values,
-      invalidError = FormError(s"$fieldName[0]", "error.invalid")
-    )
+    "bind for two valid values" in {
+      for {
+        gen <- Gen.pick(2, AlternativeDocuments.values)
+      } yield {
+        val data = gen.zipWithIndex.map{case (value, i) => s"$fieldName[$i]" -> value.toString}.toMap
+        val result = form.bind(data)
+        result.get mustEqual Set(gen)
+        result.errors mustBe empty
+      }
+    }
+
+    "fail to bind for one valid value" in {
+      for {
+        gen <- Gen.pick(1, AlternativeDocuments.values)
+      } yield {
+        val data = gen.zipWithIndex.map{case (value, i) => s"$fieldName[$i]" -> value.toString}.toMap
+        form.bind(data).errors must contain(invalidError)
+      }
+    }
+
+    "fail to bind for three or more valid values" in {
+      for {
+        num <- Gen.pick(1, 3 to 7)
+        gen <- Gen.pick(num.head, AlternativeDocuments.values)
+      } yield {
+        val data = gen.zipWithIndex.map{case (value, i) => s"$fieldName[$i]" -> value.toString}.toMap
+        form.bind(data).errors must contain(invalidError)
+      }
+    }
+
+    "fail to bind when the answer is invalid" in {
+      val data = Map(
+        s"$fieldName[0]" -> "invalid value"
+      )
+      form.bind(data).errors must contain(invalidError)
+    }
 
     behave like mandatoryCheckboxField(
       form,

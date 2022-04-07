@@ -63,7 +63,7 @@ class WhichAlternativeDocumentsControllerSpec extends SpecBase with MockitoSugar
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhichAlternativeDocumentsPage, AlternativeDocuments.values.toSet).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhichAlternativeDocumentsPage, AlternativeDocuments.values.take(2).toSet).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -75,7 +75,7 @@ class WhichAlternativeDocumentsControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(AlternativeDocuments.values.toSet), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(AlternativeDocuments.values.take(2).toSet), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -96,7 +96,7 @@ class WhichAlternativeDocumentsControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request =
           FakeRequest(POST, whichAlternativeDocumentsRoute)
-            .withFormUrlEncodedBody(("value[0]", AlternativeDocuments.values.head.toString))
+            .withFormUrlEncodedBody(AlternativeDocuments.values.take(2).zipWithIndex.map{case (value, i) => (s"value[$i]", value.toString)}:_*)
 
         val result = route(application, request).value
 

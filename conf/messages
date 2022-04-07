@@ -495,7 +495,7 @@ whichAlternativeDocuments.marriage-or-civil-partnership-certificate = Marriage o
 whichAlternativeDocuments.army-or-navy-certificate = Certificate of service in Her Majesty’s Armed Forces or merchant navy
 whichAlternativeDocuments.identity-or-medical-card = Identity or medical card
 whichAlternativeDocuments.checkYourAnswersLabel = Which alternative documents do you have?
-whichAlternativeDocuments.error.required = Select which alternative documents you have
+whichAlternativeDocuments.error.exactlyTwo = Select exactly two alternative documents that you have
 whichAlternativeDocuments.change.hidden = which alternative documents you have
 
 doYouKnowYourNationalInsuranceNumber.title = Do you know your National Insurance number?
