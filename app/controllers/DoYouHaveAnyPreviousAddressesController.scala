@@ -18,14 +18,14 @@ package controllers
 
 import controllers.actions._
 import forms.DoYouHaveAnyPreviousAddressesFormProvider
-import models.{Index, Mode, UserAnswers}
+import models.{Mode, UserAnswers}
 import navigation.Navigator
-import pages.{DoYouHaveAnyPreviousAddressesPage, PreviousAddressesQuery, WhatIsYourPreviousAddressInternationalPage, WhatIsYourPreviousAddressUkPage}
+import pages.{DoYouHaveAnyPreviousAddressesPage, PreviousAddressesQuery}
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers.PreviousAddressSummary
 import views.html.DoYouHaveAnyPreviousAddressesView
 
 import javax.inject.Inject
@@ -44,23 +44,9 @@ class DoYouHaveAnyPreviousAddressesController @Inject()(
 
   val form = formProvider()
 
-  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] = {
-
-    val previousAddresses = answers.get(PreviousAddressesQuery).getOrElse(Seq.empty)
-
-    previousAddresses.indices.flatMap { i =>
-      answers.get(WhatIsYourPreviousAddressUkPage(Index(i))).map(_.lines) orElse
-        answers.get(WhatIsYourPreviousAddressInternationalPage(Index(i))).map(_.lines)
-    }.zipWithIndex.map { case (lines, i) =>
-      ListWithActionsItem(
-        name = Text(lines.mkString(", ")),
-        actions = List(
-          ListWithActionsAction(content = Text(messages("site.change")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(i), mode).url),
-          ListWithActionsAction(content = Text(messages("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(i), mode).url)
-        )
-      )
-    }
-  }
+  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
+    answers.get(PreviousAddressesQuery).getOrElse(Seq.empty)
+      .indices.map(PreviousAddressSummary.item(answers, mode, _))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>

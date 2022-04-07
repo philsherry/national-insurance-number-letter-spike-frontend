@@ -33,6 +33,8 @@ object PreviousEmployerSummary {
 
   def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): ListWithActionsItem = {
 
+    val name = answers.get(WhatIsYourPreviousEmployersNamePage(Index(i))).getOrElse("")
+
     val content = HtmlContent(
       List(
         answers.get(WhatIsYourPreviousEmployersNamePage(Index(i))),
@@ -47,8 +49,8 @@ object PreviousEmployerSummary {
     ListWithActionsItem(
       name = content,
       actions = List(
-        ListWithActionsAction(content = Text(Messages("site.change")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(i), mode).url),
-        ListWithActionsAction(content = Text(Messages("site.remove")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(i), mode).url)
+        ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousEmployerHidden", name)), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(i), mode).url),
+        ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousEmployerHidden", name)), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(i), mode).url)
       )
     )
   }
