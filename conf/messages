@@ -540,8 +540,16 @@ areYouSureYouWantToRemovePreviousAddress.title = Are you sure you want to remove
 areYouSureYouWantToRemovePreviousAddress.heading = Are you sure you want to remove this previous address?
 areYouSureYouWantToRemovePreviousAddress.error.required = Select yes if you want to remove this previous address
 
-pdf.title = Get your National Insurance Number by post
-pdf.page = Page
+pdf.title = Get your National Insurance Number by post (CA5403)
+pdf.page = CA5403 - Page
+
+pdf.nextSteps = What to do next
+pdf.nextSteps.p1 = Once you have printed and checked this form you should post it and your identity documents to:
+pdf.nextSteps.address1 = National Insurance Contributions and Employer Office
+pdf.nextSteps.address2 = HM Revenue and Customs
+pdf.nextSteps.address3 = BX9 1AN
+pdf.nextSteps.documentsToInclude.singular = You must include a copy of the following document, or we may not be able to process your application:
+pdf.nextSteps.documentsToInclude.plural = You must include copies of the following documents, or we may not be able to process your application:
 
 pdf.personalDetails = Personal details
 pdf.personalDetails.firstName = First name
