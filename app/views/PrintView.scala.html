@@ -38,13 +38,27 @@
      InsetText(content = HtmlContent("<p class=\"govuk-body\">" + messages("print.address1") + "<br/>" + messages("print.address2")+ "<br/>" + messages("print.address3") + "</p>"))
     )
 
-    <p class="govuk-body">@messages("print.p3")</p>
+    <h2 class="govuk-heading-m">@messages("print.documents")</h2>
+
+    @if(model.primaryDocument.isDefined) {
+    <p class="govuk-body">@messages("print.p3.singular")</p>
 
     <ul class="govuk-list govuk-list--bullet">
-     @for(document <- model.secondaryDocuments.getOrElse(List.empty)) {
-     <li>@messages(document)</li>
-     }
+        @for(document <- model.primaryDocument) {
+        <li>@messages(document)</li>
+        }
     </ul>
+    }
+
+    @if(model.secondaryDocuments.nonEmpty) {
+    <p class="govuk-body">@messages("print.p3.plural")</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+        @for(document <- model.secondaryDocuments.getOrElse(List.empty)) {
+        <li>@messages(document)</li>
+        }
+    </ul>
+    }
 
     <p class="govuk-body">@messages("print.p4.1") <a class="govuk-link" href="@routes.CheckYourAnswersController.onPageLoad">@messages("print.p4.change")</a>. @messages("print.p4.2")
      <a href="@routes.JourneyRecoveryController.onStartAgain.url" class="govuk-link">@messages("print.p4.restart")</a>.</p>
