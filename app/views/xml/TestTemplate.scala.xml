@@ -20,7 +20,7 @@
 
 @(model: PrintModel)(implicit messages: Messages)
 
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="sans-serif">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" font-family="sans-serif">
     <fo:layout-master-set>
         <fo:simple-page-master master-name="main" page-height="297mm" page-width="210mm" margin-top="2cm" margin-bottom="2cm" margin-left="2cm" margin-right="2cm">
             <fo:region-body region-name="xsl-region-body" margin-top="3cm" margin-bottom="1.5cm"/>
@@ -32,7 +32,7 @@
 
         <fo:static-content flow-name="xsl-region-before">
             <fo:block>
-                <fo:external-graphic src="url(conf/resources/logo.jpg)" padding-right="1cm" />
+                <fo:external-graphic src="url(conf/resources/logo.jpg)" padding-right="1cm" fox:alt-text="HM Revenue and Customs logo" />
                 <fo:block margin-left="6cm" margin-top="-1.5cm" text-align="right" font-size="18pt" font-weight="bold">@messages("pdf.title")</fo:block>
             </fo:block>
         </fo:static-content>
