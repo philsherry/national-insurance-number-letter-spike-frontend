@@ -431,25 +431,21 @@ whenDidYouStartWorkingForEmployer.error.required = The date must include {0}
 whenDidYouStartWorkingForEmployer.error.invalid = Enter a real date
 whenDidYouStartWorkingForEmployer.change.hidden = when you started working for your most recent employer
 
-whenDidYouStartWorkingForPreviousEmployer.title = When did you start working for previous employer?
-whenDidYouStartWorkingForPreviousEmployer.heading = When did you start working for previous employer?
+whenDidYouStartWorkingForPreviousEmployer.title = When did you start working for your previous employer?
+whenDidYouStartWorkingForPreviousEmployer.heading = When did you start working for your previous employer?
 whenDidYouStartWorkingForPreviousEmployer.hint = For example, 12 11 2007
-whenDidYouStartWorkingForPreviousEmployer.checkYourAnswersLabel = When did you start working for previous employer?
 whenDidYouStartWorkingForPreviousEmployer.error.required.all = Enter the date you started working for previous employer
 whenDidYouStartWorkingForPreviousEmployer.error.required.two = The date must include {0} and {1}
 whenDidYouStartWorkingForPreviousEmployer.error.required = The date must include {0}
 whenDidYouStartWorkingForPreviousEmployer.error.invalid = Enter a real date
-whenDidYouStartWorkingForPreviousEmployer.change.hidden = when you started working for previous employer
 
-whenDidYouStopWorkingForPreviousEmployer.title = When did you stop working for previous employer?
-whenDidYouStopWorkingForPreviousEmployer.heading = When did you stop working for previous employer?
+whenDidYouStopWorkingForPreviousEmployer.title = When did you stop working for your previous employer?
+whenDidYouStopWorkingForPreviousEmployer.heading = When did you stop working for your previous employer?
 whenDidYouStopWorkingForPreviousEmployer.hint = For example, 12 11 2007
-whenDidYouStopWorkingForPreviousEmployer.checkYourAnswersLabel = When did you stop working for previous employer?
-whenDidYouStopWorkingForPreviousEmployer.error.required.all = Enter the date you stopped working for previous employer
+whenDidYouStopWorkingForPreviousEmployer.error.required.all = Enter the date you stopped working for your previous employer
 whenDidYouStopWorkingForPreviousEmployer.error.required.two = The date must include {0} and {1}
 whenDidYouStopWorkingForPreviousEmployer.error.required = The date must include {0}
 whenDidYouStopWorkingForPreviousEmployer.error.invalid = Enter a real date
-whenDidYouStopWorkingForPreviousEmployer.change.hidden = when you stopped working for previous employer
 
 doYouHavePrimaryDocument.title = Do you have one of the following identity documents?
 doYouHavePrimaryDocument.heading = Do you have one of the following identity documents?
