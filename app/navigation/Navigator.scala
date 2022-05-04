@@ -19,7 +19,7 @@ package navigation
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
-import pages.{AreYouSureYouWantToRemovePreviousNamePage, _}
+import pages._
 import models._
 
 @Singleton
@@ -168,6 +168,7 @@ class Navigator @Inject()() {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
+    case DoYouHaveAPreviousNamePage => doYouHaveAPreviousNameCheckRoutes
     case IsYourPreviousAddressInUkPage(index) => isYourPreviousAddressInUkRoutes(_, index, CheckMode)
     case AreYouMarriedPage => areYouMarriedCheckRoutes
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes
@@ -183,6 +184,12 @@ class Navigator @Inject()() {
     case WhenDidYouStartWorkingForPreviousEmployerPage(index) => _ => routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index, CheckMode)
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
+
+  private def doYouHaveAPreviousNameCheckRoutes(answers: UserAnswers): Call =
+    (answers.get(DoYouHaveAPreviousNamePage), answers.get(WhatIsYourPreviousNamePage(Index(0)))) match {
+      case (Some(true), None) => routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), CheckMode)
+      case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
 
   private def areYouMarriedCheckRoutes(answers: UserAnswers): Call =
     (answers.get(AreYouMarriedPage), answers.get(WhenDidYouGetMarriedPage)) match {

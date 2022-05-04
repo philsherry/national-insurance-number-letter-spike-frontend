@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.AreYouSureYouWantToRemovePreviousNameFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers, WhatIsYourPreviousName}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AreYouSureYouWantToRemovePreviousNamePage
+import pages.{AreYouSureYouWantToRemovePreviousNamePage, WhatIsYourPreviousNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -40,13 +40,18 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
   val formProvider = new AreYouSureYouWantToRemovePreviousNameFormProvider()
   val form = formProvider()
 
-  lazy val areYouSureYouWantToRemovePreviousNameRoute = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(NormalMode).url
+  lazy val areYouSureYouWantToRemovePreviousNameRoute = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(Index(0), NormalMode).url
 
   "AreYouSureYouWantToRemovePreviousName Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val name = WhatIsYourPreviousName("first", Some("middle"), "last")
+
+      val userAnswers = emptyUserAnswers
+        .set(WhatIsYourPreviousNamePage(Index(0)), name).success.value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousNameRoute)
@@ -56,13 +61,17 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
         val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousNameView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, "first middle last", NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouSureYouWantToRemovePreviousNamePage, true).success.value
+      val name = WhatIsYourPreviousName("first", Some("middle"), "last")
+
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(WhatIsYourPreviousNamePage(Index(0)), name).success.value
+        .set(AreYouSureYouWantToRemovePreviousNamePage(Index(0)), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +83,7 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), "first middle last", NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -106,7 +115,12 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val name = WhatIsYourPreviousName("first", Some("middle"), "last")
+
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(WhatIsYourPreviousNamePage(Index(0)), name).success.value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request =
@@ -120,7 +134,7 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, "first middle last", NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 

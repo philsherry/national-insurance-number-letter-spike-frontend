@@ -18,14 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourPreviousNameFormProvider
-import models.{NormalMode, WhatIsYourPreviousName, UserAnswers}
+import models.{Index, NormalMode, UserAnswers, WhatIsYourPreviousName}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.WhatIsYourPreviousNamePage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -41,19 +40,7 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new WhatIsYourPreviousNameFormProvider()
   val form = formProvider()
 
-  lazy val whatIsYourPreviousNameRoute = routes.WhatIsYourPreviousNameController.onPageLoad(NormalMode).url
-
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      WhatIsYourPreviousNamePage.toString -> Json.obj(
-        "title" -> "title",
-        "firstName" -> "first",
-        "middleNames" -> "middle",
-        "lastName" -> "last"
-      )
-    )
-  )
+  lazy val whatIsYourPreviousNameRoute = routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), NormalMode).url
 
   "WhatIsYourPreviousName Controller" - {
 
@@ -69,11 +56,14 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
+
+      val userAnswers = UserAnswers("")
+        .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("first", Some("middle"), "last")).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -85,7 +75,7 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourPreviousName("first", Some("middle"), "last")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhatIsYourPreviousName("first", Some("middle"), "last")), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -131,7 +121,7 @@ class WhatIsYourPreviousNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

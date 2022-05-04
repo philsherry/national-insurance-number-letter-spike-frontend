@@ -16,16 +16,17 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 class AreYouSureYouWantToRemovePreviousNamePageSpec extends PageBehaviours {
 
   "AreYouSureYouWantToRemovePreviousNamePage" - {
 
-    beRetrievable[Boolean](AreYouSureYouWantToRemovePreviousNamePage)
+    beRetrievable[Boolean](AreYouSureYouWantToRemovePreviousNamePage(Index(0)))
 
-    beSettable[Boolean](AreYouSureYouWantToRemovePreviousNamePage)
+    beSettable[Boolean](AreYouSureYouWantToRemovePreviousNamePage(Index(0)))
 
-    beRemovable[Boolean](AreYouSureYouWantToRemovePreviousNamePage)
+    beRemovable[Boolean](AreYouSureYouWantToRemovePreviousNamePage(Index(0)))
   }
 }

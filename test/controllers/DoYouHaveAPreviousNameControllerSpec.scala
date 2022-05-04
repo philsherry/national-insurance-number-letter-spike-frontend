@@ -56,7 +56,7 @@ class DoYouHaveAPreviousNameControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[DoYouHaveAPreviousNameView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Seq.empty, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -102,7 +102,7 @@ class DoYouHaveAPreviousNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Seq.empty, NormalMode)(request, messages(application)).toString
       }
     }
 

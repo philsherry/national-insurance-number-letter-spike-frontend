@@ -50,7 +50,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
 
     UserAnswers("id")
       .set(WhatIsYourNamePage, WhatIsYourName("first", Some("middle"), "last")).get
-      .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
+      .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
       .set(WhatIsYourDateOfBirthPage, LocalDate.of(1990, 12, 1)).get
       .set(WhatIsYourCurrentAddressUkPage, currentAddressUk).get
       .set(WhatIsYourPreviousAddressUkPage(Index(0)), previousAddressUk).get

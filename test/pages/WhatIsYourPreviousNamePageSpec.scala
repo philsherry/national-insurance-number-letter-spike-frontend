@@ -16,17 +16,17 @@
 
 package pages
 
-import models.WhatIsYourPreviousName
+import models.{Index, WhatIsYourPreviousName}
 import pages.behaviours.PageBehaviours
 
 class WhatIsYourPreviousNamePageSpec extends PageBehaviours {
 
   "WhatIsYourPreviousNamePage" - {
 
-    beRetrievable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage)
+    beRetrievable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage(Index(0)))
 
-    beSettable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage)
+    beSettable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage(Index(0)))
 
-    beRemovable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage)
+    beRemovable[WhatIsYourPreviousName](WhatIsYourPreviousNamePage(Index(0)))
   }
 }
