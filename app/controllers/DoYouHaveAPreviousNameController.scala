@@ -22,7 +22,7 @@ import forms.DoYouHaveAPreviousNameFormProvider
 import javax.inject.Inject
 import models.{Mode, UserAnswers}
 import navigation.Navigator
-import pages.{DoYouHaveAPreviousNamePage, PreviousNameQuery}
+import pages.{DoYouHaveAPreviousNamePage, PreviousNamesQuery}
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.hmrcfrontend.views.viewmodels.listwithactions.ListWithActionsItem
@@ -46,7 +46,7 @@ class DoYouHaveAPreviousNameController @Inject()(
   val form = formProvider()
 
   private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
-    answers.get(PreviousNameQuery).getOrElse(Seq.empty)
+    answers.get(PreviousNamesQuery).getOrElse(Seq.empty)
       .indices.map(PreviousNameSummary.item(answers, mode, _))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {

@@ -17,10 +17,9 @@
 package navigation
 
 import javax.inject.{Inject, Singleton}
-
 import play.api.mvc.Call
 import controllers.routes
-import pages._
+import pages.{AreYouSureYouWantToRemovePreviousNamePage, _}
 import models._
 
 @Singleton
@@ -29,7 +28,8 @@ class Navigator @Inject()() {
   private val normalRoutes: Page => UserAnswers => Call = {
     case WhatIsYourNamePage                                     => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
     case DoYouHaveAPreviousNamePage                             => doYouHaveAPreviousNameRoutes
-    case WhatIsYourPreviousNamePage(index)                      => _ => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
+    case WhatIsYourPreviousNamePage(_)                          => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
+    case AreYouSureYouWantToRemovePreviousNamePage(_)           => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
     case WhatIsYourDateOfBirthPage                              => _ => routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
     case IsYourCurrentAddressInUkPage                           => isYourCurrentAddressInUkRoutes
     case WhatIsYourCurrentAddressUkPage                         => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
@@ -74,7 +74,7 @@ class Navigator @Inject()() {
   private def doYouHaveAPreviousNameRoutes(answers: UserAnswers): Call =
     answers.get(DoYouHaveAPreviousNamePage).map {
       case true  =>
-        val previousNames = answers.get(PreviousNameQuery).getOrElse(Seq.empty)
+        val previousNames = answers.get(PreviousNamesQuery).getOrElse(Seq.empty)
         routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), NormalMode)
       case false => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())

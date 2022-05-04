@@ -16,11 +16,12 @@
 
 package pages
 
+import models.Index
 import play.api.libs.json.JsPath
 
-case object AreYouSureYouWantToRemovePreviousNamePage extends QuestionPage[Boolean] {
+final case class AreYouSureYouWantToRemovePreviousNamePage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "previousNames" \ index.position \ toString
 
   override def toString: String = "areYouSureYouWantToRemovePreviousName"
 }

@@ -598,8 +598,6 @@ print.p4.change = change your answers
 print.p4.2 = You can also
 print.p4.restart = start the application form again
 
-areYouSureYouWantToRemovePreviousName.title = areYouSureYouWantToRemovePreviousName
-areYouSureYouWantToRemovePreviousName.heading = areYouSureYouWantToRemovePreviousName
-areYouSureYouWantToRemovePreviousName.checkYourAnswersLabel = areYouSureYouWantToRemovePreviousName
-areYouSureYouWantToRemovePreviousName.error.required = Select yes if areYouSureYouWantToRemovePreviousName
-areYouSureYouWantToRemovePreviousName.change.hidden = AreYouSureYouWantToRemovePreviousName
+areYouSureYouWantToRemovePreviousName.title = Are you sure you want to remove this previous name?
+areYouSureYouWantToRemovePreviousName.heading = Are you sure you want to remove this previous name?
+areYouSureYouWantToRemovePreviousName.error.required = Select yes if are sure you want to remove this previous name

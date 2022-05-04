@@ -231,7 +231,7 @@ POST       /:index/are-you-sure-you-want-to-remove-previous-employer            
 GET        /:index/change-if-you-want-to-remove-previous-employer                  controllers.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-if-you-want-to-remove-previous-employer                  controllers.AreYouSureYouWantToRemovePreviousEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /areYouSureYouWantToRemovePreviousName                        controllers.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /areYouSureYouWantToRemovePreviousName                        controllers.AreYouSureYouWantToRemovePreviousNameController.onSubmit(mode: Mode = NormalMode)
-GET        /changeAreYouSureYouWantToRemovePreviousName                  controllers.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeAreYouSureYouWantToRemovePreviousName                  controllers.AreYouSureYouWantToRemovePreviousNameController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/are-you-sure-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/are-you-sure-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-if-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-if-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index: Index, mode: Mode = CheckMode)
