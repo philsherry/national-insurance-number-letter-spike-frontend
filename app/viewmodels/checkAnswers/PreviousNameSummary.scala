@@ -33,7 +33,7 @@ object PreviousNameSummary {
       .map(n => Seq(
         Some(n.firstName),
         n.middleNames,
-        Some(n.lastName)).flatten).mkString(" ")
+        Some(n.lastName)).flatten).getOrElse(Seq.empty).mkString(" ")
 
     ListWithActionsItem(
       name = HtmlContent(name),

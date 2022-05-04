@@ -110,11 +110,16 @@ whatIsYourName.error.middleNames.length = Middle names must be 100 characters or
 whatIsYourName.error.lastName.length = Last name must be 100 characters or less
 whatIsYourName.change.hidden = your name
 
-doYouHaveAPreviousName.title = Do you have a previous name?
-doYouHaveAPreviousName.heading = Do you have a previous name?
-doYouHaveAPreviousName.checkYourAnswersLabel = Do you have a previous name?
-doYouHaveAPreviousName.error.required = Select yes if you have a previous name
-doYouHaveAPreviousName.change.hidden = do you have a previous name
+doYouHaveAPreviousName.title = Do you have any previous names?
+doYouHaveAPreviousName.add.title = You have added 1 previous name
+doYouHaveAPreviousName.add.title.plural = You have added {0} previous names
+doYouHaveAPreviousName.heading = Do you have any previous names?
+doYouHaveAPreviousName.add.heading = You have added 1 previous name
+doYouHaveAPreviousName.add.heading.plural = You have added {0} previous names
+doYouHaveAPreviousName.add.legend = Do you want to add another previous name?
+doYouHaveAPreviousName.checkYourAnswersLabel = Do you have any previous names?
+doYouHaveAPreviousName.error.required = Select yes if have any previous names
+doYouHaveAPreviousName.change.hidden = do you have any previous names
 
 whatIsYourPreviousName.title = What is your previous name?
 whatIsYourPreviousName.heading = What is your previous name?
