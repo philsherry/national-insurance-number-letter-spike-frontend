@@ -16,12 +16,10 @@
 
 package pages
 
-import play.api.libs.json.JsPath
+import play.api.libs.json.{JsPath, JsValue}
+import queries.Gettable
 
-case object DoYouHaveAPreviousNamePage extends QuestionPage[Boolean] {
+case object PreviousNameQuery extends Gettable[Seq[JsValue]] {
 
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "doYouHaveAPreviousName"
-
+  override def path: JsPath = JsPath \ "previousNames"
 }

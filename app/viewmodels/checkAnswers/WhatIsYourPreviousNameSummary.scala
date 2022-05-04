@@ -28,21 +28,22 @@ import viewmodels.implicits._
 
 object WhatIsYourPreviousNameSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhatIsYourPreviousNamePage).map {
-      answer =>
-
-        val value = List(Some(answer.firstName), answer.middleNames, Some(answer.lastName))
-          .flatten.map(HtmlFormat.escape(_).toString)
-          .mkString("<br/>")
-
-        SummaryListRowViewModel(
-          key     = "whatIsYourPreviousName.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whatIsYourPreviousName.change.hidden"))
-          )
-        )
-    }
+  //TODO: Fix summary row
+  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] = None
+//    answers.get(WhatIsYourPreviousNamePage).map {
+//      answer =>
+//
+//        val value = List(Some(answer.firstName), answer.middleNames, Some(answer.lastName))
+//          .flatten.map(HtmlFormat.escape(_).toString)
+//          .mkString("<br/>")
+//
+//        SummaryListRowViewModel(
+//          key     = "whatIsYourPreviousName.checkYourAnswersLabel",
+//          value   = ValueViewModel(HtmlContent(value)),
+//          actions = Seq(
+//            ActionItemViewModel("site.change", routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode).url)
+//              .withVisuallyHiddenText(messages("whatIsYourPreviousName.change.hidden"))
+//          )
+//        )
+//    }
 }

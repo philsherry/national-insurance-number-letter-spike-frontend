@@ -29,7 +29,7 @@ class Navigator @Inject()() {
   private val normalRoutes: Page => UserAnswers => Call = {
     case WhatIsYourNamePage                                     => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
     case DoYouHaveAPreviousNamePage                             => doYouHaveAPreviousNameRoutes
-    case WhatIsYourPreviousNamePage                             => _ => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
+    case WhatIsYourPreviousNamePage(index)                      => _ => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
     case WhatIsYourDateOfBirthPage                              => _ => routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
     case IsYourCurrentAddressInUkPage                           => isYourCurrentAddressInUkRoutes
     case WhatIsYourCurrentAddressUkPage                         => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
@@ -73,7 +73,9 @@ class Navigator @Inject()() {
 
   private def doYouHaveAPreviousNameRoutes(answers: UserAnswers): Call =
     answers.get(DoYouHaveAPreviousNamePage).map {
-      case true  => routes.WhatIsYourPreviousNameController.onPageLoad(NormalMode)
+      case true  =>
+        val previousNames = answers.get(PreviousNameQuery).getOrElse(Seq.empty)
+        routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), NormalMode)
       case false => routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
@@ -169,7 +171,6 @@ class Navigator @Inject()() {
     case IsYourPreviousAddressInUkPage(index) => isYourPreviousAddressInUkRoutes(_, index, CheckMode)
     case AreYouMarriedPage => areYouMarriedCheckRoutes
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes
-    case DoYouHaveAPreviousNamePage => doYouHaveAPreviousNameCheckRoutes
     case IsYourCurrentAddressInUkPage => isYourCurrentAddressInUkCheckRoutes
     case HaveYouEverClaimedChildBenefitPage => haveYouEverClaimedChildBenefitCheckRoutes
     case DoYouKnowYourChildBenefitNumberPage => doYouKnowYourChildBenefitNumberCheckRoutes
@@ -192,12 +193,6 @@ class Navigator @Inject()() {
   private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes(answers: UserAnswers): Call =
     (answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage), answers.get(PreviousMarriageOrPartnershipDetailsPage)) match {
       case (Some(true), None) => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(CheckMode)
-      case (_, _) => routes.CheckYourAnswersController.onPageLoad
-    }
-
-  private def doYouHaveAPreviousNameCheckRoutes(answers: UserAnswers): Call =
-    (answers.get(DoYouHaveAPreviousNamePage), answers.get(WhatIsYourPreviousNamePage)) match {
-      case (Some(true), None) => routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode)
       case (_, _) => routes.CheckYourAnswersController.onPageLoad
     }
 

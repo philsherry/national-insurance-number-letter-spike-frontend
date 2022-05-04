@@ -34,10 +34,10 @@ POST       /do-you-have-a-previous-name                        controllers.DoYou
 GET        /change-if-you-have-a-previous-name                  controllers.DoYouHaveAPreviousNameController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-have-a-previous-name                  controllers.DoYouHaveAPreviousNameController.onSubmit(mode: Mode = CheckMode)
 
-GET        /what-is-your-previous-name                        controllers.WhatIsYourPreviousNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-is-your-previous-name                        controllers.WhatIsYourPreviousNameController.onSubmit(mode: Mode = NormalMode)
-GET        /change-your-previous-name                  controllers.WhatIsYourPreviousNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-your-previous-name                  controllers.WhatIsYourPreviousNameController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/what-is-your-previous-name                        controllers.WhatIsYourPreviousNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/what-is-your-previous-name                        controllers.WhatIsYourPreviousNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-your-previous-name                  controllers.WhatIsYourPreviousNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-your-previous-name                  controllers.WhatIsYourPreviousNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /what-is-your-date-of-birth                  controllers.WhatIsYourDateOfBirthController.onPageLoad(mode: Mode = NormalMode)
 POST       /what-is-your-date-of-birth                  controllers.WhatIsYourDateOfBirthController.onSubmit(mode: Mode = NormalMode)

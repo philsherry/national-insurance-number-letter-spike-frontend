@@ -67,7 +67,7 @@ object PrintModel {
   def from(userAnswers: UserAnswers): Option[PrintModel] = {
     for {
       name <- userAnswers.get(WhatIsYourNamePage)
-      previousName = userAnswers.get(WhatIsYourPreviousNamePage)
+      previousName = None //TODO: Update for multiple previous names
       dob <- userAnswers.get(WhatIsYourDateOfBirthPage)
       currentAddress <- getCurrentAddress(userAnswers)
       previousAddresses = getPreviousAddresses(userAnswers)
