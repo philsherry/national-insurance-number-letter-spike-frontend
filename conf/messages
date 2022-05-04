@@ -597,3 +597,9 @@ print.p4.1 = If you notice a mistake before sending the form you can
 print.p4.change = change your answers
 print.p4.2 = You can also
 print.p4.restart = start the application form again
+
+areYouSureYouWantToRemovePreviousName.title = areYouSureYouWantToRemovePreviousName
+areYouSureYouWantToRemovePreviousName.heading = areYouSureYouWantToRemovePreviousName
+areYouSureYouWantToRemovePreviousName.checkYourAnswersLabel = areYouSureYouWantToRemovePreviousName
+areYouSureYouWantToRemovePreviousName.error.required = Select yes if areYouSureYouWantToRemovePreviousName
+areYouSureYouWantToRemovePreviousName.change.hidden = AreYouSureYouWantToRemovePreviousName
