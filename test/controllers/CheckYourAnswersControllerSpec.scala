@@ -53,8 +53,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).success.value
         .set(AreYouMarriedPage, true).success.value
         .set(WhenDidYouGetMarriedPage, LocalDate.now).success.value
-        .set(AreYouInACivilPartnershipPage, true).success.value
-        .set(WhenDidYouEnterACivilPartnershipPage, LocalDate.now).success.value
         .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
         .set(PreviousMarriageOrPartnershipDetailsPage, PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya")).success.value
         .set(HaveYouEverClaimedChildBenefitPage, true).success.value

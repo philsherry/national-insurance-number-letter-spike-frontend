@@ -266,37 +266,21 @@ whatIsYourTelephoneNumber.error.required = Enter your telephone number
 whatIsYourTelephoneNumber.error.length = Your telephone number must be 100 characters or less
 whatIsYourTelephoneNumber.change.hidden = your telephone number
 
-areYouInACivilPartnership.title = Are you in a civil partnership?
-areYouInACivilPartnership.heading = Are you in a civil partnership?
-areYouInACivilPartnership.checkYourAnswersLabel = Are you in a civil partnership?
-areYouInACivilPartnership.error.required = Select yes if are in a civil partnership
-areYouInACivilPartnership.change.hidden = if you are in a civil partnership
+areYouMarried.title = Are you married or in a civil partnership?
+areYouMarried.heading = Are you married or in a civil partnership?
+areYouMarried.checkYourAnswersLabel = Are you married or in a civil partnership?
+areYouMarried.error.required = Select yes if you are married or in a civil partnership
+areYouMarried.change.hidden = if you are married or in a civil partnership
 
-areYouMarried.title = Are you married?
-areYouMarried.heading = Are you married?
-areYouMarried.checkYourAnswersLabel = Are you married?
-areYouMarried.error.required = Select yes if you are married
-areYouMarried.change.hidden = if you are married
-
-whenDidYouEnterACivilPartnership.title = When you did you enter a civil partnership?
-whenDidYouEnterACivilPartnership.heading = When you did you enter a civil partnership?
-whenDidYouEnterACivilPartnership.hint = For example, 12 11 2007
-whenDidYouEnterACivilPartnership.checkYourAnswersLabel = When you did you enter a civil partnership?
-whenDidYouEnterACivilPartnership.error.required.all = Enter the date your entered into a civil partnership
-whenDidYouEnterACivilPartnership.error.required.two = The date you entered into a civil partnership must include {0} and {1}
-whenDidYouEnterACivilPartnership.error.required = The date you entered into a civil partnership must include {0}
-whenDidYouEnterACivilPartnership.error.invalid = Enter a real date
-whenDidYouEnterACivilPartnership.change.hidden = when you entered into a civil partnership
-
-whenDidYouGetMarried.title = When did you get married?
-whenDidYouGetMarried.heading = When did you get married?
+whenDidYouGetMarried.title = When did you enter a marriage or civil partnership?
+whenDidYouGetMarried.heading = When did you enter a marriage or civil partnership?
 whenDidYouGetMarried.hint = For example, 12 11 2007
-whenDidYouGetMarried.checkYourAnswersLabel = When did you get married?
-whenDidYouGetMarried.error.required.all = Enter the date you got married
-whenDidYouGetMarried.error.required.two = The date you got married must include {0} and {1}
-whenDidYouGetMarried.error.required = The date you got married must include {0}
+whenDidYouGetMarried.checkYourAnswersLabel = When did you enter a marriage or civil partnership?
+whenDidYouGetMarried.error.required.all = Enter the date you entered into a marriage or civil partnership
+whenDidYouGetMarried.error.required.two = The date must include {0} and {1}
+whenDidYouGetMarried.error.required = The date must include {0}
 whenDidYouGetMarried.error.invalid = Enter a real date
-whenDidYouGetMarried.change.hidden = when you got married
+whenDidYouGetMarried.change.hidden = when you entered a marriage or civil partnership
 
 haveYouPreviouslyBeenInAMarriageOrCivilPartnership.title = Have you previously been in a marriage or civil partnership?
 haveYouPreviouslyBeenInAMarriageOrCivilPartnership.heading = Have you previously been in a marriage or civil partnership?
@@ -321,7 +305,7 @@ previousMarriageOrPartnershipDetails.error.endDate.required.two = Enter the end 
 previousMarriageOrPartnershipDetails.error.startDate.length = The start date must be 100 characters or less
 previousMarriageOrPartnershipDetails.error.endReason.required = Enter the reason that the marriage or civil partnership ended
 previousMarriageOrPartnershipDetails.error.endReason.length = The reason that the marriage or civil partnership ended must be 100 characters or less
- previousMarriageOrPartnershipDetails.change.hidden = when you were previously in a marriage or civil partnership
+previousMarriageOrPartnershipDetails.change.hidden = when you were previously in a marriage or civil partnership
 
 doYouKnowYourChildBenefitNumber.title = Do you know your Child Benefit number?
 doYouKnowYourChildBenefitNumber.heading = Do you know your Child Benefit number?
@@ -546,8 +530,7 @@ pdf.personalDetails.telephoneNumber = Telephone number
 pdf.personalDetails.nino = National Insurance Number
 pdf.personalDetails.dob = Date of birth
 pdf.personalDetails.maritalStatus = Marital or partnership status
-pdf.personalDetails.maritalStatus.married = Currently married (since {0})
-pdf.personalDetails.maritalStatus.civilPartnership = Currently in a civil partnership (since {0})
+pdf.personalDetails.maritalStatus.married = Currently married or in a civil partnership (since {0})
 pdf.personalDetails.previousMaritalStatus = Previous marital or partnership status
 pdf.personalDetails.previousMaritalStatus.tofrom = From {0} to {1} (reason: {2})
 

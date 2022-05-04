@@ -100,14 +100,8 @@ trait PageGenerators {
   implicit lazy val arbitraryWhenDidYouGetMarriedPage: Arbitrary[WhenDidYouGetMarriedPage.type] =
     Arbitrary(WhenDidYouGetMarriedPage)
 
-  implicit lazy val arbitraryWhenDidYouEnterACivilPartnershipPage: Arbitrary[WhenDidYouEnterACivilPartnershipPage.type] =
-    Arbitrary(WhenDidYouEnterACivilPartnershipPage)
-
   implicit lazy val arbitraryAreYouMarriedPage: Arbitrary[AreYouMarriedPage.type] =
     Arbitrary(AreYouMarriedPage)
-
-  implicit lazy val arbitraryAreYouInACivilPartnershipPage: Arbitrary[AreYouInACivilPartnershipPage.type] =
-    Arbitrary(AreYouInACivilPartnershipPage)
 
   implicit lazy val arbitraryWhatIsYourTelephoneNumberPage: Arbitrary[WhatIsYourTelephoneNumberPage.type] =
     Arbitrary(WhatIsYourTelephoneNumberPage)

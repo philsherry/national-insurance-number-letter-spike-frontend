@@ -193,9 +193,9 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(AreYouMarriedPage, NormalMode, answers) mustBe routes.WhenDidYouGetMarriedController.onPageLoad(NormalMode)
         }
 
-        "to the are you in a civil partnership page when the user selects no" in {
+        "to the have you previously been married details page when the user selects no" in {
           val answers = emptyUserAnswers.set(AreYouMarriedPage, false).success.value
-          navigator.nextPage(AreYouMarriedPage, NormalMode, answers) mustBe routes.AreYouInACivilPartnershipController.onPageLoad(NormalMode)
+          navigator.nextPage(AreYouMarriedPage, NormalMode, answers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the user has no selection" in {
@@ -205,27 +205,6 @@ class NavigatorSpec extends SpecBase {
 
       "must go from the when did you get married page to the have you previously been married page" in {
         navigator.nextPage(WhenDidYouGetMarriedPage, NormalMode, emptyUserAnswers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
-      }
-
-      "must go from the are you in a civil partnership page" - {
-
-        "to the when did you enter a civil partnership page when the user selects yes" in {
-          val answers = emptyUserAnswers.set(AreYouInACivilPartnershipPage, true).success.value
-          navigator.nextPage(AreYouInACivilPartnershipPage, NormalMode, answers) mustBe routes.WhenDidYouEnterACivilPartnershipController.onPageLoad(NormalMode)
-        }
-
-        "to the have you previously been in a marriage page when the user selects no" in {
-          val answers = emptyUserAnswers.set(AreYouInACivilPartnershipPage, false).success.value
-          navigator.nextPage(AreYouInACivilPartnershipPage, NormalMode, answers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
-        }
-
-        "to the journey recovery page when the user has no selection" in {
-          navigator.nextPage(AreYouMarriedPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
-      }
-
-      "must go from the when did you enter a civil partnership page to the have you previously been married page" in {
-        navigator.nextPage(WhenDidYouEnterACivilPartnershipPage, NormalMode, emptyUserAnswers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
       }
 
       "must go from the previously married page" - {
@@ -455,32 +434,6 @@ class NavigatorSpec extends SpecBase {
     }
 
     "in Check mode" - {
-
-      "go from the are you in a civil partnership page" - {
-
-        "to the check your answers page if yes and civil partnership date is set" in {
-          val answers = emptyUserAnswers
-            .set(AreYouInACivilPartnershipPage, true).get
-            .set(WhenDidYouEnterACivilPartnershipPage, LocalDate.of(2000, 1, 1)).get
-
-          navigator.nextPage(AreYouInACivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
-        }
-
-        "to the check your answers page if no" in {
-          val answers = emptyUserAnswers
-            .set(AreYouInACivilPartnershipPage, false).get
-
-          navigator.nextPage(AreYouInACivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
-        }
-
-        "to the civil partnership date page if answer is yes and civil partnership date is not set" in {
-          val answers = emptyUserAnswers
-            .set(AreYouInACivilPartnershipPage, true).get
-
-          navigator.nextPage(AreYouInACivilPartnershipPage, CheckMode, answers) mustBe routes.WhenDidYouEnterACivilPartnershipController.onPageLoad(CheckMode)
-        }
-
-      }
 
       "go from the are you married page" - {
 

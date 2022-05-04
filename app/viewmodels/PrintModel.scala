@@ -31,7 +31,6 @@ final case class PrintModel(
                            telephoneNumber: String,
                            nino: Option[String],
                            marriage: Option[String],
-                           civilPartnership: Option[String],
                            previousMarriageOrPartnership: Option[PreviousMarriageOrPartnershipPrintModel],
                            claimedChildBenefit: Boolean,
                            childBenefitNumber: Option[String],
@@ -76,7 +75,6 @@ object PrintModel {
       telephoneNumber <- userAnswers.get(WhatIsYourTelephoneNumberPage)
       nino = userAnswers.get(WhatIsYourNationalInsuranceNumberPage).map(_.nino)
       marriage = userAnswers.get(WhenDidYouGetMarriedPage)
-      civilPartnership = userAnswers.get(WhenDidYouEnterACivilPartnershipPage)
       previousMarriageOrPartnership = userAnswers.get(PreviousMarriageOrPartnershipDetailsPage)
       claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
       childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
@@ -96,7 +94,6 @@ object PrintModel {
         telephoneNumber,
         nino,
         marriage.map(_.format(formatter)),
-        civilPartnership.map(_.format(formatter)),
         previousMarriageOrPartnership.map(PreviousMarriageOrPartnershipPrintModel(_)),
         claimedChildBenefit,
         childBenefitNumber,

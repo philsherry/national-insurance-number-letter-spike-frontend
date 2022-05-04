@@ -138,12 +138,6 @@
                 </fo:block-container>
                 }
 
-                @for(partnership <- model.civilPartnership) {
-                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-                    <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.maritalStatus"): </fo:inline>@messages("pdf.personalDetails.maritalStatus.civilPartnership", partnership)</fo:block>
-                </fo:block-container>
-                }
-
                 @for(previous <- model.previousMarriageOrPartnership) {
                 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
                     <fo:block margin-bottom="2mm"><fo:inline>@messages("pdf.personalDetails.previousMaritalStatus"): </fo:inline>@messages("pdf.personalDetails.previousMaritalStatus.tofrom", previous.from, previous.to, previous.reason)</fo:block>
