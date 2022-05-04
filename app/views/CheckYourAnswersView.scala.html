@@ -20,14 +20,27 @@
     hmrcListWithActions: HmrcListWithActions
 )
 
-@(personalDetails: SummaryList, currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, previousEmployers: Seq[ListWithActionsItem], supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
+@(personalDetails: SummaryList, previousNames: Seq[ListWithActionsItem], currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, previousEmployers: Seq[ListWithActionsItem], supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.personalDetails")</h2>
-    @govukSummaryList(personalDetails.withCssClass("govuk-!-margin-bottom-9"))
+    @govukSummaryList(personalDetails)
+
+    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousNames")</h3>
+    @if(previousNames.nonEmpty) {
+        @hmrcListWithActions(ListWithActions(items = previousNames))
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <a class="govuk-link" href="@routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousName")</a>
+        </p>
+    } else {
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <span>@messages("checkYourAnswers.noPreviousNames")</span><br/>
+            <a class="govuk-link" href="@routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousName")</a>
+        </p>
+    }
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.addressHistory")</h2>
     @govukSummaryList(currentAddress)

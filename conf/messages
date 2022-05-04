@@ -61,6 +61,10 @@ index.p7.2 = if you live in the UK and have the right to work in the UK.
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
 checkYourAnswers.personalDetails = Personal details
+checkYourAnswers.previousNames = Previous names
+checkYourAnswers.noPreviousNames = You have not provided any previous names
+checkYourAnswers.addAPreviousName = Add a previous name
+checkYourAnswers.addAnotherPreviousName = Add another previous name
 checkYourAnswers.addressHistory = Address history
 checkYourAnswers.previousAddresses = Previous addresses
 checkYourAnswers.noPreviousAddresses = You have not provided any previous addresses
@@ -599,5 +603,5 @@ print.p4.2 = You can also
 print.p4.restart = start the application form again
 
 areYouSureYouWantToRemovePreviousName.title = Are you sure you want to remove this previous name?
-areYouSureYouWantToRemovePreviousName.heading = Are you sure you want to remove this previous name?
+areYouSureYouWantToRemovePreviousName.heading = Are you sure you want to remove your previous name "{0}"?
 areYouSureYouWantToRemovePreviousName.error.required = Select yes if are sure you want to remove this previous name
