@@ -39,7 +39,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val answers = emptyUserAnswers
         .set(WhatIsYourNamePage, WhatIsYourName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
         .set(DoYouHaveAPreviousNamePage, true).success.value
-        .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+        .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+        .set(WhatIsYourPreviousNamePage(Index(1)), WhatIsYourPreviousName(firstName = "first2", None, lastName = "last2")).success.value
         .set(WhatIsYourDateOfBirthPage, LocalDate.now).success.value
         .set(IsYourCurrentAddressInUkPage, true).success.value
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
@@ -85,10 +86,26 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val view = application.injector.instanceOf[CheckYourAnswersView]
 
+        val previousNames = List(
+          ListWithActionsItem(
+            name = HtmlContent("first middle last"),
+            actions = List(
+              ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousNameHidden", "first middle last")), href = routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), CheckMode).url),
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousNameHidden", "first middle last")), href = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(Index(0), CheckMode).url)
+            )
+          ),
+          ListWithActionsItem(
+            name = HtmlContent("first2 last2"),
+            actions = List(
+              ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousNameHidden", "first2 last2")), href = routes.WhatIsYourPreviousNameController.onPageLoad(Index(1), CheckMode).url),
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousNameHidden", "first2 last2")), href = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(Index(1), CheckMode).url)
+            )
+          )
+        )
+
         val personalDetails = SummaryListViewModel(Seq(
           WhatIsYourNameSummary.row(answers)(messages(application)),
           DoYouHaveAPreviousNameSummary.row(answers)(messages(application)),
-          WhatIsYourPreviousNameSummary.row(answers)(messages(application)),
           WhatIsYourDateOfBirthSummary.row(answers)(messages(application)),
           AreYouReturningFromLivingAbroadSummary.row(answers)(messages(application)),
           WhatIsYourTelephoneNumberSummary.row(answers)(messages(application)),
@@ -149,7 +166,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhichAlternativeDocumentsSummary.row(answers)(messages(application))
         ).flatten)
 
-        val renderedView = view(personalDetails, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, previousEmployers, supportingDocuments)(request, messages(application))
+        val renderedView = view(personalDetails, previousNames, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, previousEmployers, supportingDocuments)(request, messages(application))
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual renderedView.toString

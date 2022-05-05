@@ -44,9 +44,9 @@ class NavigatorSpec extends SpecBase {
 
       "must go from the do you have a previous name page" - {
 
-        "to the previous name page when the user selects yes" in {
+        "to the what is your previous name page when the user selects yes" in {
           val answers = emptyUserAnswers.set(DoYouHaveAPreviousNamePage, true).success.value
-          navigator.nextPage(DoYouHaveAPreviousNamePage, NormalMode, answers) mustBe routes.WhatIsYourPreviousNameController.onPageLoad(NormalMode)
+          navigator.nextPage(DoYouHaveAPreviousNamePage, NormalMode, answers) mustBe routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), NormalMode)
         }
 
         "to the date of birth page when the user selects no" in {
@@ -59,8 +59,8 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
-      "must go from the previous name page to the date of birth page" in {
-        navigator.nextPage(WhatIsYourPreviousNamePage, NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode)
+      "must go from the previous name page to the do you have a previous name page (add to list)" in {
+        navigator.nextPage(WhatIsYourPreviousNamePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
       }
 
       "must go from the date of birth page to the is current address in the uk page" in {
@@ -547,7 +547,7 @@ class NavigatorSpec extends SpecBase {
         "to the check your answers page if answer is yes and previous name is set" in {
           val answers = emptyUserAnswers
             .set(DoYouHaveAPreviousNamePage, true).get
-            .set(WhatIsYourPreviousNamePage, WhatIsYourPreviousName("first", None, "last")).get
+            .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("first", None, "last")).get
 
           navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
@@ -559,11 +559,11 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
-        "to the what is your previous name page if answer is no and previous name is not set" in {
+        "to the what is your previous name page if answer is yes and previous name is not set" in {
           val answers = emptyUserAnswers
             .set(DoYouHaveAPreviousNamePage, true).get
 
-          navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.WhatIsYourPreviousNameController.onPageLoad(CheckMode)
+          navigator.nextPage(DoYouHaveAPreviousNamePage, CheckMode, answers) mustBe routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), CheckMode)
         }
 
       }

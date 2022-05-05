@@ -16,12 +16,17 @@
 
 package pages
 
-import play.api.libs.json.JsPath
+import models.Index
+import pages.behaviours.PageBehaviours
 
-case object DoYouHaveAPreviousNamePage extends QuestionPage[Boolean] {
+class AreYouSureYouWantToRemovePreviousNamePageSpec extends PageBehaviours {
 
-  override def path: JsPath = JsPath \ toString
+  "AreYouSureYouWantToRemovePreviousNamePage" - {
 
-  override def toString: String = "doYouHaveAPreviousName"
+    beRetrievable[Boolean](AreYouSureYouWantToRemovePreviousNamePage(Index(0)))
 
+    beSettable[Boolean](AreYouSureYouWantToRemovePreviousNamePage(Index(0)))
+
+    beRemovable[Boolean](AreYouSureYouWantToRemovePreviousNamePage(Index(0)))
+  }
 }

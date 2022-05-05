@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.WhatIsYourPreviousNameFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.WhatIsYourPreviousNamePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -44,29 +45,29 @@ class WhatIsYourPreviousNameController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(WhatIsYourPreviousNamePage) match {
+      val preparedForm = request.userAnswers.get(WhatIsYourPreviousNamePage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, index, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhatIsYourPreviousNamePage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhatIsYourPreviousNamePage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhatIsYourPreviousNamePage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhatIsYourPreviousNamePage(index), mode, updatedAnswers))
       )
   }
 }

@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter
 
 final case class PrintModel(
                            name: WhatIsYourName,
-                           previousName: Option[WhatIsYourPreviousName],
+                           previousNames: List[WhatIsYourPreviousName],
                            dob: String,
                            currentAddress: List[String],
                            previousAddresses: List[PreviousAddressPrintModel],
@@ -67,7 +67,7 @@ object PrintModel {
   def from(userAnswers: UserAnswers): Option[PrintModel] = {
     for {
       name <- userAnswers.get(WhatIsYourNamePage)
-      previousName = userAnswers.get(WhatIsYourPreviousNamePage)
+      previousName = getPreviousNames(userAnswers)
       dob <- userAnswers.get(WhatIsYourDateOfBirthPage)
       currentAddress <- getCurrentAddress(userAnswers)
       previousAddresses = getPreviousAddresses(userAnswers)
@@ -112,6 +112,13 @@ object PrintModel {
     }.orElse { userAnswers.get(WhatIsYourCurrentAddressInternationalPage).map { intAddr =>
         intAddr.lines
       }
+    }
+  }
+
+  private[viewmodels] def getPreviousNames(userAnswers: UserAnswers): List[WhatIsYourPreviousName] = {
+    val count = userAnswers.get(PreviousNamesQuery).getOrElse(List.empty).length
+    (0 until count).toList.flatMap { index =>
+      userAnswers.get(WhatIsYourPreviousNamePage(Index(index)))
     }
   }
 

@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import play.api.libs.json.JsPath
+import javax.inject.Inject
 
-case object DoYouHaveAPreviousNamePage extends QuestionPage[Boolean] {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  override def path: JsPath = JsPath \ toString
+class AreYouSureYouWantToRemovePreviousNameFormProvider @Inject() extends Mappings {
 
-  override def toString: String = "doYouHaveAPreviousName"
-
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("areYouSureYouWantToRemovePreviousName.error.required")
+    )
 }

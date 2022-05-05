@@ -18,21 +18,22 @@ package controllers
 
 import controllers.actions._
 import forms.DoYouHaveAPreviousNameFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, UserAnswers}
 import navigation.Navigator
-import pages.DoYouHaveAPreviousNamePage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import pages.{DoYouHaveAPreviousNamePage, PreviousNamesQuery}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import uk.gov.hmrc.hmrcfrontend.views.viewmodels.listwithactions.ListWithActionsItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers.PreviousNameSummary
 import views.html.DoYouHaveAPreviousNameView
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class DoYouHaveAPreviousNameController @Inject()(
                                          override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
                                          navigator: Navigator,
                                          identify: IdentifierAction,
                                          getData: DataRetrievalAction,
@@ -44,15 +45,13 @@ class DoYouHaveAPreviousNameController @Inject()(
 
   val form = formProvider()
 
+  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
+    answers.get(PreviousNamesQuery).getOrElse(Seq.empty)
+      .indices.map(PreviousNameSummary.item(answers, mode, _))
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(DoYouHaveAPreviousNamePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+      Ok(view(form, listItems(request.userAnswers, mode), mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -60,12 +59,10 @@ class DoYouHaveAPreviousNameController @Inject()(
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
+          Future.successful(BadRequest(view(formWithErrors, listItems(request.userAnswers, mode), mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(DoYouHaveAPreviousNamePage, value))
-            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(DoYouHaveAPreviousNamePage, mode, updatedAnswers))
       )
   }

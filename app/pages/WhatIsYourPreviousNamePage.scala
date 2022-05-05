@@ -16,12 +16,12 @@
 
 package pages
 
-import models.WhatIsYourPreviousName
+import models.{Index, WhatIsYourPreviousName}
 import play.api.libs.json.JsPath
 
-case object WhatIsYourPreviousNamePage extends QuestionPage[WhatIsYourPreviousName] {
+final case class WhatIsYourPreviousNamePage(index: Index) extends QuestionPage[WhatIsYourPreviousName] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "previousNames" \ index.position \ toString
 
   override def toString: String = "whatIsYourPreviousName"
 }
