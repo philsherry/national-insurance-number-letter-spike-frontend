@@ -21,7 +21,7 @@ import forms.AreYouSureYouWantToRemovePreviousNameFormProvider
 import models.{Index, NormalMode, UserAnswers, WhatIsYourPreviousName}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import pages.{AreYouSureYouWantToRemovePreviousNamePage, WhatIsYourPreviousNamePage}
 import play.api.inject.bind
@@ -87,7 +87,7 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must remove data then redirect to the next page when 'yes' is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -110,6 +110,36 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
+
+        verify(mockSessionRepository, times(1)).set(any())
+      }
+    }
+
+    "must not remove data then redirect to the next page when 'no' is submitted" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousNameRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual onwardRoute.url
+
+        verify(mockSessionRepository, never()).set(any())
       }
     }
 
