@@ -19,7 +19,6 @@ package controllers
 import base.SpecBase
 import models._
 import pages._
-import play.api.i18n.Messages
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.domain.Nino
@@ -41,6 +40,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(WhatIsYourNamePage, WhatIsYourName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
         .set(DoYouHaveAPreviousNamePage, true).success.value
         .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+        .set(WhatIsYourPreviousNamePage(Index(1)), WhatIsYourPreviousName(firstName = "first2", None, lastName = "last2")).success.value
         .set(WhatIsYourDateOfBirthPage, LocalDate.now).success.value
         .set(IsYourCurrentAddressInUkPage, true).success.value
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
@@ -86,13 +86,22 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val view = application.injector.instanceOf[CheckYourAnswersView]
 
-        val previousNames = List(ListWithActionsItem(
-          name = HtmlContent("first middle last"),
-          actions = List(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousNameHidden", "first middle last")), href = routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), CheckMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousNameHidden", "first middle last")), href = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(Index(0), CheckMode).url)
+        val previousNames = List(
+          ListWithActionsItem(
+            name = HtmlContent("first middle last"),
+            actions = List(
+              ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousNameHidden", "first middle last")), href = routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), CheckMode).url),
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousNameHidden", "first middle last")), href = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(Index(0), CheckMode).url)
+            )
+          ),
+          ListWithActionsItem(
+            name = HtmlContent("first2 last2"),
+            actions = List(
+              ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousNameHidden", "first2 last2")), href = routes.WhatIsYourPreviousNameController.onPageLoad(Index(1), CheckMode).url),
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousNameHidden", "first2 last2")), href = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(Index(1), CheckMode).url)
+            )
           )
-        ))
+        )
 
         val personalDetails = SummaryListViewModel(Seq(
           WhatIsYourNameSummary.row(answers)(messages(application)),
