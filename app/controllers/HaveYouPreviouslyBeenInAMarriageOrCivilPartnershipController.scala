@@ -61,11 +61,9 @@ class HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController @Inject()(
       form.bindFromRequest().fold(
         formWithErrors =>
           Future.successful(BadRequest(view(formWithErrors, mode))),
-
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, mode, updatedAnswers))
       )
   }

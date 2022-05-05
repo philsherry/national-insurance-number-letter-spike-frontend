@@ -60,24 +60,6 @@ class HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipControllerSpec extends S
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoute)
-
-        val view = application.injector.instanceOf[HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
-      }
-    }
-
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
