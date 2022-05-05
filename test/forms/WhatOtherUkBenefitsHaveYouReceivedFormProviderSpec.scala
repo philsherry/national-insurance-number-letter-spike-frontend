@@ -23,7 +23,7 @@ class WhatOtherUkBenefitsHaveYouReceivedFormProviderSpec extends StringFieldBeha
 
   val requiredKey = "whatOtherUkBenefitsHaveYouReceived.error.required"
   val lengthKey = "whatOtherUkBenefitsHaveYouReceived.error.length"
-  val maxLength = 100
+  val maxLength = 250
 
   val form = new WhatOtherUkBenefitsHaveYouReceivedFormProvider()()
 
