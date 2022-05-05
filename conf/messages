@@ -42,21 +42,30 @@ index.p1 = Use this application form to get a letter with your National Insuranc
 index.p2 = The letter will arrive within 15 working days.
 index.p3 = This application form is also available in
 index.p3.link = Welsh (Cymraeg)
-index.h2 = Before you start
-index.p4 = You will need to print this application form, and post it to HMRC.
-index.p5 = If you do not have access to a printer you cannot use this application form. Phone HMRC''s National Insurance Registrations helpline on 0300 200 3500. If you live outside the UK the telephone number is +44 191 203 7010.
 
-index.h3 = Other ways to get your National Insurance number
-index.p6 = You may be able to find your National Insurance number on:
-index.li.1 = your online
-index.li.1.link = Personal Tax Account
-index.li.2 = your P60 End of Year Certificate (given to you by your employer)
-index.li.3 = your payslip
-index.li.4 = a copy of your Self Assessment tax return
-index.li.5 = a letter from HMRC or the Department for Work and Pensions
-index.p7.1 = If you have never had a National Insurance number do not use this application form.
-index.p7.link = Apply for a National Insurance number
-index.p7.2 = if you live in the UK and have the right to work in the UK.
+index.whatInformation.h2 = What information you will need
+index.whatInformation.p1 = To help us to find your record, this form will ask for information about you including:
+index.whatInformation.li.1 =  Your personal details, such as name and any previous names
+index.whatInformation.li.2 =  Your current and previous home addresses
+index.whatInformation.li.3 =  Benefits you have claimed
+index.whatInformation.li.4 =  Your employment history
+index.whatInformation.p2 = Depending on your answers, you may be required to send a copy of one or two identity documents with the form, such as a passport or driving license.
+
+index.beforeYouStart.h2 = Before you start
+index.beforeYouStart.p1 = You will need to print this application form, and post it to HMRC.
+index.beforeYouStart.p2 = If you do not have access to a printer you cannot use this application form. Phone HMRC''s National Insurance Registrations helpline on 0300 200 3500. If you live outside the UK the telephone number is +44 191 203 7010.
+
+index.otherWays.h2 = Other ways to get your National Insurance number
+index.otherWays.p1 = You may be able to find your National Insurance number on:
+index.otherWays.li.1 = your online
+index.otherWays.li.1.link = Personal Tax Account
+index.otherWays.li.2 = your P60 End of Year Certificate (given to you by your employer)
+index.otherWays.li.3 = your payslip
+index.otherWays.li.4 = a copy of your Self Assessment tax return
+index.otherWays.li.5 = a letter from HMRC or the Department for Work and Pensions
+index.otherWays.p2.1 = If you have never had a National Insurance number do not use this application form.
+index.otherWays.p2.link = Apply for a National Insurance number
+index.otherWays.p2.2 = if you live in the UK and have the right to work in the UK.
 
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
