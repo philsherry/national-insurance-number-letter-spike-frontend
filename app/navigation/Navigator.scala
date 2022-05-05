@@ -46,7 +46,7 @@ class Navigator @Inject()() {
     case AreYouMarriedPage                                      => areYouMarriedRoutes
     case WhenDidYouGetMarriedPage                               => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes
-    case PreviousMarriageOrPartnershipDetailsPage               => _ => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
+    case PreviousMarriageOrPartnershipDetailsPage(_)            => _ => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
     case HaveYouEverClaimedChildBenefitPage                     => haveYouEverClaimedChildBenefitRoutes
     case DoYouKnowYourChildBenefitNumberPage                    => doYouKnowYourChildBenefitNumberRoutes
     case WhatIsYourChildBenefitNumberPage                       => _ => routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
@@ -109,7 +109,7 @@ class Navigator @Inject()() {
 
   private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes(answers: UserAnswers): Call =
     answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage).map {
-      case true  => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(NormalMode)
+      case true  => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(???, NormalMode)
       case false => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
@@ -195,8 +195,8 @@ class Navigator @Inject()() {
     }
 
   private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes(answers: UserAnswers): Call =
-    (answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage), answers.get(PreviousMarriageOrPartnershipDetailsPage)) match {
-      case (Some(true), None) => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(CheckMode)
+    (answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage), answers.get(PreviousMarriageOrPartnershipDetailsPage(???))) match {
+      case (Some(true), None) => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(???, CheckMode)
       case (_, _) => routes.CheckYourAnswersController.onPageLoad
     }
 

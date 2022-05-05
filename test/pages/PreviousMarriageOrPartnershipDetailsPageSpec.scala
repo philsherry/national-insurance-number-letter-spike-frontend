@@ -16,17 +16,17 @@
 
 package pages
 
-import models.PreviousMarriageOrPartnershipDetails
+import models.{Index, PreviousMarriageOrPartnershipDetails}
 import pages.behaviours.PageBehaviours
 
 class PreviousMarriageOrPartnershipDetailsPageSpec extends PageBehaviours {
 
   "PreviousMarriageOrPartnershipDetailsPage" - {
 
-    beRetrievable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage)
+    beRetrievable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
 
-    beSettable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage)
+    beSettable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
 
-    beRemovable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage)
+    beRemovable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
   }
 }

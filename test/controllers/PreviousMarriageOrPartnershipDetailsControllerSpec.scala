@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.PreviousMarriageOrPartnershipDetailsFormProvider
-import models.{NormalMode, PreviousMarriageOrPartnershipDetails, UserAnswers}
+import models.{Index, NormalMode, PreviousMarriageOrPartnershipDetails, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -41,13 +41,13 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
   val formProvider = new PreviousMarriageOrPartnershipDetailsFormProvider()
   val form = formProvider()
 
-  lazy val previousMarriageOrPartnershipDetailsRoute = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(NormalMode).url
+  lazy val previousMarriageOrPartnershipDetailsRoute = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), NormalMode).url
 
   val model = PreviousMarriageOrPartnershipDetails(
     startDate = LocalDate.now, endDate = LocalDate.now, endingReason = "value"
   )
 
-  val userAnswers = UserAnswers(userAnswersId).set(PreviousMarriageOrPartnershipDetailsPage, model).success.value
+  val userAnswers = UserAnswers(userAnswersId).set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), model).success.value
 
   "PreviousMarriageOrPartnershipDetails Controller" - {
 
@@ -63,7 +63,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -79,7 +79,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(model), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -131,7 +131,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

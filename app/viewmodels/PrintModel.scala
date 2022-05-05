@@ -72,7 +72,7 @@ object PrintModel {
       telephoneNumber <- userAnswers.get(WhatIsYourTelephoneNumberPage)
       nino = userAnswers.get(WhatIsYourNationalInsuranceNumberPage).map(_.nino)
       marriage = userAnswers.get(WhenDidYouGetMarriedPage)
-      previousMarriageOrPartnership = userAnswers.get(PreviousMarriageOrPartnershipDetailsPage)
+      previousMarriageOrPartnership = userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(???))
       claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
       childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
       otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)

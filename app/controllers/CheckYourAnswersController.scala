@@ -69,7 +69,7 @@ class CheckYourAnswersController @Inject()(
         AreYouMarriedSummary.row(answers),
         WhenDidYouGetMarriedSummary.row(answers),
         HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers),
-        PreviousMarriageOrPartnershipDetailsSummary.row(answers)
+        PreviousMarriageOrPartnershipDetailsSummary.row(answers, ???)
       ).flatten)
 
       val benefitHistory = SummaryListViewModel(Seq(

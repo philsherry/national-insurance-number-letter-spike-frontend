@@ -55,7 +55,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(AreYouMarriedPage, true).success.value
         .set(WhenDidYouGetMarriedPage, LocalDate.now).success.value
         .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-        .set(PreviousMarriageOrPartnershipDetailsPage, PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya")).success.value
+        .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya")).success.value
+        .set(PreviousMarriageOrPartnershipDetailsPage(Index(1)), PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya 2")).success.value
         .set(HaveYouEverClaimedChildBenefitPage, true).success.value
         .set(DoYouKnowYourChildBenefitNumberPage, true).success.value
         .set(WhatIsYourChildBenefitNumberPage, "cbn").success.value
@@ -127,7 +128,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           AreYouMarriedSummary.row(answers)(messages(application)),
           WhenDidYouGetMarriedSummary.row(answers)(messages(application)),
           HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers)(messages(application)),
-          PreviousMarriageOrPartnershipDetailsSummary.row(answers)(messages(application))
+          PreviousMarriageOrPartnershipDetailsSummary.row(answers, 0)(messages(application)),
+          PreviousMarriageOrPartnershipDetailsSummary.row(answers, 1)(messages(application)),
         ).flatten)
 
         val benefitHistory = SummaryListViewModel(Seq(

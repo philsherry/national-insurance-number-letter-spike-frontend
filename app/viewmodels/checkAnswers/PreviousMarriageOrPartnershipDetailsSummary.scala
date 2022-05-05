@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, UserAnswers, Index}
 import pages.PreviousMarriageOrPartnershipDetailsPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -30,8 +30,8 @@ import java.time.format.DateTimeFormatter
 
 object PreviousMarriageOrPartnershipDetailsSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PreviousMarriageOrPartnershipDetailsPage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(PreviousMarriageOrPartnershipDetailsPage(Index(index))).map {
       answer =>
 
         val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
@@ -44,7 +44,7 @@ object PreviousMarriageOrPartnershipDetailsSummary  {
           key     = "previousMarriageOrPartnershipDetails.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlContent(value)),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("previousMarriageOrPartnershipDetails.change.hidden"))
           )
         )
