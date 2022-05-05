@@ -34,22 +34,32 @@
     <p class="govuk-body">@messages("index.p3") <a href="@routes.LanguageSwitchController.switchToLanguage("cy")" class="govuk-link">@messages("index.p3.link")</a></p>
     }
 
-    <h2 class="govuk-heading-m">@messages("index.h2")</h2>
+    <h2 class="govuk-heading-m">@messages("index.whatInformation.h2")</h2>
+    <p class="govuk-body">@messages("index.whatInformation.p1")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("index.whatInformation.li.1")</li>
+        <li>@messages("index.whatInformation.li.2")</li>
+        <li>@messages("index.whatInformation.li.3")</li>
+        <li>@messages("index.whatInformation.li.4")</li>
+    </ul>
+    <p class="govuk-body">@messages("index.whatInformation.p2")</p>
 
-    <p class="govuk-body">@messages("index.p4")</p>
-    <p class="govuk-body">@messages("index.p5")</p>
+    <h2 class="govuk-heading-m">@messages("index.beforeYouStart.h2")</h2>
+
+    <p class="govuk-body">@messages("index.beforeYouStart.p1")</p>
+    <p class="govuk-body">@messages("index.beforeYouStart.p2")</p>
 
     <a id="start" href="@routes.WhatIsYourNameController.onPageLoad(NormalMode)" class="govuk-button govuk-button--start">@messages("site.start")</a>
 
-    <h2 class="govuk-heading-m">@messages("index.h3")</h2>
+    <h2 class="govuk-heading-m">@messages("index.otherWays.h2")</h2>
 
-    <p class="govuk-body">@messages("index.p6")</p>
+    <p class="govuk-body">@messages("index.otherWays.p1")</p>
     <ul class="govuk-list govuk-list--bullet">
-        <li>@messages("index.li.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/personal-tax-account">@messages("index.li.1.link")</a></li>
-        <li>@messages("index.li.2")</li>
-        <li>@messages("index.li.3")</li>
-        <li>@messages("index.li.4")</li>
+        <li>@messages("index.otherWays.li.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/personal-tax-account">@messages("index.otherWays.li.1.link")</a></li>
+        <li>@messages("index.otherWays.li.2")</li>
+        <li>@messages("index.otherWays.li.3")</li>
+        <li>@messages("index.otherWays.li.4")</li>
     </ul>
 
-    <p class="govuk-body">@messages("index.p7.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/apply-national-insurance-number">@messages("index.p7.link")</a> @messages("index.p7.2")</p>
+    <p class="govuk-body">@messages("index.otherWays.p2.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/apply-national-insurance-number">@messages("index.otherWays.p2.link")</a> @messages("index.otherWays.p2.2")</p>
 }
