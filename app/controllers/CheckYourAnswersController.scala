@@ -19,7 +19,7 @@ package controllers
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.CheckMode
-import pages.{PreviousAddressesQuery, EmployersQuery, PreviousNamesQuery}
+import pages._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -65,12 +65,13 @@ class CheckYourAnswersController @Inject()(
       val previousAddresses = answers.get(PreviousAddressesQuery).getOrElse(List.empty)
         .indices.map(PreviousAddressSummary.item(answers, CheckMode, _))
 
-      val relationshipHistory = SummaryListViewModel(Seq(
+      val currentRelationship = SummaryListViewModel(Seq(
         AreYouMarriedSummary.row(answers),
-        WhenDidYouGetMarriedSummary.row(answers),
-        HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers),
-        PreviousMarriageOrPartnershipDetailsSummary.row(answers, ???)
+        WhenDidYouGetMarriedSummary.row(answers)
       ).flatten)
+
+      val previousRelationships = answers.get(PreviousRelationshipsQuery).getOrElse(List.empty)
+        .indices.flatMap(PreviousMarriageOrPartnershipDetailsSummary.item(answers, CheckMode, _))
 
       val benefitHistory = SummaryListViewModel(Seq(
         HaveYouEverClaimedChildBenefitSummary.row(answers),
@@ -95,6 +96,17 @@ class CheckYourAnswersController @Inject()(
         WhichAlternativeDocumentsSummary.row(answers)
       ).flatten)
 
-      Ok(view(personalDetails, previousNames, currentAddress, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, previousEmployers, supportingDocuments))
+      Ok(view(
+        personalDetails,
+        previousNames,
+        currentAddress,
+        previousAddresses,
+        currentRelationship,
+        previousRelationships,
+        benefitHistory,
+        employmentHistory,
+        previousEmployers,
+        supportingDocuments
+      ))
   }
 }

@@ -16,12 +16,10 @@
 
 package pages
 
-import models.{Index, PreviousMarriageOrPartnershipDetails}
-import play.api.libs.json.JsPath
+import play.api.libs.json.{JsPath, JsValue}
+import queries.Gettable
 
-final case class PreviousMarriageOrPartnershipDetailsPage(index: Index) extends QuestionPage[PreviousMarriageOrPartnershipDetails] {
+case object PreviousRelationshipsQuery extends Gettable[Seq[JsValue]] {
 
-  override def path: JsPath = JsPath \ "previousRelationships" \ index.position \ toString
-
-  override def toString: String = "previousMarriageOrPartnershipDetails"
+  override def path: JsPath = JsPath \ "previousRelationships"
 }

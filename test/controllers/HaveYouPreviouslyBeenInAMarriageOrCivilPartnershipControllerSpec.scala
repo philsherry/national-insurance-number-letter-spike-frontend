@@ -56,7 +56,7 @@ class HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipControllerSpec extends S
         val view = application.injector.instanceOf[HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, List.empty, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -102,7 +102,7 @@ class HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipControllerSpec extends S
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, List.empty, NormalMode)(request, messages(application)).toString
       }
     }
 

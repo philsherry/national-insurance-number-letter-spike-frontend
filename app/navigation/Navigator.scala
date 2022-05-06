@@ -109,7 +109,7 @@ class Navigator @Inject()() {
 
   private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes(answers: UserAnswers): Call =
     answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage).map {
-      case true  => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(???, NormalMode)
+      case true  => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), NormalMode)
       case false => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 

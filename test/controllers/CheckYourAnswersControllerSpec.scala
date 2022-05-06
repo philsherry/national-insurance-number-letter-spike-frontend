@@ -55,8 +55,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(AreYouMarriedPage, true).success.value
         .set(WhenDidYouGetMarriedPage, LocalDate.now).success.value
         .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-        .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya")).success.value
-        .set(PreviousMarriageOrPartnershipDetailsPage(Index(1)), PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya 2")).success.value
+        .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(LocalDate.of(2000, 2, 1), LocalDate.of(2001, 3, 2), "nunya")).success.value
+        .set(PreviousMarriageOrPartnershipDetailsPage(Index(1)), PreviousMarriageOrPartnershipDetails(LocalDate.of(2002, 2, 1), LocalDate.of(2003, 3, 2), "nunya 2")).success.value
         .set(HaveYouEverClaimedChildBenefitPage, true).success.value
         .set(DoYouKnowYourChildBenefitNumberPage, true).success.value
         .set(WhatIsYourChildBenefitNumberPage, "cbn").success.value
@@ -124,13 +124,27 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           )
         ))
 
-        val relationshipHistory = SummaryListViewModel(Seq(
+        val currentRelationship = SummaryListViewModel(Seq(
           AreYouMarriedSummary.row(answers)(messages(application)),
           WhenDidYouGetMarriedSummary.row(answers)(messages(application)),
-          HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipSummary.row(answers)(messages(application)),
-          PreviousMarriageOrPartnershipDetailsSummary.row(answers, 0)(messages(application)),
-          PreviousMarriageOrPartnershipDetailsSummary.row(answers, 1)(messages(application)),
         ).flatten)
+
+        val previousRelationships = List(
+          ListWithActionsItem(
+            name = HtmlContent(messages(application)("From 1 February 2000 to 2 March 2001")),
+            actions = List(
+              ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousRelationshipHidden", "1 February 2000", "2 March 2001")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode).url),
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousRelationshipHidden", "1 February 2000", "2 March 2001")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode).url) // TODO change to remove controller
+            )
+          ),
+          ListWithActionsItem(
+            name = HtmlContent(messages(application)("From 1 February 2002 to 2 March 2003")),
+            actions = List(
+              ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousRelationshipHidden", "1 February 2002", "2 March 2003")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), CheckMode).url),
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousRelationshipHidden", "1 February 2002", "2 March 2003")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), CheckMode).url) // TODO change to remove controller
+            )
+          )
+        )
 
         val benefitHistory = SummaryListViewModel(Seq(
           HaveYouEverClaimedChildBenefitSummary.row(answers)(messages(application)),
@@ -159,7 +173,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhichAlternativeDocumentsSummary.row(answers)(messages(application))
         ).flatten)
 
-        val renderedView = view(personalDetails, previousNames, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, employers, supportingDocuments)(request, messages(application))
+        val renderedView = view(personalDetails, previousNames, addressHistory, previousAddresses, currentRelationship, previousRelationships, benefitHistory, employers, supportingDocuments)(request, messages(application))
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual renderedView.toString

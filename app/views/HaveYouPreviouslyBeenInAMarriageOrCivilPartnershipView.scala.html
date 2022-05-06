@@ -19,12 +19,28 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    hmrcListWithActions: HmrcListWithActions
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], items: Seq[ListWithActionsItem], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.title"))) {
+@titleText = @{
+    items.length match {
+        case 0 => messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.title")
+        case 1 => messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.add.title")
+        case _ => messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.add.title.plural", items.length)
+    }
+}
+
+@headingText = @{
+    items.length match {
+        case 1 => messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.add.heading")
+        case _ => messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.add.heading.plural", items.length)
+    }
+}
+
+@layout(pageTitle = title(form, titleText)) {
 
     @formHelper(action = routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -32,12 +48,27 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.heading")).asPageHeading()
+        @if(items.isEmpty) {
+
+            @govukRadios(
+                RadiosViewModel.yesNo(
+                    field = form("value"),
+                    legend = LegendViewModel(messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.heading")).asPageHeading()
+                )
             )
-        )
+        } else {
+            <h1 class="govuk-heading-xl">@headingText</h1>
+
+            @hmrcListWithActions(ListWithActions(items = items, classes = "govuk-!-margin-bottom-9"))
+
+            @govukRadios(
+                RadiosViewModel.yesNo(
+                    field = form("value"),
+                    legend = LegendViewModel(messages("haveYouPreviouslyBeenInAMarriageOrCivilPartnership.add.legend"))
+                            .withCssClass("govuk-fieldset__legend--m")
+                )
+            )
+        }
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

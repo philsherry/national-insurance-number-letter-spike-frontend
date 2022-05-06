@@ -20,7 +20,19 @@
     hmrcListWithActions: HmrcListWithActions
 )
 
-@(personalDetails: SummaryList, previousNames: Seq[ListWithActionsItem], currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, employers: Seq[ListWithActionsItem], supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
+@(
+        personalDetails: SummaryList,
+        previousNames: Seq[ListWithActionsItem],
+        currentAddress: SummaryList,
+        previousAddresses: Seq[ListWithActionsItem],
+        currentRelationship: SummaryList,
+        previousRelationships: Seq[ListWithActionsItem],
+        benefitHistory: SummaryList,
+        employmentHistory: SummaryList,
+        employers: Seq[ListWithActionsItem],
+        previousEmployers: Seq[ListWithActionsItem],
+        supportingDocuments: SummaryList
+)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -58,7 +70,19 @@
     }
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.relationshipHistory")</h2>
-    @govukSummaryList(relationshipHistory.withCssClass("govuk-!-margin-bottom-9"))
+    @govukSummaryList(currentRelationship)
+    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousRelationships")</h3>
+    @if(previousRelationships.nonEmpty) {
+        @hmrcListWithActions(ListWithActions(items = previousRelationships))
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <a class="govuk-link" href="@routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(previousRelationships.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousRelationship")</a>
+        </p>
+    } else {
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <span>@messages("checkYourAnswers.noPreviousRelationships")</span><br/>
+            <a class="govuk-link" href="@routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousRelationship")</a>
+        </p>
+    }
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.benefitHistory")</h2>
     @govukSummaryList(benefitHistory.withCssClass("govuk-!-margin-bottom-9"))
