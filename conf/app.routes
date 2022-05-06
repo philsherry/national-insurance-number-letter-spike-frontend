@@ -189,10 +189,10 @@ POST       /do-you-know-your-national-insurance-number                        co
 GET        /change-if-you-know-your-national-insurance-number                  controllers.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-know-your-national-insurance-number                  controllers.DoYouKnowYourNationalInsuranceNumberController.onSubmit(mode: Mode = CheckMode)
 
-GET        /are-you-still-employed                        controllers.AreYouStillEmployedController.onPageLoad(mode: Mode = NormalMode)
-POST       /are-you-still-employed                        controllers.AreYouStillEmployedController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-are-still-employed                  controllers.AreYouStillEmployedController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-are-still-employed                  controllers.AreYouStillEmployedController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/are-you-still-employed                        controllers.AreYouStillEmployedController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/are-you-still-employed                        controllers.AreYouStillEmployedController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-if-you-are-still-employed                  controllers.AreYouStillEmployedController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-if-you-are-still-employed                  controllers.AreYouStillEmployedController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /when-did-you-finish-your-employment                  controllers.WhenDidYouFinishYourEmploymentController.onPageLoad(mode: Mode = NormalMode)
 POST       /when-did-you-finish-your-employment                  controllers.WhenDidYouFinishYourEmploymentController.onSubmit(mode: Mode = NormalMode)

@@ -53,12 +53,12 @@ class Navigator @Inject()() {
     case HaveYouEverReceivedOtherUkBenefitsPage                 => haveYouEverReceivedOtherUkBenefitsRoutes
     case WhatOtherUkBenefitsHaveYouReceivedPage                 => _ => routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
     case HaveYouEverWorkedInUkPage                              => haveYouEverWorkedInUkRoutes
-    case AreYouStillEmployedPage                                => areYouStillEmployedRoutes
+    case AreYouStillEmployedPage(index)                         => areYouStillEmployedRoutes(index)
     case WhenDidYouFinishYourEmploymentPage                     => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
     case DoYouHaveAnyPreviousEmployersPage                      => doYouHaveAnyPreviousEmployersRoutes
     case WhatIsYourPreviousEmployersNamePage(index)             => _ => routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(index, NormalMode)
     case WhatIsYourPreviousEmployersAddressPage(index)          => _ => routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
-    case WhenDidYouStartWorkingForPreviousEmployerPage(index)   => _ => routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
+    case WhenDidYouStartWorkingForPreviousEmployerPage(index)   => _ => routes.AreYouStillEmployedController.onPageLoad(index, NormalMode)
     case WhenDidYouStopWorkingForPreviousEmployerPage(_)        => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
     case AreYouSureYouWantToRemovePreviousEmployerPage(_)       => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
     case DoYouHavePrimaryDocumentPage                           => doYouHaveAPrimaryDocumentRoutes
@@ -134,15 +134,14 @@ class Navigator @Inject()() {
 
   private def haveYouEverWorkedInUkRoutes(answers: UserAnswers): Call =
     answers.get(HaveYouEverWorkedInUkPage).map {
-      //TODO: Routing fix for "have you ever worked"
-//      case true  => routes.WhatIsYourEmployersNameController.onPageLoad(NormalMode)
+      case true  => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
       case false => routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def areYouStillEmployedRoutes(answers: UserAnswers): Call =
-    answers.get(AreYouStillEmployedPage).map {
+  private def areYouStillEmployedRoutes(index: Index)(answers: UserAnswers): Call =
+    answers.get(AreYouStillEmployedPage(index)).map {
       case true  => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
-      case false => routes.WhenDidYouFinishYourEmploymentController.onPageLoad(NormalMode)
+      case false => routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def doYouHaveAnyPreviousEmployersRoutes(answers: UserAnswers): Call =
@@ -179,7 +178,7 @@ class Navigator @Inject()() {
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
     case WhatIsYourPreviousEmployersNamePage(index) => _ => routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(index, CheckMode)
     case WhatIsYourPreviousEmployersAddressPage(index) => _ => routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index, CheckMode)
-    case WhenDidYouStartWorkingForPreviousEmployerPage(index) => _ => routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index, CheckMode)
+    case WhenDidYouStartWorkingForPreviousEmployerPage(index) => _ => routes.AreYouStillEmployedController.onPageLoad(index, CheckMode)
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
