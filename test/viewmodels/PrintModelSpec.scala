@@ -34,7 +34,7 @@ class PrintModelSpec extends SpecBase {
       LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1))
     val previousAddressInternational = PreviousAddressInternational(addressLine1 = "line 1", None, None, country = "France",
       LocalDate.of(2002, 1, 1), LocalDate.of(2003, 1, 1))
-    val previousEmployerAddress = PreviousEmployersAddress("line 1", None, None, "AA1 1AA")
+    val previousEmployerAddress = EmployersAddress("line 1", None, None, "AA1 1AA")
 
     "get current address" - {
 
@@ -125,7 +125,7 @@ class PrintModelSpec extends SpecBase {
       "must extract one previous employer" in {
         val userAnswers = UserAnswers("id")
           .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
-          .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get
+          .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
 
@@ -139,11 +139,11 @@ class PrintModelSpec extends SpecBase {
       "must extract multiple previous employers" in {
         val userAnswers = UserAnswers("id")
           .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
-          .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get
+          .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
           .set(WhatIsYourPreviousEmployersNamePage(Index(1)), "emp 2").get
-          .set(WhatIsYourPreviousEmployersAddressPage(Index(1)), previousEmployerAddress).get
+          .set(WhatIsYourEmployersAddressPage(Index(1)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(1)), LocalDate.of(2015, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(1)), LocalDate.of(2016, 3, 3)).get
 
@@ -181,7 +181,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
           .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
           .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
-          .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get
+          .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
           .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).get
@@ -230,7 +230,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
           .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
           .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
-          .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get
+          .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
           .set(WhichAlternativeDocumentsPage, Set[AlternativeDocuments](AlternativeDocuments.AdoptionCertificate, AlternativeDocuments.WorkPermit)).get

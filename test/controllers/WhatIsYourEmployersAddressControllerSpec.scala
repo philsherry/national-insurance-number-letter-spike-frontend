@@ -17,34 +17,34 @@
 package controllers
 
 import base.SpecBase
-import forms.WhatIsYourPreviousEmployersAddressFormProvider
-import models.{Index, NormalMode, PreviousEmployersAddress, UserAnswers}
+import forms.WhatIsYourEmployersAddressFormProvider
+import models.{Index, NormalMode, EmployersAddress, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.WhatIsYourPreviousEmployersAddressPage
+import pages.WhatIsYourEmployersAddressPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.WhatIsYourPreviousEmployersAddressView
+import views.html.WhatIsYourEmployersAddressView
 
 import java.time.LocalDate
 import scala.concurrent.Future
 
-class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with MockitoSugar {
+class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new WhatIsYourPreviousEmployersAddressFormProvider()
+  val formProvider = new WhatIsYourEmployersAddressFormProvider()
   val form = formProvider()
 
-  lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(Index(0), NormalMode).url
+  lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), NormalMode).url
 
   val userAnswers = UserAnswers(userAnswersId)
-    .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("value 1", Some("value 2"), None, "postcode"))
+    .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("value 1", Some("value 2"), None, "postcode"))
     .success.value
 
   "WhatIsYourPreviousEmployersAddress Controller" - {
@@ -56,7 +56,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
       running(application) {
         val request = FakeRequest(GET, whatIsYourPreviousEmployersAddressRoute)
 
-        val view = application.injector.instanceOf[WhatIsYourPreviousEmployersAddressView]
+        val view = application.injector.instanceOf[WhatIsYourEmployersAddressView]
 
         val result = route(application, request).value
 
@@ -72,12 +72,12 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
       running(application) {
         val request = FakeRequest(GET, whatIsYourPreviousEmployersAddressRoute)
 
-        val view = application.injector.instanceOf[WhatIsYourPreviousEmployersAddressView]
+        val view = application.injector.instanceOf[WhatIsYourEmployersAddressView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PreviousEmployersAddress("value 1", Some("value 2"), None, "postcode")), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(EmployersAddress("value 1", Some("value 2"), None, "postcode")), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -124,7 +124,7 @@ class WhatIsYourPreviousEmployersAddressControllerSpec extends SpecBase with Moc
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[WhatIsYourPreviousEmployersAddressView]
+        val view = application.injector.instanceOf[WhatIsYourEmployersAddressView]
 
         val result = route(application, request).value
 

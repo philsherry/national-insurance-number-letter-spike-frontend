@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{Index, Mode, UserAnswers}
-import pages.{WhatIsYourPreviousEmployersAddressPage, WhatIsYourPreviousEmployersNamePage, WhenDidYouStartWorkingForPreviousEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
+import pages.{WhatIsYourEmployersAddressPage, WhatIsYourPreviousEmployersNamePage, WhenDidYouStartWorkingForPreviousEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
@@ -38,7 +38,7 @@ object PreviousEmployerSummary {
     val content = HtmlContent(
       List(
         answers.get(WhatIsYourPreviousEmployersNamePage(Index(i))),
-        answers.get(WhatIsYourPreviousEmployersAddressPage(Index(i))).map(_.lines.mkString(", ")),
+        answers.get(WhatIsYourEmployersAddressPage(Index(i))).map(_.lines.mkString(", ")),
         for {
           from <- answers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
           to   = answers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))

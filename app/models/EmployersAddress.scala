@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package pages
+package models
 
-import models.{Index, PreviousEmployersAddress}
-import play.api.libs.json.JsPath
+import play.api.libs.json._
 
-final case class WhatIsYourPreviousEmployersAddressPage(index: Index) extends QuestionPage[PreviousEmployersAddress] {
+final case class EmployersAddress(
+                                           addressLine1: String,
+                                           addressLine2: Option[String],
+                                           addressLine3: Option[String],
+                                           postcode: String
+                                         ) {
 
-  override def path: JsPath = JsPath \ "previousEmployer" \ index.position \ toString
+  def lines: List[String] =
+    List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
 
-  override def toString: String = "whatIsYourPreviousEmployersAddress"
+}
+
+object EmployersAddress {
+  implicit val format = Json.format[EmployersAddress]
 }

@@ -142,7 +142,7 @@ object PrintModel {
     (0 until count).toList.flatMap { index =>
       for {
         name <- userAnswers.get(WhatIsYourPreviousEmployersNamePage(Index(index)))
-        address <- userAnswers.get(WhatIsYourPreviousEmployersAddressPage(Index(index)))
+        address <- userAnswers.get(WhatIsYourEmployersAddressPage(Index(index)))
         from <- userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(index)))
         to <- userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(index)))
       } yield {

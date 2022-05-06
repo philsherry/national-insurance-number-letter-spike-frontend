@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package models
+package pages
 
-import play.api.libs.json._
+import models.{Index, EmployersAddress}
+import pages.behaviours.PageBehaviours
 
-final case class PreviousEmployersAddress(
-                                           addressLine1: String,
-                                           addressLine2: Option[String],
-                                           addressLine3: Option[String],
-                                           postcode: String
-                                         ) {
+class WhatIsYourEmployersAddressPageSpec extends PageBehaviours {
 
-  def lines: List[String] =
-    List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
+  "WhatIsYourPreviousEmployersAddressPage" - {
 
-}
+    beRetrievable[EmployersAddress](WhatIsYourEmployersAddressPage(Index(0)))
 
-object PreviousEmployersAddress {
-  implicit val format = Json.format[PreviousEmployersAddress]
+    beSettable[EmployersAddress](WhatIsYourEmployersAddressPage(Index(0)))
+
+    beRemovable[EmployersAddress](WhatIsYourEmployersAddressPage(Index(0)))
+  }
 }

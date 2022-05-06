@@ -19,9 +19,9 @@ package forms
 import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
 import play.api.data.FormError
 
-class WhatIsYourPreviousEmployersAddressFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
+class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
 
-  val form = new WhatIsYourPreviousEmployersAddressFormProvider()()
+  val form = new WhatIsYourEmployersAddressFormProvider()()
 
   ".addressLine1" - {
 

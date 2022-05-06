@@ -149,10 +149,10 @@ POST       /have-you-ever-worked-in-uk                        controllers.HaveYo
 GET        /change-if-you-have-ever-worked-in-uk                  controllers.HaveYouEverWorkedInUkController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-have-ever-worked-in-uk                  controllers.HaveYouEverWorkedInUkController.onSubmit(mode: Mode = CheckMode)
 
-GET        /:index/what-is-your-previous-employers-address                        controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/what-is-your-previous-employers-address                        controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-your-previous-employers-address                  controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-your-previous-employers-address                  controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/what-is-your-employers-address                        controllers.WhatIsYourEmployersAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/what-is-your-employers-address                        controllers.WhatIsYourEmployersAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-your-employers-address                  controllers.WhatIsYourEmployersAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-your-employers-address                  controllers.WhatIsYourEmployersAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/what-is-your-previous-employers-name                        controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/what-is-your-previous-employers-name                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = NormalMode)

@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.DoYouHaveAnyPreviousEmployersFormProvider
-import models.{Index, NormalMode, PreviousEmployersAddress, UserAnswers}
+import models.{Index, NormalMode, EmployersAddress, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.scalatestplus.mockito.MockitoSugar
 import pages._
@@ -64,7 +64,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
 
       val answers = emptyUserAnswers
         .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "foobar").success.value
-        .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("line 1", None, None, "postcode")).success.value
+        .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("line 1", None, None, "postcode")).success.value
         .set(AreYouStillEmployedPage(Index(0)), true).success.value
         .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
         .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 3, 2)).success.value

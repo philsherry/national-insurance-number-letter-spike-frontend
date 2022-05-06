@@ -16,17 +16,12 @@
 
 package pages
 
-import models.{Index, PreviousEmployersAddress}
-import pages.behaviours.PageBehaviours
+import models.{Index, EmployersAddress}
+import play.api.libs.json.JsPath
 
-class WhatIsYourPreviousEmployersAddressPageSpec extends PageBehaviours {
+final case class WhatIsYourEmployersAddressPage(index: Index) extends QuestionPage[EmployersAddress] {
 
-  "WhatIsYourPreviousEmployersAddressPage" - {
+  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
 
-    beRetrievable[PreviousEmployersAddress](WhatIsYourPreviousEmployersAddressPage(Index(0)))
-
-    beSettable[PreviousEmployersAddress](WhatIsYourPreviousEmployersAddressPage(Index(0)))
-
-    beRemovable[PreviousEmployersAddress](WhatIsYourPreviousEmployersAddressPage(Index(0)))
-  }
+  override def toString: String = "whatIsYourEmployersAddress"
 }

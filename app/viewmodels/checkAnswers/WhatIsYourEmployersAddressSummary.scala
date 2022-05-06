@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, Index, UserAnswers}
-import pages.WhatIsYourPreviousEmployersAddressPage
+import pages.WhatIsYourEmployersAddressPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -26,10 +26,10 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhatIsYourPreviousEmployersAddressSummary  {
+object WhatIsYourEmployersAddressSummary  {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhatIsYourPreviousEmployersAddressPage(Index(index))).map {
+    answers.get(WhatIsYourEmployersAddressPage(Index(index))).map {
       answer =>
 
         val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, Some(answer.postcode))
@@ -40,7 +40,7 @@ object WhatIsYourPreviousEmployersAddressSummary  {
           key     = "whatIsYourPreviousEmployersAddress.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlContent(value)),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.WhatIsYourPreviousEmployersAddressController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel("site.change", routes.WhatIsYourEmployersAddressController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("whatIsYourPreviousEmployersAddress.change.hidden"))
           )
         )
