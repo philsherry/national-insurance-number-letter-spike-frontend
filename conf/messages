@@ -534,8 +534,8 @@ pdf.personalDetails.nino = National Insurance Number
 pdf.personalDetails.dob = Date of birth
 pdf.personalDetails.maritalStatus = Marital or partnership status
 pdf.personalDetails.maritalStatus.married = Currently married or in a civil partnership (since {0})
-pdf.personalDetails.previousMaritalStatus = Previous marital or partnership status
-pdf.personalDetails.previousMaritalStatus.tofrom = From {0} to {1} (reason: {2})
+pdf.personalDetails.previousRelationships = Previous relationships
+pdf.personalDetails.previousRelationships.tofrom = From {0} to {1} (reason: {2})
 
 pdf.addressHistory = Address history
 pdf.addressHistory.current = Current address

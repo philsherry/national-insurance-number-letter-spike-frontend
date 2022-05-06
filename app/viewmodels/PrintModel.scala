@@ -31,7 +31,7 @@ final case class PrintModel(
                              telephoneNumber: String,
                              nino: Option[String],
                              marriage: Option[String],
-                             previousMarriageOrPartnership: Option[PreviousMarriageOrPartnershipPrintModel],
+                             previousRelationships: Seq[PreviousMarriageOrPartnershipPrintModel],
                              claimedChildBenefit: Boolean,
                              childBenefitNumber: Option[String],
                              otherBenefits: Option[String],
@@ -72,7 +72,7 @@ object PrintModel {
       telephoneNumber <- userAnswers.get(WhatIsYourTelephoneNumberPage)
       nino = userAnswers.get(WhatIsYourNationalInsuranceNumberPage).map(_.nino)
       marriage = userAnswers.get(WhenDidYouGetMarriedPage)
-      previousMarriageOrPartnership = userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(???))
+      previousRelationships = getPreviousRelationships(userAnswers)
       claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
       childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
       otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
@@ -90,7 +90,7 @@ object PrintModel {
         telephoneNumber,
         nino,
         marriage.map(_.format(formatter)),
-        previousMarriageOrPartnership.map(PreviousMarriageOrPartnershipPrintModel(_)),
+        previousRelationships,
         claimedChildBenefit,
         childBenefitNumber,
         otherBenefits,
@@ -114,6 +114,12 @@ object PrintModel {
     val count = userAnswers.get(PreviousNamesQuery).getOrElse(List.empty).length
     (0 until count).toList.flatMap { index =>
       userAnswers.get(WhatIsYourPreviousNamePage(Index(index)))
+    }
+  }
+
+  private def getPreviousRelationships(userAnswers: UserAnswers): Seq[PreviousMarriageOrPartnershipPrintModel] = {
+    userAnswers.get(PreviousRelationshipsQuery).getOrElse(List.empty).indices.flatMap { index =>
+      userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(Index(index))).map(PreviousMarriageOrPartnershipPrintModel(_))
     }
   }
 
