@@ -14,23 +14,26 @@
  * limitations under the License.
  */
 
-package forms
+package pages
+
+import models.Index
 
 import java.time.LocalDate
+import org.scalacheck.Arbitrary
+import pages.behaviours.PageBehaviours
 
-import forms.mappings.Mappings
-import javax.inject.Inject
-import play.api.data.Form
+class WhenDidYouStopWorkingForEmployerPageSpec extends PageBehaviours {
 
-class WhenDidYouStopWorkingForPreviousEmployerFormProvider @Inject() extends Mappings {
+  "WhenDidYouStopWorkingForPreviousEmployerPage" - {
 
-  def apply(): Form[LocalDate] =
-    Form(
-      "value" -> localDate(
-        invalidKey     = "whenDidYouStopWorkingForPreviousEmployer.error.invalid",
-        allRequiredKey = "whenDidYouStopWorkingForPreviousEmployer.error.required.all",
-        twoRequiredKey = "whenDidYouStopWorkingForPreviousEmployer.error.required.two",
-        requiredKey    = "whenDidYouStopWorkingForPreviousEmployer.error.required"
-      )
-    )
+    implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
+      datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
+    }
+
+    beRetrievable[LocalDate](WhenDidYouStopWorkingForEmployerPage(Index(0)))
+
+    beSettable[LocalDate](WhenDidYouStopWorkingForEmployerPage(Index(0)))
+
+    beRemovable[LocalDate](WhenDidYouStopWorkingForEmployerPage(Index(0)))
+  }
 }

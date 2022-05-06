@@ -127,7 +127,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
-          .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
+          .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
 
         val expected = List(
           PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")
@@ -141,11 +141,11 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
-          .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
+          .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
           .set(WhatIsYourEmployersNamePage(Index(1)), "emp 2").get
           .set(WhatIsYourEmployersAddressPage(Index(1)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForEmployerPage(Index(1)), LocalDate.of(2015, 3, 2)).get
-          .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(1)), LocalDate.of(2016, 3, 3)).get
+          .set(WhenDidYouStopWorkingForEmployerPage(Index(1)), LocalDate.of(2016, 3, 3)).get
 
         val expected = List(
           PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013"),
@@ -183,7 +183,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
-          .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
+          .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
           .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).get
 
         val expected = Some(PrintModel(
@@ -232,7 +232,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
-          .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
+          .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
           .set(WhichAlternativeDocumentsPage, Set[AlternativeDocuments](AlternativeDocuments.AdoptionCertificate, AlternativeDocuments.WorkPermit)).get
 
         val expected = Some(PrintModel(

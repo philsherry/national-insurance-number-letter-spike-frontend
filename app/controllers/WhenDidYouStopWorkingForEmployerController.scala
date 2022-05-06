@@ -17,30 +17,30 @@
 package controllers
 
 import controllers.actions._
-import forms.WhenDidYouStopWorkingForPreviousEmployerFormProvider
+import forms.WhenDidYouStopWorkingForEmployerFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.WhenDidYouStopWorkingForPreviousEmployerPage
+import pages.WhenDidYouStopWorkingForEmployerPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.WhenDidYouStopWorkingForPreviousEmployerView
+import views.html.WhenDidYouStopWorkingForEmployerView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class WhenDidYouStopWorkingForPreviousEmployerController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: WhenDidYouStopWorkingForPreviousEmployerFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: WhenDidYouStopWorkingForPreviousEmployerView
+class WhenDidYouStopWorkingForEmployerController @Inject()(
+                                                            override val messagesApi: MessagesApi,
+                                                            sessionRepository: SessionRepository,
+                                                            navigator: Navigator,
+                                                            identify: IdentifierAction,
+                                                            getData: DataRetrievalAction,
+                                                            requireData: DataRequiredAction,
+                                                            formProvider: WhenDidYouStopWorkingForEmployerFormProvider,
+                                                            val controllerComponents: MessagesControllerComponents,
+                                                            view: WhenDidYouStopWorkingForEmployerView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def form = formProvider()
@@ -48,7 +48,7 @@ class WhenDidYouStopWorkingForPreviousEmployerController @Inject()(
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(index)) match {
+      val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -65,9 +65,9 @@ class WhenDidYouStopWorkingForPreviousEmployerController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForPreviousEmployerPage(index), value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForEmployerPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage(index), mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(index), mode, updatedAnswers))
       )
   }
 }

@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{Index, Mode, UserAnswers}
-import pages.{WhatIsYourEmployersAddressPage, WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
+import pages.{WhatIsYourEmployersAddressPage, WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
@@ -41,7 +41,7 @@ object PreviousEmployerSummary {
         answers.get(WhatIsYourEmployersAddressPage(Index(i))).map(_.lines.mkString(", ")),
         for {
           from <- answers.get(WhenDidYouStartWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
-          to   = answers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
+          to   = answers.get(WhenDidYouStopWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
         } yield to.fold(Messages("doYouHaveAnyPreviousEmployers.from", from))(to => Messages("doYouHaveAnyPreviousEmployers.fromTo", from, to))
       ).flatten.map(HtmlFormat.escape(_).toString).mkString("<br/>")
     )

@@ -16,23 +16,21 @@
 
 package forms
 
-import java.time.{LocalDate, ZoneOffset}
+import java.time.LocalDate
 
-import forms.behaviours.DateBehaviours
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-class WhenDidYouStopWorkingForPreviousEmployerFormProviderSpec extends DateBehaviours {
+class WhenDidYouStopWorkingForEmployerFormProvider @Inject() extends Mappings {
 
-  val form = new WhenDidYouStopWorkingForPreviousEmployerFormProvider()()
-
-  ".value" - {
-
-    val validData = datesBetween(
-      min = LocalDate.of(2000, 1, 1),
-      max = LocalDate.now(ZoneOffset.UTC)
+  def apply(): Form[LocalDate] =
+    Form(
+      "value" -> localDate(
+        invalidKey     = "whenDidYouStopWorkingForPreviousEmployer.error.invalid",
+        allRequiredKey = "whenDidYouStopWorkingForPreviousEmployer.error.required.all",
+        twoRequiredKey = "whenDidYouStopWorkingForPreviousEmployer.error.required.two",
+        requiredKey    = "whenDidYouStopWorkingForPreviousEmployer.error.required"
+      )
     )
-
-    behave like dateField(form, "value", validData)
-
-    behave like mandatoryDateField(form, "value", "whenDidYouStopWorkingForPreviousEmployer.error.required.all")
-  }
 }

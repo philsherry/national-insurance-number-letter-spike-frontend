@@ -14,12 +14,25 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import play.api.libs.json.{JsPath, JsValue}
-import queries.Gettable
+import java.time.{LocalDate, ZoneOffset}
 
-case object PreviousEmployersQuery extends Gettable[List[JsValue]] {
+import forms.behaviours.DateBehaviours
 
-  override def path: JsPath = JsPath \ "employer"
+class WhenDidYouStopWorkingForEmployerFormProviderSpec extends DateBehaviours {
+
+  val form = new WhenDidYouStopWorkingForEmployerFormProvider()()
+
+  ".value" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "value", validData)
+
+    behave like mandatoryDateField(form, "value", "whenDidYouStopWorkingForPreviousEmployer.error.required.all")
+  }
 }

@@ -104,10 +104,10 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStopWorkingForPreviousEmployerPage, JsValue)] =
+  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStopWorkingForEmployerPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhenDidYouStopWorkingForPreviousEmployerPage]
+        page  <- arbitrary[WhenDidYouStopWorkingForEmployerPage]
         value <- arbitrary[Int].map(Json.toJson(_))
       } yield (page, value)
     }

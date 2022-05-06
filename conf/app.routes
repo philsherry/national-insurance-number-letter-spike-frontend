@@ -164,10 +164,10 @@ POST       /:index/when-did-you-start-working-for-your-employer                 
 GET        /:index/change-when-you-started-working-for-your-employer                        controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-when-you-started-working-for-your-employer                        controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/when-did-you-stop-working-for-your-previous-employer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/when-did-you-stop-working-for-your-previous-employer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-when-you-stopped-working-for-your-previous-employer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-when-you-stopped-working-for-your-previous-employer                        controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/when-did-you-stop-working-for-your-employer                  controllers.WhenDidYouStopWorkingForEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/when-did-you-stop-working-for-your-employer                  controllers.WhenDidYouStopWorkingForEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-when-you-stopped-working-for-your-employer                        controllers.WhenDidYouStopWorkingForEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-when-you-stopped-working-for-your-employer                        controllers.WhenDidYouStopWorkingForEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /do-you-have-an-identity-document                        controllers.DoYouHavePrimaryDocumentController.onPageLoad(mode: Mode = NormalMode)
 POST       /do-you-have-an-identity-document                        controllers.DoYouHavePrimaryDocumentController.onSubmit(mode: Mode = NormalMode)

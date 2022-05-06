@@ -22,7 +22,7 @@ import forms.AreYouSureYouWantToRemovePreviousEmployerFormProvider
 import javax.inject.Inject
 import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.{AreYouSureYouWantToRemovePreviousEmployerPage, PreviousAddressQuery, PreviousEmployerQuery, WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
+import pages.{AreYouSureYouWantToRemovePreviousEmployerPage, PreviousAddressQuery, PreviousEmployerQuery, WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -54,7 +54,7 @@ class AreYouSureYouWantToRemovePreviousEmployerController @Inject()(
     implicit request =>
       val employerName = request.userAnswers.get(WhatIsYourEmployersNamePage(index))
       val from = request.userAnswers.get(WhenDidYouStartWorkingForEmployerPage(index))
-      val to = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(index))
+      val to = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index))
       Ok(view(form, employerName, from, to, mode, index))
   }
 
@@ -65,7 +65,7 @@ class AreYouSureYouWantToRemovePreviousEmployerController @Inject()(
         formWithErrors => {
           val employerName = request.userAnswers.get(WhatIsYourEmployersNamePage(index))
           val from = request.userAnswers.get(WhenDidYouStartWorkingForEmployerPage(index))
-          val to = request.userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(index))
+          val to = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index))
           Future.successful(BadRequest(view(formWithErrors, employerName, from, to, mode, index)))
         },
         value =>

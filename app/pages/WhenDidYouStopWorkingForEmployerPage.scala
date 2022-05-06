@@ -21,9 +21,9 @@ import models.Index
 import java.time.LocalDate
 import play.api.libs.json.JsPath
 
-final case class WhenDidYouStopWorkingForPreviousEmployerPage(index: Index) extends QuestionPage[LocalDate] {
+final case class WhenDidYouStopWorkingForEmployerPage(index: Index) extends QuestionPage[LocalDate] {
 
-  override def path: JsPath = JsPath \ "previousEmployer" \ index.position \ toString
+  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
 
-  override def toString: String = "whenDidYouStopWorkingForPreviousEmployer"
+  override def toString: String = "whenDidYouStopWorkingForEmployer"
 }

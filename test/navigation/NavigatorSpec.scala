@@ -313,7 +313,7 @@ class NavigatorSpec extends SpecBase {
 
         "to the when did your employment end page when the user selects no" in {
           val answers = emptyUserAnswers.set(AreYouStillEmployedPage(Index(0)), false).success.value
-          navigator.nextPage(AreYouStillEmployedPage(Index(0)), NormalMode, answers) mustBe routes.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(Index(0), NormalMode)
+          navigator.nextPage(AreYouStillEmployedPage(Index(0)), NormalMode, answers) mustBe routes.WhenDidYouStopWorkingForEmployerController.onPageLoad(Index(0), NormalMode)
         }
 
         "to the journey recovery page when the user has no selection" in {
@@ -343,7 +343,7 @@ class NavigatorSpec extends SpecBase {
               .set(WhatIsYourEmployersNamePage(Index(0)), "foobar").success.value
               .set(WhatIsYourEmployersAddressPage(Index(0)), address).success.value
               .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.now).success.value
-              .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
+              .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.now).success.value
             navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(1), NormalMode)
           }
         }
@@ -371,7 +371,7 @@ class NavigatorSpec extends SpecBase {
       }
 
       "go from when did you stop working for your previous employer page to the employment history page" in {
-        navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
+        navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
       }
 
       "go from are you sure you want to remove your previous employer page to the employment history page" in {
