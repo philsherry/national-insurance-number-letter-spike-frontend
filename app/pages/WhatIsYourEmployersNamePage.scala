@@ -19,9 +19,9 @@ package pages
 import models.Index
 import play.api.libs.json.JsPath
 
-final case class WhatIsYourPreviousEmployersNamePage(index: Index) extends QuestionPage[String] {
+final case class WhatIsYourEmployersNamePage(index: Index) extends QuestionPage[String] {
 
-  override def path: JsPath = JsPath \ "previousEmployer" \ index.position \ toString
+  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
 
-  override def toString: String = "whatIsYourPreviousEmployersName"
+  override def toString: String = "whatIsYourEmployersName"
 }

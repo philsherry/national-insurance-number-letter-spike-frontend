@@ -62,7 +62,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
       .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
       .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
       .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-      .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
+      .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
       .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
       .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
       .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get

@@ -56,7 +56,7 @@ class Navigator @Inject()() {
     case AreYouStillEmployedPage(index)                         => areYouStillEmployedRoutes(index)
     case WhenDidYouFinishYourEmploymentPage                     => _ => routes.EmploymentHistoryController.onPageLoad(NormalMode)
     case DoYouHaveAnyPreviousEmployersPage                      => doYouHaveAnyPreviousEmployersRoutes
-    case WhatIsYourPreviousEmployersNamePage(index)             => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, NormalMode)
+    case WhatIsYourEmployersNamePage(index)             => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, NormalMode)
     case WhatIsYourEmployersAddressPage(index)          => _ => routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index, NormalMode)
     case WhenDidYouStartWorkingForPreviousEmployerPage(index)   => _ => routes.AreYouStillEmployedController.onPageLoad(index, NormalMode)
     case WhenDidYouStopWorkingForPreviousEmployerPage(_)        => _ => routes.EmploymentHistoryController.onPageLoad(NormalMode)
@@ -148,7 +148,7 @@ class Navigator @Inject()() {
     answers.get(DoYouHaveAnyPreviousEmployersPage).map {
       case true  =>
         val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty)
-        routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(previousEmployers.length), NormalMode)
+        routes.WhatIsYourEmployersNameController.onPageLoad(Index(previousEmployers.length), NormalMode)
       case false => routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
@@ -176,7 +176,7 @@ class Navigator @Inject()() {
     case DoYouKnowYourNationalInsuranceNumberPage => doYouKnowYourNationalInsuranceNumberCheckRoutes
     case DoYouHavePrimaryDocumentPage => doYouHavePrimaryDocumentCheckRoutes
     case DoYouHaveTwoSecondaryDocumentsPage => doYouHaveTwoSecondaryDocumentsCheckRoutes
-    case WhatIsYourPreviousEmployersNamePage(index) => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, CheckMode)
+    case WhatIsYourEmployersNamePage(index) => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, CheckMode)
     case WhatIsYourEmployersAddressPage(index) => _ => routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index, CheckMode)
     case WhenDidYouStartWorkingForPreviousEmployerPage(index) => _ => routes.AreYouStillEmployedController.onPageLoad(index, CheckMode)
     case _ => _ => routes.CheckYourAnswersController.onPageLoad

@@ -154,10 +154,10 @@ POST       /:index/what-is-your-employers-address                        control
 GET        /:index/change-your-employers-address                  controllers.WhatIsYourEmployersAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-your-employers-address                  controllers.WhatIsYourEmployersAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/what-is-your-previous-employers-name                        controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/what-is-your-previous-employers-name                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-your-previous-employers-name                  controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-your-previous-employers-name                  controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/what-is-your-employers-name                        controllers.WhatIsYourEmployersNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/what-is-your-employers-name                        controllers.WhatIsYourEmployersNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-your-employers-name                  controllers.WhatIsYourEmployersNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-your-employers-name                  controllers.WhatIsYourEmployersNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/when-did-you-start-working-for-your-previous-employer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/when-did-you-start-working-for-your-previous-employer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)

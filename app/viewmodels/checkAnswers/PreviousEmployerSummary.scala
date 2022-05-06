@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{Index, Mode, UserAnswers}
-import pages.{WhatIsYourEmployersAddressPage, WhatIsYourPreviousEmployersNamePage, WhenDidYouStartWorkingForPreviousEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
+import pages.{WhatIsYourEmployersAddressPage, WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForPreviousEmployerPage, WhenDidYouStopWorkingForPreviousEmployerPage}
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
@@ -33,11 +33,11 @@ object PreviousEmployerSummary {
 
   def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): ListWithActionsItem = {
 
-    val name = answers.get(WhatIsYourPreviousEmployersNamePage(Index(i))).getOrElse("")
+    val name = answers.get(WhatIsYourEmployersNamePage(Index(i))).getOrElse("")
 
     val content = HtmlContent(
       List(
-        answers.get(WhatIsYourPreviousEmployersNamePage(Index(i))),
+        answers.get(WhatIsYourEmployersNamePage(Index(i))),
         answers.get(WhatIsYourEmployersAddressPage(Index(i))).map(_.lines.mkString(", ")),
         for {
           from <- answers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
@@ -49,7 +49,7 @@ object PreviousEmployerSummary {
     ListWithActionsItem(
       name = content,
       actions = List(
-        ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousEmployerHidden", name)), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(i), mode).url),
+        ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousEmployerHidden", name)), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(i), mode).url),
         ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousEmployerHidden", name)), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(i), mode).url)
       )
     )

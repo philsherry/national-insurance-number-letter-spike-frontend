@@ -64,7 +64,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(HaveYouEverWorkedInUkPage, true).success.value
         .set(WhenDidYouFinishYourEmploymentPage, LocalDate.now).success.value
         .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
-        .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "previous employers name").success.value
+        .set(WhatIsYourEmployersNamePage(Index(0)), "previous employers name").success.value
         .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("line 1", None, None, "postcode")).success.value
         .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
         .set(AreYouStillEmployedPage(Index(0)), true).success.value
@@ -146,7 +146,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val previousEmployers = List(ListWithActionsItem(
           name = HtmlContent("previous employers name<br/>line 1, postcode<br/>Employed from 1 February 2000 to 2 March 2001"),
           actions = List(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "previous employers name")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "previous employers name")), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), CheckMode).url),
             ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "previous employers name")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), CheckMode).url)
           )
         ))

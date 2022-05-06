@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("whatIsYourPreviousEmployersName.title"))) {
 
-    @formHelper(action = routes.WhatIsYourPreviousEmployersNameController.onSubmit(index, mode)) {
+    @formHelper(action = routes.WhatIsYourEmployersNameController.onSubmit(index, mode)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

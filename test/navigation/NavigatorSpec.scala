@@ -331,7 +331,7 @@ class NavigatorSpec extends SpecBase {
 
           "at index 0 when there are no previous addresses" in {
             val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousEmployersPage, true).success.value
-            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), NormalMode)
+            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), NormalMode)
           }
 
           "at index 1 when there is a previous address" in {
@@ -340,11 +340,11 @@ class NavigatorSpec extends SpecBase {
             )
             val answers = emptyUserAnswers
               .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
-              .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "foobar").success.value
+              .set(WhatIsYourEmployersNamePage(Index(0)), "foobar").success.value
               .set(WhatIsYourEmployersAddressPage(Index(0)), address).success.value
               .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
               .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
-            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(1), NormalMode)
+            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(1), NormalMode)
           }
         }
 
@@ -359,7 +359,7 @@ class NavigatorSpec extends SpecBase {
       }
 
       "go from the what is your previous employers name page to the what is your previous employers address page" in {
-        navigator.nextPage(WhatIsYourPreviousEmployersNamePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), NormalMode)
+        navigator.nextPage(WhatIsYourEmployersNamePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), NormalMode)
       }
 
       "go from the what is your previous employers address page to the when did you start working for previous employer page" in {
@@ -685,7 +685,7 @@ class NavigatorSpec extends SpecBase {
       }
 
       "go from the what is your previous employers name page to the what is your previous employers address page" in {
-        navigator.nextPage(WhatIsYourPreviousEmployersNamePage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), CheckMode)
+        navigator.nextPage(WhatIsYourEmployersNamePage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), CheckMode)
       }
 
       "go from the what is your previous employers address page to the when did you start working for previous employer page" in {

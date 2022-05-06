@@ -124,7 +124,7 @@ class PrintModelSpec extends SpecBase {
 
       "must extract one previous employer" in {
         val userAnswers = UserAnswers("id")
-          .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
+          .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
@@ -138,11 +138,11 @@ class PrintModelSpec extends SpecBase {
 
       "must extract multiple previous employers" in {
         val userAnswers = UserAnswers("id")
-          .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
+          .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
-          .set(WhatIsYourPreviousEmployersNamePage(Index(1)), "emp 2").get
+          .set(WhatIsYourEmployersNamePage(Index(1)), "emp 2").get
           .set(WhatIsYourEmployersAddressPage(Index(1)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(1)), LocalDate.of(2015, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(1)), LocalDate.of(2016, 3, 3)).get
@@ -180,7 +180,7 @@ class PrintModelSpec extends SpecBase {
           .set(HaveYouEverClaimedChildBenefitPage, true).get
           .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
           .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-          .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
+          .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
@@ -229,7 +229,7 @@ class PrintModelSpec extends SpecBase {
           .set(HaveYouEverClaimedChildBenefitPage, true).get
           .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
           .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-          .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
+          .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
           .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get

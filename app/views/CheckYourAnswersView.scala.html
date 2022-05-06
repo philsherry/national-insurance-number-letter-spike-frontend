@@ -69,12 +69,12 @@
     @if(previousEmployers.nonEmpty) {
         @hmrcListWithActions(ListWithActions(items = previousEmployers))
         <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" href="@routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(previousEmployers.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousEmployer")</a>
+            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(previousEmployers.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousEmployer")</a>
         </p>
     } else {
         <p class="govuk-body govuk-!-margin-bottom-9">
             <span>@messages("checkYourAnswers.noPreviousEmployers")</span><br/>
-            <a class="govuk-link" href="@routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousEmployer")</a>
+            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousEmployer")</a>
         </p>
     }
 

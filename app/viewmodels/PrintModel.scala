@@ -141,7 +141,7 @@ object PrintModel {
     val count = userAnswers.get(PreviousEmployersQuery).getOrElse(List.empty).length
     (0 until count).toList.flatMap { index =>
       for {
-        name <- userAnswers.get(WhatIsYourPreviousEmployersNamePage(Index(index)))
+        name <- userAnswers.get(WhatIsYourEmployersNamePage(Index(index)))
         address <- userAnswers.get(WhatIsYourEmployersAddressPage(Index(index)))
         from <- userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(index)))
         to <- userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(index)))

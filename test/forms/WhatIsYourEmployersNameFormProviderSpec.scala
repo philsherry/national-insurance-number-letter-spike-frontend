@@ -19,13 +19,13 @@ package forms
 import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
-class WhatIsYourPreviousEmployersNameFormProviderSpec extends StringFieldBehaviours {
+class WhatIsYourEmployersNameFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "whatIsYourPreviousEmployersName.error.required"
   val lengthKey = "whatIsYourPreviousEmployersName.error.length"
   val maxLength = 100
 
-  val form = new WhatIsYourPreviousEmployersNameFormProvider()()
+  val form = new WhatIsYourEmployersNameFormProvider()()
 
   ".value" - {
 

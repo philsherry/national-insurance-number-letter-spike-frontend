@@ -63,7 +63,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
     "must return OK and the correct view for a GET when there are already previous addresses" in {
 
       val answers = emptyUserAnswers
-        .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "foobar").success.value
+        .set(WhatIsYourEmployersNamePage(Index(0)), "foobar").success.value
         .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("line 1", None, None, "postcode")).success.value
         .set(AreYouStillEmployedPage(Index(0)), true).success.value
         .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
@@ -75,7 +75,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
         ListWithActionsItem(
           name = HtmlContent("foobar<br/>line 1, postcode<br/>Employed from 1 February 2000 to 2 March 2000"),
           actions = Seq(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "foobar")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), NormalMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "foobar")), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), NormalMode).url),
             ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "foobar")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), NormalMode).url)
           )
         )
