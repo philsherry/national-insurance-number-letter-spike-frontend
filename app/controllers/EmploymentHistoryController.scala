@@ -26,7 +26,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.EmployerSummary
-import views.html.DoYouHaveAnyPreviousEmployersView
+import views.html.EmploymentHistoryView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,7 +39,7 @@ class EmploymentHistoryController @Inject()(
                                          requireData: DataRequiredAction,
                                          formProvider: DoYouHaveAnyPreviousEmployersFormProvider,
                                          val controllerComponents: MessagesControllerComponents,
-                                         view: DoYouHaveAnyPreviousEmployersView
+                                         view: EmploymentHistoryView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()

@@ -27,24 +27,24 @@
 
 @titleText = @{
     items.length match {
-        case 0 => messages("doYouHaveAnyPreviousEmployers.title.none")
-        case 1 => messages("doYouHaveAnyPreviousEmployers.title.one")
-        case _ => messages("doYouHaveAnyPreviousEmployers.title.many", items.length)
+        case 0 => messages("employmentHistory.title.none")
+        case 1 => messages("employmentHistory.title.one")
+        case _ => messages("employmentHistory.title.many", items.length)
     }
 }
 
 @headingText = @{
     items.length match {
-        case 0 => messages("doYouHaveAnyPreviousEmployers.heading.none")
-        case 1 => messages("doYouHaveAnyPreviousEmployers.heading.one")
-        case _ => messages("doYouHaveAnyPreviousEmployers.heading.many", items.length)
+        case 0 => messages("employmentHistory.heading.none")
+        case 1 => messages("employmentHistory.heading.one")
+        case _ => messages("employmentHistory.heading.many", items.length)
     }
 }
 
 @legendText = @{
     items.length match {
-        case 0 => messages("doYouHaveAnyPreviousEmployers.add.legend.none")
-        case _ => messages("doYouHaveAnyPreviousEmployers.add.legend.some")
+        case 0 => messages("employmentHistory.add.legend.none")
+        case _ => messages("employmentHistory.add.legend.some")
     }
 }
 

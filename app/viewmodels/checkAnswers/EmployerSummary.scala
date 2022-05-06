@@ -42,7 +42,7 @@ object EmployerSummary {
         for {
           from <- answers.get(WhenDidYouStartWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
           to   = answers.get(WhenDidYouStopWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
-        } yield to.fold(Messages("doYouHaveAnyPreviousEmployers.from", from))(to => Messages("doYouHaveAnyPreviousEmployers.fromTo", from, to))
+        } yield to.fold(Messages("employmentHistory.from", from))(to => Messages("employmentHistory.fromTo", from, to))
       ).flatten.map(HtmlFormat.escape(_).toString).mkString("<br/>")
     )
 

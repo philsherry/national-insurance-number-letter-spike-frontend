@@ -29,7 +29,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithActionsItem}
-import views.html.DoYouHaveAnyPreviousEmployersView
+import views.html.EmploymentHistoryView
 
 import java.time.LocalDate
 
@@ -53,7 +53,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[DoYouHaveAnyPreviousEmployersView]
+        val view = application.injector.instanceOf[EmploymentHistoryView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, List.empty, NormalMode)(request, messages(application)).toString
@@ -86,7 +86,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[DoYouHaveAnyPreviousEmployersView]
+        val view = application.injector.instanceOf[EmploymentHistoryView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, expectedItems, NormalMode)(request, messages(application)).toString
@@ -102,7 +102,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request = FakeRequest(GET, doYouHaveAnyPreviousEmployersRoute)
 
-        val view = application.injector.instanceOf[DoYouHaveAnyPreviousEmployersView]
+        val view = application.injector.instanceOf[EmploymentHistoryView]
 
         val result = route(application, request).value
 
@@ -143,7 +143,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[DoYouHaveAnyPreviousEmployersView]
+        val view = application.injector.instanceOf[EmploymentHistoryView]
 
         val result = route(application, request).value
 
