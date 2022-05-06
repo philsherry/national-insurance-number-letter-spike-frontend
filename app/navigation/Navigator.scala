@@ -46,7 +46,7 @@ class Navigator @Inject()() {
     case AreYouMarriedPage                                      => areYouMarriedRoutes
     case WhenDidYouGetMarriedPage                               => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes
-    case PreviousMarriageOrPartnershipDetailsPage(_)            => _ => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
+    case PreviousMarriageOrPartnershipDetailsPage(_)            => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
     case HaveYouEverClaimedChildBenefitPage                     => haveYouEverClaimedChildBenefitRoutes
     case DoYouKnowYourChildBenefitNumberPage                    => doYouKnowYourChildBenefitNumberRoutes
     case WhatIsYourChildBenefitNumberPage                       => _ => routes.HaveYouEverReceivedOtherUkBenefitsController.onPageLoad(NormalMode)
@@ -109,7 +109,9 @@ class Navigator @Inject()() {
 
   private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes(answers: UserAnswers): Call =
     answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage).map {
-      case true  => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), NormalMode)
+      case true  =>
+        val previousRelationships = answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty)
+        routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(previousRelationships.length), NormalMode)
       case false => routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
@@ -195,10 +197,12 @@ class Navigator @Inject()() {
     }
 
   private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes(answers: UserAnswers): Call =
-    (answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage), answers.get(PreviousMarriageOrPartnershipDetailsPage(???))) match {
-      case (Some(true), None) => routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(???, CheckMode)
-      case (_, _) => routes.CheckYourAnswersController.onPageLoad
-    }
+    answers.get(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage).map {
+      case true  =>
+        val previousRelationships = answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty)
+        routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(previousRelationships.length), CheckMode)
+      case false => routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def isYourCurrentAddressInUkCheckRoutes(answers: UserAnswers): Call =
     (answers.get(IsYourCurrentAddressInUkPage), answers.get(WhatIsYourCurrentAddressUkPage), answers.get(WhatIsYourCurrentAddressInternationalPage)) match {

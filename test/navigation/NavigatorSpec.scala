@@ -209,9 +209,19 @@ class NavigatorSpec extends SpecBase {
 
       "must go from the previously married page" - {
 
-        "to the when previous marriage or civil partnership details page when the user selects yes" in {
-          val answers = emptyUserAnswers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(???, NormalMode)
+        "to the previous marriage or civil partnership details page when the user selects yes" - {
+
+          "when there are no previous relationships set" in {
+            val answers = emptyUserAnswers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), NormalMode)
+          }
+
+          "when there are previous relationships set" in {
+            val answers = emptyUserAnswers
+              .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+              .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya")).success.value
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), NormalMode)
+          }
         }
 
         "to have you ever claimed child benefit page when the user selects no" in {
@@ -224,8 +234,8 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
-      "go from the when previous marriage or civil partnership details page to the have you claimed child benefit page" in {
-        navigator.nextPage(PreviousMarriageOrPartnershipDetailsPage(???), NormalMode, emptyUserAnswers) mustBe routes.HaveYouEverClaimedChildBenefitController.onPageLoad(NormalMode)
+      "go from the when previous marriage or civil partnership details page to the do you want to add another previous relationship page" in {
+        navigator.nextPage(PreviousMarriageOrPartnershipDetailsPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
       }
 
       "go from the have you claimed child benefit page" - {
@@ -447,29 +457,28 @@ class NavigatorSpec extends SpecBase {
 
       "go from the previous marriage or civil partnership page" - {
 
-//        "to the check your answers page if answer is yes and previous details are set" in {
-//          val previous = PreviousMarriageOrPartnershipDetails(LocalDate.of(2000,1,1), LocalDate.of(2001, 1, 1), "reason")
-//
-//          val answers = emptyUserAnswers
-//            .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).get
-//            .set(PreviousMarriageOrPartnershipDetailsPage, previous).get
-//
-//          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
-//        }
-//
-//        "to the check your answers page if answer is no" in {
-//          val answers = emptyUserAnswers
-//            .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, false).get
-//
-//          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
-//        }
-//
-//        "to the previous details page if answer is yes and civil partnership date is not set" in {
-//          val answers = emptyUserAnswers
-//            .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).get
-//
-//          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(CheckMode)
-//        }
+        "to the previous relationship details page" - {
+
+          "at index 0 if there are no previous relationships" in {
+            val answers = emptyUserAnswers
+              .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode)
+          }
+
+          "at the next available index if there are previous relationships" in {
+            val previous = PreviousMarriageOrPartnershipDetails(LocalDate.of(2000,1,1), LocalDate.of(2001, 1, 1), "reason")
+            val answers = emptyUserAnswers
+              .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+              .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), previous).success.value
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), CheckMode)
+          }
+        }
+
+        "to the check your answers page if answer is no" in {
+          val answers = emptyUserAnswers
+            .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, false).success.value
+          navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
       }
 
       "go from the have you ever claimed child benefit page" - {
