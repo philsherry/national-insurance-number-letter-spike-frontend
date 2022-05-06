@@ -62,9 +62,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
         .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").success.value
         .set(HaveYouEverWorkedInUkPage, true).success.value
-        .set(WhatIsYourEmployersNamePage, "employer").success.value
-        .set(WhatIsYourEmployersAddressPage, WhatIsYourEmployersAddress("line 1", Some("line 2"), Some("line 3"), "postcode")).success.value
-        .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.now).success.value
         .set(AreYouStillEmployedPage, false).success.value
         .set(WhenDidYouFinishYourEmploymentPage, LocalDate.now).success.value
         .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
@@ -144,11 +141,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val employmentHistory = SummaryListViewModel(Seq(
           HaveYouEverWorkedInUkSummary.row(answers)(messages(application)),
-          WhatIsYourEmployersNameSummary.row(answers)(messages(application)),
-          WhatIsYourEmployersAddressSummary.row(answers)(messages(application)),
-          WhenDidYouStartWorkingForEmployerSummary.row(answers)(messages(application)),
-          AreYouStillEmployedSummary.row(answers)(messages(application)),
-          WhenDidYouFinishYourEmploymentSummary.row(answers)(messages(application))
+          AreYouStillEmployedSummary.row(answers)(messages(application))
         ).flatten)
 
         val previousEmployers = List(ListWithActionsItem(

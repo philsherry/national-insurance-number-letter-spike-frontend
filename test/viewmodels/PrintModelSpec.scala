@@ -34,7 +34,6 @@ class PrintModelSpec extends SpecBase {
       LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1))
     val previousAddressInternational = PreviousAddressInternational(addressLine1 = "line 1", None, None, country = "France",
       LocalDate.of(2002, 1, 1), LocalDate.of(2003, 1, 1))
-    val employerAddress = WhatIsYourEmployersAddress(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
     val previousEmployerAddress = PreviousEmployersAddress("line 1", None, None, "AA1 1AA")
 
     "get current address" - {
@@ -115,49 +114,6 @@ class PrintModelSpec extends SpecBase {
 
     }
 
-    "get most recent employer" - {
-
-      "must extract employer with a start and end" in {
-        val userAnswers = UserAnswers("id")
-          .set(WhatIsYourEmployersNamePage, "employer name").get
-          .set(WhatIsYourEmployersAddressPage, employerAddress).get
-          .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.of(2010, 5, 10)).get
-          .set(WhenDidYouFinishYourEmploymentPage, LocalDate.of(2015, 10, 20)).get
-
-        val expected = MostRecentUkEmployerPrintModel(
-          "employer name",
-          List("line 1", "AA1 1AA"),
-          "10 May 2010",
-          Some("20 October 2015")
-        )
-
-        getMostRecentUkEmployer(userAnswers) mustBe Some(expected)
-      }
-
-      "must extract employer with start" in {
-        val userAnswers = UserAnswers("id")
-          .set(WhatIsYourEmployersNamePage, "employer name").get
-          .set(WhatIsYourEmployersAddressPage, employerAddress).get
-          .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.of(2010, 5, 10)).get
-
-        val expected = MostRecentUkEmployerPrintModel(
-          "employer name",
-          List("line 1", "AA1 1AA"),
-          "10 May 2010",
-          None
-        )
-
-        getMostRecentUkEmployer(userAnswers) mustBe Some(expected)
-      }
-
-      "must return None if answers are not set" in {
-        val userAnswers = UserAnswers("id")
-
-        getMostRecentUkEmployer(userAnswers) mustBe None
-      }
-
-    }
-
     "get previous employers" - {
 
       "must extract no previous employers" in {
@@ -224,10 +180,6 @@ class PrintModelSpec extends SpecBase {
           .set(HaveYouEverClaimedChildBenefitPage, true).get
           .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
           .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-          .set(WhatIsYourEmployersNamePage, "employer name").get
-          .set(WhatIsYourEmployersAddressPage, employerAddress).get
-          .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.of(2001, 2, 28)).get
-          .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
           .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
@@ -248,7 +200,6 @@ class PrintModelSpec extends SpecBase {
           claimedChildBenefit = true,
           Some("CHB12345678"),
           Some("other benefits"),
-          Some(MostRecentUkEmployerPrintModel("employer name", List("line 1", "AA1 1AA"), "28 February 2001", None)),
           List(PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")),
           Some("whichPrimaryDocument.passport"),
           None
@@ -278,10 +229,6 @@ class PrintModelSpec extends SpecBase {
           .set(HaveYouEverClaimedChildBenefitPage, true).get
           .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
           .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-          .set(WhatIsYourEmployersNamePage, "employer name").get
-          .set(WhatIsYourEmployersAddressPage, employerAddress).get
-          .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.of(2001, 2, 28)).get
-          .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
           .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
@@ -302,7 +249,6 @@ class PrintModelSpec extends SpecBase {
           claimedChildBenefit = true,
           Some("CHB12345678"),
           Some("other benefits"),
-          Some(MostRecentUkEmployerPrintModel("employer name", List("line 1", "AA1 1AA"), "28 February 2001", None)),
           List(PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")),
           None,
           Some(List("whichAlternativeDocuments.adoption-certificate", "whichAlternativeDocuments.work-permit"))

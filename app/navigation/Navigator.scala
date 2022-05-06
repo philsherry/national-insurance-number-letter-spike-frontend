@@ -53,9 +53,6 @@ class Navigator @Inject()() {
     case HaveYouEverReceivedOtherUkBenefitsPage                 => haveYouEverReceivedOtherUkBenefitsRoutes
     case WhatOtherUkBenefitsHaveYouReceivedPage                 => _ => routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
     case HaveYouEverWorkedInUkPage                              => haveYouEverWorkedInUkRoutes
-    case WhatIsYourEmployersNamePage                            => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(NormalMode)
-    case WhatIsYourEmployersAddressPage                         => _ => routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(NormalMode)
-    case WhenDidYouStartWorkingForEmployerPage                  => _ => routes.AreYouStillEmployedController.onPageLoad(NormalMode)
     case AreYouStillEmployedPage                                => areYouStillEmployedRoutes
     case WhenDidYouFinishYourEmploymentPage                     => _ => routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
     case DoYouHaveAnyPreviousEmployersPage                      => doYouHaveAnyPreviousEmployersRoutes
@@ -137,7 +134,8 @@ class Navigator @Inject()() {
 
   private def haveYouEverWorkedInUkRoutes(answers: UserAnswers): Call =
     answers.get(HaveYouEverWorkedInUkPage).map {
-      case true  => routes.WhatIsYourEmployersNameController.onPageLoad(NormalMode)
+      //TODO: Routing fix for "have you ever worked"
+//      case true  => routes.WhatIsYourEmployersNameController.onPageLoad(NormalMode)
       case false => routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 

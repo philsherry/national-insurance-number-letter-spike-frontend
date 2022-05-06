@@ -35,15 +35,12 @@ final case class PrintModel(
                            claimedChildBenefit: Boolean,
                            childBenefitNumber: Option[String],
                            otherBenefits: Option[String],
-                           mostRecentUkEmployer: Option[MostRecentUkEmployerPrintModel],
                            previousEmployers: List[PreviousEmployerPrintModel],
                            primaryDocument: Option[String],
                            secondaryDocuments: Option[List[String]]
                            )
 
 final case class PreviousAddressPrintModel(address: List[String], from: String, to: String)
-
-final case class MostRecentUkEmployerPrintModel(name: String, address: List[String], from: String, to: Option[String])
 
 final case class PreviousEmployerPrintModel(name: String, address: List[String], from: String, to: String)
 
@@ -79,7 +76,6 @@ object PrintModel {
       claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
       childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
       otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
-      mostRecentUkEmployer = getMostRecentUkEmployer(userAnswers)
       previousEmployers = getPreviousEmployers(userAnswers)
       primaryDocument = userAnswers.get(WhichPrimaryDocumentPage).map(key => s"whichPrimaryDocument.$key")
       secondaryDocuments = userAnswers.get(WhichAlternativeDocumentsPage).map(_.toList.map(key => s"whichAlternativeDocuments.$key"))
@@ -98,7 +94,6 @@ object PrintModel {
         claimedChildBenefit,
         childBenefitNumber,
         otherBenefits,
-        mostRecentUkEmployer,
         previousEmployers,
         primaryDocument,
         secondaryDocuments
@@ -139,22 +134,6 @@ object PrintModel {
         )
         }
       }
-    }
-  }
-
-  private[viewmodels] def getMostRecentUkEmployer(userAnswers: UserAnswers): Option[MostRecentUkEmployerPrintModel] = {
-    for {
-      name <- userAnswers.get(WhatIsYourEmployersNamePage)
-      address <- userAnswers.get(WhatIsYourEmployersAddressPage)
-      from <- userAnswers.get(WhenDidYouStartWorkingForEmployerPage)
-      to = userAnswers.get(WhenDidYouFinishYourEmploymentPage)
-    } yield {
-      MostRecentUkEmployerPrintModel(
-        name,
-        address.lines,
-        from.format(formatter),
-        to.map(_.format(formatter))
-      )
     }
   }
 

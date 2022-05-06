@@ -198,21 +198,8 @@
                 <!-- Employment -->
                 <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.employment")</fo:block>
 
-                <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-                @model.mostRecentUkEmployer.fold {
+                <!-- TODO: Make this conditional on "have you ever worked"-->
                 <fo:block margin-bottom="2mm">@messages("pdf.employment.notWorked")</fo:block>
-                }{ mostRecentUkEmployer =>
-                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.employment.mostRecentEmployer"): </fo:inline></fo:block>
-                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.mostRecentEmployer.name"): </fo:inline>@mostRecentUkEmployer.name</fo:block>
-                    <fo:block margin-bottom="2mm" margin-left="0.5cm">
-                        <fo:inline>@messages("pdf.employment.mostRecentEmployer.address"): </fo:inline>
-                        @for(line <- mostRecentUkEmployer.address) {
-                        <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
-                        }
-                    </fo:block>
-                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.mostRecentEmployer.duration"): </fo:inline>@{mostRecentUkEmployer.to.fold{messages("pdf.employment.mostRecentEmployer.from", mostRecentUkEmployer.from)}{to => messages("pdf.employment.mostRecentEmployer.fromto", mostRecentUkEmployer.from, to)}}</fo:block>
-                }
-                </fo:block-container>
 
                 @if(model.previousEmployers.nonEmpty) {
                 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">

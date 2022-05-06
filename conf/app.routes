@@ -149,16 +149,6 @@ POST       /have-you-ever-worked-in-uk                        controllers.HaveYo
 GET        /change-if-you-have-ever-worked-in-uk                  controllers.HaveYouEverWorkedInUkController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-have-ever-worked-in-uk                  controllers.HaveYouEverWorkedInUkController.onSubmit(mode: Mode = CheckMode)
 
-GET        /what-is-your-employers-address                        controllers.WhatIsYourEmployersAddressController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-is-your-employers-address                        controllers.WhatIsYourEmployersAddressController.onSubmit(mode: Mode = NormalMode)
-GET        /change-your-employers-address                  controllers.WhatIsYourEmployersAddressController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-your-employers-address                  controllers.WhatIsYourEmployersAddressController.onSubmit(mode: Mode = CheckMode)
-
-GET        /what-is-your-employers-name                        controllers.WhatIsYourEmployersNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-is-your-employers-name                        controllers.WhatIsYourEmployersNameController.onSubmit(mode: Mode = NormalMode)
-GET        /change-your-employers-name                  controllers.WhatIsYourEmployersNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-your-employers-name                  controllers.WhatIsYourEmployersNameController.onSubmit(mode: Mode = CheckMode)
-
 GET        /:index/what-is-your-previous-employers-address                        controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/what-is-your-previous-employers-address                        controllers.WhatIsYourPreviousEmployersAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-your-previous-employers-address                  controllers.WhatIsYourPreviousEmployersAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
@@ -168,11 +158,6 @@ GET        /:index/what-is-your-previous-employers-name                        c
 POST       /:index/what-is-your-previous-employers-name                        controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-your-previous-employers-name                  controllers.WhatIsYourPreviousEmployersNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-your-previous-employers-name                  controllers.WhatIsYourPreviousEmployersNameController.onSubmit(index: Index, mode: Mode = CheckMode)
-
-GET        /when-did-you-start-working-for-your-employer                  controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = NormalMode)
-POST       /when-did-you-start-working-for-your-employer                  controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = NormalMode)
-GET        /change-when-you-started-working-for-your-employer                        controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-when-you-started-working-for-your-employer                        controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(mode: Mode = CheckMode)
 
 GET        /:index/when-did-you-start-working-for-your-previous-employer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/when-did-you-start-working-for-your-previous-employer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)

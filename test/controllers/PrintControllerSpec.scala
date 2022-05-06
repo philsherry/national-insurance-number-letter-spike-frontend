@@ -39,7 +39,6 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
     val currentAddressUk = CurrentAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
     val previousAddressUk = PreviousAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA",
       LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1))
-    val employerAddress = WhatIsYourEmployersAddress(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
     val previousEmployerAddress = PreviousEmployersAddress("line 1", None, None, "AA1 1AA")
 
     val previousMarriage = PreviousMarriageOrPartnershipDetails(
@@ -62,9 +61,6 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
       .set(HaveYouEverClaimedChildBenefitPage, true).get
       .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
       .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-      .set(WhatIsYourEmployersNamePage, "employer name").get
-      .set(WhatIsYourEmployersAddressPage, employerAddress).get
-      .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.of(2001, 2, 28)).get
       .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
       .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
       .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get

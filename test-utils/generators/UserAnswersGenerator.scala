@@ -39,11 +39,8 @@ trait UserAnswersGenerator extends TryValues {
     arbitrary[(DoYouHavePrimaryDocumentPage.type, JsValue)] ::
     arbitrary[(WhenDidYouStopWorkingForPreviousEmployerPage, JsValue)] ::
     arbitrary[(WhenDidYouStartWorkingForPreviousEmployerPage, JsValue)] ::
-    arbitrary[(WhenDidYouStartWorkingForEmployerPage.type, JsValue)] ::
     arbitrary[(WhatIsYourPreviousEmployersNamePage, JsValue)] ::
     arbitrary[(WhatIsYourPreviousEmployersAddressPage, JsValue)] ::
-    arbitrary[(WhatIsYourEmployersNamePage.type, JsValue)] ::
-    arbitrary[(WhatIsYourEmployersAddressPage.type, JsValue)] ::
     arbitrary[(HaveYouEverWorkedInUkPage.type, JsValue)] ::
     arbitrary[(DoYouHaveAnyPreviousEmployersPage.type, JsValue)] ::
     arbitrary[(WhatOtherUkBenefitsHaveYouReceivedPage.type, JsValue)] ::

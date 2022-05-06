@@ -120,14 +120,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhenDidYouStartWorkingForEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStartWorkingForEmployerPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhenDidYouStartWorkingForEmployerPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
   implicit lazy val arbitraryWhatIsYourPreviousEmployersNameUserAnswersEntry: Arbitrary[(WhatIsYourPreviousEmployersNamePage, JsValue)] =
     Arbitrary {
       for {
@@ -141,22 +133,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       for {
         page  <- arbitrary[WhatIsYourPreviousEmployersAddressPage]
         value <- arbitrary[PreviousEmployersAddress].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryWhatIsYourEmployersNameUserAnswersEntry: Arbitrary[(WhatIsYourEmployersNamePage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhatIsYourEmployersNamePage.type]
-        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryWhatIsYourEmployersAddressUserAnswersEntry: Arbitrary[(WhatIsYourEmployersAddressPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhatIsYourEmployersAddressPage.type]
-        value <- arbitrary[WhatIsYourEmployersAddress].map(Json.toJson(_))
       } yield (page, value)
     }
 
