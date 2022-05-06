@@ -147,7 +147,7 @@ class Navigator @Inject()() {
   private def doYouHaveAnyPreviousEmployersRoutes(answers: UserAnswers): Call =
     answers.get(DoYouHaveAnyPreviousEmployersPage).map {
       case true  =>
-        val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty)
+        val previousEmployers = answers.get(EmployersQuery).getOrElse(List.empty)
         routes.WhatIsYourEmployersNameController.onPageLoad(Index(previousEmployers.length), NormalMode)
       case false => routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())

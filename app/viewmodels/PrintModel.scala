@@ -138,7 +138,7 @@ object PrintModel {
   }
 
   private[viewmodels] def getPreviousEmployers(userAnswers: UserAnswers): List[PreviousEmployerPrintModel] = {
-    val count = userAnswers.get(PreviousEmployersQuery).getOrElse(List.empty).length
+    val count = userAnswers.get(EmployersQuery).getOrElse(List.empty).length
     (0 until count).toList.flatMap { index =>
       for {
         name <- userAnswers.get(WhatIsYourEmployersNamePage(Index(index)))

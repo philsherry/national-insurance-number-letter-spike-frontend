@@ -22,7 +22,7 @@ import forms.AreYouSureYouWantToRemoveEmployerFormProvider
 import javax.inject.Inject
 import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.{AreYouSureYouWantToRemovePreviousEmployerPage, PreviousAddressQuery, PreviousEmployerQuery, WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
+import pages.{AreYouSureYouWantToRemovePreviousEmployerPage, PreviousAddressQuery, EmployerQuery, WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -46,7 +46,7 @@ class AreYouSureYouWantToRemoveEmployerController @Inject()(
   val form = formProvider()
 
   private def removeEmployer(answers: UserAnswers, index: Index): Future[Unit] = for {
-    updatedAnswers <- Future.fromTry(answers.remove(PreviousEmployerQuery(index)))
+    updatedAnswers <- Future.fromTry(answers.remove(EmployerQuery(index)))
     _              <- sessionRepository.set(updatedAnswers)
   } yield ()
 

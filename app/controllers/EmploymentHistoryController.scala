@@ -25,7 +25,7 @@ import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.PreviousEmployerSummary
+import viewmodels.checkAnswers.EmployerSummary
 import views.html.DoYouHaveAnyPreviousEmployersView
 
 import javax.inject.Inject
@@ -45,7 +45,7 @@ class EmploymentHistoryController @Inject()(
   val form = formProvider()
 
   private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
-    answers.get(PreviousEmployersQuery).getOrElse(Seq.empty).indices.map(PreviousEmployerSummary.item(answers, mode, _))
+    answers.get(EmployersQuery).getOrElse(Seq.empty).indices.map(EmployerSummary.item(answers, mode, _))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>

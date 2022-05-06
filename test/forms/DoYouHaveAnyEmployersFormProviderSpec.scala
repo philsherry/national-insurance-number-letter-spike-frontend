@@ -19,9 +19,9 @@ package forms
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class DoYouHaveAnyPreviousEmployersFormProviderSpec extends BooleanFieldBehaviours {
+class DoYouHaveAnyEmployersFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "doYouHaveAnyPreviousEmployers.error.required"
+  val requiredKey = "employmentHistory.error.required"
   val invalidKey = "error.boolean"
 
   val form = new DoYouHaveAnyPreviousEmployersFormProvider()()

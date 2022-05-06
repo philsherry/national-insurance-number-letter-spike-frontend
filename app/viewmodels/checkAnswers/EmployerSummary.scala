@@ -27,7 +27,7 @@ import uk.gov.hmrc.hmrcfrontend.views.Aliases.{ListWithActionsAction, ListWithAc
 
 import java.time.format.DateTimeFormatter
 
-object PreviousEmployerSummary {
+object EmployerSummary {
 
   private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 

@@ -19,7 +19,7 @@ package controllers
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.CheckMode
-import pages.{PreviousAddressesQuery, PreviousEmployersQuery, PreviousNamesQuery}
+import pages.{PreviousAddressesQuery, EmployersQuery, PreviousNamesQuery}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -85,8 +85,8 @@ class CheckYourAnswersController @Inject()(
           HaveYouEverWorkedInUkSummary.row(answers),
         ).flatten)
 
-      val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty)
-        .indices.map(PreviousEmployerSummary.item(answers, CheckMode, _))
+      val previousEmployers = answers.get(EmployersQuery).getOrElse(List.empty)
+        .indices.map(EmployerSummary.item(answers, CheckMode, _))
 
       val supportingDocuments = SummaryListViewModel(Seq(
         DoYouHavePrimaryDocumentSummary.row(answers),

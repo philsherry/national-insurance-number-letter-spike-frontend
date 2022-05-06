@@ -16,11 +16,10 @@
 
 package pages
 
-import models.Index
 import play.api.libs.json.{JsPath, JsValue}
-import queries.Settable
+import queries.Gettable
 
-final case class PreviousEmployerQuery(index: Index) extends Settable[JsValue] {
+case object EmployersQuery extends Gettable[List[JsValue]] {
 
-  override def path: JsPath = JsPath \ "employer" \ index.position
+  override def path: JsPath = JsPath \ "employer"
 }
