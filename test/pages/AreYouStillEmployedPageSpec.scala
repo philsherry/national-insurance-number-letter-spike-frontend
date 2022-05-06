@@ -16,16 +16,17 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 class AreYouStillEmployedPageSpec extends PageBehaviours {
 
   "AreYouStillEmployedPage" - {
 
-    beRetrievable[Boolean](AreYouStillEmployedPage)
+    beRetrievable[Boolean](AreYouStillEmployedPage(Index(0)))
 
-    beSettable[Boolean](AreYouStillEmployedPage)
+    beSettable[Boolean](AreYouStillEmployedPage(Index(0)))
 
-    beRemovable[Boolean](AreYouStillEmployedPage)
+    beRemovable[Boolean](AreYouStillEmployedPage(Index(0)))
   }
 }

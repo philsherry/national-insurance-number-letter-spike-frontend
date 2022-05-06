@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.AreYouStillEmployedFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -40,7 +40,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new AreYouStillEmployedFormProvider()
   val form = formProvider()
 
-  lazy val areYouStillEmployedRoute = routes.AreYouStillEmployedController.onPageLoad(NormalMode).url
+  lazy val areYouStillEmployedRoute = routes.AreYouStillEmployedController.onPageLoad(Index(0), NormalMode).url
 
   "AreYouStillEmployed Controller" - {
 
@@ -56,13 +56,13 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[AreYouStillEmployedView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouStillEmployedPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(AreYouStillEmployedPage(Index(0)), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +74,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -120,7 +120,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

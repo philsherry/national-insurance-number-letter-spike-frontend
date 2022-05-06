@@ -30,7 +30,7 @@ final case class AreYouStillEmployedPage(index: Index) extends QuestionPage[Bool
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
     value match {
       case Some(true) => userAnswers.remove(WhenDidYouStopWorkingForPreviousEmployerPage(index))
-      case None => super.cleanup(value, userAnswers)
+      case _ => super.cleanup(value, userAnswers)
     }
   }
 }

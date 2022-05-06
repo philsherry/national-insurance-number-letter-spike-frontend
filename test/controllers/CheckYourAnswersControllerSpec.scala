@@ -62,12 +62,12 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
         .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").success.value
         .set(HaveYouEverWorkedInUkPage, true).success.value
-        .set(AreYouStillEmployedPage, false).success.value
         .set(WhenDidYouFinishYourEmploymentPage, LocalDate.now).success.value
         .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
         .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "previous employers name").success.value
         .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("line 1", None, None, "postcode")).success.value
         .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
+        .set(AreYouStillEmployedPage(Index(0)), true).success.value
         .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2001, 3, 2)).success.value
         .set(DoYouHavePrimaryDocumentPage, true).success.value
         .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).success.value
@@ -140,12 +140,11 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         ).flatten)
 
         val employmentHistory = SummaryListViewModel(Seq(
-          HaveYouEverWorkedInUkSummary.row(answers)(messages(application)),
-          AreYouStillEmployedSummary.row(answers)(messages(application))
+          HaveYouEverWorkedInUkSummary.row(answers)(messages(application))
         ).flatten)
 
         val previousEmployers = List(ListWithActionsItem(
-          name = HtmlContent("previous employers name<br/>line 1, postcode<br/>1 February 2000 to 2 March 2001"),
+          name = HtmlContent("previous employers name<br/>line 1, postcode<br/>Employed from 1 February 2000 to 2 March 2001"),
           actions = List(
             ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "previous employers name")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url),
             ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "previous employers name")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), CheckMode).url)

@@ -65,6 +65,7 @@ class DoYouHaveAnyPreviousEmployersControllerSpec extends SpecBase with MockitoS
       val answers = emptyUserAnswers
         .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "foobar").success.value
         .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("line 1", None, None, "postcode")).success.value
+        .set(AreYouStillEmployedPage(Index(0)), true).success.value
         .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
         .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 3, 2)).success.value
 
@@ -72,7 +73,7 @@ class DoYouHaveAnyPreviousEmployersControllerSpec extends SpecBase with MockitoS
 
       val expectedItems = List(
         ListWithActionsItem(
-          name = HtmlContent("foobar<br/>line 1, postcode<br/>1 February 2000 to 2 March 2000"),
+          name = HtmlContent("foobar<br/>line 1, postcode<br/>Employed from 1 February 2000 to 2 March 2000"),
           actions = Seq(
             ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "foobar")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), NormalMode).url),
             ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "foobar")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), NormalMode).url)
