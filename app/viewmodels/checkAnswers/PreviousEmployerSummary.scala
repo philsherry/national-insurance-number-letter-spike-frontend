@@ -41,8 +41,8 @@ object PreviousEmployerSummary {
         answers.get(WhatIsYourPreviousEmployersAddressPage(Index(i))).map(_.lines.mkString(", ")),
         for {
           from <- answers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
-          to   <- answers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
-        } yield Messages("site.range", from, to)
+          to   = answers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(i))).map(_.format(dateFormatter))
+        } yield to.fold(Messages("doYouHaveAnyPreviousEmployers.from", from))(to => Messages("doYouHaveAnyPreviousEmployers.fromTo", from, to))
       ).flatten.map(HtmlFormat.escape(_).toString).mkString("<br/>")
     )
 

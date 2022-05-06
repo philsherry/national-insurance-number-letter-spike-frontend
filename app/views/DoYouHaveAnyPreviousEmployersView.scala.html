@@ -41,6 +41,13 @@
     }
 }
 
+@legendText = @{
+    items.length match {
+        case 0 => messages("doYouHaveAnyPreviousEmployers.add.legend.none")
+        case _ => messages("doYouHaveAnyPreviousEmployers.add.legend.some")
+    }
+}
+
 @layout(pageTitle = title(form, titleText)) {
 
     @formHelper(action = routes.DoYouHaveAnyPreviousEmployersController.onSubmit(mode), 'autoComplete -> "off") {
@@ -56,7 +63,7 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("doYouHaveAnyPreviousEmployers.add.legend"))
+                legend = LegendViewModel(legendText)
                     .withCssClass("govuk-fieldset__legend--m")
             )
         )
