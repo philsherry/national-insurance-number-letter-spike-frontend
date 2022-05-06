@@ -594,3 +594,9 @@ print.p4.restart = start the application form again
 areYouSureYouWantToRemovePreviousName.title = Are you sure you want to remove this previous name?
 areYouSureYouWantToRemovePreviousName.heading = Are you sure you want to remove your previous name "{0}"?
 areYouSureYouWantToRemovePreviousName.error.required = Select yes if are sure you want to remove this previous name
+
+areYouSureYouWantToRemovePreviousRelationship.title = areYouSureYouWantToRemovePreviousRelationship
+areYouSureYouWantToRemovePreviousRelationship.heading = areYouSureYouWantToRemovePreviousRelationship
+areYouSureYouWantToRemovePreviousRelationship.checkYourAnswersLabel = areYouSureYouWantToRemovePreviousRelationship
+areYouSureYouWantToRemovePreviousRelationship.error.required = Select yes if areYouSureYouWantToRemovePreviousRelationship
+areYouSureYouWantToRemovePreviousRelationship.change.hidden = AreYouSureYouWantToRemovePreviousRelationship

@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryAreYouSureYouWantToRemovePreviousRelationshipPage: Arbitrary[AreYouSureYouWantToRemovePreviousRelationshipPage.type] =
+    Arbitrary(AreYouSureYouWantToRemovePreviousRelationshipPage)
+
   implicit lazy val arbitraryAreYouSureYouWantToRemovePreviousNamePage: Arbitrary[AreYouSureYouWantToRemovePreviousNamePage] =
     Arbitrary(AreYouSureYouWantToRemovePreviousNamePage(Index(0)))
 
