@@ -80,7 +80,7 @@ class AreYouSureYouWantToRemovePreviousNameController @Inject()(
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousNamePage(index), value))
-            _              <- if (value) removeName(updatedAnswers, index: Index) else Future.unit
+            _              <- if (value) removeName(updatedAnswers, index) else Future.unit
           } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousNamePage(index), mode, updatedAnswers))
       )
   }

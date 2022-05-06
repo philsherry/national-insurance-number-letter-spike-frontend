@@ -134,14 +134,14 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
             name = HtmlContent(messages(application)("From 1 February 2000 to 2 March 2001")),
             actions = List(
               ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousRelationshipHidden", "1 February 2000", "2 March 2001")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode).url),
-              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousRelationshipHidden", "1 February 2000", "2 March 2001")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode).url) // TODO change to remove controller
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousRelationshipHidden", "1 February 2000", "2 March 2001")), href = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(0), CheckMode).url)
             )
           ),
           ListWithActionsItem(
             name = HtmlContent(messages(application)("From 1 February 2002 to 2 March 2003")),
             actions = List(
               ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousRelationshipHidden", "1 February 2002", "2 March 2003")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), CheckMode).url),
-              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousRelationshipHidden", "1 February 2002", "2 March 2003")), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), CheckMode).url) // TODO change to remove controller
+              ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousRelationshipHidden", "1 February 2002", "2 March 2003")), href = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(1), CheckMode).url)
             )
           )
         )

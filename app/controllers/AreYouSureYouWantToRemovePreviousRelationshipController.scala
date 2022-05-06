@@ -18,10 +18,11 @@ package controllers
 
 import controllers.actions._
 import forms.AreYouSureYouWantToRemovePreviousRelationshipFormProvider
+
 import javax.inject.Inject
-import models.{Index, Mode}
+import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.AreYouSureYouWantToRemovePreviousRelationshipPage
+import pages.{AreYouSureYouWantToRemovePreviousRelationshipPage, PreviousMarriageOrPartnershipDetailsPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -44,28 +45,29 @@ class AreYouSureYouWantToRemovePreviousRelationshipController @Inject()(
 
   val form = formProvider()
 
+  private def removeRelationship(answers: UserAnswers, index: Index): Future[Unit] = for {
+    updatedAnswers <- Future.fromTry(answers.remove(PreviousMarriageOrPartnershipDetailsPage(index)))
+    _              <- sessionRepository.set(updatedAnswers)
+  } yield ()
+
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(AreYouSureYouWantToRemovePreviousRelationshipPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, index, mode))
+      request.userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(index)).map { details =>
+        Ok(view(form, details, index, mode))
+      }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+          request.userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(index)).map { details =>
+            Future.successful(BadRequest(view(formWithErrors, details, index, mode)))
+          }.getOrElse(Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousRelationshipPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
+            _              <- if (value) removeRelationship(updatedAnswers, index) else Future.unit
           } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousRelationshipPage(index), mode, updatedAnswers))
       )
   }

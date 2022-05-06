@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.AreYouSureYouWantToRemovePreviousRelationshipFormProvider
-import models.{Index, NormalMode, UserAnswers}
+import models.{Index, NormalMode, PreviousMarriageOrPartnershipDetails}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{times, verify, when, never}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AreYouSureYouWantToRemovePreviousRelationshipPage
+import pages.PreviousMarriageOrPartnershipDetailsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -31,6 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.AreYouSureYouWantToRemovePreviousRelationshipView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBase with MockitoSugar {
@@ -40,13 +41,20 @@ class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBa
   val formProvider = new AreYouSureYouWantToRemovePreviousRelationshipFormProvider()
   val form = formProvider()
 
+  val from = LocalDate.of(2000, 2, 1)
+  val to = LocalDate.of(2001, 3, 2)
+  val details = PreviousMarriageOrPartnershipDetails(from, to, "nunya")
+
+  val answers = emptyUserAnswers
+    .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), details).success.value
+
   lazy val areYouSureYouWantToRemovePreviousRelationshipRoute = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(0), NormalMode).url
 
   "AreYouSureYouWantToRemovePreviousRelationship Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
         val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousRelationshipRoute)
@@ -56,29 +64,11 @@ class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBa
         val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousRelationshipView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, details, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouSureYouWantToRemovePreviousRelationshipPage(Index(0)), true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousRelationshipRoute)
-
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousRelationshipView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), Index(0), NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted" in {
+    "must remove data then redirect to the next page when 'yes' is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -101,12 +91,42 @@ class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBa
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
+
+        verify(mockSessionRepository, times(1)).set(any())
+      }
+    }
+
+    "must not remove data then redirect to the next page when 'no' is submitted" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousRelationshipRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual onwardRoute.url
+
+        verify(mockSessionRepository, never()).set(any())
       }
     }
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
         val request =
@@ -120,7 +140,7 @@ class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBa
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, details, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

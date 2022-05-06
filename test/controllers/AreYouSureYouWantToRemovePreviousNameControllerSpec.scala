@@ -65,28 +65,6 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val name = WhatIsYourPreviousName("first", Some("middle"), "last")
-
-      val userAnswers = UserAnswers(userAnswersId)
-        .set(WhatIsYourPreviousNamePage(Index(0)), name).success.value
-        .set(AreYouSureYouWantToRemovePreviousNamePage(Index(0)), true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousNameRoute)
-
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousNameView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), "first middle last", NormalMode, Index(0))(request, messages(application)).toString
-      }
-    }
-
     "must remove data then redirect to the next page when 'yes' is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]

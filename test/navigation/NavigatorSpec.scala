@@ -238,6 +238,10 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(PreviousMarriageOrPartnershipDetailsPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
       }
 
+      "go from the are you sure you want to remove this previous relationship page to the do you have a previous relationship page" in {
+        navigator.nextPage(AreYouSureYouWantToRemovePreviousRelationshipPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
+      }
+
       "go from the have you claimed child benefit page" - {
 
         "to the do you know your child benefit number page when the user selects yes" in {

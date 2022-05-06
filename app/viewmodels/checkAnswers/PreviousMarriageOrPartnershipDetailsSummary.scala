@@ -42,7 +42,7 @@ object PreviousMarriageOrPartnershipDetailsSummary  {
           name = Text(content),
           actions = List(
             ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousRelationshipHidden", from, to)), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(i), mode).url),
-            ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousRelationshipHidden", from, to)), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(i), mode).url) // TODO add remove page route
+            ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousRelationshipHidden", from, to)), href = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(i), mode).url)
           )
         )
       }
