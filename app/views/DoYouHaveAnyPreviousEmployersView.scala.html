@@ -27,16 +27,17 @@
 
 @titleText = @{
     items.length match {
-        case 0 => messages("doYouHaveAnyPreviousEmployers.title")
-        case 1 => messages("doYouHaveAnyPreviousEmployers.add.title")
-        case _ => messages("doYouHaveAnyPreviousEmployers.add.title.plural", items.length)
+        case 0 => messages("doYouHaveAnyPreviousEmployers.title.none")
+        case 1 => messages("doYouHaveAnyPreviousEmployers.title.one")
+        case _ => messages("doYouHaveAnyPreviousEmployers.title.many", items.length)
     }
 }
 
 @headingText = @{
     items.length match {
-        case 1 => messages("doYouHaveAnyPreviousEmployers.add.heading")
-        case _ => messages("doYouHaveAnyPreviousEmployers.add.heading.plural", items.length)
+        case 0 => messages("doYouHaveAnyPreviousEmployers.heading.none")
+        case 1 => messages("doYouHaveAnyPreviousEmployers.heading.one")
+        case _ => messages("doYouHaveAnyPreviousEmployers.heading.many", items.length)
     }
 }
 
@@ -48,27 +49,17 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @if(items.isEmpty) {
+        <h1 class="govuk-heading-xl">@headingText</h1>
 
-            @govukRadios(
-                RadiosViewModel.yesNo(
-                    field = form("value"),
-                    legend = LegendViewModel(messages("doYouHaveAnyPreviousEmployers.heading")).asPageHeading()
-                )
+        @hmrcListWithActions(ListWithActions(items = items, classes = "govuk-!-margin-bottom-9"))
+
+        @govukRadios(
+            RadiosViewModel.yesNo(
+                field = form("value"),
+                legend = LegendViewModel(messages("doYouHaveAnyPreviousEmployers.add.legend"))
+                    .withCssClass("govuk-fieldset__legend--m")
             )
-        } else {
-            <h1 class="govuk-heading-xl">@headingText</h1>
-
-            @hmrcListWithActions(ListWithActions(items = items, classes = "govuk-!-margin-bottom-9"))
-
-            @govukRadios(
-                RadiosViewModel.yesNo(
-                    field = form("value"),
-                    legend = LegendViewModel(messages("doYouHaveAnyPreviousEmployers.add.legend"))
-                        .withCssClass("govuk-fieldset__legend--m")
-                )
-            )
-        }
+        )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
