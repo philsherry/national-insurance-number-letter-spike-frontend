@@ -54,7 +54,6 @@ class Navigator @Inject()() {
     case WhatOtherUkBenefitsHaveYouReceivedPage                 => _ => routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
     case HaveYouEverWorkedInUkPage                              => haveYouEverWorkedInUkRoutes
     case AreYouStillEmployedPage(index)                         => areYouStillEmployedRoutes(index)
-    case WhenDidYouFinishYourEmploymentPage                     => _ => routes.EmploymentHistoryController.onPageLoad(NormalMode)
     case DoYouHaveAnyPreviousEmployersPage                      => doYouHaveAnyPreviousEmployersRoutes
     case WhatIsYourEmployersNamePage(index)             => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, NormalMode)
     case WhatIsYourEmployersAddressPage(index)          => _ => routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(index, NormalMode)

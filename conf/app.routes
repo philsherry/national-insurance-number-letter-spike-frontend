@@ -194,11 +194,6 @@ POST       /:index/are-you-still-employed                        controllers.Are
 GET        /:index/change-if-you-are-still-employed                  controllers.AreYouStillEmployedController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-if-you-are-still-employed                  controllers.AreYouStillEmployedController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /when-did-you-finish-your-employment                  controllers.WhenDidYouFinishYourEmploymentController.onPageLoad(mode: Mode = NormalMode)
-POST       /when-did-you-finish-your-employment                  controllers.WhenDidYouFinishYourEmploymentController.onSubmit(mode: Mode = NormalMode)
-GET        /change-when-you-finished-your-employment                        controllers.WhenDidYouFinishYourEmploymentController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-when-you-finished-your-employment                        controllers.WhenDidYouFinishYourEmploymentController.onSubmit(mode: Mode = CheckMode)
-
 GET        /which-alternative-documents-do-you-have                        controllers.WhichAlternativeDocumentsController.onPageLoad(mode: Mode = NormalMode)
 POST       /which-alternative-documents-do-you-have                        controllers.WhichAlternativeDocumentsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-which-alternative-documents-you-have                  controllers.WhichAlternativeDocumentsController.onPageLoad(mode: Mode = CheckMode)

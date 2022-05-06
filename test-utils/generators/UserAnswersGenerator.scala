@@ -31,7 +31,6 @@ trait UserAnswersGenerator extends TryValues {
     arbitrary[(AreYouSureYouWantToRemovePreviousEmployerPage, JsValue)] ::
     arbitrary[(AreYouSureYouWantToRemovePreviousAddressPage, JsValue)] ::
     arbitrary[(WhichAlternativeDocumentsPage.type, JsValue)] ::
-    arbitrary[(WhenDidYouFinishYourEmploymentPage.type, JsValue)] ::
     arbitrary[(AreYouStillEmployedPage, JsValue)] ::
     arbitrary[(DoYouKnowYourNationalInsuranceNumberPage.type, JsValue)] ::
     arbitrary[(WhichPrimaryDocumentPage.type, JsValue)] ::

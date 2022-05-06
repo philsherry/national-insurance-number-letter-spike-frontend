@@ -377,29 +377,6 @@ haveYouEverWorkedInUk.checkYourAnswersLabel = Have you ever worked in the UK?
 haveYouEverWorkedInUk.error.required = Select yes if you have ever worked in the UK
 haveYouEverWorkedInUk.change.hidden = whether you have have worked in the UK
 
-whatIsYourEmployersAddress.title = What is your most recent employer’s address?
-whatIsYourEmployersAddress.heading = What is your most recent employer’s address?
-whatIsYourEmployersAddress.addressLine1 = Address line 1
-whatIsYourEmployersAddress.addressLine2 = Address line 2
-whatIsYourEmployersAddress.addressLine3 = Address line 3
-whatIsYourEmployersAddress.postcode = Postcode
-whatIsYourEmployersAddress.checkYourAnswersLabel = What is your most recent employer’s address?
-whatIsYourEmployersAddress.error.addressLine1.required = Enter address line 1
-whatIsYourEmployersAddress.error.addressLine2.required = Enter address line 2
-whatIsYourEmployersAddress.error.postcode.required = Enter a postcode
-whatIsYourEmployersAddress.error.addressLine1.length = Address line 1 must be 100 characters or less
-whatIsYourEmployersAddress.error.addressLine2.length = Address line 2 must be 100 characters or less
-whatIsYourEmployersAddress.error.addressLine3.length = Address line 3 must be 100 characters or less
-whatIsYourEmployersAddress.error.postcode.length = Postcode must be 100 characters or less
-whatIsYourEmployersAddress.change.hidden = your most recent employer’s address
-
-whatIsYourEmployersName.title = What is your most recent employer’s name?
-whatIsYourEmployersName.heading = What is your most recent employer’s name?
-whatIsYourEmployersName.checkYourAnswersLabel = What is your most recent employer’s name?
-whatIsYourEmployersName.error.required = Enter your most recent employer’s name
-whatIsYourEmployersName.error.length = Your most recent employer’s name must be 100 characters or less
-whatIsYourEmployersName.change.hidden = your most recent employer’s name
-
 whatIsYourPreviousEmployersAddress.title = What is your previous employer’s address?
 whatIsYourPreviousEmployersAddress.heading = What is your previous employer’s address?
 whatIsYourPreviousEmployersAddress.addressLine1 = Address line 1
@@ -511,16 +488,6 @@ areYouStillEmployed.heading = Are you still employed by your most recent employe
 areYouStillEmployed.checkYourAnswersLabel = Are you still employed by your most recent employer?
 areYouStillEmployed.error.required = Select yes if are still employed by your most recent employer
 areYouStillEmployed.change.hidden = whether you are still employed by your most recent employer
-
-whenDidYouFinishYourEmployment.title = When did you stop being employed by your most recent employer?
-whenDidYouFinishYourEmployment.heading = When did you stop being employed by your most recent employer?
-whenDidYouFinishYourEmployment.hint = For example, 12 11 2007
-whenDidYouFinishYourEmployment.checkYourAnswersLabel = When did you stop being employed by your most recent employer?
-whenDidYouFinishYourEmployment.error.required.all = Enter the date you stopped being employed by your most recent employer
-whenDidYouFinishYourEmployment.error.required.two = The date must include {0} and {1}
-whenDidYouFinishYourEmployment.error.required = The date must include {0}
-whenDidYouFinishYourEmployment.error.invalid = Enter a real date
-whenDidYouFinishYourEmployment.change.hidden = when you stopped being employed by your most recent employer
 
 areYouSureYouWantToRemovePreviousAddress.title = Are you sure you want to remove this previous address?
 areYouSureYouWantToRemovePreviousAddress.heading = Are you sure you want to remove this previous address?

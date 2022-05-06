@@ -34,9 +34,6 @@ trait PageGenerators {
   implicit lazy val arbitraryWhichAlternativeDocumentsPage: Arbitrary[WhichAlternativeDocumentsPage.type] =
     Arbitrary(WhichAlternativeDocumentsPage)
 
-  implicit lazy val arbitraryWhenDidYouFinishYourEmploymentPage: Arbitrary[WhenDidYouFinishYourEmploymentPage.type] =
-    Arbitrary(WhenDidYouFinishYourEmploymentPage)
-
   implicit lazy val arbitraryAreYouStillEmployedPage: Arbitrary[AreYouStillEmployedPage] =
     Arbitrary(AreYouStillEmployedPage(Index(0)))
 
