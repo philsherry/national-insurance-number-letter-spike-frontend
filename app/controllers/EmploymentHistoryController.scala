@@ -31,7 +31,7 @@ import views.html.DoYouHaveAnyPreviousEmployersView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class DoYouHaveAnyPreviousEmployersController @Inject()(
+class EmploymentHistoryController @Inject()(
                                          override val messagesApi: MessagesApi,
                                          navigator: Navigator,
                                          identify: IdentifierAction,

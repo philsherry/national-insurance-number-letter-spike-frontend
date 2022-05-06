@@ -36,7 +36,7 @@ object DoYouHaveAnyPreviousEmployersSummary  {
           key     = "doYouHaveAnyPreviousEmployers.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.EmploymentHistoryController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("doYouHaveAnyPreviousEmployers.change.hidden"))
           )
         )

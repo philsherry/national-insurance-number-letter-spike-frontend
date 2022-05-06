@@ -33,14 +33,14 @@ import views.html.DoYouHaveAnyPreviousEmployersView
 
 import java.time.LocalDate
 
-class DoYouHaveAnyPreviousEmployersControllerSpec extends SpecBase with MockitoSugar {
+class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new DoYouHaveAnyPreviousEmployersFormProvider()
   val form = formProvider()
 
-  lazy val doYouHaveAnyPreviousEmployersRoute = routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode).url
+  lazy val doYouHaveAnyPreviousEmployersRoute = routes.EmploymentHistoryController.onPageLoad(NormalMode).url
 
   "DoYouHaveAnyPreviousEmployers Controller" - {
 

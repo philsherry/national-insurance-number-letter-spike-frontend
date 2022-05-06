@@ -139,10 +139,10 @@ POST       /what-other-uk-benefits-have-you-received                        cont
 GET        /change-what-other-uk-benefits-you-have-received                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-what-other-uk-benefits-you-have-received                  controllers.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode: Mode = CheckMode)
 
-GET        /do-you-have-any-previous-employers                        controllers.DoYouHaveAnyPreviousEmployersController.onPageLoad(mode: Mode = NormalMode)
-POST       /do-you-have-any-previous-employers                        controllers.DoYouHaveAnyPreviousEmployersController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-have-any-previous-employers                  controllers.DoYouHaveAnyPreviousEmployersController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-have-any-previous-employers                  controllers.DoYouHaveAnyPreviousEmployersController.onSubmit(mode: Mode = CheckMode)
+GET        /your-employment-history                        controllers.EmploymentHistoryController.onPageLoad(mode: Mode = NormalMode)
+POST       /your-employment-history                        controllers.EmploymentHistoryController.onSubmit(mode: Mode = NormalMode)
+GET        /change-your-employment-history                  controllers.EmploymentHistoryController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-your-employment-history                  controllers.EmploymentHistoryController.onSubmit(mode: Mode = CheckMode)
 
 GET        /have-you-ever-worked-in-uk                        controllers.HaveYouEverWorkedInUkController.onPageLoad(mode: Mode = NormalMode)
 POST       /have-you-ever-worked-in-uk                        controllers.HaveYouEverWorkedInUkController.onSubmit(mode: Mode = NormalMode)

@@ -289,9 +289,9 @@ class NavigatorSpec extends SpecBase {
 
       "go from the have you worked in the uk page" - {
 
-        "to the employer add to list page when the user selects yet" in {
+        "to the employment history page when the user selects yet" in {
           val answers = emptyUserAnswers.set(HaveYouEverWorkedInUkPage, true).success.value
-          navigator.nextPage(HaveYouEverWorkedInUkPage, NormalMode, answers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+          navigator.nextPage(HaveYouEverWorkedInUkPage, NormalMode, answers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
         }
 
         "to the do you have a primary document page when the user selects no" in {
@@ -306,9 +306,9 @@ class NavigatorSpec extends SpecBase {
 
       "go from the are you still employed page" - {
 
-        "to the do you have any previous employers page when the user selects yes" in {
+        "to the employment history page when the user selects yes" in {
           val answers = emptyUserAnswers.set(AreYouStillEmployedPage(Index(0)), true).success.value
-          navigator.nextPage(AreYouStillEmployedPage(Index(0)), NormalMode, answers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+          navigator.nextPage(AreYouStillEmployedPage(Index(0)), NormalMode, answers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
         }
 
         "to the when did your employment end page when the user selects no" in {
@@ -321,8 +321,8 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
-      "go from the when did you finish your employment page to the do you have any previous employers page" in {
-        navigator.nextPage(WhenDidYouFinishYourEmploymentPage, NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+      "go from the when did you finish your employment page to the employment history page" in {
+        navigator.nextPage(WhenDidYouFinishYourEmploymentPage, NormalMode, emptyUserAnswers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
       }
 
       "go from the do you have any previous employers page" - {
@@ -370,12 +370,12 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), NormalMode)
       }
 
-      "go from when did you stop working for your previous employer page to the do you have any previous employers page" in {
-        navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+      "go from when did you stop working for your previous employer page to the employment history page" in {
+        navigator.nextPage(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
       }
 
-      "go from are you sure you want to remove your previous employer page to the do you have any previous employers page" in {
-        navigator.nextPage(AreYouSureYouWantToRemovePreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousEmployersController.onPageLoad(NormalMode)
+      "go from are you sure you want to remove your previous employer page to the employment history page" in {
+        navigator.nextPage(AreYouSureYouWantToRemovePreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
       }
 
       "go from the do you have a primary document page" - {

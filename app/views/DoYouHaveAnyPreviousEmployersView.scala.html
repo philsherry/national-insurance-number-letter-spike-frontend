@@ -50,7 +50,7 @@
 
 @layout(pageTitle = title(form, titleText)) {
 
-    @formHelper(action = routes.DoYouHaveAnyPreviousEmployersController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.EmploymentHistoryController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
