@@ -26,6 +26,6 @@ class WhatOtherUkBenefitsHaveYouReceivedFormProvider @Inject() extends Mappings 
   def apply(): Form[String] =
     Form(
       "value" -> text("whatOtherUkBenefitsHaveYouReceived.error.required")
-        .verifying(maxLength(100, "whatOtherUkBenefitsHaveYouReceived.error.length"))
+        .verifying(maxLength(250, "whatOtherUkBenefitsHaveYouReceived.error.length"))
     )
 }
