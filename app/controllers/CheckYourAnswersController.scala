@@ -83,7 +83,6 @@ class CheckYourAnswersController @Inject()(
       val employmentHistory =
         SummaryListViewModel(Seq(
           HaveYouEverWorkedInUkSummary.row(answers),
-          AreYouStillEmployedSummary.row(answers), // TODO: Move this to employer loop
         ).flatten)
 
       val previousEmployers = answers.get(PreviousEmployersQuery).getOrElse(List.empty)
