@@ -16,12 +16,21 @@
 
 package pages
 
-import models.Index
+import models.{Index, UserAnswers}
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 final case class AreYouStillEmployedPage(index: Index) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString \ index.position \ toString
 
   override def toString: String = "areYouStillEmployed"
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(true) => userAnswers.remove(WhenDidYouStopWorkingForPreviousEmployerPage(index))
+      case None => super.cleanup(value, userAnswers)
+    }
+  }
 }
