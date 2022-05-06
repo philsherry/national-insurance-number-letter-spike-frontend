@@ -216,7 +216,7 @@ POST       /:index/are-you-sure-you-want-to-remove-previous-name                
 GET        /:index/change-if-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-if-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /areYouSureYouWantToRemovePreviousRelationship                        controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(mode: Mode = NormalMode)
-POST       /areYouSureYouWantToRemovePreviousRelationship                        controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(mode: Mode = NormalMode)
-GET        /changeAreYouSureYouWantToRemovePreviousRelationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeAreYouSureYouWantToRemovePreviousRelationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/are-you-sure-you-want-to-remove-previous-relationship                        controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/are-you-sure-you-want-to-remove-previous-relationship                        controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-if-you-are-sure-you-want-to-remove-previous-relationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-if-you-are-sure-you-want-to-remove-previous-relationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index: Index, mode: Mode = CheckMode)
