@@ -18,32 +18,32 @@ package controllers
 
 import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
-import forms.WhenDidYouStartWorkingForPreviousEmployerFormProvider
+import forms.WhenDidYouStartWorkingForEmployerFormProvider
 import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.WhenDidYouStartWorkingForPreviousEmployerPage
+import pages.WhenDidYouStartWorkingForEmployerPage
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.WhenDidYouStartWorkingForPreviousEmployerView
+import views.html.WhenDidYouStartWorkingForEmployerView
 
 import scala.concurrent.Future
 
-class WhenDidYouStartWorkingForPreviousEmployerControllerSpec extends SpecBase with MockitoSugar {
+class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new WhenDidYouStartWorkingForPreviousEmployerFormProvider()
+  val formProvider = new WhenDidYouStartWorkingForEmployerFormProvider()
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  lazy val whenDidYouStartWorkingForPreviousEmployerRoute = routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(Index(0), NormalMode).url
+  lazy val whenDidYouStartWorkingForPreviousEmployerRoute = routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(0), NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -67,7 +67,7 @@ class WhenDidYouStartWorkingForPreviousEmployerControllerSpec extends SpecBase w
       running(application) {
         val result = route(application, getRequest).value
 
-        val view = application.injector.instanceOf[WhenDidYouStartWorkingForPreviousEmployerView]
+        val view = application.injector.instanceOf[WhenDidYouStartWorkingForEmployerView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, Index(0), NormalMode)(getRequest, messages(application)).toString
@@ -76,12 +76,12 @@ class WhenDidYouStartWorkingForPreviousEmployerControllerSpec extends SpecBase w
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStartWorkingForEmployerPage(Index(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val view = application.injector.instanceOf[WhenDidYouStartWorkingForPreviousEmployerView]
+        val view = application.injector.instanceOf[WhenDidYouStartWorkingForEmployerView]
 
         val result = route(application, getRequest).value
 
@@ -123,7 +123,7 @@ class WhenDidYouStartWorkingForPreviousEmployerControllerSpec extends SpecBase w
       running(application) {
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[WhenDidYouStartWorkingForPreviousEmployerView]
+        val view = application.injector.instanceOf[WhenDidYouStartWorkingForEmployerView]
 
         val result = route(application, request).value
 

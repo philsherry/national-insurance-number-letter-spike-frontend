@@ -342,7 +342,7 @@ class NavigatorSpec extends SpecBase {
               .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
               .set(WhatIsYourEmployersNamePage(Index(0)), "foobar").success.value
               .set(WhatIsYourEmployersAddressPage(Index(0)), address).success.value
-              .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
+              .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.now).success.value
               .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.now).success.value
             navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(1), NormalMode)
           }
@@ -363,11 +363,11 @@ class NavigatorSpec extends SpecBase {
       }
 
       "go from the what is your previous employers address page to the when did you start working for previous employer page" in {
-        navigator.nextPage(WhatIsYourEmployersAddressPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(Index(0), NormalMode)
+        navigator.nextPage(WhatIsYourEmployersAddressPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(0), NormalMode)
       }
 
       "go from when did you start working for your previous employer page to the are you still employed page" in {
-        navigator.nextPage(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), NormalMode)
+        navigator.nextPage(WhenDidYouStartWorkingForEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), NormalMode)
       }
 
       "go from when did you stop working for your previous employer page to the employment history page" in {
@@ -689,11 +689,11 @@ class NavigatorSpec extends SpecBase {
       }
 
       "go from the what is your previous employers address page to the when did you start working for previous employer page" in {
-        navigator.nextPage(WhatIsYourEmployersAddressPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(Index(0), CheckMode)
+        navigator.nextPage(WhatIsYourEmployersAddressPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(0), CheckMode)
       }
 
       "go from when did you start working for your previous employer page to the are you still employed page" in {
-        navigator.nextPage(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), CheckMode)
+        navigator.nextPage(WhenDidYouStartWorkingForEmployerPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), CheckMode)
       }
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {

@@ -19,21 +19,11 @@ package pages
 import models.Index
 
 import java.time.LocalDate
-import org.scalacheck.Arbitrary
-import pages.behaviours.PageBehaviours
+import play.api.libs.json.JsPath
 
-class WhenDidYouStartWorkingForPreviousEmployerPageSpec extends PageBehaviours {
+final case class WhenDidYouStartWorkingForEmployerPage(index: Index) extends QuestionPage[LocalDate] {
 
-  "WhenDidYouStartWorkingForPreviousEmployerPage" - {
+  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
 
-    implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
-      datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
-    }
-
-    beRetrievable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))
-
-    beSettable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))
-
-    beRemovable[LocalDate](WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))
-  }
+  override def toString: String = "whenDidYouStartWorkingForEmployer"
 }

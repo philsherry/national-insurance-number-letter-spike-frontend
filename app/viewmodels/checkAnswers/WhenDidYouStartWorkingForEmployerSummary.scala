@@ -19,16 +19,16 @@ package viewmodels.checkAnswers
 import java.time.format.DateTimeFormatter
 import controllers.routes
 import models.{CheckMode, Index, UserAnswers}
-import pages.WhenDidYouStartWorkingForPreviousEmployerPage
+import pages.WhenDidYouStartWorkingForEmployerPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhenDidYouStartWorkingForPreviousEmployerSummary  {
+object WhenDidYouStartWorkingForEmployerSummary  {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(index))).map {
+    answers.get(WhenDidYouStartWorkingForEmployerPage(Index(index))).map {
       answer =>
 
         val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
@@ -37,7 +37,7 @@ object WhenDidYouStartWorkingForPreviousEmployerSummary  {
           key     = "whenDidYouStartWorkingForPreviousEmployer.checkYourAnswersLabel",
           value   = ValueViewModel(answer.format(dateFormatter)),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel("site.change", routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("whenDidYouStartWorkingForPreviousEmployer.change.hidden"))
           )
         )

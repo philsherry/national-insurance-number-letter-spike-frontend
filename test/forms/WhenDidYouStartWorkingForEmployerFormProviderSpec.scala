@@ -20,9 +20,9 @@ import java.time.{LocalDate, ZoneOffset}
 
 import forms.behaviours.DateBehaviours
 
-class WhenDidYouStartWorkingForPreviousEmployerFormProviderSpec extends DateBehaviours {
+class WhenDidYouStartWorkingForEmployerFormProviderSpec extends DateBehaviours {
 
-  val form = new WhenDidYouStartWorkingForPreviousEmployerFormProvider()()
+  val form = new WhenDidYouStartWorkingForEmployerFormProvider()()
 
   ".value" - {
 

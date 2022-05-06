@@ -143,7 +143,7 @@ object PrintModel {
       for {
         name <- userAnswers.get(WhatIsYourEmployersNamePage(Index(index)))
         address <- userAnswers.get(WhatIsYourEmployersAddressPage(Index(index)))
-        from <- userAnswers.get(WhenDidYouStartWorkingForPreviousEmployerPage(Index(index)))
+        from <- userAnswers.get(WhenDidYouStartWorkingForEmployerPage(Index(index)))
         to <- userAnswers.get(WhenDidYouStopWorkingForPreviousEmployerPage(Index(index)))
       } yield {
         PreviousEmployerPrintModel(

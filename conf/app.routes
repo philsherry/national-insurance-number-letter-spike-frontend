@@ -159,10 +159,10 @@ POST       /:index/what-is-your-employers-name                        controller
 GET        /:index/change-your-employers-name                  controllers.WhatIsYourEmployersNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-your-employers-name                  controllers.WhatIsYourEmployersNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/when-did-you-start-working-for-your-previous-employer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/when-did-you-start-working-for-your-previous-employer                  controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-when-you-started-working-for-your-previous-employer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-when-you-started-working-for-your-previous-employer                        controllers.WhenDidYouStartWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/when-did-you-start-working-for-your-employer                  controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/when-did-you-start-working-for-your-employer                  controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-when-you-started-working-for-your-employer                        controllers.WhenDidYouStartWorkingForEmployerController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-when-you-started-working-for-your-employer                        controllers.WhenDidYouStartWorkingForEmployerController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/when-did-you-stop-working-for-your-previous-employer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/when-did-you-stop-working-for-your-previous-employer                  controllers.WhenDidYouStopWorkingForPreviousEmployerController.onSubmit(index: Index, mode: Mode = NormalMode)
