@@ -19,12 +19,12 @@ package forms
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class AreYouSureYouWantToRemovePreviousEmployerFormProviderSpec extends BooleanFieldBehaviours {
+class AreYouSureYouWantToRemoveEmployerFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "areYouSureYouWantToRemovePreviousEmployer.error.required"
   val invalidKey = "error.boolean"
 
-  val form = new AreYouSureYouWantToRemovePreviousEmployerFormProvider()()
+  val form = new AreYouSureYouWantToRemoveEmployerFormProvider()()
 
   ".value" - {
 

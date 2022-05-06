@@ -33,7 +33,7 @@
 
     @layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousEmployer.title"))) {
 
-    @formHelper(action = routes.AreYouSureYouWantToRemovePreviousEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.AreYouSureYouWantToRemoveEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

@@ -147,7 +147,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           name = HtmlContent("previous employers name<br/>line 1, postcode<br/>Employed from 1 February 2000 to 2 March 2001"),
           actions = List(
             ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "previous employers name")), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), CheckMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "previous employers name")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), CheckMode).url)
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "previous employers name")), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(0), CheckMode).url)
           )
         ))
 

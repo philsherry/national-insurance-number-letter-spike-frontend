@@ -17,7 +17,7 @@
 package controllers
 
 import controllers.actions._
-import forms.AreYouSureYouWantToRemovePreviousEmployerFormProvider
+import forms.AreYouSureYouWantToRemoveEmployerFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode, UserAnswers}
@@ -27,20 +27,20 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.AreYouSureYouWantToRemovePreviousEmployerView
+import views.html.AreYouSureYouWantToRemoveEmployerView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AreYouSureYouWantToRemovePreviousEmployerController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         navigator: Navigator,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: AreYouSureYouWantToRemovePreviousEmployerFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: AreYouSureYouWantToRemovePreviousEmployerView
+class AreYouSureYouWantToRemoveEmployerController @Inject()(
+                                                             override val messagesApi: MessagesApi,
+                                                             sessionRepository: SessionRepository,
+                                                             navigator: Navigator,
+                                                             identify: IdentifierAction,
+                                                             getData: DataRetrievalAction,
+                                                             requireData: DataRequiredAction,
+                                                             formProvider: AreYouSureYouWantToRemoveEmployerFormProvider,
+                                                             val controllerComponents: MessagesControllerComponents,
+                                                             view: AreYouSureYouWantToRemoveEmployerView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()

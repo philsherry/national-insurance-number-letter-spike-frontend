@@ -17,30 +17,29 @@
 package controllers
 
 import base.SpecBase
-import forms.AreYouSureYouWantToRemovePreviousEmployerFormProvider
-import models.{Index, NormalMode, UserAnswers}
+import forms.AreYouSureYouWantToRemoveEmployerFormProvider
+import models.{Index, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{never, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AreYouSureYouWantToRemovePreviousEmployerPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.AreYouSureYouWantToRemovePreviousEmployerView
+import views.html.AreYouSureYouWantToRemoveEmployerView
 
 import scala.concurrent.Future
 
-class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase with MockitoSugar {
+class AreYouSureYouWantToRemoveEmployerControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new AreYouSureYouWantToRemovePreviousEmployerFormProvider()
+  val formProvider = new AreYouSureYouWantToRemoveEmployerFormProvider()
   val form = formProvider()
 
-  lazy val areYouSureYouWantToRemovePreviousEmployerRoute = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), NormalMode).url
+  lazy val areYouSureYouWantToRemovePreviousEmployerRoute = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(0), NormalMode).url
 
   "AreYouSureYouWantToRemovePreviousEmployer Controller" - {
 
@@ -53,7 +52,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousEmployerView]
+        val view = application.injector.instanceOf[AreYouSureYouWantToRemoveEmployerView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, None, None, None, NormalMode, Index(0))(request, messages(application)).toString
@@ -147,7 +146,7 @@ class AreYouSureYouWantToRemovePreviousEmployerControllerSpec extends SpecBase w
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousEmployerView]
+        val view = application.injector.instanceOf[AreYouSureYouWantToRemoveEmployerView]
 
         val result = route(application, request).value
 

@@ -21,7 +21,7 @@ import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
 
-class AreYouSureYouWantToRemovePreviousEmployerFormProvider @Inject() extends Mappings {
+class AreYouSureYouWantToRemoveEmployerFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
     Form(

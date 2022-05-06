@@ -50,7 +50,7 @@ object PreviousEmployerSummary {
       name = content,
       actions = List(
         ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousEmployerHidden", name)), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(i), mode).url),
-        ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousEmployerHidden", name)), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(i), mode).url)
+        ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousEmployerHidden", name)), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(i), mode).url)
       )
     )
   }
