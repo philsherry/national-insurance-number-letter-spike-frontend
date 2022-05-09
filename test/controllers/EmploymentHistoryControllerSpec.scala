@@ -44,7 +44,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
 
   "DoYouHaveAnyPreviousEmployers Controller" - {
 
-    "must return OK and the correct view for a GET when there are no previous addresses" in {
+    "must return OK and the correct view for a GET when there are no previous employers" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
@@ -60,7 +60,7 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must return OK and the correct view for a GET when there are already previous addresses" in {
+    "must return OK and the correct view for a GET when there are already previous employers" in {
 
       val answers = emptyUserAnswers
         .set(WhatIsYourEmployersNamePage(Index(0)), "foobar").success.value
@@ -75,8 +75,8 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
         ListWithActionsItem(
           name = HtmlContent("foobar<br/>line 1, postcode<br/>Employed from 1 February 2000 to 2 March 2000"),
           actions = Seq(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "foobar")), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), NormalMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "foobar")), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(0), NormalMode).url)
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changeEmployerHidden", "foobar")), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), NormalMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removeEmployerHidden", "foobar")), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(0), NormalMode).url)
           )
         )
       )
