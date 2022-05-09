@@ -27,7 +27,7 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourPreviousEmployersAddress.title"))) {
+@layout(pageTitle = title(form, messages("whatIsYourEmployersAddress.title"))) {
 
     @formHelper(action = routes.WhatIsYourEmployersAddressController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -35,12 +35,12 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("whatIsYourPreviousEmployersAddress.heading")</h1>
+        <h1 class="govuk-heading-xl">@messages("whatIsYourEmployersAddress.heading")</h1>
 
         @govukInput(
             InputViewModel(
                 field = form("addressLine1"),
-                label = LabelViewModel(messages("whatIsYourPreviousEmployersAddress.addressLine1"))
+                label = LabelViewModel(messages("whatIsYourEmployersAddress.addressLine1"))
             )
             .withWidth(Full)
         )
@@ -48,7 +48,7 @@
         @govukInput(
             InputViewModel(
                 field = form("addressLine2"),
-                label = LabelViewModel(messages("whatIsYourPreviousEmployersAddress.addressLine2"))
+                label = LabelViewModel(messages("whatIsYourEmployersAddress.addressLine2"))
             )
             .withWidth(Full)
         )
@@ -56,7 +56,7 @@
         @govukInput(
             InputViewModel(
                 field = form("addressLine3"),
-                label = LabelViewModel(messages("whatIsYourPreviousEmployersAddress.addressLine3"))
+                label = LabelViewModel(messages("whatIsYourEmployersAddress.addressLine3"))
             )
             .withWidth(Full)
         )
@@ -64,7 +64,7 @@
         @govukInput(
             InputViewModel(
                 field = form("postcode"),
-                label = LabelViewModel(messages("whatIsYourPreviousEmployersAddress.postcode"))
+                label = LabelViewModel(messages("whatIsYourEmployersAddress.postcode"))
             )
             .withWidth(Full)
         )

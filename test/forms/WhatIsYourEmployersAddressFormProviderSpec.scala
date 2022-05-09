@@ -26,8 +26,8 @@ class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours w
   ".addressLine1" - {
 
     val fieldName = "addressLine1"
-    val requiredKey = "whatIsYourPreviousEmployersAddress.error.addressLine1.required"
-    val lengthKey = "whatIsYourPreviousEmployersAddress.error.addressLine1.length"
+    val requiredKey = "whatIsYourEmployersAddress.error.addressLine1.required"
+    val lengthKey = "whatIsYourEmployersAddress.error.addressLine1.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(
@@ -53,7 +53,7 @@ class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours w
   ".addressLine2" - {
 
     val fieldName = "addressLine2"
-    val lengthKey = "whatIsYourPreviousEmployersAddress.error.addressLine2.length"
+    val lengthKey = "whatIsYourEmployersAddress.error.addressLine2.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(
@@ -73,7 +73,7 @@ class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours w
   ".addressLine3" - {
 
     val fieldName = "addressLine3"
-    val lengthKey = "whatIsYourPreviousEmployersAddress.error.addressLine3.length"
+    val lengthKey = "whatIsYourEmployersAddress.error.addressLine3.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(
@@ -93,7 +93,7 @@ class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours w
   ".postcode" - {
 
     val fieldName = "postcode"
-    val lengthKey = "whatIsYourPreviousEmployersAddress.error.postcode.length"
+    val lengthKey = "whatIsYourEmployersAddress.error.postcode.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(
