@@ -119,7 +119,7 @@ class PrintModelSpec extends SpecBase {
       "must extract no previous employers" in {
         val userAnswers = UserAnswers("id")
 
-        getPreviousEmployers(userAnswers) mustBe List.empty
+        getEmployers(userAnswers) mustBe List.empty
       }
 
       "must extract one previous employer" in {
@@ -130,10 +130,10 @@ class PrintModelSpec extends SpecBase {
           .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
 
         val expected = List(
-          PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")
+          EmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", Some("3 March 2013"))
         )
 
-        getPreviousEmployers(userAnswers) mustBe expected
+        getEmployers(userAnswers) mustBe expected
       }
 
       "must extract multiple previous employers" in {
@@ -148,11 +148,11 @@ class PrintModelSpec extends SpecBase {
           .set(WhenDidYouStopWorkingForEmployerPage(Index(1)), LocalDate.of(2016, 3, 3)).get
 
         val expected = List(
-          PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013"),
-          PreviousEmployerPrintModel("emp 2", List("line 1", "AA1 1AA"), "2 March 2015", "3 March 2016")
+          EmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", Some("3 March 2013")),
+          EmployerPrintModel("emp 2", List("line 1", "AA1 1AA"), "2 March 2015", Some("3 March 2016"))
         )
 
-        getPreviousEmployers(userAnswers) mustBe expected
+        getEmployers(userAnswers) mustBe expected
       }
 
     }
@@ -200,7 +200,7 @@ class PrintModelSpec extends SpecBase {
           claimedChildBenefit = true,
           Some("CHB12345678"),
           Some("other benefits"),
-          List(PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")),
+          List(EmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", Some("3 March 2013"))),
           Some("whichPrimaryDocument.passport"),
           None
         ))
@@ -249,7 +249,7 @@ class PrintModelSpec extends SpecBase {
           claimedChildBenefit = true,
           Some("CHB12345678"),
           Some("other benefits"),
-          List(PreviousEmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", "3 March 2013")),
+          List(EmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", Some("3 March 2013"))),
           None,
           Some(List("whichAlternativeDocuments.adoption-certificate", "whichAlternativeDocuments.work-permit"))
         ))

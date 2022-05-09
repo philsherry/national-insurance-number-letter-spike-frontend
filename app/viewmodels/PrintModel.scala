@@ -22,27 +22,27 @@ import queries._
 import java.time.format.DateTimeFormatter
 
 final case class PrintModel(
-                           name: WhatIsYourName,
-                           previousNames: List[WhatIsYourPreviousName],
-                           dob: String,
-                           currentAddress: List[String],
-                           previousAddresses: List[PreviousAddressPrintModel],
-                           returningFromLivingAbroad: Boolean,
-                           telephoneNumber: String,
-                           nino: Option[String],
-                           marriage: Option[String],
-                           previousMarriageOrPartnership: Option[PreviousMarriageOrPartnershipPrintModel],
-                           claimedChildBenefit: Boolean,
-                           childBenefitNumber: Option[String],
-                           otherBenefits: Option[String],
-                           previousEmployers: List[PreviousEmployerPrintModel],
-                           primaryDocument: Option[String],
-                           secondaryDocuments: Option[List[String]]
+                             name: WhatIsYourName,
+                             previousNames: List[WhatIsYourPreviousName],
+                             dob: String,
+                             currentAddress: List[String],
+                             previousAddresses: List[PreviousAddressPrintModel],
+                             returningFromLivingAbroad: Boolean,
+                             telephoneNumber: String,
+                             nino: Option[String],
+                             marriage: Option[String],
+                             previousMarriageOrPartnership: Option[PreviousMarriageOrPartnershipPrintModel],
+                             claimedChildBenefit: Boolean,
+                             childBenefitNumber: Option[String],
+                             otherBenefits: Option[String],
+                             employers: List[EmployerPrintModel],
+                             primaryDocument: Option[String],
+                             secondaryDocuments: Option[List[String]]
                            )
 
 final case class PreviousAddressPrintModel(address: List[String], from: String, to: String)
 
-final case class PreviousEmployerPrintModel(name: String, address: List[String], from: String, to: String)
+final case class EmployerPrintModel(name: String, address: List[String], from: String, to: Option[String])
 
 final case class PreviousMarriageOrPartnershipPrintModel(from: String, to: String, reason: String)
 
@@ -76,7 +76,7 @@ object PrintModel {
       claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
       childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
       otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
-      previousEmployers = getPreviousEmployers(userAnswers)
+      previousEmployers = getEmployers(userAnswers)
       primaryDocument = userAnswers.get(WhichPrimaryDocumentPage).map(key => s"whichPrimaryDocument.$key")
       secondaryDocuments = userAnswers.get(WhichAlternativeDocumentsPage).map(_.toList.map(key => s"whichAlternativeDocuments.$key"))
     } yield {
@@ -137,20 +137,20 @@ object PrintModel {
     }
   }
 
-  private[viewmodels] def getPreviousEmployers(userAnswers: UserAnswers): List[PreviousEmployerPrintModel] = {
+  private[viewmodels] def getEmployers(userAnswers: UserAnswers): List[EmployerPrintModel] = {
     val count = userAnswers.get(EmployersQuery).getOrElse(List.empty).length
     (0 until count).toList.flatMap { index =>
       for {
         name <- userAnswers.get(WhatIsYourEmployersNamePage(Index(index)))
         address <- userAnswers.get(WhatIsYourEmployersAddressPage(Index(index)))
         from <- userAnswers.get(WhenDidYouStartWorkingForEmployerPage(Index(index)))
-        to <- userAnswers.get(WhenDidYouStopWorkingForEmployerPage(Index(index)))
+        to = userAnswers.get(WhenDidYouStopWorkingForEmployerPage(Index(index)))
       } yield {
-        PreviousEmployerPrintModel(
+        EmployerPrintModel(
           name,
           address.lines,
           from.format(formatter),
-          to.format(formatter)
+          to.map(_.format(formatter))
         )
       }
     }

@@ -198,23 +198,29 @@
                 <!-- Employment -->
                 <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.employment")</fo:block>
 
-                <!-- TODO: Make this conditional on "have you ever worked"-->
-                <fo:block margin-bottom="2mm">@messages("pdf.employment.notWorked")</fo:block>
-
-                @if(model.previousEmployers.nonEmpty) {
+                @if(model.employers.nonEmpty) {
                 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.employment.previousEmployers"): </fo:inline></fo:block>
-                    @for(employer <- model.previousEmployers) {
-                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.previousEmployers.name"): </fo:inline>@employer.name</fo:block>
+                    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.employment.employers"): </fo:inline></fo:block>
+                    @for(employer <- model.employers) {
+                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.employers.name"): </fo:inline>@employer.name</fo:block>
                     <fo:block margin-bottom="2mm" margin-left="0.5cm">
-                        <fo:inline>@messages("pdf.employment.previousEmployers.address"): </fo:inline>
+                        <fo:inline>@messages("pdf.employment.employers.address"): </fo:inline>
                         @for(line <- employer.address) {
                         <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
                         }
                     </fo:block>
-                    <fo:block margin-bottom="2mm" margin-left="0.5cm"><fo:inline>@messages("pdf.employment.previousEmployers.duration"): </fo:inline>@messages("pdf.employment.previousEmployers.fromto", employer.from, employer.to)</fo:block>
+                    <fo:block margin-bottom="10mm" margin-left="0.5cm">
+                        <fo:inline>@messages("pdf.employment.employers.duration"): </fo:inline>
+                        @if(employer.to.isDefined) {
+                            @messages("pdf.employment.employers.fromto", employer.from, employer.to.get)
+                        } else {
+                            @messages("pdf.employment.employers.from", employer.from)
+                        }
+                    </fo:block>
                     }
                 </fo:block-container>
+                } else {
+                    <fo:block margin-bottom="2mm">@messages("pdf.employment.notWorked")</fo:block>
                 }
 
                 <!-- Documents -->
