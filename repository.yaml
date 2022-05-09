@@ -3,26 +3,17 @@ repoVisibility: public_0C3F0CE3E6E6448FAD341E7BFA50FCD333E06A20CFF05FCACE61154DD
 leakDetectionExemptions:
   - ruleId: 'aws_secret_access_key'
     filePaths:
-      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
-      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+      - '/app/forms/WhenDidYouStopWorkingForEmployerFormProvider.scala'
     text: 'invalidKey'
   - ruleId: 'aws_secret_access_key'
     filePaths:
-      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
-      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+      - '/app/forms/WhenDidYouStopWorkingForEmployerFormProvider.scala'
     text: 'allRequiredKey'
   - ruleId: 'aws_secret_access_key'
     filePaths:
-      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
-      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+      - '/app/forms/WhenDidYouStopWorkingForEmployerFormProvider.scala'
     text: 'twoRequiredKey'
   - ruleId: 'aws_secret_access_key'
     filePaths:
-      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
-      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
+      - '/app/forms/WhenDidYouStopWorkingForEmployerFormProvider.scala'
     text: 'requiredKey'
-  - ruleId: 'aws_secret_access_key'
-    filePaths:
-      - '/app/forms/WhenDidYouStopWorkingForPreviousEmployerFormProvider.scala'
-      - '/app/viewmodels/checkAnswers/WhenDidYouStopWorkingForPreviousEmployerSummary.scala'
-    text: 'whenDidYouStopWorkingForPreviousEmployer'

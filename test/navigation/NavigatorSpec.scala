@@ -320,7 +320,7 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(AreYouStillEmployedPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
-      
+
       "go from the do you have any previous employers page" - {
 
         "to the what is your previous employers name page when the user selects yes" - {
