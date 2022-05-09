@@ -20,7 +20,7 @@
     hmrcListWithActions: HmrcListWithActions
 )
 
-@(personalDetails: SummaryList, previousNames: Seq[ListWithActionsItem], currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, previousEmployers: Seq[ListWithActionsItem], supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
+@(personalDetails: SummaryList, previousNames: Seq[ListWithActionsItem], currentAddress: SummaryList, previousAddresses: Seq[ListWithActionsItem], relationshipHistory: SummaryList, benefitHistory: SummaryList, employmentHistory: SummaryList, employers: Seq[ListWithActionsItem], supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -65,16 +65,16 @@
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswers.employmentHistory")</h2>
     @govukSummaryList(employmentHistory)
-    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousEmployers")</h3>
-    @if(previousEmployers.nonEmpty) {
-        @hmrcListWithActions(ListWithActions(items = previousEmployers))
+    <h3 class="govuk-heading-s">@messages("checkYourAnswers.employers")</h3>
+    @if(employers.nonEmpty) {
+        @hmrcListWithActions(ListWithActions(items = employers))
         <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(previousEmployers.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousEmployer")</a>
+            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url">@messages("checkYourAnswers.addAnotherEmployer")</a>
         </p>
     } else {
         <p class="govuk-body govuk-!-margin-bottom-9">
-            <span>@messages("checkYourAnswers.noPreviousEmployers")</span><br/>
-            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousEmployer")</a>
+            <span>@messages("checkYourAnswers.noEmployers")</span><br/>
+            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAnEmployer")</a>
         </p>
     }
 

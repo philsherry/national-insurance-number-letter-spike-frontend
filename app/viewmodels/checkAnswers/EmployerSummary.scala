@@ -49,8 +49,8 @@ object EmployerSummary {
     ListWithActionsItem(
       name = content,
       actions = List(
-        ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousEmployerHidden", name)), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(i), mode).url),
-        ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousEmployerHidden", name)), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(i), mode).url)
+        ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changeEmployerHidden", name)), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(i), mode).url),
+        ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removeEmployerHidden", name)), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(i), mode).url)
       )
     )
   }
