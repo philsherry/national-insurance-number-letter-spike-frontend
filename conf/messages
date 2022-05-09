@@ -396,12 +396,12 @@ whatIsYourPreviousEmployersAddress.addressLine2.change.hidden = address line 2
 whatIsYourPreviousEmployersAddress.addressLine2.change.hidden = address line 3
 whatIsYourPreviousEmployersAddress.postcode.change.hidden = postcode
 
-whatIsYourPreviousEmployersName.title = What is your previous employer’s name?
-whatIsYourPreviousEmployersName.heading = What is your previous employer’s name?
-whatIsYourPreviousEmployersName.checkYourAnswersLabel = What is your previous employer’s name?
-whatIsYourPreviousEmployersName.error.required = Enter your previous employer’s name
-whatIsYourPreviousEmployersName.error.length = Your previous employer’s name must be 100 characters or less
-whatIsYourPreviousEmployersName.change.hidden = your previous employer’s name
+whatIsYourEmployersName.title = What is your employer’s name?
+whatIsYourEmployersName.heading = What is your employer’s name?
+whatIsYourEmployersName.checkYourAnswersLabel = What is your employer’s name?
+whatIsYourEmployersName.error.required = Enter your employer’s name
+whatIsYourEmployersName.error.length = Your employer’s name must be 100 characters or less
+whatIsYourEmployersName.change.hidden = your employer’s name
 
 whenDidYouStartWorkingForEmployer.title = When did you start working for your most recent employer?
 whenDidYouStartWorkingForEmployer.heading = When did you start working for your most recent employer?
