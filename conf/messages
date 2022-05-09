@@ -483,11 +483,11 @@ doYouKnowYourNationalInsuranceNumber.checkYourAnswersLabel = Do you know your Na
 doYouKnowYourNationalInsuranceNumber.error.required = Select yes if you know your National Insurance number
 doYouKnowYourNationalInsuranceNumber.change.hidden = whether you know your National Insurance number
 
-areYouStillEmployed.title = Are you still employed by your most recent employer?
-areYouStillEmployed.heading = Are you still employed by your most recent employer?
-areYouStillEmployed.checkYourAnswersLabel = Are you still employed by your most recent employer?
-areYouStillEmployed.error.required = Select yes if are still employed by your most recent employer
-areYouStillEmployed.change.hidden = whether you are still employed by your most recent employer
+areYouStillEmployed.title = Are you still employed by your employer?
+areYouStillEmployed.heading = Are you still employed by your employer?
+areYouStillEmployed.checkYourAnswersLabel = Are you still employed by your employer?
+areYouStillEmployed.error.required = Select yes if are still employed by your employer
+areYouStillEmployed.change.hidden = whether you are still employed by your employer
 
 areYouSureYouWantToRemovePreviousAddress.title = Are you sure you want to remove this previous address?
 areYouSureYouWantToRemovePreviousAddress.heading = Are you sure you want to remove this previous address?
