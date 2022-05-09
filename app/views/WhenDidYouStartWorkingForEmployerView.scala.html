@@ -24,7 +24,7 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whenDidYouStartWorkingForPreviousEmployer.title"))) {
+@layout(pageTitle = title(form, messages("whenDidYouStartForEmployer.title"))) {
 
     @formHelper(action = routes.WhenDidYouStartWorkingForEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -35,9 +35,9 @@
         @govukDateInput(
             DateViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whenDidYouStartWorkingForPreviousEmployer.heading")).asPageHeading()
+                legend = LegendViewModel(messages("whenDidYouStartForEmployer.heading")).asPageHeading()
             )
-            .withHint(HintViewModel(messages("whenDidYouStartWorkingForPreviousEmployer.hint")))
+            .withHint(HintViewModel(messages("whenDidYouStartForEmployer.hint")))
         )
 
         @govukButton(

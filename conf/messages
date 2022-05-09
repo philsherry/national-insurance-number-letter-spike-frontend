@@ -413,13 +413,13 @@ whenDidYouStartWorkingForEmployer.error.required = The date must include {0}
 whenDidYouStartWorkingForEmployer.error.invalid = Enter a real date
 whenDidYouStartWorkingForEmployer.change.hidden = when you started working for your most recent employer
 
-whenDidYouStartWorkingForPreviousEmployer.title = When did you start working for your previous employer?
-whenDidYouStartWorkingForPreviousEmployer.heading = When did you start working for your previous employer?
-whenDidYouStartWorkingForPreviousEmployer.hint = For example, 12 11 2007
-whenDidYouStartWorkingForPreviousEmployer.error.required.all = Enter the date you started working for previous employer
-whenDidYouStartWorkingForPreviousEmployer.error.required.two = The date must include {0} and {1}
-whenDidYouStartWorkingForPreviousEmployer.error.required = The date must include {0}
-whenDidYouStartWorkingForPreviousEmployer.error.invalid = Enter a real date
+whenDidYouStartForEmployer.title = When did you start working for your employer?
+whenDidYouStartForEmployer.heading = When did you start working for your employer?
+whenDidYouStartForEmployer.hint = For example, 12 11 2007
+whenDidYouStartForEmployer.error.required.all = Enter the date you started working for employer
+whenDidYouStartForEmployer.error.required.two = The date must include {0} and {1}
+whenDidYouStartForEmployer.error.required = The date must include {0}
+whenDidYouStartForEmployer.error.invalid = Enter a real date
 
 whenDidYouStopWorkingForPreviousEmployer.title = When did you stop working for your previous employer?
 whenDidYouStopWorkingForPreviousEmployer.heading = When did you stop working for your previous employer?
