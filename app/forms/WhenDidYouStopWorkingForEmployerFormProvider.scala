@@ -27,10 +27,10 @@ class WhenDidYouStopWorkingForEmployerFormProvider @Inject() extends Mappings {
   def apply(): Form[LocalDate] =
     Form(
       "value" -> localDate(
-        invalidKey     = "whenDidYouStopWorkingForPreviousEmployer.error.invalid",
-        allRequiredKey = "whenDidYouStopWorkingForPreviousEmployer.error.required.all",
-        twoRequiredKey = "whenDidYouStopWorkingForPreviousEmployer.error.required.two",
-        requiredKey    = "whenDidYouStopWorkingForPreviousEmployer.error.required"
+        invalidKey     = "whenDidYouStopWorkingForEmployer.error.invalid",
+        allRequiredKey = "whenDidYouStopWorkingForEmployer.error.required.all",
+        twoRequiredKey = "whenDidYouStopWorkingForEmployer.error.required.two",
+        requiredKey    = "whenDidYouStopWorkingForEmployer.error.required"
       )
     )
 }

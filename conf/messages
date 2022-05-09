@@ -358,10 +358,10 @@ whatOtherUkBenefitsHaveYouReceived.error.length = The other UK benefits you have
 whatOtherUkBenefitsHaveYouReceived.change.hidden = what other UK benefits you have received
 
 employmentHistory.title.none = You have added no employers
-employmentHistory.title.one = You have added 1 employers
+employmentHistory.title.one = You have added 1 employer
 employmentHistory.title.many = You have added {0} employers
 employmentHistory.heading.none = You have added no employers
-employmentHistory.heading.one = You have added 1 employers
+employmentHistory.heading.one = You have added 1 employer
 employmentHistory.heading.many = You have added {0} employers
 employmentHistory.from = Employed since {0}
 employmentHistory.fromTo = Employed from {0} to {1}
@@ -421,13 +421,13 @@ whenDidYouStartForEmployer.error.required.two = The date must include {0} and {1
 whenDidYouStartForEmployer.error.required = The date must include {0}
 whenDidYouStartForEmployer.error.invalid = Enter a real date
 
-whenDidYouStopWorkingForPreviousEmployer.title = When did you stop working for your previous employer?
-whenDidYouStopWorkingForPreviousEmployer.heading = When did you stop working for your previous employer?
-whenDidYouStopWorkingForPreviousEmployer.hint = For example, 12 11 2007
-whenDidYouStopWorkingForPreviousEmployer.error.required.all = Enter the date you stopped working for your previous employer
-whenDidYouStopWorkingForPreviousEmployer.error.required.two = The date must include {0} and {1}
-whenDidYouStopWorkingForPreviousEmployer.error.required = The date must include {0}
-whenDidYouStopWorkingForPreviousEmployer.error.invalid = Enter a real date
+whenDidYouStopWorkingForEmployer.title = When did you stop working for your employer?
+whenDidYouStopWorkingForEmployer.heading = When did you stop working for your employer?
+whenDidYouStopWorkingForEmployer.hint = For example, 12 11 2007
+whenDidYouStopWorkingForEmployer.error.required.all = Enter the date you stopped working for your employer
+whenDidYouStopWorkingForEmployer.error.required.two = The date must include {0} and {1}
+whenDidYouStopWorkingForEmployer.error.required = The date must include {0}
+whenDidYouStopWorkingForEmployer.error.invalid = Enter a real date
 
 doYouHavePrimaryDocument.title = Do you have one of the following identity documents?
 doYouHavePrimaryDocument.heading = Do you have one of the following identity documents?

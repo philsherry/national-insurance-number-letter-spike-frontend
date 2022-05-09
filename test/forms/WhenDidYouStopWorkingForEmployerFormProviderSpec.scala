@@ -33,6 +33,6 @@ class WhenDidYouStopWorkingForEmployerFormProviderSpec extends DateBehaviours {
 
     behave like dateField(form, "value", validData)
 
-    behave like mandatoryDateField(form, "value", "whenDidYouStopWorkingForPreviousEmployer.error.required.all")
+    behave like mandatoryDateField(form, "value", "whenDidYouStopWorkingForEmployer.error.required.all")
   }
 }
