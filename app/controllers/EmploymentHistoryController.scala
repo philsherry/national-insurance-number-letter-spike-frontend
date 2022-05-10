@@ -50,12 +50,7 @@ class EmploymentHistoryController @Inject()(
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(DoYouHaveAnyPreviousEmployersPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, listItems(request.userAnswers, mode), mode))
+      Ok(view(form, listItems(request.userAnswers, mode), mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -67,8 +62,8 @@ class EmploymentHistoryController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(DoYouHaveAnyPreviousEmployersPage, value))
-          } yield Redirect(navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, mode, updatedAnswers))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(EmploymentHistoryPage, value))
+          } yield Redirect(navigator.nextPage(EmploymentHistoryPage, mode, updatedAnswers))
       )
   }
 }

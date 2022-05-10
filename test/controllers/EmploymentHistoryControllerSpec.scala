@@ -93,24 +93,6 @@ class EmploymentHistoryControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(DoYouHaveAnyPreviousEmployersPage, true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, doYouHaveAnyPreviousEmployersRoute)
-
-        val view = application.injector.instanceOf[EmploymentHistoryView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), List.empty, NormalMode)(request, messages(application)).toString
-      }
-    }
-
     "must redirect to the next page when valid data is submitted" in {
 
       val application =

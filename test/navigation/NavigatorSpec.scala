@@ -321,13 +321,13 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
-      "go from the do you have any previous employers page" - {
+      "go from the employment history page" - {
 
-        "to the what is your previous employers name page when the user selects yes" - {
+        "to the what is your employers name page when the user selects yes" - {
 
           "at index 0 when there are no previous addresses" in {
-            val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousEmployersPage, true).success.value
-            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), NormalMode)
+            val answers = emptyUserAnswers.set(EmploymentHistoryPage, true).success.value
+            navigator.nextPage(EmploymentHistoryPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), NormalMode)
           }
 
           "at index 1 when there is a previous address" in {
@@ -335,22 +335,22 @@ class NavigatorSpec extends SpecBase {
               addressLine1 = "line 1", addressLine2 = Some("line 2"), addressLine3 = None, postcode = "postcode"
             )
             val answers = emptyUserAnswers
-              .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
+              .set(EmploymentHistoryPage, true).success.value
               .set(WhatIsYourEmployersNamePage(Index(0)), "foobar").success.value
               .set(WhatIsYourEmployersAddressPage(Index(0)), address).success.value
               .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.now).success.value
               .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.now).success.value
-            navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(1), NormalMode)
+            navigator.nextPage(EmploymentHistoryPage, NormalMode, answers) mustBe routes.WhatIsYourEmployersNameController.onPageLoad(Index(1), NormalMode)
           }
         }
 
         "to the do you have a primary document page when the user selects no" in {
-          val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousEmployersPage, false).success.value
-          navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, answers) mustBe routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
+          val answers = emptyUserAnswers.set(EmploymentHistoryPage, false).success.value
+          navigator.nextPage(EmploymentHistoryPage, NormalMode, answers) mustBe routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the user has no selection" in {
-          navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+          navigator.nextPage(EmploymentHistoryPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
 
