@@ -173,7 +173,18 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhichAlternativeDocumentsSummary.row(answers)(messages(application))
         ).flatten)
 
-        val renderedView = view(personalDetails, previousNames, addressHistory, previousAddresses, currentRelationship, previousRelationships, benefitHistory, employers, supportingDocuments)(request, messages(application))
+        val renderedView = view(
+          personalDetails,
+          previousNames,
+          addressHistory,
+          previousAddresses,
+          currentRelationship,
+          previousRelationships,
+          benefitHistory,
+          employmentHistory,
+          employers,
+          supportingDocuments
+        )(request, messages(application))
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual renderedView.toString

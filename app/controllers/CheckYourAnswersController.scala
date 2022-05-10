@@ -86,7 +86,7 @@ class CheckYourAnswersController @Inject()(
           HaveYouEverWorkedInUkSummary.row(answers),
         ).flatten)
 
-      val previousEmployers = answers.get(EmployersQuery).getOrElse(List.empty)
+      val employers = answers.get(EmployersQuery).getOrElse(List.empty)
         .indices.map(EmployerSummary.item(answers, CheckMode, _))
 
       val supportingDocuments = SummaryListViewModel(Seq(
@@ -105,7 +105,7 @@ class CheckYourAnswersController @Inject()(
         previousRelationships,
         benefitHistory,
         employmentHistory,
-        previousEmployers,
+        employers,
         supportingDocuments
       ))
   }
