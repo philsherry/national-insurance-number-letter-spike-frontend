@@ -692,6 +692,24 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(WhenDidYouStartWorkingForEmployerPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), CheckMode)
       }
 
+      "go from the are you still employed page" - {
+
+        "to the when did you stop working page when answered yes" in {
+          val answers = emptyUserAnswers
+            .set(AreYouStillEmployedPage(Index(0)), false).success.value
+
+          navigator.nextPage(AreYouStillEmployedPage(Index(0)), CheckMode, answers) mustBe routes.WhenDidYouStopWorkingForEmployerController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the check your answers page when answered no" in {
+          val answers = emptyUserAnswers
+            .set(AreYouStillEmployedPage(Index(0)), true).success.value
+
+          navigator.nextPage(AreYouStillEmployedPage(Index(0)), CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+      }
+
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
 
         case object UnknownPage extends Page

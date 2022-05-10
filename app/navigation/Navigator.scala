@@ -178,6 +178,7 @@ class Navigator @Inject()() {
     case WhatIsYourEmployersNamePage(index) => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, CheckMode)
     case WhatIsYourEmployersAddressPage(index) => _ => routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(index, CheckMode)
     case WhenDidYouStartWorkingForEmployerPage(index) => _ => routes.AreYouStillEmployedController.onPageLoad(index, CheckMode)
+    case AreYouStillEmployedPage(index) => areYouStillEmployedCheckRoutes(_, index)
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
@@ -241,6 +242,12 @@ class Navigator @Inject()() {
     answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
       case true => routes.WhichAlternativeDocumentsController.onPageLoad(CheckMode)
       case false => routes.InsufficientDocumentsController.onPageLoad()
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def areYouStillEmployedCheckRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(AreYouStillEmployedPage(index)).map {
+      case true => routes.CheckYourAnswersController.onPageLoad
+      case false => routes.WhenDidYouStopWorkingForEmployerController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
