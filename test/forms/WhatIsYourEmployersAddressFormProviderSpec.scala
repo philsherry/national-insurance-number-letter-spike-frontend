@@ -16,10 +16,10 @@
 
 package forms
 
-import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
-class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
+class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours {
 
   val form = new WhatIsYourEmployersAddressFormProvider()()
 
