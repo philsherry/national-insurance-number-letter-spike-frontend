@@ -18,14 +18,14 @@ package pages
 
 import pages.behaviours.PageBehaviours
 
-class DoYouHaveAnyPreviousEmployersPageSpec extends PageBehaviours {
+class EmploymentHistoryPageSpec extends PageBehaviours {
 
-  "DoYouHaveAnyPreviousEmployersPage" - {
+  "EmploymentHistoryPage" - {
 
-    beRetrievable[Boolean](DoYouHaveAnyPreviousEmployersPage)
+    beRetrievable[Boolean](EmploymentHistoryPage)
 
-    beSettable[Boolean](DoYouHaveAnyPreviousEmployersPage)
+    beSettable[Boolean](EmploymentHistoryPage)
 
-    beRemovable[Boolean](DoYouHaveAnyPreviousEmployersPage)
+    beRemovable[Boolean](EmploymentHistoryPage)
   }
 }

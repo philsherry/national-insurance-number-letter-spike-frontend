@@ -54,7 +54,7 @@ class Navigator @Inject()() {
     case WhatOtherUkBenefitsHaveYouReceivedPage                 => _ => routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
     case HaveYouEverWorkedInUkPage                              => haveYouEverWorkedInUkRoutes
     case AreYouStillEmployedPage(index)                         => areYouStillEmployedRoutes(index)
-    case DoYouHaveAnyPreviousEmployersPage                      => doYouHaveAnyPreviousEmployersRoutes
+    case EmploymentHistoryPage                      => employmentHistoryRoutes
     case WhatIsYourEmployersNamePage(index)             => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, NormalMode)
     case WhatIsYourEmployersAddressPage(index)          => _ => routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(index, NormalMode)
     case WhenDidYouStartWorkingForEmployerPage(index)   => _ => routes.AreYouStillEmployedController.onPageLoad(index, NormalMode)
@@ -143,11 +143,11 @@ class Navigator @Inject()() {
       case false => routes.WhenDidYouStopWorkingForEmployerController.onPageLoad(index, NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def doYouHaveAnyPreviousEmployersRoutes(answers: UserAnswers): Call =
-    answers.get(DoYouHaveAnyPreviousEmployersPage).map {
+  private def employmentHistoryRoutes(answers: UserAnswers): Call =
+    answers.get(EmploymentHistoryPage).map {
       case true  =>
-        val previousEmployers = answers.get(EmployersQuery).getOrElse(List.empty)
-        routes.WhatIsYourEmployersNameController.onPageLoad(Index(previousEmployers.length), NormalMode)
+        val employers = answers.get(EmployersQuery).getOrElse(List.empty)
+        routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), NormalMode)
       case false => routes.DoYouHavePrimaryDocumentController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
