@@ -22,7 +22,7 @@ import forms.AreYouSureYouWantToRemovePreviousRelationshipFormProvider
 import javax.inject.Inject
 import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.{AreYouSureYouWantToRemovePreviousRelationshipPage, PreviousMarriageOrPartnershipDetailsPage}
+import pages.{AreYouSureYouWantToRemovePreviousRelationshipPage, PreviousMarriageOrPartnershipDetailsPage, PreviousRelationshipQuery}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -46,7 +46,7 @@ class AreYouSureYouWantToRemovePreviousRelationshipController @Inject()(
   val form = formProvider()
 
   private def removeRelationship(answers: UserAnswers, index: Index): Future[Unit] = for {
-    updatedAnswers <- Future.fromTry(answers.remove(PreviousMarriageOrPartnershipDetailsPage(index)))
+    updatedAnswers <- Future.fromTry(answers.remove(PreviousRelationshipQuery(index)))
     _              <- sessionRepository.set(updatedAnswers)
   } yield ()
 
