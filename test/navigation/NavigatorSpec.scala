@@ -354,23 +354,23 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
-      "go from the what is your previous employers name page to the what is your previous employers address page" in {
+      "go from the what is your employers name page to the what is your employers address page" in {
         navigator.nextPage(WhatIsYourEmployersNamePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), NormalMode)
       }
 
-      "go from the what is your previous employers address page to the when did you start working for previous employer page" in {
+      "go from the what is your employers address page to the when did you start working for employer page" in {
         navigator.nextPage(WhatIsYourEmployersAddressPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(0), NormalMode)
       }
 
-      "go from when did you start working for your previous employer page to the are you still employed page" in {
+      "go from when did you start working for your employer page to the are you still employed page" in {
         navigator.nextPage(WhenDidYouStartWorkingForEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), NormalMode)
       }
 
-      "go from when did you stop working for your previous employer page to the employment history page" in {
+      "go from when did you stop working for your employer page to the employment history page" in {
         navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
       }
 
-      "go from are you sure you want to remove your previous employer page to the employment history page" in {
+      "go from are you sure you want to remove your employer page to the employment history page" in {
         navigator.nextPage(AreYouSureYouWantToRemovePreviousEmployerPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
       }
 
@@ -680,15 +680,15 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
-      "go from the what is your previous employers name page to the what is your previous employers address page" in {
+      "go from the what is your employers name page to the what is your employers address page" in {
         navigator.nextPage(WhatIsYourEmployersNamePage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), CheckMode)
       }
 
-      "go from the what is your previous employers address page to the when did you start working for previous employer page" in {
+      "go from the what is your employers address page to the when did you start working for employer page" in {
         navigator.nextPage(WhatIsYourEmployersAddressPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(0), CheckMode)
       }
 
-      "go from when did you start working for your previous employer page to the are you still employed page" in {
+      "go from when did you start working for your employer page to the are you still employed page" in {
         navigator.nextPage(WhenDidYouStartWorkingForEmployerPage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.AreYouStillEmployedController.onPageLoad(Index(0), CheckMode)
       }
 
