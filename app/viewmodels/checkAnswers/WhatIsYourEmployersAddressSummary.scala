@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Index, UserAnswers}
 import pages.WhatIsYourEmployersAddressPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,8 +28,8 @@ import viewmodels.implicits._
 
 object WhatIsYourEmployersAddressSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhatIsYourEmployersAddressPage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(WhatIsYourEmployersAddressPage(Index(index))).map {
       answer =>
 
         val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, Some(answer.postcode))
@@ -37,11 +37,11 @@ object WhatIsYourEmployersAddressSummary  {
           .mkString("<br/>")
 
         SummaryListRowViewModel(
-          key     = "whatIsYourEmployersAddress.checkYourAnswersLabel",
+          key     = "whatIsYourPreviousEmployersAddress.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlContent(value)),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.WhatIsYourEmployersAddressController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whatIsYourEmployersAddress.change.hidden"))
+            ActionItemViewModel("site.change", routes.WhatIsYourEmployersAddressController.onPageLoad(Index(index), CheckMode).url)
+              .withVisuallyHiddenText(messages("whatIsYourPreviousEmployersAddress.change.hidden"))
           )
         )
     }

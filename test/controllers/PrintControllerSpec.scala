@@ -39,8 +39,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
     val currentAddressUk = CurrentAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
     val previousAddressUk = PreviousAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA",
       LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1))
-    val employerAddress = WhatIsYourEmployersAddress(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
-    val previousEmployerAddress = PreviousEmployersAddress("line 1", None, None, "AA1 1AA")
+    val previousEmployerAddress = EmployersAddress("line 1", None, None, "AA1 1AA")
 
     val previousMarriage = PreviousMarriageOrPartnershipDetails(
       LocalDate.of(2005, 2, 1),
@@ -62,14 +61,11 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
       .set(HaveYouEverClaimedChildBenefitPage, true).get
       .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
       .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-      .set(WhatIsYourEmployersNamePage, "employer name").get
-      .set(WhatIsYourEmployersAddressPage, employerAddress).get
-      .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.of(2001, 2, 28)).get
       .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-      .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "emp 1").get
-      .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), previousEmployerAddress).get
-      .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
-      .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
+      .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
+      .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
+      .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
+      .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
       .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).get
   }
 

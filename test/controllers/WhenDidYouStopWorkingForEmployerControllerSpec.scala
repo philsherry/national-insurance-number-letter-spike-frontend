@@ -16,65 +16,77 @@
 
 package controllers
 
+import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
-import forms.AreYouStillEmployedFormProvider
+import forms.WhenDidYouStopWorkingForEmployerFormProvider
 import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AreYouStillEmployedPage
+import pages.WhenDidYouStopWorkingForEmployerPage
 import play.api.inject.bind
-import play.api.mvc.Call
+import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.AreYouStillEmployedView
+import views.html.WhenDidYouStopWorkingForEmployerView
 
 import scala.concurrent.Future
 
-class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
+class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with MockitoSugar {
+
+  val formProvider = new WhenDidYouStopWorkingForEmployerFormProvider()
+  private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new AreYouStillEmployedFormProvider()
-  val form = formProvider()
+  val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  lazy val areYouStillEmployedRoute = routes.AreYouStillEmployedController.onPageLoad(Index(0), NormalMode).url
+  lazy val whenDidYouStopWorkingForPreviousEmployerRoute = routes.WhenDidYouStopWorkingForEmployerController.onPageLoad(Index(0), NormalMode).url
 
-  "AreYouStillEmployed Controller" - {
+  override val emptyUserAnswers = UserAnswers(userAnswersId)
+
+  def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest(GET, whenDidYouStopWorkingForPreviousEmployerRoute)
+
+  def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
+    FakeRequest(POST, whenDidYouStopWorkingForPreviousEmployerRoute)
+      .withFormUrlEncodedBody(
+        "value.day"   -> validAnswer.getDayOfMonth.toString,
+        "value.month" -> validAnswer.getMonthValue.toString,
+        "value.year"  -> validAnswer.getYear.toString
+      )
+
+  "WhenDidYouStopWorkingForPreviousEmployer Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, areYouStillEmployedRoute)
+        val result = route(application, getRequest).value
 
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[AreYouStillEmployedView]
+        val view = application.injector.instanceOf[WhenDidYouStopWorkingForEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(getRequest, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouStillEmployedPage(Index(0)), true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStopWorkingForEmployerPage(Index(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, areYouStillEmployedRoute)
+        val view = application.injector.instanceOf[WhenDidYouStopWorkingForEmployerView]
 
-        val view = application.injector.instanceOf[AreYouStillEmployedView]
-
-        val result = route(application, request).value
+        val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(getRequest, messages(application)).toString
       }
     }
 
@@ -93,11 +105,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, areYouStillEmployedRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val result = route(application, postRequest).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
@@ -108,14 +116,14 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
+      val request =
+        FakeRequest(POST, whenDidYouStopWorkingForPreviousEmployerRoute)
+          .withFormUrlEncodedBody(("value", "invalid value"))
+
       running(application) {
-        val request =
-          FakeRequest(POST, areYouStillEmployedRoute)
-            .withFormUrlEncodedBody(("value", ""))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> ""))
-
-        val view = application.injector.instanceOf[AreYouStillEmployedView]
+        val view = application.injector.instanceOf[WhenDidYouStopWorkingForEmployerView]
 
         val result = route(application, request).value
 
@@ -129,9 +137,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, areYouStillEmployedRoute)
-
-        val result = route(application, request).value
+        val result = route(application, getRequest).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
@@ -143,11 +149,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, areYouStillEmployedRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val result = route(application, postRequest).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url

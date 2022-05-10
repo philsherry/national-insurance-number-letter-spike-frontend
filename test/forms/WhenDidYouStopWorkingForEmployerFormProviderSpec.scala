@@ -14,14 +14,25 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{Index, EmployersAddress}
-import play.api.libs.json.JsPath
+import java.time.{LocalDate, ZoneOffset}
 
-final case class WhatIsYourEmployersAddressPage(index: Index) extends QuestionPage[EmployersAddress] {
+import forms.behaviours.DateBehaviours
 
-  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
+class WhenDidYouStopWorkingForEmployerFormProviderSpec extends DateBehaviours {
 
-  override def toString: String = "whatIsYourEmployersAddress"
+  val form = new WhenDidYouStopWorkingForEmployerFormProvider()()
+
+  ".value" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "value", validData)
+
+    behave like mandatoryDateField(form, "value", "whenDidYouStopWorkingForEmployer.error.required.all")
+  }
 }

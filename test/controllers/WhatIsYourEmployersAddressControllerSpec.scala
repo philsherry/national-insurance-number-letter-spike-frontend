@@ -18,20 +18,20 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourEmployersAddressFormProvider
-import models.{NormalMode, WhatIsYourEmployersAddress, UserAnswers}
+import models.{Index, NormalMode, EmployersAddress, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.WhatIsYourEmployersAddressPage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.WhatIsYourEmployersAddressView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSugar {
@@ -41,35 +41,27 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
   val formProvider = new WhatIsYourEmployersAddressFormProvider()
   val form = formProvider()
 
-  lazy val whatIsYourEmployersAddressRoute = routes.WhatIsYourEmployersAddressController.onPageLoad(NormalMode).url
+  lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      WhatIsYourEmployersAddressPage.toString -> Json.obj(
-        "addressLine1" -> "value 1",
-        "addressLine2" -> "value 2",
-        "addressLine3" -> "value 3",
-        "postcode" -> "value 4"
-      )
-    )
-  )
+  val userAnswers = UserAnswers(userAnswersId)
+    .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("value 1", Some("value 2"), None, "postcode"))
+    .success.value
 
-  "WhatIsYourEmployersAddress Controller" - {
+  "WhatIsYourPreviousEmployersAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whatIsYourEmployersAddressRoute)
+        val request = FakeRequest(GET, whatIsYourPreviousEmployersAddressRoute)
 
         val view = application.injector.instanceOf[WhatIsYourEmployersAddressView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -78,14 +70,14 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whatIsYourEmployersAddressRoute)
+        val request = FakeRequest(GET, whatIsYourPreviousEmployersAddressRoute)
 
         val view = application.injector.instanceOf[WhatIsYourEmployersAddressView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhatIsYourEmployersAddress("value 1", Some("value 2"), Some("value 3"), "value 4")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(EmployersAddress("value 1", Some("value 2"), None, "postcode")), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -103,10 +95,16 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
           )
           .build()
 
+      val validData = List(
+        "addressLine1" -> "value 1", "addressLine2" -> "value 2", "postcode" -> "postcode",
+        "from.day" -> LocalDate.now.getDayOfMonth.toString, "from.month" -> LocalDate.now.getMonthValue.toString, "from.year" -> LocalDate.now.getYear.toString,
+        "to.day" -> LocalDate.now.getDayOfMonth.toString, "to.month" -> LocalDate.now.getMonthValue.toString, "to.year" -> LocalDate.now.getYear.toString
+      )
+
       running(application) {
         val request =
-          FakeRequest(POST, whatIsYourEmployersAddressRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"), ("addressLine3", "value 3"), ("postcode", "value 4"))
+          FakeRequest(POST, whatIsYourPreviousEmployersAddressRoute)
+            .withFormUrlEncodedBody(validData: _*)
 
         val result = route(application, request).value
 
@@ -121,7 +119,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
 
       running(application) {
         val request =
-          FakeRequest(POST, whatIsYourEmployersAddressRoute)
+          FakeRequest(POST, whatIsYourPreviousEmployersAddressRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
@@ -131,7 +129,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -140,7 +138,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, whatIsYourEmployersAddressRoute)
+        val request = FakeRequest(GET, whatIsYourPreviousEmployersAddressRoute)
 
         val result = route(application, request).value
 
@@ -155,8 +153,8 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
 
       running(application) {
         val request =
-          FakeRequest(POST, whatIsYourEmployersAddressRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"), ("addressLine3", "value 3"), ("postcode", "value 4"))
+          FakeRequest(POST, whatIsYourPreviousEmployersAddressRoute)
+            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
 
         val result = route(application, request).value
 

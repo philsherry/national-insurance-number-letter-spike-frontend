@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.WhatIsYourEmployersAddressFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.WhatIsYourEmployersAddressPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -31,42 +32,42 @@ import views.html.WhatIsYourEmployersAddressView
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhatIsYourEmployersAddressController @Inject()(
-                                      override val messagesApi: MessagesApi,
-                                      sessionRepository: SessionRepository,
-                                      navigator: Navigator,
-                                      identify: IdentifierAction,
-                                      getData: DataRetrievalAction,
-                                      requireData: DataRequiredAction,
-                                      formProvider: WhatIsYourEmployersAddressFormProvider,
-                                      val controllerComponents: MessagesControllerComponents,
-                                      view: WhatIsYourEmployersAddressView
+                                                      override val messagesApi: MessagesApi,
+                                                      sessionRepository: SessionRepository,
+                                                      navigator: Navigator,
+                                                      identify: IdentifierAction,
+                                                      getData: DataRetrievalAction,
+                                                      requireData: DataRequiredAction,
+                                                      formProvider: WhatIsYourEmployersAddressFormProvider,
+                                                      val controllerComponents: MessagesControllerComponents,
+                                                      view: WhatIsYourEmployersAddressView
                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(WhatIsYourEmployersAddressPage) match {
+      val preparedForm = request.userAnswers.get(WhatIsYourEmployersAddressPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, index, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhatIsYourEmployersAddressPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhatIsYourEmployersAddressPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhatIsYourEmployersAddressPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhatIsYourEmployersAddressPage(index), mode, updatedAnswers))
       )
   }
 }

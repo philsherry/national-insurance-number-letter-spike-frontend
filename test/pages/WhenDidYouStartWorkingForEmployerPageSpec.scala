@@ -16,23 +16,24 @@
 
 package pages
 
-import java.time.LocalDate
+import models.Index
 
+import java.time.LocalDate
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
 
 class WhenDidYouStartWorkingForEmployerPageSpec extends PageBehaviours {
 
-  "WhenDidYouStartWorkingForEmployerPage" - {
+  "WhenDidYouStartWorkingForPreviousEmployerPage" - {
 
     implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
       datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
     }
 
-    beRetrievable[LocalDate](WhenDidYouStartWorkingForEmployerPage)
+    beRetrievable[LocalDate](WhenDidYouStartWorkingForEmployerPage(Index(0)))
 
-    beSettable[LocalDate](WhenDidYouStartWorkingForEmployerPage)
+    beSettable[LocalDate](WhenDidYouStartWorkingForEmployerPage(Index(0)))
 
-    beRemovable[LocalDate](WhenDidYouStartWorkingForEmployerPage)
+    beRemovable[LocalDate](WhenDidYouStartWorkingForEmployerPage(Index(0)))
   }
 }

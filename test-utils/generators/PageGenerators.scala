@@ -34,11 +34,8 @@ trait PageGenerators {
   implicit lazy val arbitraryWhichAlternativeDocumentsPage: Arbitrary[WhichAlternativeDocumentsPage.type] =
     Arbitrary(WhichAlternativeDocumentsPage)
 
-  implicit lazy val arbitraryWhenDidYouFinishYourEmploymentPage: Arbitrary[WhenDidYouFinishYourEmploymentPage.type] =
-    Arbitrary(WhenDidYouFinishYourEmploymentPage)
-
-  implicit lazy val arbitraryAreYouStillEmployedPage: Arbitrary[AreYouStillEmployedPage.type] =
-    Arbitrary(AreYouStillEmployedPage)
+  implicit lazy val arbitraryAreYouStillEmployedPage: Arbitrary[AreYouStillEmployedPage] =
+    Arbitrary(AreYouStillEmployedPage(Index(0)))
 
   implicit lazy val arbitraryDoYouKnowYourNationalInsuranceNumberPage: Arbitrary[DoYouKnowYourNationalInsuranceNumberPage.type] =
     Arbitrary(DoYouKnowYourNationalInsuranceNumberPage)
@@ -52,26 +49,17 @@ trait PageGenerators {
   implicit lazy val arbitraryDoYouHavePrimaryDocumentPage: Arbitrary[DoYouHavePrimaryDocumentPage.type] =
     Arbitrary(DoYouHavePrimaryDocumentPage)
 
-  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStopWorkingForPreviousEmployerPage] =
-    Arbitrary(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)))
+  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStopWorkingForEmployerPage] =
+    Arbitrary(WhenDidYouStopWorkingForEmployerPage(Index(0)))
 
-  implicit lazy val arbitraryWhenDidYouStartWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStartWorkingForPreviousEmployerPage] =
-    Arbitrary(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)))
+  implicit lazy val arbitraryWhenDidYouStartWorkingForPreviousEmployerPage: Arbitrary[WhenDidYouStartWorkingForEmployerPage] =
+    Arbitrary(WhenDidYouStartWorkingForEmployerPage(Index(0)))
 
-  implicit lazy val arbitraryWhenDidYouStartWorkingForEmployerPage: Arbitrary[WhenDidYouStartWorkingForEmployerPage.type] =
-    Arbitrary(WhenDidYouStartWorkingForEmployerPage)
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersNamePage: Arbitrary[WhatIsYourEmployersNamePage] =
+    Arbitrary(WhatIsYourEmployersNamePage(Index(0)))
 
-  implicit lazy val arbitraryWhatIsYourPreviousEmployersNamePage: Arbitrary[WhatIsYourPreviousEmployersNamePage] =
-    Arbitrary(WhatIsYourPreviousEmployersNamePage(Index(0)))
-
-  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddressPage: Arbitrary[WhatIsYourPreviousEmployersAddressPage] =
-    Arbitrary(WhatIsYourPreviousEmployersAddressPage(Index(0)))
-
-  implicit lazy val arbitraryWhatIsYourEmployersNamePage: Arbitrary[WhatIsYourEmployersNamePage.type] =
-    Arbitrary(WhatIsYourEmployersNamePage)
-
-  implicit lazy val arbitraryWhatIsYourEmployersAddressPage: Arbitrary[WhatIsYourEmployersAddressPage.type] =
-    Arbitrary(WhatIsYourEmployersAddressPage)
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddressPage: Arbitrary[WhatIsYourEmployersAddressPage] =
+    Arbitrary(WhatIsYourEmployersAddressPage(Index(0)))
 
   implicit lazy val arbitraryHaveYouEverWorkedInUkPage: Arbitrary[HaveYouEverWorkedInUkPage.type] =
     Arbitrary(HaveYouEverWorkedInUkPage)

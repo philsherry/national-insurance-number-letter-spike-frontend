@@ -16,12 +16,11 @@
 
 package pages
 
-import models.{Index, EmployersAddress}
-import play.api.libs.json.JsPath
+import models.Index
+import play.api.libs.json.{JsPath, JsValue}
+import queries.Settable
 
-final case class WhatIsYourEmployersAddressPage(index: Index) extends QuestionPage[EmployersAddress] {
+final case class EmployerQuery(index: Index) extends Settable[JsValue] {
 
-  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
-
-  override def toString: String = "whatIsYourEmployersAddress"
+  override def path: JsPath = JsPath \ "employer" \ index.position
 }

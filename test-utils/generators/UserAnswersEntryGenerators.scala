@@ -56,18 +56,10 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhenDidYouFinishYourEmploymentUserAnswersEntry: Arbitrary[(WhenDidYouFinishYourEmploymentPage.type, JsValue)] =
+  implicit lazy val arbitraryAreYouStillEmployedUserAnswersEntry: Arbitrary[(AreYouStillEmployedPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhenDidYouFinishYourEmploymentPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryAreYouStillEmployedUserAnswersEntry: Arbitrary[(AreYouStillEmployedPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[AreYouStillEmployedPage.type]
+        page  <- arbitrary[AreYouStillEmployedPage]
         value <- arbitrary[Boolean].map(Json.toJson(_))
       } yield (page, value)
     }
@@ -104,59 +96,35 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStopWorkingForPreviousEmployerPage, JsValue)] =
+  implicit lazy val arbitraryWhenDidYouStopWorkingForPreviousEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStopWorkingForEmployerPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhenDidYouStopWorkingForPreviousEmployerPage]
+        page  <- arbitrary[WhenDidYouStopWorkingForEmployerPage]
         value <- arbitrary[Int].map(Json.toJson(_))
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhenDidYouStartWorkingForPreviousEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStartWorkingForPreviousEmployerPage, JsValue)] =
+  implicit lazy val arbitraryWhenDidYouStartWorkingForPreviousEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStartWorkingForEmployerPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhenDidYouStartWorkingForPreviousEmployerPage]
+        page  <- arbitrary[WhenDidYouStartWorkingForEmployerPage]
         value <- arbitrary[Int].map(Json.toJson(_))
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhenDidYouStartWorkingForEmployerUserAnswersEntry: Arbitrary[(WhenDidYouStartWorkingForEmployerPage.type, JsValue)] =
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersNameUserAnswersEntry: Arbitrary[(WhatIsYourEmployersNamePage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhenDidYouStartWorkingForEmployerPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryWhatIsYourPreviousEmployersNameUserAnswersEntry: Arbitrary[(WhatIsYourPreviousEmployersNamePage, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhatIsYourPreviousEmployersNamePage]
+        page  <- arbitrary[WhatIsYourEmployersNamePage]
         value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddressUserAnswersEntry: Arbitrary[(WhatIsYourPreviousEmployersAddressPage, JsValue)] =
+  implicit lazy val arbitraryWhatIsYourPreviousEmployersAddressUserAnswersEntry: Arbitrary[(WhatIsYourEmployersAddressPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhatIsYourPreviousEmployersAddressPage]
-        value <- arbitrary[PreviousEmployersAddress].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryWhatIsYourEmployersNameUserAnswersEntry: Arbitrary[(WhatIsYourEmployersNamePage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhatIsYourEmployersNamePage.type]
-        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryWhatIsYourEmployersAddressUserAnswersEntry: Arbitrary[(WhatIsYourEmployersAddressPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhatIsYourEmployersAddressPage.type]
-        value <- arbitrary[WhatIsYourEmployersAddress].map(Json.toJson(_))
+        page  <- arbitrary[WhatIsYourEmployersAddressPage]
+        value <- arbitrary[EmployersAddress].map(Json.toJson(_))
       } yield (page, value)
     }
 

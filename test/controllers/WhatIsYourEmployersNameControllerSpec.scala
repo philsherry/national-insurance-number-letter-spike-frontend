@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourEmployersNameFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -40,41 +40,41 @@ class WhatIsYourEmployersNameControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new WhatIsYourEmployersNameFormProvider()
   val form = formProvider()
 
-  lazy val whatIsYourEmployersNameRoute = routes.WhatIsYourEmployersNameController.onPageLoad(NormalMode).url
+  lazy val whatIsYourPreviousEmployersNameRoute = routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), NormalMode).url
 
-  "WhatIsYourEmployersName Controller" - {
+  "WhatIsYourPreviousEmployersName Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whatIsYourEmployersNameRoute)
+        val request = FakeRequest(GET, whatIsYourPreviousEmployersNameRoute)
 
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[WhatIsYourEmployersNameView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhatIsYourEmployersNamePage, "answer").success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhatIsYourEmployersNamePage(Index(0)), "answer").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whatIsYourEmployersNameRoute)
+        val request = FakeRequest(GET, whatIsYourPreviousEmployersNameRoute)
 
         val view = application.injector.instanceOf[WhatIsYourEmployersNameView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -94,7 +94,7 @@ class WhatIsYourEmployersNameControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whatIsYourEmployersNameRoute)
+          FakeRequest(POST, whatIsYourPreviousEmployersNameRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value
@@ -110,7 +110,7 @@ class WhatIsYourEmployersNameControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whatIsYourEmployersNameRoute)
+          FakeRequest(POST, whatIsYourPreviousEmployersNameRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
@@ -120,7 +120,7 @@ class WhatIsYourEmployersNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -129,7 +129,7 @@ class WhatIsYourEmployersNameControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, whatIsYourEmployersNameRoute)
+        val request = FakeRequest(GET, whatIsYourPreviousEmployersNameRoute)
 
         val result = route(application, request).value
 
@@ -144,7 +144,7 @@ class WhatIsYourEmployersNameControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whatIsYourEmployersNameRoute)
+          FakeRequest(POST, whatIsYourPreviousEmployersNameRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value

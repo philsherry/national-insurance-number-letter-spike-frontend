@@ -16,17 +16,17 @@
 
 package pages
 
-import models.WhatIsYourEmployersAddress
+import models.{Index, EmployersAddress}
 import pages.behaviours.PageBehaviours
 
 class WhatIsYourEmployersAddressPageSpec extends PageBehaviours {
 
-  "WhatIsYourEmployersAddressPage" - {
+  "WhatIsYourPreviousEmployersAddressPage" - {
 
-    beRetrievable[WhatIsYourEmployersAddress](WhatIsYourEmployersAddressPage)
+    beRetrievable[EmployersAddress](WhatIsYourEmployersAddressPage(Index(0)))
 
-    beSettable[WhatIsYourEmployersAddress](WhatIsYourEmployersAddressPage)
+    beSettable[EmployersAddress](WhatIsYourEmployersAddressPage(Index(0)))
 
-    beRemovable[WhatIsYourEmployersAddress](WhatIsYourEmployersAddressPage)
+    beRemovable[EmployersAddress](WhatIsYourEmployersAddressPage(Index(0)))
   }
 }

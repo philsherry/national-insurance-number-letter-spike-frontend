@@ -62,16 +62,12 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
         .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").success.value
         .set(HaveYouEverWorkedInUkPage, true).success.value
-        .set(WhatIsYourEmployersNamePage, "employer").success.value
-        .set(WhatIsYourEmployersAddressPage, WhatIsYourEmployersAddress("line 1", Some("line 2"), Some("line 3"), "postcode")).success.value
-        .set(WhenDidYouStartWorkingForEmployerPage, LocalDate.now).success.value
-        .set(AreYouStillEmployedPage, false).success.value
-        .set(WhenDidYouFinishYourEmploymentPage, LocalDate.now).success.value
         .set(DoYouHaveAnyPreviousEmployersPage, true).success.value
-        .set(WhatIsYourPreviousEmployersNamePage(Index(0)), "previous employers name").success.value
-        .set(WhatIsYourPreviousEmployersAddressPage(Index(0)), PreviousEmployersAddress("line 1", None, None, "postcode")).success.value
-        .set(WhenDidYouStartWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
-        .set(WhenDidYouStopWorkingForPreviousEmployerPage(Index(0)), LocalDate.of(2001, 3, 2)).success.value
+        .set(WhatIsYourEmployersNamePage(Index(0)), "previous employers name").success.value
+        .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("line 1", None, None, "postcode")).success.value
+        .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
+        .set(AreYouStillEmployedPage(Index(0)), true).success.value
+        .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2001, 3, 2)).success.value
         .set(DoYouHavePrimaryDocumentPage, true).success.value
         .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).success.value
         .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
@@ -143,19 +139,14 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         ).flatten)
 
         val employmentHistory = SummaryListViewModel(Seq(
-          HaveYouEverWorkedInUkSummary.row(answers)(messages(application)),
-          WhatIsYourEmployersNameSummary.row(answers)(messages(application)),
-          WhatIsYourEmployersAddressSummary.row(answers)(messages(application)),
-          WhenDidYouStartWorkingForEmployerSummary.row(answers)(messages(application)),
-          AreYouStillEmployedSummary.row(answers)(messages(application)),
-          WhenDidYouFinishYourEmploymentSummary.row(answers)(messages(application))
+          HaveYouEverWorkedInUkSummary.row(answers)(messages(application))
         ).flatten)
 
-        val previousEmployers = List(ListWithActionsItem(
-          name = HtmlContent("previous employers name<br/>line 1, postcode<br/>1 February 2000 to 2 March 2001"),
+        val employers = List(ListWithActionsItem(
+          name = HtmlContent("previous employers name<br/>line 1, postcode<br/>Employed from 1 February 2000 to 2 March 2001"),
           actions = List(
-            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousEmployerHidden", "previous employers name")), href = routes.WhatIsYourPreviousEmployersNameController.onPageLoad(Index(0), CheckMode).url),
-            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousEmployerHidden", "previous employers name")), href = routes.AreYouSureYouWantToRemovePreviousEmployerController.onPageLoad(Index(0), CheckMode).url)
+            ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changeEmployerHidden", "previous employers name")), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), CheckMode).url),
+            ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removeEmployerHidden", "previous employers name")), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(0), CheckMode).url)
           )
         ))
 
@@ -166,7 +157,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           WhichAlternativeDocumentsSummary.row(answers)(messages(application))
         ).flatten)
 
-        val renderedView = view(personalDetails, previousNames, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, previousEmployers, supportingDocuments)(request, messages(application))
+        val renderedView = view(personalDetails, previousNames, addressHistory, previousAddresses, relationshipHistory, benefitHistory, employmentHistory, employers, supportingDocuments)(request, messages(application))
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual renderedView.toString

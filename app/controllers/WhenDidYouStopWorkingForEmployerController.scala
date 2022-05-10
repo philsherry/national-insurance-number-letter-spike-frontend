@@ -17,38 +17,38 @@
 package controllers
 
 import controllers.actions._
-import forms.AreYouStillEmployedFormProvider
+import forms.WhenDidYouStopWorkingForEmployerFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.AreYouStillEmployedPage
+import pages.WhenDidYouStopWorkingForEmployerPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.AreYouStillEmployedView
+import views.html.WhenDidYouStopWorkingForEmployerView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AreYouStillEmployedController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         navigator: Navigator,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: AreYouStillEmployedFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: AreYouStillEmployedView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class WhenDidYouStopWorkingForEmployerController @Inject()(
+                                                            override val messagesApi: MessagesApi,
+                                                            sessionRepository: SessionRepository,
+                                                            navigator: Navigator,
+                                                            identify: IdentifierAction,
+                                                            getData: DataRetrievalAction,
+                                                            requireData: DataRequiredAction,
+                                                            formProvider: WhenDidYouStopWorkingForEmployerFormProvider,
+                                                            val controllerComponents: MessagesControllerComponents,
+                                                            view: WhenDidYouStopWorkingForEmployerView
+                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  def form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(AreYouStillEmployedPage(index)) match {
+      val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -65,9 +65,9 @@ class AreYouStillEmployedController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouStillEmployedPage(index), value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForEmployerPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(AreYouStillEmployedPage(index), mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(index), mode, updatedAnswers))
       )
   }
 }

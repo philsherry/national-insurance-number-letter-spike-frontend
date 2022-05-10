@@ -14,14 +14,23 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{Index, EmployersAddress}
-import play.api.libs.json.JsPath
+import java.time.LocalDate
 
-final case class WhatIsYourEmployersAddressPage(index: Index) extends QuestionPage[EmployersAddress] {
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
+class WhenDidYouStopWorkingForEmployerFormProvider @Inject() extends Mappings {
 
-  override def toString: String = "whatIsYourEmployersAddress"
+  def apply(): Form[LocalDate] =
+    Form(
+      "value" -> localDate(
+        invalidKey     = "whenDidYouStopWorkingForEmployer.error.invalid",
+        allRequiredKey = "whenDidYouStopWorkingForEmployer.error.required.all",
+        twoRequiredKey = "whenDidYouStopWorkingForEmployer.error.required.two",
+        requiredKey    = "whenDidYouStopWorkingForEmployer.error.required"
+      )
+    )
 }

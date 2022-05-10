@@ -31,19 +31,15 @@ trait UserAnswersGenerator extends TryValues {
     arbitrary[(AreYouSureYouWantToRemovePreviousEmployerPage, JsValue)] ::
     arbitrary[(AreYouSureYouWantToRemovePreviousAddressPage, JsValue)] ::
     arbitrary[(WhichAlternativeDocumentsPage.type, JsValue)] ::
-    arbitrary[(WhenDidYouFinishYourEmploymentPage.type, JsValue)] ::
-    arbitrary[(AreYouStillEmployedPage.type, JsValue)] ::
+    arbitrary[(AreYouStillEmployedPage, JsValue)] ::
     arbitrary[(DoYouKnowYourNationalInsuranceNumberPage.type, JsValue)] ::
     arbitrary[(WhichPrimaryDocumentPage.type, JsValue)] ::
     arbitrary[(DoYouHaveTwoSecondaryDocumentsPage.type, JsValue)] ::
     arbitrary[(DoYouHavePrimaryDocumentPage.type, JsValue)] ::
-    arbitrary[(WhenDidYouStopWorkingForPreviousEmployerPage, JsValue)] ::
-    arbitrary[(WhenDidYouStartWorkingForPreviousEmployerPage, JsValue)] ::
-    arbitrary[(WhenDidYouStartWorkingForEmployerPage.type, JsValue)] ::
-    arbitrary[(WhatIsYourPreviousEmployersNamePage, JsValue)] ::
-    arbitrary[(WhatIsYourPreviousEmployersAddressPage, JsValue)] ::
-    arbitrary[(WhatIsYourEmployersNamePage.type, JsValue)] ::
-    arbitrary[(WhatIsYourEmployersAddressPage.type, JsValue)] ::
+    arbitrary[(WhenDidYouStopWorkingForEmployerPage, JsValue)] ::
+    arbitrary[(WhenDidYouStartWorkingForEmployerPage, JsValue)] ::
+    arbitrary[(WhatIsYourEmployersNamePage, JsValue)] ::
+    arbitrary[(WhatIsYourEmployersAddressPage, JsValue)] ::
     arbitrary[(HaveYouEverWorkedInUkPage.type, JsValue)] ::
     arbitrary[(DoYouHaveAnyPreviousEmployersPage.type, JsValue)] ::
     arbitrary[(WhatOtherUkBenefitsHaveYouReceivedPage.type, JsValue)] ::

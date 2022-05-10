@@ -17,26 +17,26 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Index, UserAnswers}
 import pages.WhatIsYourEmployersNamePage
 import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
 object WhatIsYourEmployersNameSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhatIsYourEmployersNamePage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(WhatIsYourEmployersNamePage(Index(index))).map {
       answer =>
 
         SummaryListRowViewModel(
-          key     = "whatIsYourEmployersName.checkYourAnswersLabel",
-          value   = ValueViewModel(Text(answer)),
+          key     = "whatIsYourPreviousEmployersName.checkYourAnswersLabel",
+          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.WhatIsYourEmployersNameController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whatIsYourEmployersName.change.hidden"))
+            ActionItemViewModel("site.change", routes.WhatIsYourEmployersNameController.onPageLoad(Index(index), CheckMode).url)
+              .withVisuallyHiddenText(messages("whatIsYourPreviousEmployersName.change.hidden"))
           )
         )
     }

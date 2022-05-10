@@ -25,6 +25,6 @@ class DoYouHaveAnyPreviousEmployersFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
     Form(
-      "value" -> boolean("doYouHaveAnyPreviousEmployers.error.required")
+      "value" -> boolean("employmentHistory.error.required")
     )
 }

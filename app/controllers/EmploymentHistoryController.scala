@@ -17,57 +17,58 @@
 package controllers
 
 import controllers.actions._
-import forms.AreYouStillEmployedFormProvider
+import forms.DoYouHaveAnyPreviousEmployersFormProvider
+import models.{Mode, UserAnswers}
+import navigation.Navigator
+import pages._
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers.EmployerSummary
+import views.html.EmploymentHistoryView
 
 import javax.inject.Inject
-import models.{Index, Mode}
-import navigation.Navigator
-import pages.AreYouStillEmployedPage
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.AreYouStillEmployedView
-
 import scala.concurrent.{ExecutionContext, Future}
 
-class AreYouStillEmployedController @Inject()(
+class EmploymentHistoryController @Inject()(
                                          override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
                                          navigator: Navigator,
                                          identify: IdentifierAction,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction,
-                                         formProvider: AreYouStillEmployedFormProvider,
+                                         formProvider: DoYouHaveAnyPreviousEmployersFormProvider,
                                          val controllerComponents: MessagesControllerComponents,
-                                         view: AreYouStillEmployedView
+                                         view: EmploymentHistoryView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
+    answers.get(EmployersQuery).getOrElse(Seq.empty).indices.map(EmployerSummary.item(answers, mode, _))
+
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(AreYouStillEmployedPage(index)) match {
+      val preparedForm = request.userAnswers.get(DoYouHaveAnyPreviousEmployersPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode))
+      Ok(view(preparedForm, listItems(request.userAnswers, mode), mode))
   }
 
-  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
+          Future.successful(BadRequest(view(formWithErrors, listItems(request.userAnswers, mode), mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouStillEmployedPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(AreYouStillEmployedPage(index), mode, updatedAnswers))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(DoYouHaveAnyPreviousEmployersPage, value))
+          } yield Redirect(navigator.nextPage(DoYouHaveAnyPreviousEmployersPage, mode, updatedAnswers))
       )
   }
 }

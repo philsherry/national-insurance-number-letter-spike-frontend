@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.WhenDidYouStartWorkingForEmployerFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.WhenDidYouStartWorkingForEmployerPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -31,42 +32,42 @@ import views.html.WhenDidYouStartWorkingForEmployerView
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhenDidYouStartWorkingForEmployerController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: WhenDidYouStartWorkingForEmployerFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: WhenDidYouStartWorkingForEmployerView
+                                                             override val messagesApi: MessagesApi,
+                                                             sessionRepository: SessionRepository,
+                                                             navigator: Navigator,
+                                                             identify: IdentifierAction,
+                                                             getData: DataRetrievalAction,
+                                                             requireData: DataRequiredAction,
+                                                             formProvider: WhenDidYouStartWorkingForEmployerFormProvider,
+                                                             val controllerComponents: MessagesControllerComponents,
+                                                             view: WhenDidYouStartWorkingForEmployerView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(WhenDidYouStartWorkingForEmployerPage) match {
+      val preparedForm = request.userAnswers.get(WhenDidYouStartWorkingForEmployerPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, index, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStartWorkingForEmployerPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStartWorkingForEmployerPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhenDidYouStartWorkingForEmployerPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenDidYouStartWorkingForEmployerPage(index), mode, updatedAnswers))
       )
   }
 }

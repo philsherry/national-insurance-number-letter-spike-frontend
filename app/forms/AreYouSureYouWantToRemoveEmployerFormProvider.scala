@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{Index, EmployersAddress}
-import play.api.libs.json.JsPath
+import javax.inject.Inject
 
-final case class WhatIsYourEmployersAddressPage(index: Index) extends QuestionPage[EmployersAddress] {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
+class AreYouSureYouWantToRemoveEmployerFormProvider @Inject() extends Mappings {
 
-  override def toString: String = "whatIsYourEmployersAddress"
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("areYouSureYouWantToRemovePreviousEmployer.error.required")
+    )
 }

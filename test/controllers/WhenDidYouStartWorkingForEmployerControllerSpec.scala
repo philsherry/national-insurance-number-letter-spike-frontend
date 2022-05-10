@@ -17,10 +17,9 @@
 package controllers
 
 import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.WhenDidYouStartWorkingForEmployerFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -44,22 +43,22 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  lazy val whenDidYouStartWorkingForEmployerRoute = routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(NormalMode).url
+  lazy val whenDidYouStartWorkingForPreviousEmployerRoute = routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(0), NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest(GET, whenDidYouStartWorkingForEmployerRoute)
+    FakeRequest(GET, whenDidYouStartWorkingForPreviousEmployerRoute)
 
   def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, whenDidYouStartWorkingForEmployerRoute)
+    FakeRequest(POST, whenDidYouStartWorkingForPreviousEmployerRoute)
       .withFormUrlEncodedBody(
         "value.day"   -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
         "value.year"  -> validAnswer.getYear.toString
       )
 
-  "WhenDidYouStartWorkingForEmployer Controller" - {
+  "WhenDidYouStartWorkingForPreviousEmployer Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
@@ -71,13 +70,13 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
         val view = application.injector.instanceOf[WhenDidYouStartWorkingForEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(getRequest, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStartWorkingForEmployerPage, validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStartWorkingForEmployerPage(Index(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -87,7 +86,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(getRequest, messages(application)).toString
       }
     }
 
@@ -118,7 +117,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       val request =
-        FakeRequest(POST, whenDidYouStartWorkingForEmployerRoute)
+        FakeRequest(POST, whenDidYouStartWorkingForPreviousEmployerRoute)
           .withFormUrlEncodedBody(("value", "invalid value"))
 
       running(application) {
@@ -129,7 +128,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

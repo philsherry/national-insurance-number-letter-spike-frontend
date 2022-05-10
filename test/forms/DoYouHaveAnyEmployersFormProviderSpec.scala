@@ -14,23 +14,32 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{Index, UserAnswers}
-import play.api.libs.json.JsPath
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-import scala.util.Try
+class DoYouHaveAnyEmployersFormProviderSpec extends BooleanFieldBehaviours {
 
-final case class AreYouStillEmployedPage(index: Index) extends QuestionPage[Boolean] {
+  val requiredKey = "employmentHistory.error.required"
+  val invalidKey = "error.boolean"
 
-  override def path: JsPath = JsPath \ toString \ index.position \ toString
+  val form = new DoYouHaveAnyPreviousEmployersFormProvider()()
 
-  override def toString: String = "areYouStillEmployed"
+  ".value" - {
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
-    value match {
-      case Some(true) => userAnswers.remove(WhenDidYouStopWorkingForEmployerPage(index))
-      case _ => super.cleanup(value, userAnswers)
-    }
+    val fieldName = "value"
+
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
 }

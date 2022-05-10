@@ -17,7 +17,7 @@
 package forms
 
 import forms.mappings.Mappings
-import models.WhatIsYourEmployersAddress
+import models.EmployersAddress
 import play.api.data.Form
 import play.api.data.Forms._
 
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 class WhatIsYourEmployersAddressFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[WhatIsYourEmployersAddress] = Form(
+   def apply(): Form[EmployersAddress] = Form(
      mapping(
        "addressLine1" -> text("whatIsYourEmployersAddress.error.addressLine1.required")
          .verifying(maxLength(100, "whatIsYourEmployersAddress.error.addressLine1.length")),
@@ -35,6 +35,6 @@ class WhatIsYourEmployersAddressFormProvider @Inject() extends Mappings {
          .verifying(maxLength(100, "whatIsYourEmployersAddress.error.addressLine3.length"))),
        "postcode" -> text("whatIsYourEmployersAddress.error.postcode.required")
          .verifying(maxLength(100, "whatIsYourEmployersAddress.error.postcode.length"))
-    )(WhatIsYourEmployersAddress.apply)(WhatIsYourEmployersAddress.unapply)
+    )(EmployersAddress.apply)(EmployersAddress.unapply)
    )
  }

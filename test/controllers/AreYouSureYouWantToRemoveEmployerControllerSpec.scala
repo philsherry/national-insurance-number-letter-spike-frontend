@@ -17,64 +17,45 @@
 package controllers
 
 import base.SpecBase
-import forms.AreYouStillEmployedFormProvider
-import models.{Index, NormalMode, UserAnswers}
+import forms.AreYouSureYouWantToRemoveEmployerFormProvider
+import models.{Index, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{never, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AreYouStillEmployedPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.AreYouStillEmployedView
+import views.html.AreYouSureYouWantToRemoveEmployerView
 
 import scala.concurrent.Future
 
-class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
+class AreYouSureYouWantToRemoveEmployerControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new AreYouStillEmployedFormProvider()
+  val formProvider = new AreYouSureYouWantToRemoveEmployerFormProvider()
   val form = formProvider()
 
-  lazy val areYouStillEmployedRoute = routes.AreYouStillEmployedController.onPageLoad(Index(0), NormalMode).url
+  lazy val areYouSureYouWantToRemovePreviousEmployerRoute = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(0), NormalMode).url
 
-  "AreYouStillEmployed Controller" - {
+  "AreYouSureYouWantToRemovePreviousEmployer Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, areYouStillEmployedRoute)
+        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousEmployerRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[AreYouStillEmployedView]
+        val view = application.injector.instanceOf[AreYouSureYouWantToRemoveEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(AreYouStillEmployedPage(Index(0)), true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, areYouStillEmployedRoute)
-
-        val view = application.injector.instanceOf[AreYouStillEmployedView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, None, None, None, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -94,7 +75,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, areYouStillEmployedRoute)
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousEmployerRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -104,23 +85,73 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must remove the previous employer if the user selects yes" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousEmployerRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        route(application, request).value.futureValue
+
+        verify(mockSessionRepository, times(1)).set(any())
+      }
+    }
+
+    "must not remove the previous employer if the user selects no" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousEmployerRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        route(application, request).value.futureValue
+
+        verify(mockSessionRepository, never()).set(any())
+      }
+    }
+
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
         val request =
-          FakeRequest(POST, areYouStillEmployedRoute)
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousEmployerRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[AreYouStillEmployedView]
+        val view = application.injector.instanceOf[AreYouSureYouWantToRemoveEmployerView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, None, None, None, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -129,7 +160,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, areYouStillEmployedRoute)
+        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousEmployerRoute)
 
         val result = route(application, request).value
 
@@ -144,7 +175,7 @@ class AreYouStillEmployedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, areYouStillEmployedRoute)
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousEmployerRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value

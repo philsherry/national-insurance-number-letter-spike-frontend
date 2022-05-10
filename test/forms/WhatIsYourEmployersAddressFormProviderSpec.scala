@@ -93,7 +93,6 @@ class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours {
   ".postcode" - {
 
     val fieldName = "postcode"
-    val requiredKey = "whatIsYourEmployersAddress.error.postcode.required"
     val lengthKey = "whatIsYourEmployersAddress.error.postcode.length"
     val maxLength = 100
 
@@ -108,12 +107,6 @@ class WhatIsYourEmployersAddressFormProviderSpec extends StringFieldBehaviours {
       fieldName,
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
     )
   }
 }
