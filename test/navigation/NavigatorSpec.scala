@@ -289,7 +289,7 @@ class NavigatorSpec extends SpecBase {
 
       "go from the have you worked in the uk page" - {
 
-        "to the employment history page when the user selects yet" in {
+        "to the employment history page when the user selects yes" in {
           val answers = emptyUserAnswers.set(HaveYouEverWorkedInUkPage, true).success.value
           navigator.nextPage(HaveYouEverWorkedInUkPage, NormalMode, answers) mustBe routes.EmploymentHistoryController.onPageLoad(NormalMode)
         }
