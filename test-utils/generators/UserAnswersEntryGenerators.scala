@@ -24,6 +24,14 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { this: Generators =>
 
+  implicit lazy val arbitraryAreYouSureYouWantToRemovePreviousRelationshipUserAnswersEntry: Arbitrary[(AreYouSureYouWantToRemovePreviousRelationshipPage, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AreYouSureYouWantToRemovePreviousRelationshipPage]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryAreYouSureYouWantToRemovePreviousNameUserAnswersEntry: Arbitrary[(AreYouSureYouWantToRemovePreviousNamePage, JsValue)] =
     Arbitrary {
       for {
@@ -184,10 +192,10 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators { t
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryPreviousMarriageOrPartnershipDetailsUserAnswersEntry: Arbitrary[(PreviousMarriageOrPartnershipDetailsPage.type, JsValue)] =
+  implicit lazy val arbitraryPreviousMarriageOrPartnershipDetailsUserAnswersEntry: Arbitrary[(PreviousMarriageOrPartnershipDetailsPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[PreviousMarriageOrPartnershipDetailsPage.type]
+        page  <- arbitrary[PreviousMarriageOrPartnershipDetailsPage]
         value <- arbitrary[PreviousMarriageOrPartnershipDetails].map(Json.toJson(_))
       } yield (page, value)
     }

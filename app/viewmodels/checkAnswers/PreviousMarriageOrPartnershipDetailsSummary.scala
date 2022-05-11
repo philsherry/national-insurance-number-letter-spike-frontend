@@ -17,36 +17,33 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{Index, Mode, UserAnswers}
 import pages.PreviousMarriageOrPartnershipDetailsPage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
+import uk.gov.hmrc.hmrcfrontend.views.viewmodels.listwithactions.ListWithActionsAction
 
 import java.time.format.DateTimeFormatter
 
 object PreviousMarriageOrPartnershipDetailsSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PreviousMarriageOrPartnershipDetailsPage).map {
-      answer =>
+  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
-        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): Option[ListWithActionsItem] =
+    answers
+      .get(PreviousMarriageOrPartnershipDetailsPage(Index(i)))
+      .map { details =>
+        val from = dateFormatter.format(details.startDate)
+        val to = dateFormatter.format(details.endDate)
+        val content = messages("previousMarriageOrPartnershipDetails.checkYourAnswersFormat", from, to)
 
-        val value = List(answer.startDate.format(dateFormatter), answer.endDate.format(dateFormatter), answer.endingReason)
-          .map(HtmlFormat.escape(_).toString)
-          .mkString("<br/>")
-
-        SummaryListRowViewModel(
-          key     = "previousMarriageOrPartnershipDetails.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("previousMarriageOrPartnershipDetails.change.hidden"))
+        ListWithActionsItem(
+          name = Text(content),
+          actions = List(
+            ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousRelationshipHidden", from, to)), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(i), mode).url),
+            ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousRelationshipHidden", from, to)), href = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(i), mode).url)
           )
         )
-    }
+      }
 }

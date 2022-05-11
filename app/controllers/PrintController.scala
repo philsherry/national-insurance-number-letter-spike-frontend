@@ -23,7 +23,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.PrintModel
-import views.xml.xml.TestTemplate
+import views.xml.xml.PrintTemplate
 
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class PrintController @Inject()(
                                  getData: DataRetrievalAction,
                                  requireData: DataRequiredAction,
                                  fop: PlayFop,
-                                 template: TestTemplate,
+                                 template: PrintTemplate,
                                  view: views.html.PrintView
                                ) extends FrontendBaseController with I18nSupport {
 

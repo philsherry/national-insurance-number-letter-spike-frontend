@@ -109,10 +109,10 @@ POST       /have-you-been-in-a-previous-marriage-or-civil-partnership           
 GET        /change-if-you-have-been-in-a-previous-marriage-or-civil-partnership                  controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-have-been-in-a-previous-marriage-or-civil-partnership                  controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode: Mode = CheckMode)
 
-GET        /when-were-you-previously-in-a-marriage-or-civil-partnership                        controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST       /when-were-you-previously-in-a-marriage-or-civil-partnership                        controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-when-you-were-previously-in-a-marriage-or-civil-partnership                  controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-when-you-were-previously-in-a-marriage-or-civil-partnership                  controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/when-were-you-previously-in-a-marriage-or-civil-partnership                        controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/when-were-you-previously-in-a-marriage-or-civil-partnership                        controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-when-you-were-previously-in-a-marriage-or-civil-partnership                  controllers.PreviousMarriageOrPartnershipDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-when-you-were-previously-in-a-marriage-or-civil-partnership                  controllers.PreviousMarriageOrPartnershipDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /do-you-know-your-child-benefit-number                        controllers.DoYouKnowYourChildBenefitNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /do-you-know-your-child-benefit-number                        controllers.DoYouKnowYourChildBenefitNumberController.onSubmit(mode: Mode = NormalMode)
@@ -215,3 +215,8 @@ GET        /:index/are-you-sure-you-want-to-remove-previous-name                
 POST       /:index/are-you-sure-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-if-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-if-you-want-to-remove-previous-name                        controllers.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/are-you-sure-you-want-to-remove-previous-relationship                        controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/are-you-sure-you-want-to-remove-previous-relationship                        controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-if-you-are-sure-you-want-to-remove-previous-relationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-if-you-are-sure-you-want-to-remove-previous-relationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index: Index, mode: Mode = CheckMode)

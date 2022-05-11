@@ -57,7 +57,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
       .set(WhatIsYourTelephoneNumberPage, "1234567890").get
       .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).get
       .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 5, 1)).get
-      .set(PreviousMarriageOrPartnershipDetailsPage, previousMarriage).get
+      .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), previousMarriage).get
       .set(HaveYouEverClaimedChildBenefitPage, true).get
       .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
       .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get

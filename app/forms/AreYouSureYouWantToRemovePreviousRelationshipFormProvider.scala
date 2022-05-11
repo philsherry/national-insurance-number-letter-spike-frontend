@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{Index, PreviousMarriageOrPartnershipDetails}
-import pages.behaviours.PageBehaviours
+import javax.inject.Inject
 
-class PreviousMarriageOrPartnershipDetailsPageSpec extends PageBehaviours {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  "PreviousMarriageOrPartnershipDetailsPage" - {
+class AreYouSureYouWantToRemovePreviousRelationshipFormProvider @Inject() extends Mappings {
 
-    beRetrievable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-
-    beSettable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-
-    beRemovable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-  }
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("areYouSureYouWantToRemovePreviousRelationship.error.required")
+    )
 }

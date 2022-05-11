@@ -16,17 +16,10 @@
 
 package pages
 
-import models.{Index, PreviousMarriageOrPartnershipDetails}
-import pages.behaviours.PageBehaviours
+import play.api.libs.json.{JsPath, JsValue}
+import queries.Gettable
 
-class PreviousMarriageOrPartnershipDetailsPageSpec extends PageBehaviours {
+case object PreviousRelationshipsQuery extends Gettable[Seq[JsValue]] {
 
-  "PreviousMarriageOrPartnershipDetailsPage" - {
-
-    beRetrievable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-
-    beSettable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-
-    beRemovable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-  }
+  override def path: JsPath = JsPath \ "previousRelationships"
 }

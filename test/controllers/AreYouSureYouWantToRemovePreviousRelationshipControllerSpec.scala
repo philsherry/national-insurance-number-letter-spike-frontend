@@ -17,51 +17,54 @@
 package controllers
 
 import base.SpecBase
-import forms.AreYouSureYouWantToRemovePreviousNameFormProvider
-import models.{Index, NormalMode, UserAnswers, WhatIsYourPreviousName}
+import forms.AreYouSureYouWantToRemovePreviousRelationshipFormProvider
+import models.{Index, NormalMode, PreviousMarriageOrPartnershipDetails}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito._
+import org.mockito.Mockito.{times, verify, when, never}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{AreYouSureYouWantToRemovePreviousNamePage, WhatIsYourPreviousNamePage}
+import pages.PreviousMarriageOrPartnershipDetailsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.AreYouSureYouWantToRemovePreviousNameView
+import views.html.AreYouSureYouWantToRemovePreviousRelationshipView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
-class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with MockitoSugar {
+class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new AreYouSureYouWantToRemovePreviousNameFormProvider()
+  val formProvider = new AreYouSureYouWantToRemovePreviousRelationshipFormProvider()
   val form = formProvider()
 
-  lazy val areYouSureYouWantToRemovePreviousNameRoute = routes.AreYouSureYouWantToRemovePreviousNameController.onPageLoad(Index(0), NormalMode).url
+  val from = LocalDate.of(2000, 2, 1)
+  val to = LocalDate.of(2001, 3, 2)
+  val details = PreviousMarriageOrPartnershipDetails(from, to, "nunya")
 
-  "AreYouSureYouWantToRemovePreviousName Controller" - {
+  val answers = emptyUserAnswers
+    .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), details).success.value
+
+  lazy val areYouSureYouWantToRemovePreviousRelationshipRoute = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(0), NormalMode).url
+
+  "AreYouSureYouWantToRemovePreviousRelationship Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val name = WhatIsYourPreviousName("first", Some("middle"), "last")
-
-      val userAnswers = emptyUserAnswers
-        .set(WhatIsYourPreviousNamePage(Index(0)), name).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousNameRoute)
+        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousRelationshipRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousNameView]
+        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousRelationshipView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, "first middle last", NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, details, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -81,7 +84,7 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
 
       running(application) {
         val request =
-          FakeRequest(POST, areYouSureYouWantToRemovePreviousNameRoute)
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousRelationshipRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -109,7 +112,7 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
 
       running(application) {
         val request =
-          FakeRequest(POST, areYouSureYouWantToRemovePreviousNameRoute)
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousRelationshipRoute)
             .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value
@@ -123,26 +126,21 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val name = WhatIsYourPreviousName("first", Some("middle"), "last")
-
-      val userAnswers = UserAnswers(userAnswersId)
-        .set(WhatIsYourPreviousNamePage(Index(0)), name).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
         val request =
-          FakeRequest(POST, areYouSureYouWantToRemovePreviousNameRoute)
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousRelationshipRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousNameView]
+        val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousRelationshipView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, "first middle last", NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, details, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -151,7 +149,7 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousNameRoute)
+        val request = FakeRequest(GET, areYouSureYouWantToRemovePreviousRelationshipRoute)
 
         val result = route(application, request).value
 
@@ -166,7 +164,7 @@ class AreYouSureYouWantToRemovePreviousNameControllerSpec extends SpecBase with 
 
       running(application) {
         val request =
-          FakeRequest(POST, areYouSureYouWantToRemovePreviousNameRoute)
+          FakeRequest(POST, areYouSureYouWantToRemovePreviousRelationshipRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value

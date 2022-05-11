@@ -16,17 +16,12 @@
 
 package pages
 
-import models.{Index, PreviousMarriageOrPartnershipDetails}
-import pages.behaviours.PageBehaviours
+import models.Index
+import play.api.libs.json.JsPath
 
-class PreviousMarriageOrPartnershipDetailsPageSpec extends PageBehaviours {
+final case class AreYouSureYouWantToRemovePreviousRelationshipPage(index: Index) extends QuestionPage[Boolean] {
 
-  "PreviousMarriageOrPartnershipDetailsPage" - {
+  override def path: JsPath = JsPath \ "previousRelationships" \ index.position \ toString
 
-    beRetrievable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-
-    beSettable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-
-    beRemovable[PreviousMarriageOrPartnershipDetails](PreviousMarriageOrPartnershipDetailsPage(Index(0)))
-  }
+  override def toString: String = "areYouSureYouWantToRemovePreviousRelationship"
 }

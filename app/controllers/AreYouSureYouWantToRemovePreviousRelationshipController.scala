@@ -17,71 +17,58 @@
 package controllers
 
 import controllers.actions._
-import forms.AreYouSureYouWantToRemovePreviousNameFormProvider
+import forms.AreYouSureYouWantToRemovePreviousRelationshipFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.{AreYouSureYouWantToRemovePreviousNamePage, PreviousNameQuery, WhatIsYourPreviousNamePage}
+import pages.{AreYouSureYouWantToRemovePreviousRelationshipPage, PreviousMarriageOrPartnershipDetailsPage, PreviousRelationshipQuery}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.AreYouSureYouWantToRemovePreviousNameView
+import views.html.AreYouSureYouWantToRemovePreviousRelationshipView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AreYouSureYouWantToRemovePreviousNameController @Inject()(
+class AreYouSureYouWantToRemovePreviousRelationshipController @Inject()(
                                          override val messagesApi: MessagesApi,
                                          sessionRepository: SessionRepository,
                                          navigator: Navigator,
                                          identify: IdentifierAction,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction,
-                                         formProvider: AreYouSureYouWantToRemovePreviousNameFormProvider,
+                                         formProvider: AreYouSureYouWantToRemovePreviousRelationshipFormProvider,
                                          val controllerComponents: MessagesControllerComponents,
-                                         view: AreYouSureYouWantToRemovePreviousNameView
+                                         view: AreYouSureYouWantToRemovePreviousRelationshipView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
-  private def getName(index: Index, userAnswers: UserAnswers): String =
-    userAnswers.get(WhatIsYourPreviousNamePage(index))
-      .map(n => Seq(
-        Some(n.firstName),
-        n.middleNames,
-        Some(n.lastName)).flatten).getOrElse(Seq.empty).mkString(" ")
-
-  private def removeName(answers: UserAnswers, index: Index): Future[Unit] = for {
-    updatedAnswers <- Future.fromTry(answers.remove(PreviousNameQuery(index)))
-    _ <- sessionRepository.set(updatedAnswers)
+  private def removeRelationship(answers: UserAnswers, index: Index): Future[Unit] = for {
+    updatedAnswers <- Future.fromTry(answers.remove(PreviousRelationshipQuery(index)))
+    _              <- sessionRepository.set(updatedAnswers)
   } yield ()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val name = getName(index, request.userAnswers)
-
-      val preparedForm = request.userAnswers.get(AreYouSureYouWantToRemovePreviousNamePage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, name, mode, index))
+      request.userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(index)).map { details =>
+        Ok(view(form, details, index, mode))
+      }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors => {
-          val name = getName(index, request.userAnswers)
-          Future.successful(BadRequest(view(formWithErrors, name, mode, index)))
-        },
+        formWithErrors =>
+          request.userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(index)).map { details =>
+            Future.successful(BadRequest(view(formWithErrors, details, index, mode)))
+          }.getOrElse(Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousNamePage(index), value))
-            _              <- if (value) removeName(updatedAnswers, index) else Future.unit
-          } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousNamePage(index), mode, updatedAnswers))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouSureYouWantToRemovePreviousRelationshipPage(index), value))
+            _              <- if (value) removeRelationship(updatedAnswers, index) else Future.unit
+          } yield Redirect(navigator.nextPage(AreYouSureYouWantToRemovePreviousRelationshipPage(index), mode, updatedAnswers))
       )
   }
 }
