@@ -16,21 +16,34 @@
 
 package audit
 
+import audit.DownloadAuditEvent._
 import models._
-import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
+import org.mockito.Mockito.{times, verify}
+import org.mockito.ArgumentMatchers.{eq => eqTo, any}
+import org.scalatestplus.mockito.MockitoSugar
 import pages._
 import uk.gov.hmrc.domain.Nino
-import DownloadAuditEvent._
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.http.connector.AuditConnector
+import play.api.Configuration
 
 import java.time.LocalDate
+import scala.concurrent.ExecutionContext.Implicits.global
 
-class DownloadAuditEventSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
+class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues with MockitoSugar {
 
-  "apply" - {
+  val mockAuditConnector: AuditConnector = mock[AuditConnector]
+  val configuration: Configuration = Configuration(
+    "auditing.downloadEventName" -> "downloadAuditEvent"
+  )
+  val service = new AuditService(mockAuditConnector, configuration)
 
-    "must create the correct event from the given user answers" in {
+  "auditDownload" - {
+
+    "must call the audit connector with the correct payload" in {
 
       val now = LocalDate.now
 
@@ -106,7 +119,10 @@ class DownloadAuditEventSpec extends AnyFreeSpec with Matchers with OptionValues
         )
       )
 
-      DownloadAuditEvent(answers).value mustEqual expected
+      val hc = HeaderCarrier()
+      service.auditDownload(answers)(hc)
+
+      verify(mockAuditConnector, times(1)).sendExplicitAudit(eqTo("downloadAuditEvent"), eqTo(expected))(eqTo(hc), any(), any())
     }
   }
 }

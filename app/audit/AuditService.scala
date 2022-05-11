@@ -17,14 +17,19 @@
 package audit
 
 import com.google.inject.{Inject, Singleton}
+import play.api.{Logging, Configuration}
 import models.UserAnswers
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
+import uk.gov.hmrc.http.HeaderCarrier
+import scala.concurrent.ExecutionContext
 
 @Singleton
-class AuditService @Inject() (connector: AuditConnector){
+class AuditService @Inject() (connector: AuditConnector, configuration: Configuration)(implicit ec: ExecutionContext) extends Logging {
 
-  def auditDownload(userAnswers: UserAnswers): Unit = {
-
-  }
-
+  def auditDownload(answers: UserAnswers)(implicit hc: HeaderCarrier): Unit =
+    DownloadAuditEvent(answers).map { data =>
+      connector.sendExplicitAudit(configuration.get[String]("auditing.downloadEventName"), data)
+    }.getOrElse {
+      logger.warn(s"Unable to create download event for ${answers.id}")
+    }
 }

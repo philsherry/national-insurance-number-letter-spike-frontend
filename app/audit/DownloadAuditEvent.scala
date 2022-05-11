@@ -20,6 +20,7 @@ import audit.DownloadAuditEvent._
 import models.{Index, UserAnswers}
 import pages._
 import cats.implicits._
+import play.api.libs.json.{Json, Format}
 
 import java.time.LocalDate
 
@@ -36,23 +37,8 @@ final case class DownloadAuditEvent(
                                      documents: List[String]
                                    )
 
+// scalastyle:off
 object DownloadAuditEvent {
-
-  private[audit] final case class Name(firstName: String, middleNames: Option[String], lastName: String)
-  private[audit] final case class Names(currentName: Name, previousNames: List[Name])
-
-  private[audit] final case class Address(line1: String, line2: Option[String], line3: Option[String], postcode: Option[String], country: Option[String])
-  private[audit] final case class PreviousAddress(line1: String, line2: Option[String], line3: Option[String], postcode: Option[String], country: Option[String], from: LocalDate, to: LocalDate)
-  private[audit] final case class Addresses(currentAddress: Address, previousAddresses: List[PreviousAddress])
-
-  private[audit] final case class Relationship(startDate: LocalDate)
-  private[audit] final case class PreviousRelationship(startDate: LocalDate, endDate: LocalDate, reasonForEnding: String)
-  private[audit] final case class Relationships(currentRelationship: Option[Relationship], previousRelationships: List[PreviousRelationship])
-
-  private[audit] final case class Benefits(claimedChildBenefit: Boolean, childBenefitNumber: Option[String], otherBenefits: Option[String])
-
-  private[audit] final case class EmployerAddress(line1: String, line2: Option[String], line3: Option[String], postcode: String)
-  private[audit] final case class Employer(name: String, address: EmployerAddress, startDate: LocalDate, endDate: Option[LocalDate])
 
   def apply(answers: UserAnswers): Option[DownloadAuditEvent] = for {
     names                     <- getNames(answers)
@@ -109,7 +95,7 @@ object DownloadAuditEvent {
   } yield Relationships(current, previous)
 
   private def getCurrentRelationship(answers: UserAnswers): Option[Relationship] =
-    answers.get(WhenDidYouGetMarriedPage).map(Relationship)
+    answers.get(WhenDidYouGetMarriedPage).map(d => Relationship(d))
 
   private def getPreviousRelationships(answers: UserAnswers): Option[List[PreviousRelationship]] =
     answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty).indices.toList.traverse { i =>
@@ -137,4 +123,61 @@ object DownloadAuditEvent {
   private def getDocuments(answers: UserAnswers): Option[List[String]] =
     answers.get(WhichPrimaryDocumentPage).map(d => List(d.toString)) orElse
       answers.get(WhichAlternativeDocumentsPage).map(d => d.map(_.toString).toList)
+
+  private[audit] final case class Name(firstName: String, middleNames: Option[String], lastName: String)
+  object Name {
+    implicit lazy val formats: Format[Name] = Json.format
+  }
+
+  private[audit] final case class Names(currentName: Name, previousNames: List[Name])
+  object Names {
+    implicit lazy val formats: Format[Names] = Json.format
+  }
+
+  private[audit] final case class Address(line1: String, line2: Option[String], line3: Option[String], postcode: Option[String], country: Option[String])
+  object Address {
+    implicit lazy val formats: Format[Address] = Json.format
+  }
+
+  private[audit] final case class PreviousAddress(line1: String, line2: Option[String], line3: Option[String], postcode: Option[String], country: Option[String], from: LocalDate, to: LocalDate)
+  object PreviousAddress {
+    implicit lazy val formats: Format[PreviousAddress] = Json.format
+  }
+
+  private[audit] final case class Addresses(currentAddress: Address, previousAddresses: List[PreviousAddress])
+  object Addresses {
+    implicit lazy val formats: Format[Addresses] = Json.format
+  }
+
+  private[audit] final case class Relationship(startDate: LocalDate)
+  object Relationship {
+    implicit lazy val formats: Format[Relationship] = Json.format
+  }
+
+  private[audit] final case class PreviousRelationship(startDate: LocalDate, endDate: LocalDate, reasonForEnding: String)
+  object PreviousRelationship {
+    implicit lazy val formats: Format[PreviousRelationship] = Json.format
+  }
+
+  private[audit] final case class Relationships(currentRelationship: Option[Relationship], previousRelationships: List[PreviousRelationship])
+  object Relationships {
+    implicit lazy val formats: Format[Relationships] = Json.format
+  }
+
+  private[audit] final case class Benefits(claimedChildBenefit: Boolean, childBenefitNumber: Option[String], otherBenefits: Option[String])
+  object Benefits {
+    implicit lazy val formats: Format[Benefits] = Json.format
+  }
+
+  private[audit] final case class EmployerAddress(line1: String, line2: Option[String], line3: Option[String], postcode: String)
+  object EmployerAddress {
+    implicit lazy val formats: Format[EmployerAddress] = Json.format
+  }
+
+  private[audit] final case class Employer(name: String, address: EmployerAddress, startDate: LocalDate, endDate: Option[LocalDate])
+  object Employer {
+    implicit lazy val formats: Format[Employer] = Json.format
+  }
+
+  implicit lazy val writes: Format[DownloadAuditEvent] = Json.format
 }
