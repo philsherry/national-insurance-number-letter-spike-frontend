@@ -26,9 +26,10 @@ import uk.gov.hmrc.domain.Nino
 import viewmodels.PrintModel
 import views.html.PrintView
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
+import audit.AuditService
 
 import java.nio.charset.Charset
 import java.time.LocalDate
@@ -109,11 +110,15 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
     "onDownload" - {
 
       "must return OK for a GET when user answers is complete" in {
+        val mockAuditService = mock[AuditService]
         val mockFop = mock[PlayFop]
         when(mockFop.processTwirlXml(any(), any(), any(), any())).thenReturn("hello".getBytes)
 
         val application = applicationBuilder(userAnswers = Some(completeUserAnswers))
-          .overrides(bind[PlayFop].toInstance(mockFop))
+          .overrides(
+            bind[PlayFop].toInstance(mockFop),
+            bind[AuditService].toInstance(mockAuditService)
+          )
           .build()
 
         running(application) {
@@ -123,6 +128,8 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
 
           status(result) mustEqual OK
           contentAsBytes(result).decodeString(Charset.defaultCharset()) mustEqual "hello"
+
+          verify(mockAuditService, times(1)).auditDownload(any())(any())
         }
       }
 
@@ -140,7 +147,6 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
           redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
         }
       }
-
     }
   }
 
