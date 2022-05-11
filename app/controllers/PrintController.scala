@@ -16,6 +16,7 @@
 
 package controllers
 
+import audit.AuditService
 import com.dmanchester.playfop.sapi.PlayFop
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import org.apache.xmlgraphics.util.MimeConstants
@@ -34,13 +35,14 @@ class PrintController @Inject()(
                                  requireData: DataRequiredAction,
                                  fop: PlayFop,
                                  template: PrintTemplate,
-                                 view: views.html.PrintView
+                                 view: views.html.PrintView,
+                                 auditService: AuditService
                                ) extends FrontendBaseController with I18nSupport {
 
   def onDownload: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     PrintModel.from(request.userAnswers).map { model =>
       val pdf = fop.processTwirlXml(template.render(model, implicitly), MimeConstants.MIME_PDF)
-
+      auditService.auditDownload(request.userAnswers)
       Ok(pdf).as(MimeConstants.MIME_PDF).withHeaders(CONTENT_DISPOSITION -> "filename=get-your-national-insurance-number-by-post.pdf")
     }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
