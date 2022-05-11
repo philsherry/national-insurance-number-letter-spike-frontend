@@ -513,6 +513,7 @@ areYouSureYouWantToRemovePreviousAddress.error.required = Select yes if you want
 
 pdf.title = Get your National Insurance Number by post (CA5403)
 pdf.page = CA5403 - Page
+pdf.instructions = CA5403 - Instructions
 
 pdf.nextSteps = What to do next
 pdf.nextSteps.p1 = Once you have printed and checked this form you should post it and your identity documents to:
