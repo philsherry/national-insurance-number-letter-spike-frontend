@@ -559,7 +559,8 @@ pdf.benefits.otherBenefits.none = None
 
 pdf.employment = Employment
 pdf.employment.notWorked = You have not provided details for any UK employers.
-pdf.employment.employers = Employers
+pdf.employment.currentEmployers = Current employers
+pdf.employment.previousEmployers = Previous employers
 pdf.employment.employers.name = Name
 pdf.employment.employers.address = Address
 pdf.employment.employers.duration = Dates

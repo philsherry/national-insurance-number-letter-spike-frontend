@@ -35,7 +35,8 @@ final case class PrintModel(
                              claimedChildBenefit: Boolean,
                              childBenefitNumber: Option[String],
                              otherBenefits: Option[String],
-                             employers: List[EmployerPrintModel],
+                             currentEmployers: List[EmployerPrintModel],
+                             previousEmployers: List[EmployerPrintModel],
                              primaryDocument: Option[String],
                              secondaryDocuments: Option[List[String]]
                            )
@@ -76,7 +77,7 @@ object PrintModel {
       claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
       childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
       otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
-      previousEmployers = getEmployers(userAnswers)
+      (previousEmployers, currentEmployers) = getEmployers(userAnswers).partition(_.to.isDefined)
       primaryDocument = userAnswers.get(WhichPrimaryDocumentPage).map(key => s"whichPrimaryDocument.$key")
       secondaryDocuments = userAnswers.get(WhichAlternativeDocumentsPage).map(_.toList.map(key => s"whichAlternativeDocuments.$key"))
     } yield {
@@ -94,6 +95,7 @@ object PrintModel {
         claimedChildBenefit,
         childBenefitNumber,
         otherBenefits,
+        currentEmployers,
         previousEmployers,
         primaryDocument,
         secondaryDocuments
