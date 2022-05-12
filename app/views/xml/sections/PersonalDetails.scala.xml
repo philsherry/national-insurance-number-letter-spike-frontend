@@ -1,0 +1,86 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.PrintModel
+@import views.xml.xml.sections._
+
+@this()
+
+@(model: PrintModel)(implicit messages: Messages)
+
+<fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.personalDetails")</fo:block>
+
+<fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+<fo:block margin-bottom="2mm" font-weight="bold"><fo:inline font-weight="bold">@messages("pdf.addressHistory.current"): </fo:inline></fo:block>
+@for(line <- model.currentAddress) {
+<fo:block margin-left="0.5cm"><fo:inline>@(line)</fo:inline></fo:block>
+}
+</fo:block-container>
+
+@if(model.previousAddresses.nonEmpty) {
+    <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline font-weight="bold">@messages("pdf.addressHistory.previous"): </fo:inline></fo:block>
+    @for(addr <- model.previousAddresses) {
+        <fo:block margin-left="0.5cm" margin-bottom="2mm"><fo:inline>@messages("pdf.addressHistory.previous.fromto", addr.from, addr.to)</fo:inline></fo:block>
+        @for(line <- addr.address) {
+            <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
+        }
+        <fo:block margin-bottom="0.5cm"/>
+    }
+    </fo:block-container>
+}
+
+@if(model.previousNames.nonEmpty) {
+    <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+        <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.personalDetails.previousNames"): </fo:inline></fo:block>
+        <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+            @for(previousName <- model.previousNames) {
+            <fo:block-container margin-bottom="0.5cm">
+                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousFirstName"): </fo:inline>@previousName.firstName</fo:block>
+                @if(previousName.middleNames.isDefined) {<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousMiddleNames"): </fo:inline>@previousName.middleNames</fo:block>}
+                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousLastName"): </fo:inline>@previousName.lastName</fo:block>
+            </fo:block-container>
+            }
+        </fo:block-container>
+    </fo:block-container>
+}
+
+<fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.returningFromLivingAbroad"): </fo:inline>@if(model.returningFromLivingAbroad) {@messages("pdf.personalDetails.returningFromLivingAbroad.yes")} else {@messages("pdf.personalDetails.returningFromLivingAbroad.no")}</fo:block>
+</fo:block-container>
+
+<fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.telephoneNumber"): </fo:inline>@(model.telephoneNumber)</fo:block>
+</fo:block-container>
+
+@for(marriage <- model.marriage) {
+    <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+        <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.maritalStatus"): </fo:inline>@messages("pdf.personalDetails.maritalStatus.married", marriage)</fo:block>
+    </fo:block-container>
+}
+
+@if(model.previousRelationships.nonEmpty) {
+    <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+        <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousRelationships"): </fo:inline></fo:block>
+        <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+            @for(previous <- model.previousRelationships) {
+                <fo:block-container margin-bottom="0.5cm">
+                <fo:block margin-bottom="2mm">@messages("pdf.personalDetails.previousRelationships.tofrom", previous.from, previous.to, previous.reason)</fo:block>
+                </fo:block-container>
+            }
+        </fo:block-container>
+    </fo:block-container>
+}
