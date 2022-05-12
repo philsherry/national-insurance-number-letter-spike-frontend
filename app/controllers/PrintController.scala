@@ -19,6 +19,7 @@ package controllers
 import audit.AuditService
 import com.dmanchester.playfop.sapi.PlayFop
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import org.apache.fop.apps.FOUserAgent
 import org.apache.xmlgraphics.util.MimeConstants
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -39,10 +40,21 @@ class PrintController @Inject()(
                                  auditService: AuditService
                                ) extends FrontendBaseController with I18nSupport {
 
+  val userAgentBlock: FOUserAgent => Unit = { foUserAgent: FOUserAgent =>
+    foUserAgent.setAccessibility(true)
+    foUserAgent.setPdfUAEnabled(true)
+    foUserAgent.setAuthor("HMRC forms service")
+    foUserAgent.setProducer("HMRC forms services")
+    foUserAgent.setCreator("HMRC forms services")
+    foUserAgent.setSubject("Get your National Insurance number by post form")
+    foUserAgent.setTitle("Get your National Insurance number by post form")
+  }
+
   def onDownload: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     PrintModel.from(request.userAnswers).map { model =>
-      val pdf = fop.processTwirlXml(template.render(model, implicitly), MimeConstants.MIME_PDF)
+      val pdf = fop.processTwirlXml(template.render(model, implicitly), MimeConstants.MIME_PDF, foUserAgentBlock = userAgentBlock)
       auditService.auditDownload(request.userAnswers)
+      
       Ok(pdf).as(MimeConstants.MIME_PDF).withHeaders(CONTENT_DISPOSITION -> "filename=get-your-national-insurance-number-by-post.pdf")
     }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
