@@ -117,13 +117,7 @@
             </fo:block>
             <fo:block border-bottom-width="1pt" border-bottom-style="solid" margin-top="3mm" margin-bottom="3mm"/>
 
-            <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.nino"):</fo:inline>
-                @if(model.nino.isDefined) {
-                    @(model.nino.get)
-                } else {
-                    @messages("pdf.personalDetails.noNino")
-                }
-            </fo:block>
+            <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.nino"): </fo:inline>@model.nino.getOrElse(messages("pdf.personalDetails.noNino"))</fo:block>
             <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.firstName"): </fo:inline>@model.name.firstName</fo:block>
             <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.middleNames"): </fo:inline>@if(model.name.middleNames.isDefined){@model.name.middleNames.get} else {}</fo:block>
             <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.lastName"): </fo:inline>@model.name.lastName</fo:block>
@@ -173,13 +167,7 @@
                 </fo:block-container>
 
                 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-                    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.nino"):</fo:inline>
-                        @if(model.nino.isDefined) {
-                            @(model.nino.get)
-                        } else {
-                            @messages("pdf.personalDetails.noNino")
-                        }
-                    </fo:block>
+                    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.nino"): </fo:inline>@model.nino.getOrElse(messages("pdf.personalDetails.noNino"))</fo:block>
                 </fo:block-container>
 
                 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
