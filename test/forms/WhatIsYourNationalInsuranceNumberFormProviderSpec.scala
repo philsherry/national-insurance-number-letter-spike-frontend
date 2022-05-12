@@ -18,6 +18,7 @@ package forms
 
 import forms.behaviours.FieldBehaviours
 import play.api.data.FormError
+import org.scalacheck.Gen
 
 class WhatIsYourNationalInsuranceNumberFormProviderSpec extends FieldBehaviours {
 
@@ -29,10 +30,18 @@ class WhatIsYourNationalInsuranceNumberFormProviderSpec extends FieldBehaviours 
 
     val fieldName = "value"
 
+    val ninoGen = arbitraryNino.arbitrary.map(_.value)
+    val ninoWithSpacesGen = for {
+      spaceBefore <- Gen.stringOf(Gen.const(' '))
+      spaceAfter  <- Gen.stringOf(Gen.const(' '))
+      nino        <- ninoGen
+    } yield s"$spaceBefore$nino$spaceAfter"
+    val gen = Gen.oneOf(ninoGen, ninoWithSpacesGen)
+
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      arbitraryNino.arbitrary.map(_.value)
+      gen
     )
 
     behave like mandatoryField(
