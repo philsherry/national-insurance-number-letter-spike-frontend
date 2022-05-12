@@ -40,12 +40,6 @@
             <!-- Personal details -->
             <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.personalDetails")</fo:block>
 
-            <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.firstName"): </fo:inline>@model.name.firstName</fo:block>
-                @if(model.name.middleNames.isDefined) {<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.middleNames"): </fo:inline>@model.name.middleNames</fo:block>}
-                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.lastName"): </fo:inline>@model.name.lastName</fo:block>
-            </fo:block-container>
-
             @if(model.previousNames.nonEmpty) {
             <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
                 <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.personalDetails.previousNames"): </fo:inline></fo:block>
@@ -67,14 +61,6 @@
 
             <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
                 <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.telephoneNumber"): </fo:inline>@(model.telephoneNumber)</fo:block>
-            </fo:block-container>
-
-            <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.nino"): </fo:inline>@model.nino.getOrElse(messages("pdf.personalDetails.noNino"))</fo:block>
-            </fo:block-container>
-
-            <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.dob"): </fo:inline>@(model.dob)</fo:block>
             </fo:block-container>
 
             @for(marriage <- model.marriage) {
