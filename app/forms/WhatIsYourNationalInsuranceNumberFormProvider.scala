@@ -28,7 +28,7 @@ class WhatIsYourNationalInsuranceNumberFormProvider @Inject() extends Mappings {
   def apply(): Form[Nino] =
     Form(
       "value" -> text("whatIsYourNationalInsuranceNumber.error.required")
-        .verifying("whatIsYourNationalInsuranceNumber.error.invalid", nonEmptyString => Try(Nino(nonEmptyString.toUpperCase)).isSuccess)
-        .transform[Nino](nonEmptyString => Nino(nonEmptyString.toUpperCase), nino => nino.toString)
+        .verifying("whatIsYourNationalInsuranceNumber.error.invalid", nonEmptyString => Try(Nino(nonEmptyString.trim.toUpperCase)).isSuccess)
+        .transform[Nino](nonEmptyString => Nino(nonEmptyString.trim.toUpperCase), nino => nino.toString)
     )
 }

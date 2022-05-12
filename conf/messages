@@ -143,7 +143,7 @@ doYouHaveAPreviousName.add.heading = You have added 1 previous name
 doYouHaveAPreviousName.add.heading.plural = You have added {0} previous names
 doYouHaveAPreviousName.add.legend = Do you want to add another previous name?
 doYouHaveAPreviousName.checkYourAnswersLabel = Do you have any previous names?
-doYouHaveAPreviousName.error.required = Select yes if have any previous names
+doYouHaveAPreviousName.error.required = Select yes if you have any previous names
 doYouHaveAPreviousName.change.hidden = do you have any previous names
 
 whatIsYourPreviousName.title = What is your previous name?
@@ -214,7 +214,7 @@ doYouHaveAnyPreviousAddresses.add.heading = You have added 1 previous home addre
 doYouHaveAnyPreviousAddresses.add.heading.plural = You have added {0} previous home addresses
 doYouHaveAnyPreviousAddresses.add.legend = Do you want to add another previous home address?
 doYouHaveAnyPreviousAddresses.checkYourAnswersLabel = Do you have any previous home addresses?
-doYouHaveAnyPreviousAddresses.error.required = Select yes if have any previous home addresses
+doYouHaveAnyPreviousAddresses.error.required = Select yes if you have any previous home addresses
 doYouHaveAnyPreviousAddresses.change.hidden = do you have any previous home addresses
 
 isYourPreviousAddressInUk.title = Is your previous home address in the UK?
