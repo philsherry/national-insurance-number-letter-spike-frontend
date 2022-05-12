@@ -12,6 +12,7 @@ object AppDependencies {
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"             % "0.59.0",
     "uk.gov.hmrc"       %% "domain"                         % "7.0.0-play-28",
     "com.dmanchester"   %% "playfop"                        % "1.0",
+    "org.typelevel"     %% "cats-core"                      % "2.3.0",
     "org.apache.xmlgraphics" % "fop"                        % "2.7"
   )
 
