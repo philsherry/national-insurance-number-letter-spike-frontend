@@ -33,7 +33,14 @@
     @formHelper(action = routes.PreviousMarriageOrPartnershipDetailsController.onSubmit(index, mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
+            @govukErrorSummary(
+                ErrorSummaryViewModel(
+                    form = form,
+                    errorLinkOverrides = Map(
+                        "startDate" -> "startDate.day",
+                        "endDate"   -> "endDate.day"
+                    ))
+            )
         }
 
         <h1 class="govuk-heading-xl">@messages("previousMarriageOrPartnershipDetails.heading")</h1>
