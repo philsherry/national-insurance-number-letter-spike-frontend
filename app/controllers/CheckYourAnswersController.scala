@@ -49,6 +49,7 @@ class CheckYourAnswersController @Inject()(
         WhatIsYourNameSummary.row(answers),
         DoYouHaveAPreviousNameSummary.row(answers),
         WhatIsYourDateOfBirthSummary.row(answers),
+        WhatIsYourGenderSummary.row(answers),
         AreYouReturningFromLivingAbroadSummary.row(answers),
         WhatIsYourTelephoneNumberSummary.row(answers),
         DoYouKnowYourNationalInsuranceNumberSummary.row(answers),

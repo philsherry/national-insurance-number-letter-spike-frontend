@@ -63,8 +63,12 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(WhatIsYourPreviousNamePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
       }
 
-      "must go from the date of birth page to the is current address in the uk page" in {
-        navigator.nextPage(WhatIsYourDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
+      "must go from the date of birth page to the what is your gender page" in {
+        navigator.nextPage(WhatIsYourDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourGenderController.onPageLoad(NormalMode)
+      }
+
+      "must go from the what is your gender page to the is current address in the uk page" in {
+        navigator.nextPage(WhatIsYourGenderPage, NormalMode, emptyUserAnswers) mustBe routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
       }
 
       "must go from the is current address in the uk page" - {

@@ -17,7 +17,7 @@
 package audit
 
 import audit.DownloadAuditEvent._
-import models.{Index, UserAnswers}
+import models.{Index, UserAnswers, WhatIsYourGender}
 import pages._
 import cats.implicits._
 import play.api.libs.json.{Json, Format}
@@ -27,6 +27,7 @@ import java.time.LocalDate
 final case class DownloadAuditEvent(
                                      names: Names,
                                      dateOfBirth: LocalDate,
+                                     gender: WhatIsYourGender,
                                      addresses: Addresses,
                                      returningFromLivingAbroad: Boolean,
                                      telephoneNumber: String,
@@ -43,6 +44,7 @@ object DownloadAuditEvent {
   def apply(answers: UserAnswers): Option[DownloadAuditEvent] = for {
     names                     <- getNames(answers)
     dob                       <- answers.get(WhatIsYourDateOfBirthPage)
+    gender                    <- answers.get(WhatIsYourGenderPage)
     addresses                 <- getAddresses(answers)
     returningFromLivingAbroad <- answers.get(AreYouReturningFromLivingAbroadPage)
     telephoneNumber           <- answers.get(WhatIsYourTelephoneNumberPage)
@@ -52,7 +54,7 @@ object DownloadAuditEvent {
     employers                 <- getEmployers(answers)
     documents                 <- getDocuments(answers)
   } yield DownloadAuditEvent(
-    names, dob, addresses, returningFromLivingAbroad, telephoneNumber,
+    names, dob, gender, addresses, returningFromLivingAbroad, telephoneNumber,
     nino, relationships, benefits, employers, documents
   )
 

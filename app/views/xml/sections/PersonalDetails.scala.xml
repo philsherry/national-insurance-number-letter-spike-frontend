@@ -63,7 +63,11 @@
 </fo:block-container>
 
 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.telephoneNumber"): </fo:inline>@(model.telephoneNumber)</fo:block>
+<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.telephoneNumber"): </fo:inline>@(model.telephoneNumber)</fo:block>
+</fo:block-container>
+
+<fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.gender"): </fo:inline>@messages(s"whatIsYourGender.${model.gender.toString}")</fo:block>
 </fo:block-container>
 
 @for(marriage <- model.marriage) {

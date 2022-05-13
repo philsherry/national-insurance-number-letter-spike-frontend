@@ -53,6 +53,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
         .set(WhatIsYourPreviousNamePage(Index(1)), WhatIsYourPreviousName(firstName = "first2", None, lastName = "last2")).success.value
         .set(WhatIsYourDateOfBirthPage, now).success.value
+        .set(WhatIsYourGenderPage, WhatIsYourGender.PreferNotToSay).success.value
         .set(IsYourCurrentAddressInUkPage, true).success.value
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
         .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, "country")).success.value
@@ -93,6 +94,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
           )
         ),
         dateOfBirth = now,
+        gender = WhatIsYourGender.PreferNotToSay,
         addresses = Addresses(
           currentAddress = Address("line 1", None, None, Some("postcode"), None),
           previousAddresses = List(PreviousAddress("line 1", None, None, Some("postcode"), None, LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2)))

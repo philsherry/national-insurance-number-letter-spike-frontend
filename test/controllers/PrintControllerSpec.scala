@@ -52,6 +52,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
       .set(WhatIsYourNamePage, WhatIsYourName(Some("title"), "first", Some("middle"), "last")).get
       .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
       .set(WhatIsYourDateOfBirthPage, LocalDate.of(1990, 12, 1)).get
+      .set(WhatIsYourGenderPage, WhatIsYourGender.PreferNotToSay).get
       .set(WhatIsYourCurrentAddressUkPage, currentAddressUk).get
       .set(WhatIsYourPreviousAddressUkPage(Index(0)), previousAddressUk).get
       .set(AreYouReturningFromLivingAbroadPage, false).get
