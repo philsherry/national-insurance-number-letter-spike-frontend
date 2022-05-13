@@ -37,7 +37,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
     "must return OK and the correct view for a GET" in {
 
       val answers = emptyUserAnswers
-        .set(WhatIsYourNamePage, WhatIsYourName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+        .set(WhatIsYourNamePage, WhatIsYourName(title = Some("title"), firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
         .set(DoYouHaveAPreviousNamePage, true).success.value
         .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
         .set(WhatIsYourPreviousNamePage(Index(1)), WhatIsYourPreviousName(firstName = "first2", None, lastName = "last2")).success.value

@@ -121,7 +121,7 @@ unauthorised.heading = You can’t access this service with this account
 
 whatIsYourName.title = What is your name?
 whatIsYourName.heading = What is your name?
-whatIsYourName.titleField = Title
+whatIsYourName.titleField = Title (optional)
 whatIsYourName.firstName = First name
 whatIsYourName.middleNames = Middle names
 whatIsYourName.lastName = Last name

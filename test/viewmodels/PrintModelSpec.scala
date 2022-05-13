@@ -167,7 +167,7 @@ class PrintModelSpec extends SpecBase {
         )
 
         val userAnswers = UserAnswers("id")
-          .set(WhatIsYourNamePage, WhatIsYourName("first", Some("middle"), "last")).get
+          .set(WhatIsYourNamePage, WhatIsYourName(Some("title"), "first", Some("middle"), "last")).get
           .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
           .set(WhatIsYourDateOfBirthPage, LocalDate.of(1990, 12, 1)).get
           .set(WhatIsYourCurrentAddressUkPage, currentAddressUk).get
@@ -187,7 +187,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).get
 
         val expected = Some(PrintModel(
-          WhatIsYourName("first", Some("middle"), "last"),
+          WhatIsYourName(Some("title"), "first", Some("middle"), "last"),
           List(WhatIsYourPreviousName("prev", Some("prev2"), "prev3")),
           "1 December 1990",
           List("line 1", "AA1 1AA"),
@@ -217,7 +217,7 @@ class PrintModelSpec extends SpecBase {
         )
 
         val userAnswers = UserAnswers("id")
-          .set(WhatIsYourNamePage, WhatIsYourName("first", Some("middle"), "last")).get
+          .set(WhatIsYourNamePage, WhatIsYourName(Some("title"), "first", Some("middle"), "last")).get
           .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
           .set(WhatIsYourDateOfBirthPage, LocalDate.of(1990, 12, 1)).get
           .set(WhatIsYourCurrentAddressUkPage, currentAddressUk).get
@@ -236,7 +236,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhichAlternativeDocumentsPage, Set[AlternativeDocuments](AlternativeDocuments.AdoptionCertificate, AlternativeDocuments.WorkPermit)).get
 
         val expected = Some(PrintModel(
-          WhatIsYourName("first", Some("middle"), "last"),
+          WhatIsYourName(Some("title"), "first", Some("middle"), "last"),
           List(WhatIsYourPreviousName("prev", Some("prev2"), "prev3")),
           "1 December 1990",
           List("line 1", "AA1 1AA"),
