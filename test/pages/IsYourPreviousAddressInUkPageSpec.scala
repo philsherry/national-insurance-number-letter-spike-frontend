@@ -52,6 +52,7 @@ class IsYourPreviousAddressInUkPageSpec extends PageBehaviours {
         "line 1",
         None,
         None,
+        None,
         "country",
         LocalDate.of(2000, 1, 1),
         LocalDate.of(2000, 2, 2)

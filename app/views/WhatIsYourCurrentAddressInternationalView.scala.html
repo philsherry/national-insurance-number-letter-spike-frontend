@@ -62,6 +62,14 @@
 
         @govukInput(
             InputViewModel(
+                field = form("postcode"),
+                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.postcode"))
+            )
+            .withWidth(Fixed10)
+        )
+
+        @govukInput(
+            InputViewModel(
                 field = form("country"),
                 label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.country"))
             )

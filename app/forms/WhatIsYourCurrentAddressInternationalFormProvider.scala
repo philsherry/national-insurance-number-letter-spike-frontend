@@ -31,8 +31,10 @@ class WhatIsYourCurrentAddressInternationalFormProvider @Inject() extends Mappin
         .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine1.length")),
       "addressLine2" -> optional(text("whatIsYourCurrentAddressInternational.error.addressLine2.required")
         .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine2.length"))),
-      "addressLine3" -> optional(text("whatIsYourCurrentAddressInternational.error.addressLine3.required")
-        .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine3.length"))),
+       "addressLine3" -> optional(text("whatIsYourCurrentAddressInternational.error.addressLine3.required")
+         .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine3.length"))),
+       "postcode" -> optional(text("whatIsYourCurrentAddressInternational.error.postcode.required")
+         .verifying(maxLength(12, "whatIsYourCurrentAddressInternational.error.postcode.length"))),
        "country" -> text("whatIsYourCurrentAddressInternational.error.country.required")
          .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.country.length"))
      )(CurrentAddressInternational.apply)(CurrentAddressInternational.unapply)

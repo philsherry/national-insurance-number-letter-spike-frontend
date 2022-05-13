@@ -72,10 +72,11 @@ trait ModelGenerators { this: Generators =>
         addressLine1 <- arbitrary[String]
         addressLine2 <- arbitrary[Option[String]]
         addressLine3 <- arbitrary[Option[String]]
+        postcode     <- arbitrary[Option[String]]
         country      <- arbitrary[String]
         from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
         to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
-      } yield PreviousAddressInternational(addressLine1, addressLine2, addressLine3, country, from, to)
+      } yield PreviousAddressInternational(addressLine1, addressLine2, addressLine3, postcode, country, from, to)
     }
 
   implicit lazy val arbitraryWhatIsYourCurrentAddressUk: Arbitrary[CurrentAddressUk] =
@@ -94,8 +95,9 @@ trait ModelGenerators { this: Generators =>
         addressLine1 <- arbitrary[String]
         addressLine2 <- arbitrary[Option[String]]
         addressLine3 <- arbitrary[Option[String]]
+        postcode     <- arbitrary[Option[String]]
         country      <- arbitrary[String]
-      } yield CurrentAddressInternational(addressLine1, addressLine2, addressLine3, country)
+      } yield CurrentAddressInternational(addressLine1, addressLine2, addressLine3, postcode, country)
     }
 
   implicit lazy val arbitraryWhatIsYourPreviousName: Arbitrary[WhatIsYourPreviousName] =
