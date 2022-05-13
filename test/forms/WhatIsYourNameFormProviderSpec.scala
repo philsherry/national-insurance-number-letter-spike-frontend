@@ -23,6 +23,27 @@ class WhatIsYourNameFormProviderSpec extends StringFieldBehaviours {
 
   val form = new WhatIsYourNameFormProvider()()
 
+  ".title" - {
+
+    val fieldName = "title"
+    val lengthKey = "whatIsYourName.error.titleField.length"
+    val maxLength = 20
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+  }
+
   ".firstName" - {
 
     val fieldName = "firstName"

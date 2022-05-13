@@ -110,10 +110,11 @@ trait ModelGenerators { this: Generators =>
   implicit lazy val arbitraryWhatIsYourName: Arbitrary[WhatIsYourName] =
     Arbitrary {
       for {
+        title <- arbitrary[Option[String]]
         firstName <- arbitrary[String]
         middleNames <- arbitrary[Option[String]]
         lastName <- arbitrary[String]
-      } yield WhatIsYourName(firstName, middleNames, lastName)
+      } yield WhatIsYourName(title, firstName, middleNames, lastName)
     }
 
   implicit lazy val arbitraryNino: Arbitrary[Nino] = Arbitrary {

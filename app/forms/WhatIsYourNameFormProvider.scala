@@ -25,8 +25,10 @@ import models.WhatIsYourName
 
 class WhatIsYourNameFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[WhatIsYourName] = Form(
-     mapping(
+  def apply(): Form[WhatIsYourName] = Form(
+    mapping(
+      "title" -> optional(text("whatIsYourName.error.titleField.required")
+        .verifying(maxLength(20, "whatIsYourName.error.titleField.length"))),
       "firstName" -> text("whatIsYourName.error.firstName.required")
         .verifying(maxLength(100, "whatIsYourName.error.firstName.length")),
       "middleNames" -> optional(text("whatIsYourName.error.middleNames.required")
@@ -34,5 +36,5 @@ class WhatIsYourNameFormProvider @Inject() extends Mappings {
        "lastName" -> text("whatIsYourName.error.lastName.required")
          .verifying(maxLength(100, "whatIsYourName.error.lastName.length"))
     )(WhatIsYourName.apply)(WhatIsYourName.unapply)
-   )
- }
+  )
+}

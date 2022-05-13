@@ -48,7 +48,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
       val now = LocalDate.now
 
       val answers = UserAnswers("id")
-        .set(WhatIsYourNamePage, WhatIsYourName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+        .set(WhatIsYourNamePage, WhatIsYourName(title = Some("title"), firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
         .set(DoYouHaveAPreviousNamePage, true).success.value
         .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
         .set(WhatIsYourPreviousNamePage(Index(1)), WhatIsYourPreviousName(firstName = "first2", None, lastName = "last2")).success.value
@@ -86,10 +86,10 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
 
       val expected: DownloadAuditEvent = DownloadAuditEvent(
         names = Names(
-          currentName = Name("first", Some("middle"), "last"),
+          currentName = Name(Some("title"), "first", Some("middle"), "last"),
           previousNames = List(
-            Name("first", Some("middle"), "last"),
-            Name("first2", None, "last2")
+            Name(None, "first", Some("middle"), "last"),
+            Name(None, "first2", None, "last2")
           )
         ),
         dateOfBirth = now,

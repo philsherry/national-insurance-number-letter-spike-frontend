@@ -60,9 +60,9 @@ object DownloadAuditEvent {
     current  <- answers.get(WhatIsYourNamePage)
     previous <-  answers.get(PreviousNamesQuery).getOrElse(Seq.empty).indices.toList.traverse(i => answers.get(WhatIsYourPreviousNamePage(Index(i))))
   } yield Names(
-    currentName = Name(current.firstName, current.middleNames, current.lastName),
+    currentName = Name(current.title, current.firstName, current.middleNames, current.lastName),
     previousNames = previous.map { previous =>
-      Name(previous.firstName, previous.middleNames, previous.lastName)
+      Name(None, previous.firstName, previous.middleNames, previous.lastName)
     }
   )
 
@@ -124,7 +124,7 @@ object DownloadAuditEvent {
     answers.get(WhichPrimaryDocumentPage).map(d => List(d.toString)) orElse
       answers.get(WhichAlternativeDocumentsPage).map(d => d.map(_.toString).toList)
 
-  private[audit] final case class Name(firstName: String, middleNames: Option[String], lastName: String)
+  private[audit] final case class Name(title: Option[String], firstName: String, middleNames: Option[String], lastName: String)
   object Name {
     implicit lazy val formats: Format[Name] = Json.format
   }
