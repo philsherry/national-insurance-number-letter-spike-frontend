@@ -19,47 +19,48 @@
 @this(
         layout: templates.Layout,
         govukButton: GovukButton,
-        govukInset: GovukInsetText
+        govukInset: GovukInsetText,
+        govukPanel : GovukPanel,
+        govukWarningText : GovukWarningText
 )
 
 @(model: PrintModel)(implicit request: Request[_], messages: Messages)
 
+@warningText = @{
+    model.primaryDocument.fold(
+        model.secondaryDocuments.fold(
+            throw new RuntimeException("No documents specified for print view")
+        )(secondaryDocuments =>
+            messages("print.warning.multiple", secondaryDocuments.map(messages(_)):_*)
+        )
+    )(primaryDocument =>
+        messages("print.warning.single", messages(primaryDocument))
+    )
+}
+
 @layout(pageTitle = titleNoForm(messages("print.title"))) {
 
-    <h1 class="govuk-heading-xl">@messages("print.heading")</h1>
+    @govukPanel(Panel(title = messages("print.heading")))
 
-    <p class="govuk-body">@messages("print.p1")</p>
+    @for(primaryDocument <- model.primaryDocument) {
+        <p class="govuk-body">@messages("print.p1.single", messages(primaryDocument))</p>
+    }
 
-    <a id="download" href="@routes.PrintController.onDownload" class="govuk-button" download>@messages("print.button")</a>
-
-    <p class="govuk-body">@messages("print.p2")</p>
+    @for(secondaryDocuments <- model.secondaryDocuments.map(_.map(messages(_)))) {
+        <p class="govuk-body">@messages("print.p1.multiple", secondaryDocuments:_*)</p>
+    }
 
     @govukInset(
-     InsetText(content = HtmlContent("<p class=\"govuk-body\">" + messages("print.address1") + "<br/>" + messages("print.address2")+ "<br/>" + messages("print.address3") + "</p>"))
+        InsetText(content = HtmlContent("<p class=\"govuk-body\">" + messages("print.address1") + "<br/>" + messages("print.address2")+ "<br/>" + messages("print.address3") + "</p>"))
     )
 
-    <h2 class="govuk-heading-m">@messages("print.documents")</h2>
+    <p class="govuk-body">@messages("print.p2.1") <a class="govuk-link" href="@routes.CheckYourAnswersController.onPageLoad">@messages("print.p2.change")</a> @messages("print.p2.2")
+    <a href="@routes.JourneyRecoveryController.onStartAgain.url" class="govuk-link">@messages("print.p2.restart")</a>.</p>
 
-    @if(model.primaryDocument.isDefined) {
-    <p class="govuk-body">@messages("print.p3.singular")</p>
+    @govukWarningText(WarningText(
+        iconFallbackText = "Warning",
+        content = warningText
+    ))
 
-    <ul class="govuk-list govuk-list--bullet">
-        @for(document <- model.primaryDocument) {
-        <li>@messages(document)</li>
-        }
-    </ul>
-    }
-
-    @if(model.secondaryDocuments.nonEmpty) {
-    <p class="govuk-body">@messages("print.p3.plural")</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-        @for(document <- model.secondaryDocuments.getOrElse(List.empty)) {
-        <li>@messages(document)</li>
-        }
-    </ul>
-    }
-
-    <p class="govuk-body">@messages("print.p4.1") <a class="govuk-link" href="@routes.CheckYourAnswersController.onPageLoad">@messages("print.p4.change")</a>. @messages("print.p4.2")
-    <a href="@routes.JourneyRecoveryController.onStartAgain.url" class="govuk-link">@messages("print.p4.restart")</a>.</p>
+    <a id="download" href="@routes.PrintController.onDownload" class="govuk-button" download>@messages("print.button")</a>
 }
