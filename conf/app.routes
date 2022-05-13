@@ -220,3 +220,8 @@ GET        /:index/are-you-sure-you-want-to-remove-previous-relationship        
 POST       /:index/are-you-sure-you-want-to-remove-previous-relationship                        controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-if-you-are-sure-you-want-to-remove-previous-relationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-if-you-are-sure-you-want-to-remove-previous-relationship                  controllers.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /what-is-your-gender                        controllers.WhatIsYourGenderController.onPageLoad(mode: Mode = NormalMode)
+POST       /what-is-your-gender                        controllers.WhatIsYourGenderController.onSubmit(mode: Mode = NormalMode)
+GET        /change-your-gender                  controllers.WhatIsYourGenderController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-your-gender                  controllers.WhatIsYourGenderController.onSubmit(mode: Mode = CheckMode)

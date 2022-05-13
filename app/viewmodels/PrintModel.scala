@@ -25,6 +25,7 @@ final case class PrintModel(
                              name: WhatIsYourName,
                              previousNames: List[WhatIsYourPreviousName],
                              dob: String,
+                             gender: WhatIsYourGender,
                              currentAddress: List[String],
                              previousAddresses: List[PreviousAddressPrintModel],
                              returningFromLivingAbroad: Boolean,
@@ -64,27 +65,29 @@ object PrintModel {
 
   def from(userAnswers: UserAnswers): Option[PrintModel] = {
     for {
-      name <- userAnswers.get(WhatIsYourNamePage)
-      previousName = getPreviousNames(userAnswers)
-      dob <- userAnswers.get(WhatIsYourDateOfBirthPage)
-      currentAddress <- getCurrentAddress(userAnswers)
-      previousAddresses = getPreviousAddresses(userAnswers)
-      returningFromWorkingAbroad <- userAnswers.get(AreYouReturningFromLivingAbroadPage)
-      telephoneNumber <- userAnswers.get(WhatIsYourTelephoneNumberPage)
-      nino = userAnswers.get(WhatIsYourNationalInsuranceNumberPage).map(_.nino)
-      marriage = userAnswers.get(WhenDidYouGetMarriedPage)
-      previousRelationships = getPreviousRelationships(userAnswers)
-      claimedChildBenefit <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
-      childBenefitNumber = userAnswers.get(WhatIsYourChildBenefitNumberPage)
-      otherBenefits = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
+      name                                  <- userAnswers.get(WhatIsYourNamePage)
+      previousName                          = getPreviousNames(userAnswers)
+      dob                                   <- userAnswers.get(WhatIsYourDateOfBirthPage)
+      gender                                <- userAnswers.get(WhatIsYourGenderPage)
+      currentAddress                        <- getCurrentAddress(userAnswers)
+      previousAddresses                     = getPreviousAddresses(userAnswers)
+      returningFromWorkingAbroad            <- userAnswers.get(AreYouReturningFromLivingAbroadPage)
+      telephoneNumber                       <- userAnswers.get(WhatIsYourTelephoneNumberPage)
+      nino                                  = userAnswers.get(WhatIsYourNationalInsuranceNumberPage).map(_.nino)
+      marriage                              = userAnswers.get(WhenDidYouGetMarriedPage)
+      previousRelationships                 = getPreviousRelationships(userAnswers)
+      claimedChildBenefit                   <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
+      childBenefitNumber                    = userAnswers.get(WhatIsYourChildBenefitNumberPage)
+      otherBenefits                         = userAnswers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
       (previousEmployers, currentEmployers) = getEmployers(userAnswers).partition(_.to.isDefined)
-      primaryDocument = userAnswers.get(WhichPrimaryDocumentPage).map(key => s"whichPrimaryDocument.$key")
-      secondaryDocuments = userAnswers.get(WhichAlternativeDocumentsPage).map(_.toList.map(key => s"whichAlternativeDocuments.$key"))
+      primaryDocument                       = userAnswers.get(WhichPrimaryDocumentPage).map(key => s"whichPrimaryDocument.$key")
+      secondaryDocuments                    = userAnswers.get(WhichAlternativeDocumentsPage).map(_.toList.map(key => s"whichAlternativeDocuments.$key"))
     } yield {
       PrintModel(
         name,
         previousName,
         dob.format(formatter),
+        gender,
         currentAddress,
         previousAddresses,
         returningFromWorkingAbroad,

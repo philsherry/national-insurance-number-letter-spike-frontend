@@ -170,6 +170,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourNamePage, WhatIsYourName(Some("title"), "first", Some("middle"), "last")).get
           .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
           .set(WhatIsYourDateOfBirthPage, LocalDate.of(1990, 12, 1)).get
+          .set(WhatIsYourGenderPage, WhatIsYourGender.PreferNotToSay).get
           .set(WhatIsYourCurrentAddressUkPage, currentAddressUk).get
           .set(WhatIsYourPreviousAddressUkPage(Index(0)), previousAddressUk).get
           .set(AreYouReturningFromLivingAbroadPage, false).get
@@ -190,6 +191,7 @@ class PrintModelSpec extends SpecBase {
           WhatIsYourName(Some("title"), "first", Some("middle"), "last"),
           List(WhatIsYourPreviousName("prev", Some("prev2"), "prev3")),
           "1 December 1990",
+          WhatIsYourGender.PreferNotToSay,
           List("line 1", "AA1 1AA"),
           List(PreviousAddressPrintModel(List("line 1", "AA1 1AA"), "1 January 2000", "1 January 2001")),
           returningFromLivingAbroad = false,
@@ -220,6 +222,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourNamePage, WhatIsYourName(Some("title"), "first", Some("middle"), "last")).get
           .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
           .set(WhatIsYourDateOfBirthPage, LocalDate.of(1990, 12, 1)).get
+          .set(WhatIsYourGenderPage, WhatIsYourGender.PreferNotToSay).get
           .set(WhatIsYourCurrentAddressUkPage, currentAddressUk).get
           .set(WhatIsYourPreviousAddressUkPage(Index(0)), previousAddressUk).get
           .set(AreYouReturningFromLivingAbroadPage, false).get
@@ -239,6 +242,7 @@ class PrintModelSpec extends SpecBase {
           WhatIsYourName(Some("title"), "first", Some("middle"), "last"),
           List(WhatIsYourPreviousName("prev", Some("prev2"), "prev3")),
           "1 December 1990",
+          WhatIsYourGender.PreferNotToSay,
           List("line 1", "AA1 1AA"),
           List(PreviousAddressPrintModel(List("line 1", "AA1 1AA"), "1 January 2000", "1 January 2001")),
           returningFromLivingAbroad = false,

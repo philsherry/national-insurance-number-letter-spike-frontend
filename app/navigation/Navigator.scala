@@ -30,7 +30,8 @@ class Navigator @Inject()() {
     case DoYouHaveAPreviousNamePage                             => doYouHaveAPreviousNameRoutes
     case WhatIsYourPreviousNamePage(_)                          => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
     case AreYouSureYouWantToRemovePreviousNamePage(_)           => _ => routes.DoYouHaveAPreviousNameController.onPageLoad(NormalMode)
-    case WhatIsYourDateOfBirthPage                              => _ => routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
+    case WhatIsYourDateOfBirthPage                              => _ => routes.WhatIsYourGenderController.onPageLoad(NormalMode)
+    case WhatIsYourGenderPage                                   => _ => routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
     case IsYourCurrentAddressInUkPage                           => isYourCurrentAddressInUkRoutes
     case WhatIsYourCurrentAddressUkPage                         => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
     case WhatIsYourCurrentAddressInternationalPage              => _ => routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
