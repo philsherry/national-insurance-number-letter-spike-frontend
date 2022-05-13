@@ -44,7 +44,7 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
   lazy val whatIsYourPreviousAddressInternationalRoute = routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(Index(0), NormalMode).url
 
   val validData = PreviousAddressInternational(
-    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, country = "country", from = LocalDate.now, to = LocalDate.now
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = "country", from = LocalDate.now, to = LocalDate.now
   )
 
   val userAnswers = UserAnswers(userAnswersId)

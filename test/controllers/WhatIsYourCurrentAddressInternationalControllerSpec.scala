@@ -43,7 +43,7 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
   lazy val whatIsYourCurrentAddressInternationalRoute = routes.WhatIsYourCurrentAddressInternationalController.onPageLoad(NormalMode).url
 
   val validData = CurrentAddressInternational(
-    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, country = "country"
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = "country"
   )
 
   val userAnswers = UserAnswers(userAnswersId)

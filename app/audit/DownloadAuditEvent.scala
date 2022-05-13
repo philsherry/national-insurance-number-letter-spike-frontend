@@ -76,7 +76,7 @@ object DownloadAuditEvent {
       case true  => answers.get(WhatIsYourCurrentAddressUkPage)
         .map(a => Address(a.addressLine1, a.addressLine2, a.addressLine3, Some(a.postcode), None))
       case false => answers.get(WhatIsYourCurrentAddressInternationalPage)
-        .map(a => Address(a.addressLine1, a.addressLine2, a.addressLine3, None, Some(a.country)))
+        .map(a => Address(a.addressLine1, a.addressLine2, a.addressLine3, a.postcode, Some(a.country)))
     }
 
   private def getPreviousAddresses(answers: UserAnswers): Option[List[PreviousAddress]] =
@@ -85,7 +85,7 @@ object DownloadAuditEvent {
         case true  => answers.get(WhatIsYourPreviousAddressUkPage(Index(i)))
           .map(a => PreviousAddress(a.addressLine1, a.addressLine2, a.addressLine3, Some(a.postcode), None, a.from, a.to))
         case false => answers.get(WhatIsYourPreviousAddressInternationalPage(Index(i)))
-          .map(a => PreviousAddress(a.addressLine1, a.addressLine2, a.addressLine3, None, Some(a.country), a.from, a.to))
+          .map(a => PreviousAddress(a.addressLine1, a.addressLine2, a.addressLine3, a.postcode, Some(a.country), a.from, a.to))
       }
     }
 

@@ -32,8 +32,10 @@ class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappi
         .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine1.length")),
       "addressLine2" -> optional(text("whatIsYourPreviousAddressInternational.error.addressLine2.required")
         .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine2.length"))),
-      "addressLine3" -> optional(text("whatIsYourPreviousAddressInternational.error.addressLine3.required")
-        .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine3.length"))),
+       "addressLine3" -> optional(text("whatIsYourPreviousAddressInternational.error.addressLine3.required")
+         .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine3.length"))),
+       "postcode" -> optional(text("whatIsYourPreviousAddressInternational.error.postcode.required")
+         .verifying(maxLength(12, "whatIsYourPreviousAddressInternational.error.postcode.length"))),
        "country" -> text("whatIsYourPreviousAddressInternational.error.country.required")
          .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.country.length")),
        "from" -> localDate(
