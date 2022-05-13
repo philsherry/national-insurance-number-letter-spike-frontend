@@ -200,6 +200,7 @@ class PrintModelSpec extends SpecBase {
           claimedChildBenefit = true,
           Some("CHB12345678"),
           Some("other benefits"),
+          List.empty,
           List(EmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", Some("3 March 2013"))),
           Some("whichPrimaryDocument.passport"),
           None
@@ -232,7 +233,6 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
           .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
           .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
-          .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
           .set(WhichAlternativeDocumentsPage, Set[AlternativeDocuments](AlternativeDocuments.AdoptionCertificate, AlternativeDocuments.WorkPermit)).get
 
         val expected = Some(PrintModel(
@@ -249,7 +249,8 @@ class PrintModelSpec extends SpecBase {
           claimedChildBenefit = true,
           Some("CHB12345678"),
           Some("other benefits"),
-          List(EmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", Some("3 March 2013"))),
+          List(EmployerPrintModel("emp 1", List("line 1", "AA1 1AA"), "2 March 2013", None)),
+          List.empty,
           None,
           Some(List("whichAlternativeDocuments.adoption-certificate", "whichAlternativeDocuments.work-permit"))
         ))

@@ -18,17 +18,35 @@
 @import views.xml.xml.sections._
 
 @this(
-        layout: Layout,
-        instructions: Instructions,
-        main: Main
-        )
+        mainHeader: MainHeader,
+        mainFooter: MainFooter,
+        personalDetails: PersonalDetails,
+        employment: Employment,
+        documents: Documents,
+        benefits: Benefits
+)
 
 @(model: PrintModel)(implicit messages: Messages)
 
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" font-family="sans-serif">
-    @layout()
+<fo:page-sequence master-reference="main" initial-page-number="1">
 
-    @instructions(model)
+    @mainHeader(model)
 
-    @main(model)
-</fo:root>
+    @mainFooter()
+
+    <fo:flow flow-name="xsl-region-body" font-size="12pt" text-align="left">
+
+        <fo:block-container width="90%"><fo:block>
+
+            @personalDetails(model)
+
+            @benefits(model)
+
+            @employment(model)
+
+            @documents(model)
+
+        </fo:block></fo:block-container>
+
+    </fo:flow>
+</fo:page-sequence>

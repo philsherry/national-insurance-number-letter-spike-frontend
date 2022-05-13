@@ -15,20 +15,11 @@
  *@
 
 @import viewmodels.PrintModel
-@import views.xml.xml.sections._
 
-@this(
-        layout: Layout,
-        instructions: Instructions,
-        main: Main
-        )
+@this()
 
-@(model: PrintModel)(implicit messages: Messages)
+@()(implicit messages: Messages)
 
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" font-family="sans-serif">
-    @layout()
-
-    @instructions(model)
-
-    @main(model)
-</fo:root>
+<fo:static-content flow-name="xsl-region-after">
+    <fo:block text-align="center" font-size="12pt">@messages("pdf.page") <fo:page-number/></fo:block>
+</fo:static-content>
