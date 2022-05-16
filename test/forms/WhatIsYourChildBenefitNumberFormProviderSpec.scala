@@ -46,6 +46,11 @@ class WhatIsYourChildBenefitNumberFormProviderSpec extends StringFieldBehaviours
       validGen
     )
 
+    "bind data with spaces" in {
+      val result = form.bind(Map(fieldName -> "C H1 23 456 78 A A ")).apply(fieldName)
+      result.errors mustBe Seq(FormError(fieldName, formatKey, Seq("(CHB)?\\d{8}[A-Za-z]{2}")))
+    }
+
     "not bind invalid data" - {
 
       "with too few digits" in {
