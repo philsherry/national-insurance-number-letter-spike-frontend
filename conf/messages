@@ -361,9 +361,10 @@ haveYouEverClaimedChildBenefit.change.hidden = whether you have ever claimed Chi
 
 whatIsYourChildBenefitNumber.title = What is your Child Benefit number?
 whatIsYourChildBenefitNumber.heading = What is your Child Benefit number?
+whatIsYourChildBenefitNumber.hint = This is made up of the letters ‘CHB’ followed by 8 numbers and 2 letters. For example, CHB12345678AB
 whatIsYourChildBenefitNumber.checkYourAnswersLabel = What is your Child Benefit number?
 whatIsYourChildBenefitNumber.error.required = Enter your Child Benefit number
-whatIsYourChildBenefitNumber.error.length = Your Child Benefit number must be 100 characters or less
+whatIsYourChildBenefitNumber.error.format = Your Child Benefit number must be in the correct format
 whatIsYourChildBenefitNumber.change.hidden = your Child Benefit number
 
 haveYouEverReceivedOtherUkBenefits.title = Have you ever received any other UK benefits?

@@ -17,13 +17,22 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import org.scalacheck.Gen
 import play.api.data.FormError
 
 class WhatIsYourChildBenefitNumberFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "whatIsYourChildBenefitNumber.error.required"
-  val lengthKey = "whatIsYourChildBenefitNumber.error.length"
-  val maxLength = 100
+  val formatKey = "whatIsYourChildBenefitNumber.error.format"
+  val digitCount = 8
+
+  val validGen: Gen[String] = for {
+    prefix <- Gen.oneOf("CHB", "")
+    digits <- Gen.listOfN(digitCount, Gen.numChar)
+    letters <- Gen.listOfN(2, Gen.alphaChar)
+  } yield {
+    prefix ++ digits ++ letters
+  }
 
   val form = new WhatIsYourChildBenefitNumberFormProvider()()
 
@@ -34,15 +43,64 @@ class WhatIsYourChildBenefitNumberFormProviderSpec extends StringFieldBehaviours
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      stringsWithMaxLength(maxLength)
+      validGen
     )
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    "not bind invalid data" - {
+
+      "with too few digits" in {
+        val invalidGen: Gen[String] = for {
+          prefix <- Gen.oneOf("CHB", "")
+          digits <- Gen.listOfN(digitCount - 1, Gen.numChar)
+          letters <- Gen.listOfN(2, Gen.alphaChar)
+        } yield {
+          prefix ++ digits ++ letters
+        }
+
+        forAll(invalidGen -> "invalidDataItem") {
+          dataItem: String =>
+            val result = form.bind(Map(fieldName -> dataItem)).apply(fieldName)
+            result.errors mustBe Seq(FormError(fieldName, formatKey, Seq("(CHB)?\\d{8}[A-Za-z]{2}")))
+        }
+      }
+
+      "with too many digits" in {
+        val invalidGen: Gen[String] = for {
+          prefix <- Gen.oneOf("CHB", "")
+          digits <- Gen.listOfN(digitCount + 1, Gen.numChar)
+          letters <- Gen.listOfN(2, Gen.alphaChar)
+        } yield {
+          prefix ++ digits ++ letters
+        }
+
+        forAll(invalidGen -> "invalidDataItem") {
+          dataItem: String =>
+            val result = form.bind(Map(fieldName -> dataItem)).apply(fieldName)
+            result.errors mustBe Seq(FormError(fieldName, formatKey, Seq("(CHB)?\\d{8}[A-Za-z]{2}")))
+        }
+      }
+
+      "with missing letter suffix" in {
+        val invalidGen = for {
+          valid <- validGen
+          toDrop <- Gen.chooseNum(1, 2)
+        } yield {
+          valid.dropRight(toDrop)
+        }
+
+        forAll(invalidGen -> "invalidDataItem") {
+          dataItem: String =>
+            val result = form.bind(Map(fieldName -> dataItem)).apply(fieldName)
+            result.errors mustBe Seq(FormError(fieldName, formatKey, Seq("(CHB)?\\d{8}[A-Za-z]{2}")))
+        }
+      }
+
+      "with incomplete prefix" in {
+        val result = form.bind(Map(fieldName -> "CH12345678AA")).apply(fieldName)
+        result.errors mustBe Seq(FormError(fieldName, formatKey, Seq("(CHB)?\\d{8}[A-Za-z]{2}")))
+      }
+
+    }
 
     behave like mandatoryField(
       form,

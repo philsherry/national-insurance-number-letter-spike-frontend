@@ -40,6 +40,8 @@
                 label = LabelViewModel(messages("whatIsYourChildBenefitNumber.heading")).asPageHeading()
             )
             .withWidth(Full)
+            .withHint(HintViewModel(messages("whatIsYourChildBenefitNumber.hint")))
+            .withPrefix(PrefixOrSuffix(content = "CHB"))
         )
 
         @govukButton(
