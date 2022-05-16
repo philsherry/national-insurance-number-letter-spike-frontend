@@ -39,7 +39,8 @@
                 field = form("value"),
                 label = LabelViewModel(messages("whatIsYourTelephoneNumber.heading")).asPageHeading()
             )
-            .withWidth(Full)
+            .withWidth(Fixed20)
+            .withAutocomplete("tel")
         )
 
         @govukButton(
