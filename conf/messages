@@ -625,6 +625,7 @@ areYouSureYouWantToRemovePreviousRelationship.error.required = Select yes if you
 
 whatIsYourGender.title = What is your gender?
 whatIsYourGender.heading = What is your gender?
+whatIsYourGender.hint = We will use this information to confirm your identity and find your record.
 whatIsYourGender.female = Female
 whatIsYourGender.male = Male
 whatIsYourGender.preferNotToSay = Prefer not to say
