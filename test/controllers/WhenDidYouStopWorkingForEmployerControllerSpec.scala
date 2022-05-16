@@ -24,7 +24,7 @@ import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.WhenDidYouStopWorkingForEmployerPage
+import pages.{WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -36,16 +36,18 @@ import scala.concurrent.Future
 
 class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with MockitoSugar {
 
+  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val startDate = validAnswer.minusDays(1)
+
   val formProvider = new WhenDidYouStopWorkingForEmployerFormProvider()
-  private def form = formProvider()
+  private val form = formProvider(startDate)
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
-
   lazy val whenDidYouStopWorkingForPreviousEmployerRoute = routes.WhenDidYouStopWorkingForEmployerController.onPageLoad(Index(0), NormalMode).url
 
-  override val emptyUserAnswers = UserAnswers(userAnswersId)
+  private val baseAnswers =
+    emptyUserAnswers.set(WhenDidYouStartWorkingForEmployerPage(Index(0)), startDate).success.value
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, whenDidYouStopWorkingForPreviousEmployerRoute)
@@ -62,7 +64,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(baseAnswers)).build()
 
       running(application) {
         val result = route(application, getRequest).value
@@ -76,7 +78,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStopWorkingForEmployerPage(Index(0)), validAnswer).success.value
+      val userAnswers = baseAnswers.set(WhenDidYouStopWorkingForEmployerPage(Index(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -97,7 +99,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(baseAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -114,7 +116,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(baseAnswers)).build()
 
       val request =
         FakeRequest(POST, whenDidYouStopWorkingForPreviousEmployerRoute)

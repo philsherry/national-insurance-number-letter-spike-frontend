@@ -17,12 +17,15 @@
 package forms
 
 import java.time.{LocalDate, ZoneOffset}
-
 import forms.behaviours.DateBehaviours
+import play.api.data.FormError
+
+import java.time.format.DateTimeFormatter
 
 class WhenDidYouStopWorkingForEmployerFormProviderSpec extends DateBehaviours {
 
-  val form = new WhenDidYouStopWorkingForEmployerFormProvider()()
+  private val startDate = LocalDate.of(1999, 12, 31)
+  private val form = new WhenDidYouStopWorkingForEmployerFormProvider()(startDate)
 
   ".value" - {
 
@@ -34,5 +37,30 @@ class WhenDidYouStopWorkingForEmployerFormProviderSpec extends DateBehaviours {
     behave like dateField(form, "value", validData)
 
     behave like mandatoryDateField(form, "value", "whenDidYouStopWorkingForEmployer.error.required.all")
+
+    "fail to bind when given a date before the start date" in {
+
+      def dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+
+      val invalidDates = datesBetween(
+        min = LocalDate.of(1900, 1, 1),
+        max = startDate
+      )
+
+      forAll(invalidDates) {
+        date =>
+          val data = Map(
+            "value.day"   -> date.getDayOfMonth.toString,
+            "value.month" -> date.getMonthValue.toString,
+            "value.year"  -> date.getYear.toString
+          )
+
+          val result = form.bind(data)
+          result.errors must contain only FormError(
+            "value",
+            "whenDidYouStopWorkingForEmployer.error.tooEarly",
+            Seq(startDate.format(dateFormatter)))
+      }
+    }
   }
 }

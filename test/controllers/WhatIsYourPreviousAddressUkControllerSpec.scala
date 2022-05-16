@@ -43,8 +43,11 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
 
   lazy val whatIsYourPreviousAddressUkRoute = routes.WhatIsYourPreviousAddressUkController.onPageLoad(Index(0), NormalMode).url
 
+  val startDate = LocalDate.now.minusDays(1)
+  val endDate = LocalDate.now
+
   val validData = PreviousAddressUk(
-    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = LocalDate.now, to = LocalDate.now
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = startDate, to = endDate
   )
 
   val userAnswers = UserAnswers(userAnswersId)
@@ -105,8 +108,8 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
               "postcode" -> "postcode",
-              "from.day" -> LocalDate.now.getDayOfMonth.toString, "from.month" -> LocalDate.now.getMonthValue.toString, "from.year" -> LocalDate.now.getYear.toString,
-              "to.day" -> LocalDate.now.getDayOfMonth.toString, "to.month" -> LocalDate.now.getMonthValue.toString, "to.year" -> LocalDate.now.getYear.toString
+              "from.day" -> startDate.getDayOfMonth.toString, "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
+              "to.day" -> endDate.getDayOfMonth.toString, "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
             )
 
         val result = route(application, request).value

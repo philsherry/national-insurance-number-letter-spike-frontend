@@ -49,5 +49,8 @@ class WhatIsYourPreviousAddressUkFormProvider @Inject() extends Mappings {
          requiredKey    = "whatIsYourPreviousAddressUk.error.to.required"
        ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressUk.error.to.past"))
     )(PreviousAddressUk.apply)(PreviousAddressUk.unapply)
+       .verifying("whatIsYourPreviousAddressUk.error.datesOutOfOrder", x => {
+         x.from isBefore x.to
+       })
    )
  }

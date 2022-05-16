@@ -51,5 +51,8 @@ class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappi
          requiredKey    = "whatIsYourPreviousAddressInternational.error.to.required"
        ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressInternational.error.to.past"))
      )(PreviousAddressInternational.apply)(PreviousAddressInternational.unapply)
+       .verifying("whatIsYourPreviousAddressInternational.error.datesOutOfOrder", x => {
+         x.from isBefore x.to
+       })
    )
  }
