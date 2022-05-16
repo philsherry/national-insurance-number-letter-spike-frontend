@@ -40,6 +40,8 @@
             <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.nextSteps")</fo:block>
 
             <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.p1")</fo:block>
+            
+            <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.p2")</fo:block>
 
             <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
                 <fo:block>@messages("pdf.nextSteps.address1")</fo:block>
