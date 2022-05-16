@@ -577,6 +577,14 @@ pdf.documents.primaryDocument = Document
 pdf.documents.secondaryDocuments = Documents
 pdf.documents.secondaryDocuments.and = and
 
+pdf.declaration = Declaration
+pdf.declaration.declaration = I declare that the information on this form is correct and complete to the best of my knowledge.
+pdf.declaration.signature = Signature
+pdf.declaration.date = Date
+pdf.declaration.day = Day
+pdf.declaration.month = Month
+pdf.declaration.year = Year
+
 insufficientDocuments.title = You do not have the required documents
 insufficientDocuments.heading = You do not have the required documents
 insufficientDocuments.p1 = Based on your answers, you do not have the documents needed to request your National Insurance number using this form.
