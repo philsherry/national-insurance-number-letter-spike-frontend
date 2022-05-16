@@ -24,13 +24,13 @@ import java.time.format.DateTimeFormatter
 
 class WhenDidYouStopWorkingForEmployerFormProviderSpec extends DateBehaviours {
 
-  private val startDate = LocalDate.of(1999, 12, 31)
+  private val startDate = LocalDate.of(2000, 1, 1)
   private val form = new WhenDidYouStopWorkingForEmployerFormProvider()(startDate)
 
   ".value" - {
 
     val validData = datesBetween(
-      min = LocalDate.of(2000, 1, 1),
+      min = startDate,
       max = LocalDate.now(ZoneOffset.UTC)
     )
 

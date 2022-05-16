@@ -50,7 +50,7 @@ class WhatIsYourPreviousAddressUkFormProvider @Inject() extends Mappings {
        ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressUk.error.to.past"))
     )(PreviousAddressUk.apply)(PreviousAddressUk.unapply)
        .verifying("whatIsYourPreviousAddressUk.error.datesOutOfOrder", x => {
-         x.from isBefore x.to
+         (x.from isBefore x.to) || (x.from == x.to)
        })
    )
  }

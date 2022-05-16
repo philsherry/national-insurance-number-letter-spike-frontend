@@ -52,7 +52,7 @@ class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappi
        ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressInternational.error.to.past"))
      )(PreviousAddressInternational.apply)(PreviousAddressInternational.unapply)
        .verifying("whatIsYourPreviousAddressInternational.error.datesOutOfOrder", x => {
-         x.from isBefore x.to
+         (x.from isBefore x.to) || (x.from == x.to)
        })
    )
  }

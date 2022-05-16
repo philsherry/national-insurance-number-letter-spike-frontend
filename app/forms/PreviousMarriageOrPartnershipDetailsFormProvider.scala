@@ -44,7 +44,7 @@ class PreviousMarriageOrPartnershipDetailsFormProvider @Inject() extends Mapping
         .verifying(maxLength(100, "previousMarriageOrPartnershipDetails.error.endReason.length"))
     )(PreviousMarriageOrPartnershipDetails.apply)(PreviousMarriageOrPartnershipDetails.unapply)
        .verifying("previousMarriageOrPartnershipDetails.error.datesOutOfOrder", x => {
-         x.startDate isBefore x.endDate
+         (x.startDate isBefore x.endDate) || (x.startDate == x.endDate)
        })
    )
  }

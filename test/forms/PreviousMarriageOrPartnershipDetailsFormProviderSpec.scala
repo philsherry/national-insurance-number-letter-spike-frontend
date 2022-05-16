@@ -84,17 +84,18 @@ class PreviousMarriageOrPartnershipDetailsFormProviderSpec extends StringFieldBe
 
   "form" - {
 
-    "must give an error if start date is not before end date" in {
+    "must give an error if start date is not on or before end date" in {
 
-      val date = LocalDate.now
+      val startDate = LocalDate.now
+      val endDate   = startDate.minusDays(1)
 
       val data = Map(
-        "startDate.day"   -> date.getDayOfMonth.toString,
-        "startDate.month" -> date.getMonthValue.toString,
-        "startDate.year"  -> date.getYear.toString,
-        "endDate.day"     -> date.getDayOfMonth.toString,
-        "endDate.month"   -> date.getMonthValue.toString,
-        "endDate.year"    -> date.getYear.toString,
+        "startDate.day"   -> startDate.getDayOfMonth.toString,
+        "startDate.month" -> startDate.getMonthValue.toString,
+        "startDate.year"  -> startDate.getYear.toString,
+        "endDate.day"     -> endDate.getDayOfMonth.toString,
+        "endDate.month"   -> endDate.getMonthValue.toString,
+        "endDate.year"    -> endDate.getYear.toString,
         "endReason"       -> "reason"
       )
 

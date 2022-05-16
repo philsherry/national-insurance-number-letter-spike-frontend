@@ -151,15 +151,16 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
 
     "must give an error if start date is not before end date" in {
 
-      val date = LocalDate.now
+      val startDate = LocalDate.now
+      val endDate   = startDate.minusDays(1)
 
       val data = Map(
-        "from.day"     -> date.getDayOfMonth.toString,
-        "from.month"   -> date.getMonthValue.toString,
-        "from.year"    -> date.getYear.toString,
-        "to.day"       -> date.getDayOfMonth.toString,
-        "to.month"     -> date.getMonthValue.toString,
-        "to.year"      -> date.getYear.toString,
+        "from.day"     -> startDate.getDayOfMonth.toString,
+        "from.month"   -> startDate.getMonthValue.toString,
+        "from.year"    -> startDate.getYear.toString,
+        "to.day"       -> endDate.getDayOfMonth.toString,
+        "to.month"     -> endDate.getMonthValue.toString,
+        "to.year"      -> endDate.getYear.toString,
         "addressLine1" -> "line 1",
         "country"      -> "country"
       )

@@ -36,7 +36,7 @@ class WhenDidYouStopWorkingForEmployerFormProvider @Inject() extends Mappings {
         twoRequiredKey = "whenDidYouStopWorkingForEmployer.error.required.two",
         requiredKey    = "whenDidYouStopWorkingForEmployer.error.required"
       ).verifying(minDate(
-        minimum  = startDate.plusDays(1),
+        minimum  = startDate,
         errorKey = "whenDidYouStopWorkingForEmployer.error.tooEarly",
         args     = startDate.format(dateFormatter)
       ))
