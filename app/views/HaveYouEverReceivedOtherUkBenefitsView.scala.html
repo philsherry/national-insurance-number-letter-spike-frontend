@@ -37,6 +37,7 @@
                 field = form("value"),
                 legend = LegendViewModel(messages("haveYouEverReceivedOtherUkBenefits.heading")).asPageHeading()
             )
+            .withHint(Hint(content = messages("haveYouEverReceivedOtherUkBenefits.hint")))
         )
 
         @govukButton(
