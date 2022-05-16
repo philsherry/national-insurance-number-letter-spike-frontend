@@ -81,4 +81,26 @@ class PreviousMarriageOrPartnershipDetailsFormProviderSpec extends StringFieldBe
       requiredError = FormError(fieldName, requiredKey)
     )
   }
+
+  "form" - {
+
+    "must give an error if start date is not on or before end date" in {
+
+      val startDate = LocalDate.now
+      val endDate   = startDate.minusDays(1)
+
+      val data = Map(
+        "startDate.day"   -> startDate.getDayOfMonth.toString,
+        "startDate.month" -> startDate.getMonthValue.toString,
+        "startDate.year"  -> startDate.getYear.toString,
+        "endDate.day"     -> endDate.getDayOfMonth.toString,
+        "endDate.month"   -> endDate.getMonthValue.toString,
+        "endDate.year"    -> endDate.getYear.toString,
+        "endReason"       -> "reason"
+      )
+
+      val result = form.bind(data)
+      result.errors must contain only FormError("", "previousMarriageOrPartnershipDetails.error.datesOutOfOrder")
+    }
+  }
 }

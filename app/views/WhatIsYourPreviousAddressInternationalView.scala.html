@@ -32,7 +32,16 @@
     @formHelper(action = routes.WhatIsYourPreviousAddressInternationalController.onSubmit(index, mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
+            @govukErrorSummary(
+                ErrorSummaryViewModel(
+                    form = form,
+                    errorLinkOverrides = Map(
+                        "from" -> "from.day",
+                        "to"   -> "to.day",
+                        ""     -> "from.day"
+                    )
+                )
+            )
         }
 
         <h1 class="govuk-heading-xl">@messages("whatIsYourPreviousAddressInternational.heading")</h1>

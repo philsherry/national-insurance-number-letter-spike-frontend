@@ -43,8 +43,11 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
 
   lazy val previousMarriageOrPartnershipDetailsRoute = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), NormalMode).url
 
+  val startDate = LocalDate.now.minusDays(1)
+  val endDate = LocalDate.now
+
   val model = PreviousMarriageOrPartnershipDetails(
-    startDate = LocalDate.now, endDate = LocalDate.now, endingReason = "value"
+    startDate = startDate, endDate = endDate, endingReason = "value"
   )
 
   val userAnswers = UserAnswers(userAnswersId).set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), model).success.value
@@ -90,8 +93,8 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val validData = List(
-        "startDate.day" -> LocalDate.now.getDayOfMonth.toString, "startDate.month" -> LocalDate.now.getMonthValue.toString, "startDate.year" -> LocalDate.now.getYear.toString,
-        "endDate.day" -> LocalDate.now.getDayOfMonth.toString, "endDate.month" -> LocalDate.now.getMonthValue.toString, "endDate.year" -> LocalDate.now.getYear.toString,
+        "startDate.day" -> startDate.getDayOfMonth.toString, "startDate.month" -> startDate.getMonthValue.toString, "startDate.year" -> startDate.getYear.toString,
+        "endDate.day" -> endDate.getDayOfMonth.toString, "endDate.month" -> endDate.getMonthValue.toString, "endDate.year" -> endDate.getYear.toString,
         "endReason" -> "value"
       )
 

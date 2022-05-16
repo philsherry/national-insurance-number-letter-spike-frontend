@@ -22,7 +22,7 @@ import forms.WhenDidYouStopWorkingForEmployerFormProvider
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.WhenDidYouStopWorkingForEmployerPage
+import pages.{WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -41,33 +41,42 @@ class WhenDidYouStopWorkingForEmployerController @Inject()(
                                                             formProvider: WhenDidYouStopWorkingForEmployerFormProvider,
                                                             val controllerComponents: MessagesControllerComponents,
                                                             view: WhenDidYouStopWorkingForEmployerView
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
-  def form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      getAnswer(WhenDidYouStartWorkingForEmployerPage(index)) {
+        startDate =>
 
-      val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
+          val form = formProvider(startDate)
+
+          val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index)) match {
+            case None => form
+            case Some(value) => form.fill(value)
+          }
+
+          Ok(view(preparedForm, index, mode))
       }
-
-      Ok(view(preparedForm, index, mode))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      getAnswerAsync(WhenDidYouStartWorkingForEmployerPage(index)) {
+        startDate =>
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
+          val form = formProvider(startDate)
 
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForEmployerPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(index), mode, updatedAnswers))
-      )
+          form.bindFromRequest().fold(
+            formWithErrors =>
+              Future.successful(BadRequest(view(formWithErrors, index, mode))),
+
+            value =>
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForEmployerPage(index), value))
+                _ <- sessionRepository.set(updatedAnswers)
+              } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(index), mode, updatedAnswers))
+          )
+        }
   }
 }

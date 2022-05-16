@@ -146,4 +146,27 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
 
     behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousAddressInternational.error.from.past"))
   }
+
+  "form" - {
+
+    "must give an error if start date is not before end date" in {
+
+      val startDate = LocalDate.now
+      val endDate   = startDate.minusDays(1)
+
+      val data = Map(
+        "from.day"     -> startDate.getDayOfMonth.toString,
+        "from.month"   -> startDate.getMonthValue.toString,
+        "from.year"    -> startDate.getYear.toString,
+        "to.day"       -> endDate.getDayOfMonth.toString,
+        "to.month"     -> endDate.getMonthValue.toString,
+        "to.year"      -> endDate.getYear.toString,
+        "addressLine1" -> "line 1",
+        "country"      -> "country"
+      )
+
+      val result = form.bind(data)
+      result.errors must contain only FormError("", "whatIsYourPreviousAddressInternational.error.datesOutOfOrder")
+    }
+  }
 }

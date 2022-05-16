@@ -43,8 +43,11 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
 
   lazy val whatIsYourPreviousAddressInternationalRoute = routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(Index(0), NormalMode).url
 
+  val startDate = LocalDate.now.minusDays(1)
+  val endDate = LocalDate.now
+
   val validData = PreviousAddressInternational(
-    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = "country", from = LocalDate.now, to = LocalDate.now
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = "country", from = startDate, to = endDate
   )
 
   val userAnswers = UserAnswers(userAnswersId)
@@ -105,8 +108,8 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
               "country" -> "value 2",
-              "from.day" -> LocalDate.now.getDayOfMonth.toString, "from.month" -> LocalDate.now.getMonthValue.toString, "from.year" -> LocalDate.now.getYear.toString,
-              "to.day" -> LocalDate.now.getDayOfMonth.toString, "to.month" -> LocalDate.now.getMonthValue.toString, "to.year" -> LocalDate.now.getYear.toString
+              "from.day" -> startDate.getDayOfMonth.toString, "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
+              "to.day" -> endDate.getDayOfMonth.toString, "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
             )
 
         val result = route(application, request).value

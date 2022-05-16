@@ -16,13 +16,13 @@
 
 package forms
 
-import javax.inject.Inject
 import forms.mappings.Mappings
+import models.PreviousMarriageOrPartnershipDetails
 import play.api.data.Form
 import play.api.data.Forms._
-import models.PreviousMarriageOrPartnershipDetails
 
 import java.time.LocalDate
+import javax.inject.Inject
 
 class PreviousMarriageOrPartnershipDetailsFormProvider @Inject() extends Mappings {
 
@@ -39,9 +39,12 @@ class PreviousMarriageOrPartnershipDetailsFormProvider @Inject() extends Mapping
           allRequiredKey = "previousMarriageOrPartnershipDetails.error.endDate.required.all",
           twoRequiredKey = "previousMarriageOrPartnershipDetails.error.endDate.required.two",
           requiredKey    = "previousMarriageOrPartnershipDetails.error.endDate.required"
-        ).verifying(maxDate(LocalDate.now, "previousMarriageOrPartnershipDetails.error.endDate.past")),
+       ).verifying(maxDate(LocalDate.now, "previousMarriageOrPartnershipDetails.error.endDate.past")),
       "endReason" -> text("previousMarriageOrPartnershipDetails.error.endReason.required")
         .verifying(maxLength(100, "previousMarriageOrPartnershipDetails.error.endReason.length"))
     )(PreviousMarriageOrPartnershipDetails.apply)(PreviousMarriageOrPartnershipDetails.unapply)
+       .verifying("previousMarriageOrPartnershipDetails.error.datesOutOfOrder", x => {
+         (x.startDate isBefore x.endDate) || (x.startDate == x.endDate)
+       })
    )
  }
