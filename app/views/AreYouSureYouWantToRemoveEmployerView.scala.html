@@ -31,7 +31,7 @@
     DateTimeFormatter.ofPattern("d MMMM yyyy")
 }
 
-    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousEmployer.title"))) {
+    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemoveEmployer.title"))) {
 
     @formHelper(action = routes.AreYouSureYouWantToRemoveEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -39,13 +39,20 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("areYouSureYouWantToRemovePreviousEmployer.heading")</h1>
+        <h1 class="govuk-heading-xl">@messages("areYouSureYouWantToRemoveEmployer.heading")</h1>
 
         <p class="govuk-body govuk-!-margin-bottom-9">
-            @employerName.map { name => <span class="govuk-!-font-weight-bold">@name</span><br/> }
+            @employerName.map { name => <span>@name</span><br/> }
             @for(from <- from; to <- to) {
+                    @messages("areYouSureYouWantToRemoveEmployer.range", from.format(dateFormatter), to.format(dateFormatter))
+            }
+            @from.map { from =>
                 <span>
-                    @messages("areYouSureYouWantToRemovePreviousEmployer.range", from.format(dateFormatter), to.format(dateFormatter))
+                  @to.map { to =>
+                      @messages("areYouSureYouWantToRemoveEmployer.range", from.format(dateFormatter), to.format(dateFormatter))
+                  }.getOrElse {
+                      @messages("areYouSureYouWantToRemoveEmployer.openRange", from.format(dateFormatter))
+                  }
                 </span>
             }
         </p>
@@ -53,7 +60,7 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("areYouSureYouWantToRemovePreviousEmployer.heading")).withCssClass("govuk-visually-hidden")
+                legend = LegendViewModel(messages("areYouSureYouWantToRemoveEmployer.heading")).withCssClass("govuk-visually-hidden")
             )
         )
 

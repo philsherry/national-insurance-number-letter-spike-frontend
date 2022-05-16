@@ -590,10 +590,11 @@ insufficientDocuments.heading = You do not have the required documents
 insufficientDocuments.p1 = Based on your answers, you do not have the documents needed to request your National Insurance number using this form.
 insufficientDocuments.p2 = You may need to telephone our National Insurance Registrations helpline on 0300 200 3500, or if you live outside the UK telephone +44 (0) 191 203 7010.
 
-areYouSureYouWantToRemovePreviousEmployer.title = Are you sure you want to remove this previous employer?
-areYouSureYouWantToRemovePreviousEmployer.heading = Are you sure you want to remove this previous employer?
-areYouSureYouWantToRemovePreviousEmployer.error.required = Select yes if you want to remove this previous employer
-areYouSureYouWantToRemovePreviousEmployer.range = From {0} to {1}
+areYouSureYouWantToRemoveEmployer.title = Are you sure you want to remove this employer?
+areYouSureYouWantToRemoveEmployer.heading = Are you sure you want to remove this employer?
+areYouSureYouWantToRemoveEmployer.error.required = Select yes if you want to remove this employer
+areYouSureYouWantToRemoveEmployer.range = From {0} to {1}
+areYouSureYouWantToRemoveEmployer.openRange = From {0}
 
 print.title = Your application form is ready to print and post
 print.heading = Your application form is ready to print and post
