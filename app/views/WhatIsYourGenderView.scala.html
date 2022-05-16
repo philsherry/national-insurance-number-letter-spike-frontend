@@ -38,6 +38,7 @@
                 legend = LegendViewModel(messages("whatIsYourGender.heading")).asPageHeading(),
                 items  = WhatIsYourGender.options
             )
+            .withHint(Hint(content = messages("whatIsYourGender.hint")))
         )
 
         @govukButton(
