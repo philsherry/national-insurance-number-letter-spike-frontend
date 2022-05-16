@@ -25,6 +25,6 @@ class AreYouSureYouWantToRemoveEmployerFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
     Form(
-      "value" -> boolean("areYouSureYouWantToRemovePreviousEmployer.error.required")
+      "value" -> boolean("areYouSureYouWantToRemoveEmployer.error.required")
     )
 }

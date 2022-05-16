@@ -113,7 +113,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val addressHistory = SummaryListViewModel(Seq(
           IsYourCurrentAddressInUkSummary.row(answers)(messages(application)),
           WhatIsYourCurrentAddressUkSummary.row(answers)(messages(application)),
-          WhatIsYourCurrentAddressInternationalSummary.row(answers)(messages(application)),
+          WhatIsYourCurrentAddressInternationalSummary.row(answers)(messages(application))
         ).flatten)
 
         val previousAddresses = List(ListWithActionsItem(
@@ -126,7 +126,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val currentRelationship = SummaryListViewModel(Seq(
           AreYouMarriedSummary.row(answers)(messages(application)),
-          WhenDidYouGetMarriedSummary.row(answers)(messages(application)),
+          WhenDidYouGetMarriedSummary.row(answers)(messages(application))
         ).flatten)
 
         val previousRelationships = List(

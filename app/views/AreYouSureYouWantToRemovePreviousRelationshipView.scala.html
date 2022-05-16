@@ -38,11 +38,17 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <h1 class="govuk-heading-xl">@messages("areYouSureYouWantToRemovePreviousRelationship.heading")</h1>
+
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            @messages("areYouSureYouWantToRemovePreviousRelationship.text", dateFormatter.format(details.startDate), dateFormatter.format(details.endDate))
+        </p>
+
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("areYouSureYouWantToRemovePreviousRelationship.heading")).asPageHeading()
-            ).withHint(Hint(content = messages("areYouSureYouWantToRemovePreviousRelationship.text", dateFormatter.format(details.startDate), dateFormatter.format(details.endDate))))
+                legend = LegendViewModel(messages("areYouSureYouWantToRemovePreviousRelationship.heading")).withCssClass("govuk-visually-hidden")
+            )
         )
 
         @govukButton(
