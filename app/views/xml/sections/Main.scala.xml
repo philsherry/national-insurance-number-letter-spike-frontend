@@ -23,7 +23,8 @@
         personalDetails: PersonalDetails,
         employment: Employment,
         documents: Documents,
-        benefits: Benefits
+        benefits: Benefits,
+        signature: Signature
 )
 
 @(model: PrintModel)(implicit messages: Messages)
@@ -46,6 +47,7 @@
 
             @documents(model)
 
+            @signature()
         </fo:block></fo:block-container>
 
     </fo:flow>
