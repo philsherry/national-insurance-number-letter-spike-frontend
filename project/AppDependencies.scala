@@ -13,7 +13,8 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "domain"                         % "7.0.0-play-28",
     "com.dmanchester"   %% "playfop"                        % "1.0",
     "org.typelevel"     %% "cats-core"                      % "2.3.0",
-    "org.apache.xmlgraphics" % "fop"                        % "2.7"
+    "org.apache.xmlgraphics"        % "fop"                 % "2.7",
+    "com.googlecode.libphonenumber" % "libphonenumber"      % "8.12.47"
   )
 
   val test = Seq(
