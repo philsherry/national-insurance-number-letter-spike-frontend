@@ -368,12 +368,14 @@ whatIsYourChildBenefitNumber.change.hidden = your Child Benefit number
 
 haveYouEverReceivedOtherUkBenefits.title = Have you ever received any other UK benefits?
 haveYouEverReceivedOtherUkBenefits.heading = Have you ever received any other UK benefits?
+haveYouEverReceivedOtherUkBenefits.hint = For example, Universal Credit, Tax Credits or Jobseeker’s allowance.
 haveYouEverReceivedOtherUkBenefits.checkYourAnswersLabel = Have you ever received any other UK benefits?
 haveYouEverReceivedOtherUkBenefits.error.required = Select yes if you have ever received any other UK benefits
 haveYouEverReceivedOtherUkBenefits.change.hidden = whether you have ever received any other UK benefits
 
 whatOtherUkBenefitsHaveYouReceived.title = What other UK benefits have you received?
 whatOtherUkBenefitsHaveYouReceived.heading = What other UK benefits have you received?
+whatOtherUkBenefitsHaveYouReceived.hint = For example, Universal Credit, Tax Credits or Jobseeker’s allowance. You don’t need to include any reference numbers.
 whatOtherUkBenefitsHaveYouReceived.checkYourAnswersLabel = What other UK benefits have you received?
 whatOtherUkBenefitsHaveYouReceived.error.required = Enter what other UK benefits you have received
 whatOtherUkBenefitsHaveYouReceived.error.length = The other UK benefits you have received must be 100 characters or less

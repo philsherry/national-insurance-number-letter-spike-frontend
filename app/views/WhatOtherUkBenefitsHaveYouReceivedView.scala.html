@@ -44,7 +44,10 @@
                     classes = "govuk-label--xl",
                     content = Text(messages("whatOtherUkBenefitsHaveYouReceived.heading"))
                 ),
-                value = form("value").value
+                value = form("value").value,
+                hint = Some(Hint(
+                content = Text(messages("whatOtherUkBenefitsHaveYouReceived.hint"))
+                ))
             )
         )
 
