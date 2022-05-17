@@ -1,4 +1,4 @@
-service.name = Get your national insurance number by post
+service.name = Get your National Insurance number by post
 
 site.back = Back
 site.remove = Remove
@@ -296,13 +296,13 @@ areYouReturningFromLivingAbroad.checkYourAnswersLabel = Are you returning to the
 areYouReturningFromLivingAbroad.error.required = Select yes if are returning to the UK from living abroad
 areYouReturningFromLivingAbroad.change.hidden = whether you are returning to the UK from living abroad
 
-whatIsYourNationalInsuranceNumber.title = What is your national insurance number?
-whatIsYourNationalInsuranceNumber.heading = What is your national insurance number?
+whatIsYourNationalInsuranceNumber.title = What is your National Insurance number?
+whatIsYourNationalInsuranceNumber.heading = What is your National Insurance number?
 whatIsYourNationalInsuranceNumber.hint = It’s on your National Insurance card, benefit letter, payslip or P60. For example, QQ123456C.
-whatIsYourNationalInsuranceNumber.checkYourAnswersLabel = What is your national insurance number?
-whatIsYourNationalInsuranceNumber.error.required = Enter your national insurance number
+whatIsYourNationalInsuranceNumber.checkYourAnswersLabel = What is your National Insurance number?
+whatIsYourNationalInsuranceNumber.error.required = Enter your National Insurance number
 whatIsYourNationalInsuranceNumber.error.invalid = Enter your National Insurance number in the correct format
-whatIsYourNationalInsuranceNumber.change.hidden = your national insurance number
+whatIsYourNationalInsuranceNumber.change.hidden = your National Insurance number
 
 whatIsYourTelephoneNumber.title = What is your telephone number?
 whatIsYourTelephoneNumber.heading = What is your telephone number?
