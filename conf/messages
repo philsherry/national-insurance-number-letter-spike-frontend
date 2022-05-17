@@ -649,3 +649,11 @@ whatIsYourGender.preferNotToSay = Prefer not to say
 whatIsYourGender.checkYourAnswersLabel = What is your gender?
 whatIsYourGender.error.required = Select your gender
 whatIsYourGender.change.hidden = your gender
+
+currentRelationshipType.title = Is your current relationship a marriage or civil partnership?
+currentRelationshipType.heading = Is your current relationship a marriage or civil partnership?
+currentRelationshipType.marriage = Marriage
+currentRelationshipType.civilPartnership = ivil Partnership
+currentRelationshipType.checkYourAnswersLabel = Is your current relationship a marriage or civil partnership?
+currentRelationshipType.error.required = Select currentRelationshipType
+currentRelationshipType.change.hidden = CurrentRelationshipType

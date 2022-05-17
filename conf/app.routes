@@ -223,3 +223,8 @@ GET        /what-is-your-gender                        controllers.WhatIsYourGen
 POST       /what-is-your-gender                        controllers.WhatIsYourGenderController.onSubmit(mode: Mode = NormalMode)
 GET        /change-your-gender                  controllers.WhatIsYourGenderController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-your-gender                  controllers.WhatIsYourGenderController.onSubmit(mode: Mode = CheckMode)
+
+GET        /currentRelationshipType                        controllers.CurrentRelationshipTypeController.onPageLoad(mode: Mode = NormalMode)
+POST       /currentRelationshipType                        controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeCurrentRelationshipType                  controllers.CurrentRelationshipTypeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeCurrentRelationshipType                  controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = CheckMode)
