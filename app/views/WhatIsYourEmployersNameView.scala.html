@@ -26,7 +26,7 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourEmployersName.title"))) {
+@layout(pageTitle = title(form, messages("whatIsYourEmployersName.title"), Some(messages("section.employmentHistory")))) {
 
     @formHelper(action = routes.WhatIsYourEmployersNameController.onSubmit(index, mode)) {
 
@@ -37,7 +37,10 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("whatIsYourEmployersName.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("whatIsYourEmployersName.heading"),
+                    caption = HmrcSectionCaption(messages("section.employmentHistory"))
+                )
             )
             .withWidth(Full)
         )

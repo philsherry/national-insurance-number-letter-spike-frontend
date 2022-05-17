@@ -26,7 +26,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourChildBenefitNumber.title"))) {
+@layout(pageTitle = title(form, messages("whatIsYourChildBenefitNumber.title"), Some(messages("section.benefitHistory")))) {
 
     @formHelper(action = routes.WhatIsYourChildBenefitNumberController.onSubmit(mode)) {
 
@@ -37,9 +37,12 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("whatIsYourChildBenefitNumber.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("whatIsYourChildBenefitNumber.heading"),
+                    caption = HmrcSectionCaption(messages("section.benefitHistory"))
+                )
             )
-            .withWidth(Full)
+            .withWidth(Fixed20)
             .withHint(HintViewModel(messages("whatIsYourChildBenefitNumber.hint")))
             .withPrefix(PrefixOrSuffix(content = "CHB"))
         )

@@ -22,12 +22,13 @@
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
     govukButton: GovukButton,
-    govukDateInput: GovukDateInput
+    govukDateInput: GovukDateInput,
+    h1WithCaption: components.h1WithCaption
 )
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourPreviousAddressInternational.title"))) {
+@layout(pageTitle = title(form, messages("whatIsYourPreviousAddressInternational.title"), Some(messages("section.addressHistory")))) {
 
     @formHelper(action = routes.WhatIsYourPreviousAddressInternationalController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -44,7 +45,10 @@
             )
         }
 
-        <h1 class="govuk-heading-xl">@messages("whatIsYourPreviousAddressInternational.heading")</h1>
+        @h1WithCaption(
+            content = messages("whatIsYourPreviousAddressInternational.heading"),
+            caption = HmrcSectionCaption(messages("section.addressHistory"))
+        )
 
         @govukInput(
             InputViewModel(

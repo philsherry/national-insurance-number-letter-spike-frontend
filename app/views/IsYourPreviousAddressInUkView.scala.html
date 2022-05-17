@@ -24,7 +24,7 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("isYourPreviousAddressInUk.title"))) {
+@layout(pageTitle = title(form, messages("isYourPreviousAddressInUk.title"), Some(messages("section.addressHistory")))) {
 
     @formHelper(action = routes.IsYourPreviousAddressInUkController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("isYourPreviousAddressInUk.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("isYourPreviousAddressInUk.heading"),
+                    caption = HmrcSectionCaption(messages("section.addressHistory"))
+                )
             )
         )
 

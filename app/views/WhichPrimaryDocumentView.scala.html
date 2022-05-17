@@ -24,7 +24,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whichPrimaryDocument.title"))) {
+@layout(pageTitle = title(form, messages("whichPrimaryDocument.title"), Some(messages("section.supportingDocuments")))) {
 
     @formHelper(action = routes.WhichPrimaryDocumentController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whichPrimaryDocument.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whichPrimaryDocument.heading"),
+                    caption = HmrcSectionCaption(messages("section.supportingDocuments"))
+                ),
                 items  = PrimaryDocument.options
             ).withHint(Hint(content = "whichPrimaryDocument.hint"))
         )

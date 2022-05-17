@@ -24,7 +24,7 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("areYouStillEmployed.title"))) {
+@layout(pageTitle = title(form, messages("areYouStillEmployed.title"), Some(messages("section.employmentHistory")))) {
 
     @formHelper(action = routes.AreYouStillEmployedController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("areYouStillEmployed.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("areYouStillEmployed.heading"),
+                    caption = HmrcSectionCaption(messages("section.employmentHistory"))
+                )
             )
         )
 

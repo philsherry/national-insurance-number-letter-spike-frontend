@@ -24,7 +24,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whichAlternativeDocuments.title"))) {
+@layout(pageTitle = title(form, messages("whichAlternativeDocuments.title"), Some(messages("section.supportingDocuments")))) {
 
     @formHelper(action = routes.WhichAlternativeDocumentsController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -36,7 +36,10 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("whichAlternativeDocuments.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whichAlternativeDocuments.heading"),
+                    caption = HmrcSectionCaption(messages("section.supportingDocuments"))
+                ),
                 items  = AlternativeDocuments.checkboxItems
             ).withHint(Hint(content = "whichAlternativeDocuments.hint"))
         )

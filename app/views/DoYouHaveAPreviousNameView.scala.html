@@ -20,7 +20,8 @@
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
     govukButton: GovukButton,
-    hmrcListWithActions: HmrcListWithActions
+    hmrcListWithActions: HmrcListWithActions,
+    h1WithCaption: components.h1WithCaption
 )
 
 @(form: Form[_], items: Seq[ListWithActionsItem], mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -40,7 +41,7 @@
     }
 }
 
-@layout(pageTitle = title(form, titleText)) {
+@layout(pageTitle = title(form, titleText, Some(messages("section.personalDetails")))) {
 
     @formHelper(action = routes.DoYouHaveAPreviousNameController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -53,11 +54,17 @@
             @govukRadios(
                 RadiosViewModel.yesNo(
                     field = form("value"),
-                    legend = LegendViewModel(messages("doYouHaveAPreviousName.heading")).asPageHeading()
+                    legend = HmrcPageHeadingLegend(
+                        content = messages("doYouHaveAPreviousName.heading"),
+                        caption = HmrcSectionCaption(messages("section.personalDetails"))
+                    )
                 )
             )
         } else {
-            <h1 class="govuk-heading-xl">@headingText</h1>
+            @h1WithCaption(
+                content = headingText,
+                caption = HmrcSectionCaption(messages("section.personalDetails"))
+            )
 
             @hmrcListWithActions(ListWithActions(items = items, classes = "govuk-!-margin-bottom-9"))
 

@@ -24,7 +24,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("haveYouEverClaimedChildBenefit.title"))) {
+@layout(pageTitle = title(form, messages("haveYouEverClaimedChildBenefit.title"), Some(messages("section.benefitHistory")))) {
 
     @formHelper(action = routes.HaveYouEverClaimedChildBenefitController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("haveYouEverClaimedChildBenefit.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("haveYouEverClaimedChildBenefit.heading"),
+                    caption = HmrcSectionCaption(messages("section.benefitHistory"))
+                )
             )
         )
 

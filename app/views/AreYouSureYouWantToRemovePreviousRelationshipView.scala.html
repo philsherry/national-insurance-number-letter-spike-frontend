@@ -21,7 +21,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    h1WithCaption: components.h1WithCaption
 )
 
 @(form: Form[_], details: PreviousMarriageOrPartnershipDetails, index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -30,13 +31,18 @@
     DateTimeFormatter.ofPattern("d MMMM yyyy")
 }
 
-    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousRelationship.title"))) {
+    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousRelationship.title"), Some(messages("section.relationshipHistory")))) {
 
     @formHelper(action = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index, mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
+
+        @h1WithCaption(
+            content = messages("areYouSureYouWantToRemovePreviousRelationship.heading"),
+            caption = HmrcSectionCaption(messages("section.relationshipHistory"))
+        )
 
         <h1 class="govuk-heading-xl">@messages("areYouSureYouWantToRemovePreviousRelationship.heading")</h1>
 

@@ -26,7 +26,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourTelephoneNumber.title"))) {
+@layout(pageTitle = title(form, messages("whatIsYourTelephoneNumber.title"), Some(messages("section.personalDetails")))) {
 
     @formHelper(action = routes.WhatIsYourTelephoneNumberController.onSubmit(mode)) {
 
@@ -37,7 +37,10 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("whatIsYourTelephoneNumber.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("whatIsYourTelephoneNumber.heading"),
+                    caption = HmrcSectionCaption(messages("section.personalDetails"))
+                )
             )
             .withWidth(Fixed20)
             .withAutocomplete("tel")
