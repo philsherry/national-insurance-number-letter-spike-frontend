@@ -16,13 +16,19 @@
 
 package forms
 
-import java.time.LocalDate
-
+import java.time.{Clock, LocalDate}
 import forms.mappings.Mappings
+
 import javax.inject.Inject
 import play.api.data.Form
 
-class WhatIsYourDateOfBirthFormProvider @Inject() extends Mappings {
+import java.time.format.DateTimeFormatter
+
+class WhatIsYourDateOfBirthFormProvider @Inject()(clock: Clock) extends Mappings {
+
+  val minDate: LocalDate = LocalDate.now(clock).minusYears(130)
+  val maxDate: LocalDate = LocalDate.now(clock).minusYears(15).minusMonths(9)
+  private def dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
   def apply(): Form[LocalDate] =
     Form(
@@ -32,7 +38,8 @@ class WhatIsYourDateOfBirthFormProvider @Inject() extends Mappings {
         twoRequiredKey = "whatIsYourDateOfBirth.error.required.two",
         requiredKey    = "whatIsYourDateOfBirth.error.required"
       ).verifying(
-        maxDate(LocalDate.now().minusDays(1), "whatIsYourDateOfBirth.error.beforeToday")
+        maxDate(maxDate, "whatIsYourDateOfBirth.error.afterMaximum", maxDate.format(dateFormatter)),
+        minDate(minDate, "whatIsYourDateOfBirth.error.beforeMinimum", minDate.format(dateFormatter))
       )
     )
 }

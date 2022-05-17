@@ -31,17 +31,20 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.WhatIsYourDateOfBirthView
 
-import java.time.LocalDate
+import java.time.{Clock, LocalDate, ZoneId}
 import scala.concurrent.Future
 
 class WhatIsYourDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new WhatIsYourDateOfBirthFormProvider()
+  private val fixedInstant = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
+  private val clock = Clock.fixed(fixedInstant, ZoneId.systemDefault)
+
+  val formProvider = new WhatIsYourDateOfBirthFormProvider(clock)
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = LocalDate.now().minusDays(1)
+  val validAnswer = LocalDate.now(clock).minusYears(20)
 
   lazy val whatIsYourDateOfBirthRoute = routes.WhatIsYourDateOfBirthController.onPageLoad(NormalMode).url
 
