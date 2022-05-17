@@ -228,3 +228,8 @@ GET        /currentRelationshipType                        controllers.CurrentRe
 POST       /currentRelationshipType                        controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = NormalMode)
 GET        /changeCurrentRelationshipType                  controllers.CurrentRelationshipTypeController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeCurrentRelationshipType                  controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /previousRelationshipType                        controllers.PreviousRelationshipTypeController.onPageLoad(mode: Mode = NormalMode)
+POST       /previousRelationshipType                        controllers.PreviousRelationshipTypeController.onSubmit(mode: Mode = NormalMode)
+GET        /changePreviousRelationshipType                  controllers.PreviousRelationshipTypeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePreviousRelationshipType                  controllers.PreviousRelationshipTypeController.onSubmit(mode: Mode = CheckMode)

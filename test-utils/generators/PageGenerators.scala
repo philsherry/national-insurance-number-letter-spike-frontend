@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryPreviousRelationshipTypePage: Arbitrary[PreviousRelationshipTypePage.type] =
+    Arbitrary(PreviousRelationshipTypePage)
+
   implicit lazy val arbitraryCurrentRelationshipTypePage: Arbitrary[CurrentRelationshipTypePage.type] =
     Arbitrary(CurrentRelationshipTypePage)
 

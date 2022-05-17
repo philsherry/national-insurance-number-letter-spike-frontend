@@ -25,6 +25,11 @@ import java.time.LocalDate
 
 trait ModelGenerators { this: Generators =>
 
+  implicit lazy val arbitraryPreviousRelationshipType: Arbitrary[PreviousRelationshipType] =
+    Arbitrary {
+      Gen.oneOf(PreviousRelationshipType.values.toSeq)
+    }
+
   implicit lazy val arbitraryCurrentRelationshipType: Arbitrary[CurrentRelationshipType] =
     Arbitrary {
       Gen.oneOf(CurrentRelationshipType.values.toSeq)
