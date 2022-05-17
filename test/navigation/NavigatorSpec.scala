@@ -193,9 +193,9 @@ class NavigatorSpec extends SpecBase {
 
       "must go from the are you married page" - {
 
-        "to the have you previously been married page when the user selects yes" in {
+        "to the current relationship type page when the user selects yes" in {
           val answers = emptyUserAnswers.set(AreYouMarriedPage, true).success.value
-          navigator.nextPage(AreYouMarriedPage, NormalMode, answers) mustBe routes.WhenDidYouGetMarriedController.onPageLoad(NormalMode)
+          navigator.nextPage(AreYouMarriedPage, NormalMode, answers) mustBe routes.CurrentRelationshipTypeController.onPageLoad(NormalMode)
         }
 
         "to the have you previously been married details page when the user selects no" in {
@@ -206,6 +206,10 @@ class NavigatorSpec extends SpecBase {
         "to the journey recovery page when the user has no selection" in {
           navigator.nextPage(AreYouMarriedPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
+      }
+
+      "must go from the current relationship type page to the when did you get married page" in {
+        navigator.nextPage(CurrentRelationshipTypePage, NormalMode, emptyUserAnswers) mustBe routes.WhenDidYouGetMarriedController.onPageLoad(NormalMode)
       }
 
       "must go from the when did you get married page to the have you previously been married page" in {
@@ -440,10 +444,10 @@ class NavigatorSpec extends SpecBase {
 
       "go from the are you married page" - {
 
-        "to the check your answers page if yes and marriage date is set" in {
+        "to the check your answers page if yes and relationship type is set" in {
           val answers = emptyUserAnswers
-            .set(AreYouMarriedPage, true).get
-            .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 1, 1)).get
+            .set(AreYouMarriedPage, true).success.value
+            .set(CurrentRelationshipTypePage, CurrentRelationshipType.Marriage).success.value
 
           navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
@@ -455,13 +459,24 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
-        "to the civil partnership date page if answer is yes and civil partnership date is not set" in {
+        "to the current relationship type page if the current relationship type is not set" in {
           val answers = emptyUserAnswers
             .set(AreYouMarriedPage, true).get
+          navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.CurrentRelationshipTypeController.onPageLoad(CheckMode)
+        }
+      }
 
-          navigator.nextPage(AreYouMarriedPage, CheckMode, answers) mustBe routes.WhenDidYouGetMarriedController.onPageLoad(CheckMode)
+      "go from the current relationship type page" - {
+
+        "to the check your answers page if the current relationship date is set" in {
+          val answers = emptyUserAnswers
+            .set(WhenDidYouGetMarriedPage, LocalDate.now).success.value
+          navigator.nextPage(CurrentRelationshipTypePage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
+        "to the current relationship date page if the current relationship date is not set" in {
+          navigator.nextPage(CurrentRelationshipTypePage, CheckMode, emptyUserAnswers) mustBe routes.WhenDidYouGetMarriedController.onPageLoad(CheckMode)
+        }
       }
 
       "go from the previous marriage or civil partnership page" - {
