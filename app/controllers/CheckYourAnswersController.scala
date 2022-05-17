@@ -68,6 +68,7 @@ class CheckYourAnswersController @Inject()(
 
       val currentRelationship = SummaryListViewModel(Seq(
         AreYouMarriedSummary.row(answers),
+        CurrentRelationshipTypeSummary.row(answers),
         WhenDidYouGetMarriedSummary.row(answers)
       ).flatten)
 

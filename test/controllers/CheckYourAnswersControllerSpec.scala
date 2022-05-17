@@ -126,6 +126,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val currentRelationship = SummaryListViewModel(Seq(
           AreYouMarriedSummary.row(answers)(messages(application)),
+          CurrentRelationshipTypeSummary.row(answers)(messages(application)),
           WhenDidYouGetMarriedSummary.row(answers)(messages(application))
         ).flatten)
 
