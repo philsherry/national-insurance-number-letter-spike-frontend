@@ -218,18 +218,19 @@ class NavigatorSpec extends SpecBase {
 
       "must go from the previously married page" - {
 
-        "to the previous marriage or civil partnership details page when the user selects yes" - {
+        "to the previous relationship type page when the user selects yes" - {
 
           "when there are no previous relationships set" in {
             val answers = emptyUserAnswers.set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), NormalMode)
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousRelationshipTypeController.onPageLoad(Index(0), NormalMode)
           }
 
           "when there are previous relationships set" in {
             val answers = emptyUserAnswers
               .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+              .set(PreviousRelationshipTypePage(Index(0)), PreviousRelationshipType.Marriage).success.value
               .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(LocalDate.now, LocalDate.now, "nunya")).success.value
-            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), NormalMode)
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, answers) mustBe routes.PreviousRelationshipTypeController.onPageLoad(Index(1), NormalMode)
           }
         }
 
@@ -241,6 +242,10 @@ class NavigatorSpec extends SpecBase {
         "to the journey recovery page when the user has no selection" in {
           navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
+      }
+
+      "go from the previous relationship type page to the previous relationship details page" in {
+        navigator.nextPage(PreviousRelationshipTypePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), NormalMode)
       }
 
       "go from the when previous marriage or civil partnership details page to the do you want to add another previous relationship page" in {
@@ -481,20 +486,21 @@ class NavigatorSpec extends SpecBase {
 
       "go from the previous marriage or civil partnership page" - {
 
-        "to the previous relationship details page" - {
+        "to the previous relationship type page" - {
 
           "at index 0 if there are no previous relationships" in {
             val answers = emptyUserAnswers
               .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode)
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousRelationshipTypeController.onPageLoad(Index(0), CheckMode)
           }
 
           "at the next available index if there are previous relationships" in {
             val previous = PreviousMarriageOrPartnershipDetails(LocalDate.of(2000,1,1), LocalDate.of(2001, 1, 1), "reason")
             val answers = emptyUserAnswers
               .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+              .set(PreviousRelationshipTypePage(Index(0)), PreviousRelationshipType.Marriage).success.value
               .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), previous).success.value
-            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(1), CheckMode)
+            navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.PreviousRelationshipTypeController.onPageLoad(Index(1), CheckMode)
           }
         }
 
@@ -502,6 +508,20 @@ class NavigatorSpec extends SpecBase {
           val answers = emptyUserAnswers
             .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, false).success.value
           navigator.nextPage(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+      }
+
+      "go from the previous relationship type page" - {
+
+        "to the previous relationship details page when the details aren't already set" in {
+          navigator.nextPage(PreviousRelationshipTypePage(Index(0)), CheckMode, emptyUserAnswers) mustBe routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the check your answers page when the details are already set" in {
+          val previous = PreviousMarriageOrPartnershipDetails(LocalDate.of(2000,1,1), LocalDate.of(2001, 1, 1), "reason")
+          val answers = emptyUserAnswers
+            .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), previous).success.value
+          navigator.nextPage(PreviousRelationshipTypePage(Index(0)), CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
       }
 
