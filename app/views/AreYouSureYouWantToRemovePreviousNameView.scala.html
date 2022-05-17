@@ -24,7 +24,7 @@
 
 @(form: Form[_], name: String, mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousName.title"))) {
+@layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousName.title"), Some(messages("section.personalDetails")))) {
 
     @formHelper(action = routes.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index, mode), 'autoComplete -> "off") {
 

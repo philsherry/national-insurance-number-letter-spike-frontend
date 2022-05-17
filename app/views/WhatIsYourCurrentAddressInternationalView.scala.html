@@ -27,7 +27,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourCurrentAddressInternational.title"))) {
+@layout(pageTitle = title(form, messages("whatIsYourCurrentAddressInternational.title"), Some(messages("section.addressHistory")))) {
 
     @formHelper(action = routes.WhatIsYourCurrentAddressInternationalController.onSubmit(mode), 'autoComplete -> "off") {
 

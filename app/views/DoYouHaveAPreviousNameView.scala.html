@@ -41,7 +41,7 @@
     }
 }
 
-@layout(pageTitle = title(form, titleText)) {
+@layout(pageTitle = title(form, titleText, Some(messages("section.personalDetails")))) {
 
     @formHelper(action = routes.DoYouHaveAPreviousNameController.onSubmit(mode), 'autoComplete -> "off") {
 

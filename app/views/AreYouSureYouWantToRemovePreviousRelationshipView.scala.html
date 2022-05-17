@@ -31,7 +31,7 @@
     DateTimeFormatter.ofPattern("d MMMM yyyy")
 }
 
-    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousRelationship.title"))) {
+    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousRelationship.title"), Some(messages("section.relationshipHistory")))) {
 
     @formHelper(action = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onSubmit(index, mode), 'autoComplete -> "off") {
 

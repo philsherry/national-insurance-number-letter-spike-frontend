@@ -25,7 +25,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("doYouHavePrimaryDocument.title"))) {
+@layout(pageTitle = title(form, messages("doYouHavePrimaryDocument.title"), Some(messages("section.supportingDocuments")))) {
 
     @formHelper(action = routes.DoYouHavePrimaryDocumentController.onSubmit(mode), 'autoComplete -> "off") {
 

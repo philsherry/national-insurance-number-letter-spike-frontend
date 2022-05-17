@@ -49,7 +49,7 @@
     }
 }
 
-@layout(pageTitle = title(form, titleText)) {
+@layout(pageTitle = title(form, titleText, Some(messages("section.employmentHistory")))) {
 
     @formHelper(action = routes.EmploymentHistoryController.onSubmit(mode), 'autoComplete -> "off") {
 

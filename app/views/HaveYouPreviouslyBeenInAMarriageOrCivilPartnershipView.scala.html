@@ -41,7 +41,7 @@
     }
 }
 
-@layout(pageTitle = title(form, titleText)) {
+@layout(pageTitle = title(form, titleText, Some(messages("section.relationshipHistory")))) {
 
     @formHelper(action = routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode), 'autoComplete -> "off") {
 

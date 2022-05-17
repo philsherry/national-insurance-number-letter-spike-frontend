@@ -32,7 +32,7 @@
     DateTimeFormatter.ofPattern("d MMMM yyyy")
 }
 
-    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemoveEmployer.title"))) {
+    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemoveEmployer.title"), Some(messages("section.employmentHistory")))) {
 
     @formHelper(action = routes.AreYouSureYouWantToRemoveEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
 

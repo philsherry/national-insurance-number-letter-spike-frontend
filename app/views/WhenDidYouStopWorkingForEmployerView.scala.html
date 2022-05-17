@@ -24,7 +24,7 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whenDidYouStopWorkingForEmployer.title"))) {
+@layout(pageTitle = title(form, messages("whenDidYouStopWorkingForEmployer.title"), Some(messages("section.employmentHistory")))) {
 
     @formHelper(action = routes.WhenDidYouStopWorkingForEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
 
