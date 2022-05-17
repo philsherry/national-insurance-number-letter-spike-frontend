@@ -95,7 +95,7 @@ class WhatIsYourChildBenefitNumberControllerSpec extends SpecBase with MockitoSu
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourChildBenefitNumberRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+            .withFormUrlEncodedBody(("value", "12345678AA"))
 
         val result = route(application, request).value
 

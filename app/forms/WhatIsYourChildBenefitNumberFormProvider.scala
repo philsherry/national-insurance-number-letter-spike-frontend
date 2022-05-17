@@ -26,6 +26,7 @@ class WhatIsYourChildBenefitNumberFormProvider @Inject() extends Mappings {
   def apply(): Form[String] =
     Form(
       "value" -> text("whatIsYourChildBenefitNumber.error.required")
-        .verifying(maxLength(100, "whatIsYourChildBenefitNumber.error.length"))
+        .transform[String](_.replaceAll(" ", ""), value => value)
+        .verifying(regexp("(CHB)?\\d{8}[A-Za-z]{2}", "whatIsYourChildBenefitNumber.error.format"))
     )
 }
