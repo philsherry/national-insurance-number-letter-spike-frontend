@@ -37,9 +37,12 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("whatIsYourChildBenefitNumber.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("whatIsYourChildBenefitNumber.heading"),
+                    caption = HmrcSectionCaption(messages("section.benefitHistory"))
+                )
             )
-            .withWidth(Full)
+            .withWidth(Fixed20)
             .withHint(HintViewModel(messages("whatIsYourChildBenefitNumber.hint")))
             .withPrefix(PrefixOrSuffix(content = "CHB"))
         )

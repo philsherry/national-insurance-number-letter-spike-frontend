@@ -37,9 +37,12 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("whatIsYourNationalInsuranceNumber.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("whatIsYourNationalInsuranceNumber.heading"),
+                    caption = HmrcSectionCaption(messages("section.personalDetails"))
+                )
             )
-            .withWidth(Full)
+            .withWidth(Fixed20)
             .withHint(Hint(content = "whatIsYourNationalInsuranceNumber.hint"))
         )
 

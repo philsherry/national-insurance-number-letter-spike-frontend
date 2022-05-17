@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whatIsYourGender.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whatIsYourGender.heading"),
+                    caption = HmrcSectionCaption(messages("section.personalDetails"))
+                ),
                 items  = WhatIsYourGender.options
             )
             .withHint(Hint(content = messages("whatIsYourGender.hint")))

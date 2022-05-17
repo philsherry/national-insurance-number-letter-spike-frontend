@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("areYouStillEmployed.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("areYouStillEmployed.heading"),
+                    caption = HmrcSectionCaption(messages("section.employmentHistory"))
+                )
             )
         )
 

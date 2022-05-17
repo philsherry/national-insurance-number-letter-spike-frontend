@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whichPrimaryDocument.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whichPrimaryDocument.heading"),
+                    caption = HmrcSectionCaption(messages("section.supportingDocuments"))
+                ),
                 items  = PrimaryDocument.options
             ).withHint(Hint(content = "whichPrimaryDocument.hint"))
         )

@@ -19,7 +19,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    h1WithCaption: components.h1WithCaption
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -32,7 +33,10 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("doYouHavePrimaryDocument.heading")</h1>
+        @h1WithCaption(
+            content = messages("doYouHavePrimaryDocument.heading"),
+            caption = HmrcSectionCaption(messages("section.supportingDocuments"))
+        )
 
         <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
             <li>@messages("doYouHavePrimaryDocument.birthCertificate")</li>

@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("areYouMarried.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("areYouMarried.heading"),
+                    caption = HmrcSectionCaption(messages("section.relationshipHistory"))
+                )
             )
         )
 

@@ -36,6 +36,14 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 
+thisSectionIs = This section is
+section.personalDetails = Personal details
+section.addressHistory = Address history
+section.relationshipHistory = Relationship history
+section.benefitHistory = Benefit history
+section.employmentHistory = Employment history
+section.supportingDocuments = Supporting documents
+
 index.title = Get your National Insurance number by post
 index.heading = Get your National Insurance number by post
 index.p1 = Use this application form to get a letter with your National Insurance number sent to you by post.

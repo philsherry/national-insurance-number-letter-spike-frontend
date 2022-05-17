@@ -35,7 +35,10 @@
         @govukDateInput(
             DateViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whenDidYouStartForEmployer.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whenDidYouStartForEmployer.heading"),
+                    caption = HmrcSectionCaption(messages("section.employmentHistory"))
+                )
             )
             .withHint(HintViewModel(messages("whenDidYouStartForEmployer.hint")))
         )

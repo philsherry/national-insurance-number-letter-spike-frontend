@@ -37,7 +37,10 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("whatIsYourTelephoneNumber.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("whatIsYourTelephoneNumber.heading"),
+                    caption = HmrcSectionCaption(messages("section.personalDetails"))
+                )
             )
             .withWidth(Fixed20)
             .withAutocomplete("tel")

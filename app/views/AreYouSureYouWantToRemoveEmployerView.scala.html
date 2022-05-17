@@ -22,7 +22,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    h1WithCaption: components.h1WithCaption
 )
 
 @(form: Form[_], employerName: Option[String], from: Option[LocalDate], to: Option[LocalDate], mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
@@ -39,13 +40,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("areYouSureYouWantToRemoveEmployer.heading")</h1>
+        @h1WithCaption(
+            content = messages("areYouSureYouWantToRemoveEmployer.heading"),
+            caption = messages("section.employmentHistory"))
 
         <p class="govuk-body govuk-!-margin-bottom-9">
             @employerName.map { name => <span>@name</span><br/> }
-            @for(from <- from; to <- to) {
-                    @messages("areYouSureYouWantToRemoveEmployer.range", from.format(dateFormatter), to.format(dateFormatter))
-            }
+
             @from.map { from =>
                 <span>
                   @to.map { to =>

@@ -39,10 +39,9 @@
                 id = form("value").id,
                 name = form("value").id,
                 maxLength = Some(250),
-                label = Label(
-                    isPageHeading = true,
-                    classes = "govuk-label--xl",
-                    content = Text(messages("whatOtherUkBenefitsHaveYouReceived.heading"))
+                label = HmrcPageHeadingLabel(
+                    content = Text(messages("whatOtherUkBenefitsHaveYouReceived.heading")),
+                    caption = HmrcSectionCaption(messages("section.benefitHistory"))
                 ),
                 value = form("value").value,
                 hint = Some(Hint(

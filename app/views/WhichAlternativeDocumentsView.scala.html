@@ -36,7 +36,10 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("whichAlternativeDocuments.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whichAlternativeDocuments.heading"),
+                    caption = HmrcSectionCaption(messages("section.supportingDocuments"))
+                ),
                 items  = AlternativeDocuments.checkboxItems
             ).withHint(Hint(content = "whichAlternativeDocuments.hint"))
         )
