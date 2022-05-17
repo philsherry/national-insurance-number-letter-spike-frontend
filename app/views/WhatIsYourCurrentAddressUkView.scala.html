@@ -29,7 +29,7 @@
 
 @layout(pageTitle = title(form, messages("whatIsYourCurrentAddressUk.title"), Some(messages("section.addressHistory")))) {
 
-    @formHelper(action = routes.WhatIsYourCurrentAddressUkController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.WhatIsYourCurrentAddressUkController.onSubmit(mode), 'autoComplete -> "on") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -46,6 +46,7 @@
                 label = LabelViewModel(messages("whatIsYourCurrentAddressUk.addressLine1"))
             )
             .withWidth(Full)
+            .withAutocomplete("address-line1")
         )
 
         @govukInput(
@@ -54,6 +55,7 @@
                 label = LabelViewModel(messages("whatIsYourCurrentAddressUk.addressLine2"))
             )
             .withWidth(Full)
+            .withAutocomplete("address-line2")
         )
 
         @govukInput(
@@ -62,6 +64,7 @@
                 label = LabelViewModel(messages("whatIsYourCurrentAddressUk.addressLine3"))
             )
             .withWidth(Full)
+            .withAutocomplete("address-line3")
         )
 
         @govukInput(
@@ -70,6 +73,7 @@
                 label = LabelViewModel(messages("whatIsYourCurrentAddressUk.postcode"))
             )
             .withWidth(Fixed10)
+            .withAutocomplete("postal-code")
         )
 
         @govukButton(
