@@ -667,5 +667,5 @@ previousRelationshipType.heading = Is this relationship a marriage or civil part
 previousRelationshipType.marriage = Marriage
 previousRelationshipType.civilPartnership = Civil Partnership
 previousRelationshipType.checkYourAnswersLabel = Is this relationship a marriage or civil partnership?
-previousRelationshipType.error.required = Select previousRelationshipType
-previousRelationshipType.change.hidden = PreviousRelationshipType
+previousRelationshipType.error.required = Select whether this relationship is a marriage or civil partnership
+previousRelationshipType.change.hidden = the type of this relationship
