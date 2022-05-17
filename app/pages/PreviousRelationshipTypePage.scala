@@ -16,12 +16,12 @@
 
 package pages
 
-import models.PreviousRelationshipType
+import models.{Index, PreviousRelationshipType}
 import play.api.libs.json.JsPath
 
-case object PreviousRelationshipTypePage extends QuestionPage[PreviousRelationshipType] {
+final case class PreviousRelationshipTypePage(index: Index) extends QuestionPage[PreviousRelationshipType] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "previousRelationships" \ index.position \ toString
 
   override def toString: String = "previousRelationshipType"
 }

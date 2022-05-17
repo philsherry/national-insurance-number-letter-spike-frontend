@@ -16,17 +16,17 @@
 
 package pages
 
-import models.PreviousRelationshipType
+import models.{Index, PreviousRelationshipType}
 import pages.behaviours.PageBehaviours
 
-class PreviousRelationshipTypeSpec extends PageBehaviours {
+class PreviousRelationshipTypePageSpec extends PageBehaviours {
 
   "PreviousRelationshipTypePage" - {
 
-    beRetrievable[PreviousRelationshipType](PreviousRelationshipTypePage)
+    beRetrievable[PreviousRelationshipType](PreviousRelationshipTypePage(Index(0)))
 
-    beSettable[PreviousRelationshipType](PreviousRelationshipTypePage)
+    beSettable[PreviousRelationshipType](PreviousRelationshipTypePage(Index(0)))
 
-    beRemovable[PreviousRelationshipType](PreviousRelationshipTypePage)
+    beRemovable[PreviousRelationshipType](PreviousRelationshipTypePage(Index(0)))
   }
 }

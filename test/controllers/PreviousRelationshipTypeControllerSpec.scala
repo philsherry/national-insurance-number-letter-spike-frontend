@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.PreviousRelationshipTypeFormProvider
-import models.{NormalMode, PreviousRelationshipType, UserAnswers}
+import models.{Index, NormalMode, PreviousRelationshipType, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -37,7 +37,7 @@ class PreviousRelationshipTypeControllerSpec extends SpecBase with MockitoSugar 
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val previousRelationshipTypeRoute = routes.PreviousRelationshipTypeController.onPageLoad(NormalMode).url
+  lazy val previousRelationshipTypeRoute = routes.PreviousRelationshipTypeController.onPageLoad(Index(0), NormalMode).url
 
   val formProvider = new PreviousRelationshipTypeFormProvider()
   val form = formProvider()
@@ -56,13 +56,13 @@ class PreviousRelationshipTypeControllerSpec extends SpecBase with MockitoSugar 
         val view = application.injector.instanceOf[PreviousRelationshipTypeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PreviousRelationshipTypePage, PreviousRelationshipType.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(PreviousRelationshipTypePage(Index(0)), PreviousRelationshipType.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +74,7 @@ class PreviousRelationshipTypeControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PreviousRelationshipType.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(PreviousRelationshipType.values.head), Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -120,7 +120,7 @@ class PreviousRelationshipTypeControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
