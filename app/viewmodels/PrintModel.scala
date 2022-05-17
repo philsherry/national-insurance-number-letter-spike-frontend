@@ -40,7 +40,13 @@ final case class PrintModel(
                              previousEmployers: List[EmployerPrintModel],
                              primaryDocument: Option[String],
                              secondaryDocuments: Option[List[String]]
-                           )
+                           ) {
+
+  def hasDocuments: Boolean = {
+    primaryDocument.isDefined || secondaryDocuments.isDefined
+  }
+
+}
 
 final case class PreviousAddressPrintModel(address: List[String], from: String, to: String)
 

@@ -29,7 +29,7 @@
 @warningText = @{
     model.primaryDocument.fold(
         model.secondaryDocuments.fold(
-            throw new RuntimeException("No documents specified for print view")
+            messages("print.warning.none")
         )(secondaryDocuments =>
             messages("print.warning.multiple", secondaryDocuments.map(messages(_)):_*)
         )
@@ -41,6 +41,10 @@
 @layout(pageTitle = titleNoForm(messages("print.title"))) {
 
     @govukPanel(Panel(title = messages("print.heading")))
+
+    @if(!model.hasDocuments) {
+        <p class="govuk-body">@messages("print.p1.none")</p>
+    }
 
     @for(primaryDocument <- model.primaryDocument) {
         <p class="govuk-body">@messages("print.p1.single", messages(primaryDocument))</p>

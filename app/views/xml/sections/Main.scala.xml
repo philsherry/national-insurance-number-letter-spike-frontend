@@ -45,7 +45,7 @@
 
             @employment(model)
 
-            @documents(model)
+            @if(model.hasDocuments) {@documents(model)}
 
             @signature()
         </fo:block></fo:block-container>
