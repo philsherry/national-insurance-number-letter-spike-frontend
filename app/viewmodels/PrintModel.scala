@@ -31,7 +31,8 @@ final case class PrintModel(
                              returningFromLivingAbroad: Boolean,
                              telephoneNumber: String,
                              nino: Option[String],
-                             marriage: Option[String],
+                             currentRelationshipType: Option[String],
+                             currentRelationshipDate: Option[String],
                              previousRelationships: Seq[PreviousMarriageOrPartnershipPrintModel],
                              claimedChildBenefit: Boolean,
                              childBenefitNumber: Option[String],
@@ -80,7 +81,8 @@ object PrintModel {
       returningFromWorkingAbroad            <- userAnswers.get(AreYouReturningFromLivingAbroadPage)
       telephoneNumber                       <- userAnswers.get(WhatIsYourTelephoneNumberPage)
       nino                                  = userAnswers.get(WhatIsYourNationalInsuranceNumberPage).map(_.nino)
-      marriage                              = userAnswers.get(WhenDidYouGetMarriedPage)
+      currentRelationshipType               = userAnswers.get(CurrentRelationshipTypePage)
+      currentRelationshipDate               = userAnswers.get(WhenDidYouGetMarriedPage)
       previousRelationships                 = getPreviousRelationships(userAnswers)
       claimedChildBenefit                   <- userAnswers.get(HaveYouEverClaimedChildBenefitPage)
       childBenefitNumber                    = userAnswers.get(WhatIsYourChildBenefitNumberPage)
@@ -99,7 +101,8 @@ object PrintModel {
         returningFromWorkingAbroad,
         telephoneNumber,
         nino,
-        marriage.map(_.format(formatter)),
+        currentRelationshipType.map(_.toString),
+        currentRelationshipDate.map(_.format(formatter)),
         previousRelationships,
         claimedChildBenefit,
         childBenefitNumber,
