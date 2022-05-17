@@ -96,8 +96,10 @@ object DownloadAuditEvent {
     current  =  getCurrentRelationship(answers)
   } yield Relationships(current, previous)
 
-  private def getCurrentRelationship(answers: UserAnswers): Option[Relationship] =
-    answers.get(WhenDidYouGetMarriedPage).map(d => Relationship(d))
+  private def getCurrentRelationship(answers: UserAnswers): Option[Relationship] = for {
+    relationshipType <- answers.get(CurrentRelationshipTypePage)
+    date             <- answers.get(WhenDidYouGetMarriedPage)
+  } yield Relationship(relationshipType.toString, date)
 
   private def getPreviousRelationships(answers: UserAnswers): Option[List[PreviousRelationship]] =
     answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty).indices.toList.traverse { i =>
@@ -151,7 +153,7 @@ object DownloadAuditEvent {
     implicit lazy val formats: Format[Addresses] = Json.format
   }
 
-  private[audit] final case class Relationship(startDate: LocalDate)
+  private[audit] final case class Relationship(relationshipType: String, startDate: LocalDate)
   object Relationship {
     implicit lazy val formats: Format[Relationship] = Json.format
   }
