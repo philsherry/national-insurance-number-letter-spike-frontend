@@ -65,6 +65,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
         .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).success.value
         .set(AreYouMarriedPage, true).success.value
+        .set(CurrentRelationshipTypePage, CurrentRelationshipType.Marriage).success.value
         .set(WhenDidYouGetMarriedPage, now).success.value
         .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
         .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(now, now, "nunya")).success.value
@@ -103,7 +104,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         telephoneNumber = "tel",
         nationalInsuranceNumber = Some("AA123456A"),
         relationships = Relationships(
-          currentRelationship = Some(Relationship(now)),
+          currentRelationship = Some(Relationship("marriage", now)),
           previousRelationships = List(
             PreviousRelationship(now, now, "nunya")
           )

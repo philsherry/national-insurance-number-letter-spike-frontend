@@ -45,6 +45,7 @@ class Navigator @Inject()() {
     case DoYouKnowYourNationalInsuranceNumberPage               => doYouKnowYourNationalInsuranceNumberRoutes
     case WhatIsYourNationalInsuranceNumberPage                  => _ => routes.AreYouMarriedController.onPageLoad(NormalMode)
     case AreYouMarriedPage                                      => areYouMarriedRoutes
+    case CurrentRelationshipTypePage                            => _ => routes.WhenDidYouGetMarriedController.onPageLoad(NormalMode)
     case WhenDidYouGetMarriedPage                               => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipRoutes
     case PreviousMarriageOrPartnershipDetailsPage(_)            => _ => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
@@ -56,11 +57,11 @@ class Navigator @Inject()() {
     case WhatOtherUkBenefitsHaveYouReceivedPage                 => _ => routes.HaveYouEverWorkedInUkController.onPageLoad(NormalMode)
     case HaveYouEverWorkedInUkPage                              => haveYouEverWorkedInUkRoutes
     case AreYouStillEmployedPage(index)                         => areYouStillEmployedRoutes(index)
-    case EmploymentHistoryPage                      => employmentHistoryRoutes
-    case WhatIsYourEmployersNamePage(index)             => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, NormalMode)
-    case WhatIsYourEmployersAddressPage(index)          => _ => routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(index, NormalMode)
-    case WhenDidYouStartWorkingForEmployerPage(index)   => _ => routes.AreYouStillEmployedController.onPageLoad(index, NormalMode)
-    case WhenDidYouStopWorkingForEmployerPage(_)        => _ => routes.EmploymentHistoryController.onPageLoad(NormalMode)
+    case EmploymentHistoryPage                                  => employmentHistoryRoutes
+    case WhatIsYourEmployersNamePage(index)                     => _ => routes.WhatIsYourEmployersAddressController.onPageLoad(index, NormalMode)
+    case WhatIsYourEmployersAddressPage(index)                  => _ => routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(index, NormalMode)
+    case WhenDidYouStartWorkingForEmployerPage(index)           => _ => routes.AreYouStillEmployedController.onPageLoad(index, NormalMode)
+    case WhenDidYouStopWorkingForEmployerPage(_)                => _ => routes.EmploymentHistoryController.onPageLoad(NormalMode)
     case AreYouSureYouWantToRemovePreviousEmployerPage(_)       => _ => routes.EmploymentHistoryController.onPageLoad(NormalMode)
     case DoYouHavePrimaryDocumentPage                           => doYouHaveAPrimaryDocumentRoutes
     case WhichPrimaryDocumentPage                               => _ => routes.CheckYourAnswersController.onPageLoad
@@ -105,7 +106,7 @@ class Navigator @Inject()() {
 
   private def areYouMarriedRoutes(answers: UserAnswers): Call =
     answers.get(AreYouMarriedPage).map {
-      case true  => routes.WhenDidYouGetMarriedController.onPageLoad(NormalMode)
+      case true  => routes.CurrentRelationshipTypeController.onPageLoad(NormalMode)
       case false => routes.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
@@ -171,6 +172,7 @@ class Navigator @Inject()() {
     case DoYouHaveAPreviousNamePage => doYouHaveAPreviousNameCheckRoutes
     case IsYourPreviousAddressInUkPage(index) => isYourPreviousAddressInUkRoutes(_, index, CheckMode)
     case AreYouMarriedPage => areYouMarriedCheckRoutes
+    case CurrentRelationshipTypePage => currentRelationshipTypeCheckRoutes
     case HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage => haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes
     case IsYourCurrentAddressInUkPage => isYourCurrentAddressInUkCheckRoutes
     case HaveYouEverClaimedChildBenefitPage => haveYouEverClaimedChildBenefitCheckRoutes
@@ -193,9 +195,15 @@ class Navigator @Inject()() {
     }
 
   private def areYouMarriedCheckRoutes(answers: UserAnswers): Call =
-    (answers.get(AreYouMarriedPage), answers.get(WhenDidYouGetMarriedPage)) match {
-      case (Some(true), None) => routes.WhenDidYouGetMarriedController.onPageLoad(CheckMode)
+    (answers.get(AreYouMarriedPage), answers.get(CurrentRelationshipTypePage)) match {
+      case (Some(true), None) => routes.CurrentRelationshipTypeController.onPageLoad(CheckMode)
       case (_, _) => routes.CheckYourAnswersController.onPageLoad
+    }
+
+  private def currentRelationshipTypeCheckRoutes(answers: UserAnswers): Call =
+    answers.get(WhenDidYouGetMarriedPage) match {
+      case Some(_) => routes.CheckYourAnswersController.onPageLoad
+      case _       => routes.WhenDidYouGetMarriedController.onPageLoad(CheckMode)
     }
 
   private def haveYouPreviouslyBeenInAMarriageOrCivilPartnershipCheckRoutes(answers: UserAnswers): Call =

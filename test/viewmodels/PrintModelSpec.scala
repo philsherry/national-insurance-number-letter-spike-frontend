@@ -176,6 +176,7 @@ class PrintModelSpec extends SpecBase {
           .set(AreYouReturningFromLivingAbroadPage, false).get
           .set(WhatIsYourTelephoneNumberPage, "1234567890").get
           .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).get
+          .set(CurrentRelationshipTypePage, CurrentRelationshipType.Marriage).get
           .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 5, 1)).get
           .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), previousMarriage).get
           .set(HaveYouEverClaimedChildBenefitPage, true).get
@@ -197,6 +198,7 @@ class PrintModelSpec extends SpecBase {
           returningFromLivingAbroad = false,
           "1234567890",
           Some("AA123456A"),
+          Some("marriage"),
           Some("1 May 2000"),
           Seq(PreviousMarriageOrPartnershipPrintModel("1 February 2005", "2 March 2006", "reason")),
           claimedChildBenefit = true,
@@ -228,6 +230,7 @@ class PrintModelSpec extends SpecBase {
           .set(AreYouReturningFromLivingAbroadPage, false).get
           .set(WhatIsYourTelephoneNumberPage, "1234567890").get
           .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).get
+          .set(CurrentRelationshipTypePage, CurrentRelationshipType.Marriage).get
           .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 5, 1)).get
           .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), previousMarriage).get
           .set(HaveYouEverClaimedChildBenefitPage, true).get
@@ -248,6 +251,7 @@ class PrintModelSpec extends SpecBase {
           returningFromLivingAbroad = false,
           "1234567890",
           Some("AA123456A"),
+          Some("marriage"),
           Some("1 May 2000"),
           Seq(PreviousMarriageOrPartnershipPrintModel("1 February 2005", "2 March 2006", "reason")),
           claimedChildBenefit = true,

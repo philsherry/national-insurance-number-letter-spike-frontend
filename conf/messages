@@ -562,7 +562,8 @@ pdf.personalDetails.noNino = Not known
 pdf.personalDetails.dob = Date of birth
 pdf.personalDetails.gender = Gender
 pdf.personalDetails.maritalStatus = Marital or partnership status
-pdf.personalDetails.maritalStatus.married = Currently married or in a civil partnership (since {0})
+pdf.personalDetails.maritalStatus.married = Currently married (since {0})
+pdf.personalDetails.maritalStatus.civilPartnership = Currently in a civil partnership (since {0})
 pdf.personalDetails.previousRelationships = Previous relationships
 pdf.personalDetails.previousRelationships.tofrom = From {0} to {1} (reason: {2})
 
@@ -649,3 +650,11 @@ whatIsYourGender.preferNotToSay = Prefer not to say
 whatIsYourGender.checkYourAnswersLabel = What is your gender?
 whatIsYourGender.error.required = Select your gender
 whatIsYourGender.change.hidden = your gender
+
+currentRelationshipType.title = Is your current relationship a marriage or civil partnership?
+currentRelationshipType.heading = Is your current relationship a marriage or civil partnership?
+currentRelationshipType.marriage = Marriage
+currentRelationshipType.civilPartnership = Civil Partnership
+currentRelationshipType.checkYourAnswersLabel = Is your current relationship a marriage or civil partnership?
+currentRelationshipType.error.required = Select whether your current relationship is a marriage or civil partnership
+currentRelationshipType.change.hidden = the type of your current relationship
