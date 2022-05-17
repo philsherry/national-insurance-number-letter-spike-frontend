@@ -29,7 +29,7 @@
 
 @layout(pageTitle = title(form, messages("whatIsYourPreviousName.title"), Some(messages("section.personalDetails")))) {
 
-    @formHelper(action = routes.WhatIsYourPreviousNameController.onSubmit(index, mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.WhatIsYourPreviousNameController.onSubmit(index, mode), 'autoComplete -> "on") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -46,6 +46,7 @@
                 label = LabelViewModel(messages("whatIsYourPreviousName.firstName"))
             )
             .withWidth(Full)
+            .withAutocomplete("given-name")
         )
 
         @govukInput(
@@ -54,6 +55,7 @@
                 label = LabelViewModel(messages("whatIsYourPreviousName.middleNames"))
             )
             .withWidth(Full)
+            .withAutocomplete("additional-name")
         )
 
         @govukInput(
@@ -62,6 +64,7 @@
                 label = LabelViewModel(messages("whatIsYourPreviousName.lastName"))
             )
             .withWidth(Full)
+            .withAutocomplete("family-name")
         )
 
         @govukButton(

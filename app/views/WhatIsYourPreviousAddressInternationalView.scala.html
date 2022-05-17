@@ -30,7 +30,7 @@
 
 @layout(pageTitle = title(form, messages("whatIsYourPreviousAddressInternational.title"), Some(messages("section.addressHistory")))) {
 
-    @formHelper(action = routes.WhatIsYourPreviousAddressInternationalController.onSubmit(index, mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.WhatIsYourPreviousAddressInternationalController.onSubmit(index, mode), 'autoComplete -> "on") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(
@@ -56,6 +56,7 @@
                 label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.addressLine1"))
             )
             .withWidth(Full)
+            .withAutocomplete("address-line1")
         )
 
         @govukInput(
@@ -63,6 +64,7 @@
                 field = form("addressLine2"),
                 label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.addressLine2"))
             )
+            .withAutocomplete("address-line2")
             .withWidth(Full)
         )
 
@@ -72,6 +74,7 @@
                 label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.addressLine3"))
             )
             .withWidth(Full)
+            .withAutocomplete("address-line3")
         )
 
         @govukInput(
@@ -80,6 +83,7 @@
                 label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.postcode"))
             )
             .withWidth(Fixed10)
+            .withAutocomplete("postal-code")
         )
 
         @govukInput(
@@ -88,6 +92,7 @@
                 label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.country"))
             )
             .withWidth(Full)
+            .withAutocomplete("country-name")
         )
 
         @govukDateInput(
