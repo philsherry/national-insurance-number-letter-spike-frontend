@@ -529,7 +529,8 @@ pdf.instructions = CA5403 - Instructions
 
 pdf.nextSteps = What to do next
 pdf.nextSteps.p1 = Once you have printed and checked this form you must complete the declaration section on the last page.
-pdf.nextSteps.p2 = You should then post it and your identity documents to:
+pdf.nextSteps.p2.noDocuments = You should then post it to:
+pdf.nextSteps.p2.documents = You should then post it and your identity documents to:
 pdf.nextSteps.address1 = National Insurance Contributions and Employer Office
 pdf.nextSteps.address2 = HM Revenue and Customs
 pdf.nextSteps.address3 = BX9 1AN
@@ -607,6 +608,7 @@ areYouSureYouWantToRemoveEmployer.openRange = From {0}
 
 print.title = Your application form is ready to print and post
 print.heading = Your application form is ready to print and post
+print.p1.none = You must download and print this form, and post it to:
 print.p1.single = You must download and print this form, and post it along with a copy your {0} to:
 print.p1.multiple = You must download and print this form, and post it along with copies of both your {0} and {1} to:
 print.button = Download form
@@ -617,6 +619,7 @@ print.p2.1 = If you notice a mistake before sending the form you can
 print.p2.change = change your answers
 print.p2.2 = or
 print.p2.restart = start the application form again
+print.warning.none = You must sign the declaration section or we may not be able to process your application.
 print.warning.single = You must sign the declaration section and post a copy of your {0} with the form or we may not be able to process your application.
 print.warning.multiple = You must sign the declaration section and post copies of both your {0} and {1} with the form or we may not be able to process your application.
 

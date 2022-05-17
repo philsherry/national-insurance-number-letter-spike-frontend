@@ -18,6 +18,7 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
+import models.AlternativeDocuments.{AdoptionCertificate, MarriageOrCivilPartnershipCertificate}
 import models.PrimaryDocument.BirthCertificate
 import pages._
 import models._
@@ -420,9 +421,9 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.WhichAlternativeDocumentsController.onPageLoad(NormalMode)
         }
 
-        "to insufficient documents page when the user selects no" in {
+        "to check your answers page when the user selects no" in {
           val answers = emptyUserAnswers.set(DoYouHaveTwoSecondaryDocumentsPage, false).success.value
-          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.InsufficientDocumentsController.onPageLoad()
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, NormalMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "to the journey recovery page when the user has no selection" in {
@@ -722,6 +723,32 @@ class NavigatorSpec extends SpecBase {
             .set(AreYouStillEmployedPage(Index(0)), true).success.value
 
           navigator.nextPage(AreYouStillEmployedPage(Index(0)), CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+      }
+
+      "go from the do you have alternative documents page" - {
+
+        "to the which alternative documents page when true and documents not set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
+
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, CheckMode, answers) mustBe routes.WhichAlternativeDocumentsController.onPageLoad(CheckMode)
+        }
+
+        "to the check your answers page when true and documents are set" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
+            .set(WhichAlternativeDocumentsPage, Set[AlternativeDocuments](MarriageOrCivilPartnershipCertificate, AdoptionCertificate)).success.value
+
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page when false" in {
+          val answers = emptyUserAnswers
+            .set(DoYouHaveTwoSecondaryDocumentsPage, false).success.value
+
+          navigator.nextPage(DoYouHaveTwoSecondaryDocumentsPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
       }
