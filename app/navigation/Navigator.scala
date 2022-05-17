@@ -164,7 +164,7 @@ class Navigator @Inject()() {
   private def doYouHaveTwoSecondaryDocumentsRoutes(answers: UserAnswers): Call =
     answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
       case true  => routes.WhichAlternativeDocumentsController.onPageLoad(NormalMode)
-      case false => routes.InsufficientDocumentsController.onPageLoad()
+      case false => routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -245,10 +245,12 @@ class Navigator @Inject()() {
     }
 
   private def doYouHaveTwoSecondaryDocumentsCheckRoutes(answers: UserAnswers): Call =
-    answers.get(DoYouHaveTwoSecondaryDocumentsPage).map {
-      case true => routes.WhichAlternativeDocumentsController.onPageLoad(CheckMode)
-      case false => routes.InsufficientDocumentsController.onPageLoad()
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+    (answers.get(DoYouHaveTwoSecondaryDocumentsPage), answers.get(WhichAlternativeDocumentsPage)) match {
+      case (Some(true), Some(_)) => routes.CheckYourAnswersController.onPageLoad
+      case (Some(true), None) => routes.WhichAlternativeDocumentsController.onPageLoad(CheckMode)
+      case (Some(false), _) => routes.CheckYourAnswersController.onPageLoad
+      case (_, _) => routes.JourneyRecoveryController.onPageLoad()
+    }
 
   private def areYouStillEmployedCheckRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(AreYouStillEmployedPage(index)).map {
