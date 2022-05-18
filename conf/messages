@@ -736,7 +736,7 @@ doYouHavePrimaryDocument.change.hidden = whether you have a birth certificate, d
 doYouHaveTwoSecondaryDocuments.title = Do you have two of the following alternative documents?
 doYouHaveTwoSecondaryDocuments.heading = Do you have two of the following alternative documents?
 doYouHaveTwoSecondaryDocuments.legend = Do you have two of the listed alternative documents?
-doYouHaveTwoSecondaryDocuments.hint = You will need to send photocopies of these documents to HMRC. Do not send original copies.
+doYouHaveTwoSecondaryDocuments.hint = You will need to send photocopies of these documents to HMRC. Do not send any original documents.
 doYouHaveTwoSecondaryDocuments.adoptionCertificate = Adoption certificate
 doYouHaveTwoSecondaryDocuments.homeOfficeOrTravelDocument = Home office or travel document
 doYouHaveTwoSecondaryDocuments.workPermit = Work permit
@@ -750,7 +750,7 @@ doYouHaveTwoSecondaryDocuments.change.hidden = whether you have two of the alter
 
 whichPrimaryDocument.title = Which identity document do you have?
 whichPrimaryDocument.heading = Which identity document do you have?
-whichPrimaryDocument.hint = You will need to send a photocopy of this document to HMRC. Do not send an original copy.
+whichPrimaryDocument.hint = You will need to send a photocopy of this document to HMRC. Do not send any original documents.
 whichPrimaryDocument.passport = Passport
 whichPrimaryDocument.driving-license = Driving licence
 whichPrimaryDocument.birth-certificate = Birth certificate
@@ -760,7 +760,7 @@ whichPrimaryDocument.change.hidden = which identity document you have
 
 whichAlternativeDocuments.title = Which alternative documents do you have?
 whichAlternativeDocuments.heading = Which alternative documents do you have?
-whichAlternativeDocuments.hint = You will need to send photocopies of these documents to HMRC. Do not send original copies.
+whichAlternativeDocuments.hint = You will need to send photocopies of these documents to HMRC. Do not send any original documents.
 whichAlternativeDocuments.adoption-certificate = Adoption certificate
 whichAlternativeDocuments.home-office-or-travel-document = Home office or travel document
 whichAlternativeDocuments.work-permit = Work permit
