@@ -24,7 +24,7 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("previousRelationshipType.title"))) {
+@layout(pageTitle = title(form, messages("previousRelationshipType.title"), Some(messages("section.relationshipHistory")))) {
 
     @formHelper(action = routes.PreviousRelationshipTypeController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -35,7 +35,10 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("previousRelationshipType.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("previousRelationshipType.heading"),
+                    caption = HmrcSectionCaption(messages("section.relationshipHistory"))
+                ),
                 items  = PreviousRelationshipType.options
             )
         )
