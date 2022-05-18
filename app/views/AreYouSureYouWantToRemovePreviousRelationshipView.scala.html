@@ -44,8 +44,6 @@
             caption = HmrcSectionCaption(messages("section.relationshipHistory"))
         )
 
-        <h1 class="govuk-heading-xl">@messages("areYouSureYouWantToRemovePreviousRelationship.heading")</h1>
-
         <p class="govuk-body govuk-!-margin-bottom-9">
             @messages("areYouSureYouWantToRemovePreviousRelationship.text", dateFormatter.format(details.startDate), dateFormatter.format(details.endDate))
         </p>
