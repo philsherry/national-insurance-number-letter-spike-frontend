@@ -44,6 +44,8 @@
             <li>@messages("doYouHavePrimaryDocument.passport")</li>
         </ul>
 
+        <p class="govuk-body">@messages("whichPrimaryDocument.hint")</p>
+
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
