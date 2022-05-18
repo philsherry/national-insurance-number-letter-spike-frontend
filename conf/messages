@@ -357,7 +357,8 @@ previousMarriageOrPartnershipDetails.error.endReason.required = Enter the reason
 previousMarriageOrPartnershipDetails.error.endReason.length = The reason that the marriage or civil partnership ended must be 100 characters or less
 previousMarriageOrPartnershipDetails.error.datesOutOfOrder = The start date must be on or before the end date
 previousMarriageOrPartnershipDetails.change.hidden = when you were previously in a marriage or civil partnership
-previousMarriageOrPartnershipDetails.checkYourAnswersFormat = From {0} to {1}
+previousMarriageOrPartnershipDetails.checkYourAnswersFormat.marriage = Married from {0} to {1}
+previousMarriageOrPartnershipDetails.checkYourAnswersFormat.civilPartnership = In a civil partnership from {0} to {1}
 
 doYouKnowYourChildBenefitNumber.title = Do you know your Child Benefit number?
 doYouKnowYourChildBenefitNumber.heading = Do you know your Child Benefit number?

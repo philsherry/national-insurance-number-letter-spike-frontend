@@ -25,10 +25,10 @@ sealed trait PreviousRelationshipType
 object PreviousRelationshipType extends Enumerable.Implicits {
 
   case object Marriage extends WithName("marriage") with PreviousRelationshipType
-  case object Civilpartnership extends WithName("civilPartnership") with PreviousRelationshipType
+  case object CivilPartnership extends WithName("civilPartnership") with PreviousRelationshipType
 
   val values: Seq[PreviousRelationshipType] = Seq(
-    Marriage, Civilpartnership
+    Marriage, CivilPartnership
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {

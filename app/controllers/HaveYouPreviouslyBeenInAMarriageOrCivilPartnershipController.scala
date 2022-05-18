@@ -28,7 +28,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.PreviousMarriageOrPartnershipDetailsSummary
+import viewmodels.checkAnswers.PreviousRelationshipSummary
 import views.html.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipView
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -49,7 +49,7 @@ class HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController @Inject()(
 
   private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
     answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty)
-      .indices.flatMap(PreviousMarriageOrPartnershipDetailsSummary.item(answers, mode, _))
+      .indices.flatMap(PreviousRelationshipSummary.item(answers, mode, _))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>

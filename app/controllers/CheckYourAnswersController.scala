@@ -73,7 +73,7 @@ class CheckYourAnswersController @Inject()(
       ).flatten)
 
       val previousRelationships = answers.get(PreviousRelationshipsQuery).getOrElse(List.empty)
-        .indices.flatMap(PreviousMarriageOrPartnershipDetailsSummary.item(answers, CheckMode, _))
+        .indices.flatMap(PreviousRelationshipSummary.item(answers, CheckMode, _))
 
       val benefitHistory = SummaryListViewModel(Seq(
         HaveYouEverClaimedChildBenefitSummary.row(answers),
