@@ -32,7 +32,7 @@ object WhatIsYourCurrentAddressInternationalSummary  {
     answers.get(WhatIsYourCurrentAddressInternationalPage).map {
       answer =>
 
-        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, Some(answer.country))
+        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, answer.postcode, Some(answer.country.name))
           .flatten.map(HtmlFormat.escape(_).toString)
           .mkString("<br/>")
 

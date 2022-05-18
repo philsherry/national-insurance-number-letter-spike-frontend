@@ -17,12 +17,18 @@
 package forms
 
 import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
+import models.Country
+import org.scalacheck.Arbitrary.arbitrary
+import org.scalacheck.Gen
 import play.api.data.FormError
+import play.api.i18n.Messages
+import play.api.test.Helpers.{stubMessages, stubMessagesApi}
 
 import java.time.{LocalDate, ZoneOffset}
 
 class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
 
+  private implicit val msgs: Messages = stubMessages(stubMessagesApi())
   val form = new WhatIsYourPreviousAddressInternationalFormProvider()()
 
   ".addressLine1" - {
@@ -96,20 +102,12 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
 
     val fieldName = "country"
     val requiredKey = "whatIsYourPreviousAddressInternational.error.country.required"
-    val lengthKey = "whatIsYourPreviousAddressInternational.error.country.length"
-    val maxLength = 100
+
 
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      stringsWithMaxLength(maxLength)
-    )
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+      Gen.oneOf(Country.countryCodes.map(_.toUpperCase))
     )
 
     behave like mandatoryField(
@@ -117,6 +115,18 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
     )
+
+    "must not bind any values other than valid country codes" in {
+
+      val invalidAnswers =
+        arbitrary[String] suchThat (x => !Country.countryCodes.map(_.toUpperCase).contains(x))
+
+      forAll(invalidAnswers) {
+        answer =>
+          val result = form.bind(Map("value" -> answer)).apply(fieldName)
+          result.errors must contain only FormError(fieldName, requiredKey)
+      }
+    }
   }
 
   ".from" - {
@@ -162,7 +172,7 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
         "to.month"     -> endDate.getMonthValue.toString,
         "to.year"      -> endDate.getYear.toString,
         "addressLine1" -> "line 1",
-        "country"      -> "country"
+        "country"      -> "FR"
       )
 
       val result = form.bind(data)

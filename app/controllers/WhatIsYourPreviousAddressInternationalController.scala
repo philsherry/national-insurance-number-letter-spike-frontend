@@ -43,10 +43,10 @@ class WhatIsYourPreviousAddressInternationalController @Inject()(
                                       view: WhatIsYourPreviousAddressInternationalView
                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
-
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+
+      val form = formProvider()
 
       val preparedForm = request.userAnswers.get(WhatIsYourPreviousAddressInternationalPage(index)) match {
         case None => form
@@ -58,6 +58,8 @@ class WhatIsYourPreviousAddressInternationalController @Inject()(
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+
+      val form = formProvider()
 
       form.bindFromRequest().fold(
         formWithErrors =>

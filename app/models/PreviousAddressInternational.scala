@@ -25,12 +25,14 @@ final case class PreviousAddressInternational(
                                                addressLine2: Option[String],
                                                addressLine3: Option[String],
                                                postcode: Option[String],
-                                               country: String,
+                                               country: Country,
                                                from: LocalDate,
                                                to: LocalDate
                                              ) extends PreviousAddress {
 
-  override def lines: List[String] = List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(country)).flatten
+  override def lines: List[String] = List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(country.name)).flatten
+
+  def pdfLines: List[String] = List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(s"${country.name} (${country.code})")).flatten
 }
 
 object PreviousAddressInternational {

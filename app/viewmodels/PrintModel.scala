@@ -108,7 +108,7 @@ object PrintModel {
     userAnswers.get(WhatIsYourCurrentAddressUkPage).map { ukAddr =>
       ukAddr.lines
     }.orElse { userAnswers.get(WhatIsYourCurrentAddressInternationalPage).map { intAddr =>
-        intAddr.lines
+        intAddr.pdfLines
       }
     }
   }
@@ -145,7 +145,7 @@ object PrintModel {
         )
       }.orElse { userAnswers.get(WhatIsYourPreviousAddressInternationalPage(Index(index))).map { prevInt =>
         PreviousAddressPrintModel(
-          prevInt.lines,
+          prevInt.pdfLines,
           prevInt.from.format(formatter),
           prevInt.to.format(formatter)
         )

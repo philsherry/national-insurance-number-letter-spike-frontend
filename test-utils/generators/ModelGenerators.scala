@@ -19,11 +19,15 @@ package generators
 import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
+import play.api.i18n.Messages
+import play.api.test.Helpers.{stubMessages, stubMessagesApi}
 import uk.gov.hmrc.domain.Nino
 
 import java.time.LocalDate
 
 trait ModelGenerators { this: Generators =>
+
+  private implicit val msgs: Messages = stubMessages(stubMessagesApi())
 
   implicit lazy val arbitraryPreviousRelationshipType: Arbitrary[PreviousRelationshipType] =
     Arbitrary {
@@ -88,7 +92,7 @@ trait ModelGenerators { this: Generators =>
         addressLine2 <- arbitrary[Option[String]]
         addressLine3 <- arbitrary[Option[String]]
         postcode     <- arbitrary[Option[String]]
-        country      <- arbitrary[String]
+        country      <- Gen.oneOf(Country.internationalCountries)
         from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
         to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
       } yield PreviousAddressInternational(addressLine1, addressLine2, addressLine3, postcode, country, from, to)
@@ -111,7 +115,7 @@ trait ModelGenerators { this: Generators =>
         addressLine2 <- arbitrary[Option[String]]
         addressLine3 <- arbitrary[Option[String]]
         postcode     <- arbitrary[Option[String]]
-        country      <- arbitrary[String]
+        country      <- Gen.oneOf(Country.internationalCountries)
       } yield CurrentAddressInternational(addressLine1, addressLine2, addressLine3, postcode, country)
     }
 

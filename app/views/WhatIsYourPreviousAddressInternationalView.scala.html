@@ -23,6 +23,7 @@
     govukInput: GovukInput,
     govukButton: GovukButton,
     govukDateInput: GovukDateInput,
+    govukSelect: GovukSelect,
     h1WithCaption: components.h1WithCaption
 )
 
@@ -86,13 +87,13 @@
             .withAutocomplete("postal-code")
         )
 
-        @govukInput(
-            InputViewModel(
+        @govukSelect(
+            SelectViewModel(
                 field = form("country"),
-                label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.country"))
+                label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.country")),
+                items = Country.selectItems(Country.internationalCountries)
             )
-            .withWidth(Full)
-            .withAutocomplete("country-name")
+            .withCssClass("autocomplete")
         )
 
         @govukDateInput(

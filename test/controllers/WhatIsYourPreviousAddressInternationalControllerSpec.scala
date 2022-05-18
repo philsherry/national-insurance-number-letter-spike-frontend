@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourPreviousAddressInternationalFormProvider
-import models.{Index, NormalMode, PreviousAddressInternational, UserAnswers}
+import models.{Country, Index, NormalMode, PreviousAddressInternational, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -36,10 +36,11 @@ import scala.concurrent.Future
 
 class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  private def onwardRoute = Call("GET", "/foo")
+  private val country = Country("FR", "France")
 
   val formProvider = new WhatIsYourPreviousAddressInternationalFormProvider()
-  val form = formProvider()
+
 
   lazy val whatIsYourPreviousAddressInternationalRoute = routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(Index(0), NormalMode).url
 
@@ -47,7 +48,7 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
   val endDate = LocalDate.now
 
   val validData = PreviousAddressInternational(
-    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = "country", from = startDate, to = endDate
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = country, from = startDate, to = endDate
   )
 
   val userAnswers = UserAnswers(userAnswersId)
@@ -64,11 +65,13 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
         val request = FakeRequest(GET, whatIsYourPreviousAddressInternationalRoute)
 
         val view = application.injector.instanceOf[WhatIsYourPreviousAddressInternationalView]
+        implicit val msgs = messages(application)
+        val form = formProvider()
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, implicitly).toString
       }
     }
 
@@ -80,11 +83,13 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
         val request = FakeRequest(GET, whatIsYourPreviousAddressInternationalRoute)
 
         val view = application.injector.instanceOf[WhatIsYourPreviousAddressInternationalView]
+        implicit val msgs = messages(application)
+        val form = formProvider()
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validData), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validData), Index(0), NormalMode)(request, implicitly).toString
       }
     }
 
@@ -107,7 +112,7 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
           FakeRequest(POST, whatIsYourPreviousAddressInternationalRoute)
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
-              "country" -> "value 2",
+              "country" -> "FR",
               "from.day" -> startDate.getDayOfMonth.toString, "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
               "to.day" -> endDate.getDayOfMonth.toString, "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
             )
@@ -128,6 +133,9 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
           FakeRequest(POST, whatIsYourPreviousAddressInternationalRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
+        implicit val msgs = messages(application)
+        val form = formProvider()
+
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[WhatIsYourPreviousAddressInternationalView]
@@ -135,7 +143,7 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, implicitly).toString
       }
     }
 
@@ -160,7 +168,12 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourPreviousAddressInternationalRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("adressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              "addressLine1" -> "value 1",
+              "country" -> "FR",
+              "from.day" -> startDate.getDayOfMonth.toString, "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
+              "to.day" -> endDate.getDayOfMonth.toString, "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
+            )
 
         val result = route(application, request).value
 

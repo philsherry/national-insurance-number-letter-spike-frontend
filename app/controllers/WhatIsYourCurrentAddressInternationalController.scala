@@ -42,10 +42,11 @@ class WhatIsYourCurrentAddressInternationalController @Inject()(
                                       view: WhatIsYourCurrentAddressInternationalView
                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+
+      val form = formProvider()
 
       val preparedForm = request.userAnswers.get(WhatIsYourCurrentAddressInternationalPage) match {
         case None => form
@@ -57,6 +58,8 @@ class WhatIsYourCurrentAddressInternationalController @Inject()(
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+
+      val form = formProvider()
 
       form.bindFromRequest().fold(
         formWithErrors =>

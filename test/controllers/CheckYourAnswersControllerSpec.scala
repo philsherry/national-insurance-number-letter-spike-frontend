@@ -44,7 +44,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(WhatIsYourDateOfBirthPage, LocalDate.now).success.value
         .set(IsYourCurrentAddressInUkPage, true).success.value
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
-        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, None, "country")).success.value
+        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, None, Country("FR", "France"))).success.value
         .set(DoYouHaveAnyPreviousAddressesPage, true).success.value
         .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
         .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))).success.value

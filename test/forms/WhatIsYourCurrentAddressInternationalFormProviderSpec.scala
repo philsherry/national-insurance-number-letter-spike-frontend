@@ -17,10 +17,16 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import models.Country
+import org.scalacheck.Arbitrary.arbitrary
+import org.scalacheck.Gen
 import play.api.data.FormError
+import play.api.i18n.Messages
+import play.api.test.Helpers.{stubMessages, stubMessagesApi}
 
 class WhatIsYourCurrentAddressInternationalFormProviderSpec extends StringFieldBehaviours {
 
+  private implicit val msgs: Messages = stubMessages(stubMessagesApi())
   val form = new WhatIsYourCurrentAddressInternationalFormProvider()()
 
   ".addressLine1" - {
@@ -94,20 +100,11 @@ class WhatIsYourCurrentAddressInternationalFormProviderSpec extends StringFieldB
 
     val fieldName = "country"
     val requiredKey = "whatIsYourCurrentAddressInternational.error.country.required"
-    val lengthKey = "whatIsYourCurrentAddressInternational.error.country.length"
-    val maxLength = 100
 
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      stringsWithMaxLength(maxLength)
-    )
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+      Gen.oneOf(Country.countryCodes.map(_.toUpperCase))
     )
 
     behave like mandatoryField(
@@ -115,5 +112,17 @@ class WhatIsYourCurrentAddressInternationalFormProviderSpec extends StringFieldB
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
     )
+
+    "must not bind any values other than valid country codes" in {
+
+      val invalidAnswers =
+        arbitrary[String] suchThat (x => !Country.countryCodes.map(_.toUpperCase).contains(x))
+
+      forAll(invalidAnswers) {
+        answer =>
+          val result = form.bind(Map("value" -> answer)).apply(fieldName)
+          result.errors must contain only FormError(fieldName, requiredKey)
+      }
+    }
   }
 }

@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{Index, PreviousAddressInternational, PreviousAddressUk, UserAnswers}
+import models.{Country, Index, PreviousAddressInternational, PreviousAddressUk, UserAnswers}
 import pages.behaviours.PageBehaviours
 
 import java.time.LocalDate
@@ -53,7 +53,7 @@ class IsYourPreviousAddressInUkPageSpec extends PageBehaviours {
         None,
         None,
         None,
-        "country",
+        Country("FR", "France"),
         LocalDate.of(2000, 1, 1),
         LocalDate.of(2000, 2, 2)
       )
