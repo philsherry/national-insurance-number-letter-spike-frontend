@@ -755,7 +755,7 @@ whichPrimaryDocument.passport = Passport
 whichPrimaryDocument.driving-license = Driving licence
 whichPrimaryDocument.birth-certificate = Birth certificate
 whichPrimaryDocument.checkYourAnswersLabel = Which identity document do you have?
-whichPrimaryDocument.error.required = Select identity document you have
+whichPrimaryDocument.error.required = Select which identity document you have
 whichPrimaryDocument.change.hidden = which identity document you have
 
 whichAlternativeDocuments.title = Which alternative documents do you have?
