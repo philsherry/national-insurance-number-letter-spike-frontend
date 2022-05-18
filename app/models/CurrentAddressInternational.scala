@@ -23,11 +23,11 @@ final case class CurrentAddressInternational(
                                               addressLine2: Option[String],
                                               addressLine3: Option[String],
                                               postcode: Option[String],
-                                              country: String
+                                              country: Country
                                             ) {
 
   def lines: List[String] =
-    List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(country)).flatten
+    List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(country.name)).flatten
 }
 
 object CurrentAddressInternational {

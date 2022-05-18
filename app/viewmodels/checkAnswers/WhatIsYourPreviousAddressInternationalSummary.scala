@@ -36,8 +36,16 @@ object WhatIsYourPreviousAddressInternationalSummary  {
 
         val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
-        val value = List(Some(answer.addressLine1), answer.addressLine2, answer.addressLine3, Some(answer.country), Some(answer.from.format(dateFormatter)), Some(answer.to.format(dateFormatter)))
-          .flatten.map(HtmlFormat.escape(_).toString)
+        val value = List(
+          Some(answer.addressLine1),
+          answer.addressLine2,
+          answer.addressLine3,
+          answer.postcode,
+          Some(answer.country.name),
+          Some(answer.from.format(dateFormatter)),
+          Some(answer.to.format(dateFormatter))
+        ).flatten
+          .map(HtmlFormat.escape(_).toString)
           .mkString("<br/>")
 
         SummaryListRowViewModel(

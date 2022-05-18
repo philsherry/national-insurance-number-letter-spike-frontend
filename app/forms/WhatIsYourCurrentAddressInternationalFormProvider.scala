@@ -17,15 +17,15 @@
 package forms
 
 import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
-import models.CurrentAddressInternational
+import models.{Country, CurrentAddressInternational}
+import play.api.i18n.Messages
 
 class WhatIsYourCurrentAddressInternationalFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[CurrentAddressInternational] = Form(
+   def apply()(implicit messages: Messages): Form[CurrentAddressInternational] = Form(
      mapping(
       "addressLine1" -> text("whatIsYourCurrentAddressInternational.error.addressLine1.required")
         .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.addressLine1.length")),
@@ -36,7 +36,8 @@ class WhatIsYourCurrentAddressInternationalFormProvider @Inject() extends Mappin
        "postcode" -> optional(text("whatIsYourCurrentAddressInternational.error.postcode.required")
          .verifying(maxLength(12, "whatIsYourCurrentAddressInternational.error.postcode.length"))),
        "country" -> text("whatIsYourCurrentAddressInternational.error.country.required")
-         .verifying(maxLength(100, "whatIsYourCurrentAddressInternational.error.country.length"))
+         .verifying("whatIsYourCurrentAddressInternational.error.country.required", c => Country.internationalCountries.exists(_.code == c))
+         .transform[Country](value => Country.internationalCountries.find(_.code == value).get, _.code)
      )(CurrentAddressInternational.apply)(CurrentAddressInternational.unapply)
    )
  }

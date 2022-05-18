@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourCurrentAddressInternationalFormProvider
-import models.{CurrentAddressInternational, NormalMode, UserAnswers}
+import models.{Country, CurrentAddressInternational, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -35,15 +35,15 @@ import scala.concurrent.Future
 
 class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  private def onwardRoute = Call("GET", "/foo")
+  private val country = Country("FR", "France")
 
   val formProvider = new WhatIsYourCurrentAddressInternationalFormProvider()
-  val form = formProvider()
 
   lazy val whatIsYourCurrentAddressInternationalRoute = routes.WhatIsYourCurrentAddressInternationalController.onPageLoad(NormalMode).url
 
   val validData = CurrentAddressInternational(
-    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = "country"
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = country
   )
 
   val userAnswers = UserAnswers(userAnswersId)
@@ -60,11 +60,13 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
         val request = FakeRequest(GET, whatIsYourCurrentAddressInternationalRoute)
 
         val view = application.injector.instanceOf[WhatIsYourCurrentAddressInternationalView]
+        implicit val msgs = messages(application)
+        val form = formProvider()
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(request, implicitly).toString
       }
     }
 
@@ -76,11 +78,13 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
         val request = FakeRequest(GET, whatIsYourCurrentAddressInternationalRoute)
 
         val view = application.injector.instanceOf[WhatIsYourCurrentAddressInternationalView]
+        implicit val msgs = messages(application)
+        val form = formProvider()
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validData), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validData), NormalMode)(request, implicitly).toString
       }
     }
 
@@ -103,7 +107,7 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
           FakeRequest(POST, whatIsYourCurrentAddressInternationalRoute)
             .withFormUrlEncodedBody(
               "addressLine1"->  "value 1",
-              "country" -> "country"
+              "country" -> "FR"
             )
 
         val result = route(application, request).value
@@ -122,6 +126,9 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
           FakeRequest(POST, whatIsYourCurrentAddressInternationalRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
+        implicit val msgs = messages(application)
+        val form = formProvider()
+
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[WhatIsYourCurrentAddressInternationalView]
@@ -129,7 +136,7 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, implicitly).toString
       }
     }
 
@@ -154,7 +161,7 @@ class WhatIsYourCurrentAddressInternationalControllerSpec extends SpecBase with 
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourCurrentAddressInternationalRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("country", "FR"))
 
         val result = route(application, request).value
 

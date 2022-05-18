@@ -20,13 +20,14 @@ import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
-import models.PreviousAddressInternational
+import models.{Country, PreviousAddressInternational}
+import play.api.i18n.Messages
 
 import java.time.LocalDate
 
 class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[PreviousAddressInternational] = Form(
+   def apply()(implicit messages: Messages): Form[PreviousAddressInternational] = Form(
      mapping(
       "addressLine1" -> text("whatIsYourPreviousAddressInternational.error.addressLine1.required")
         .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.addressLine1.length")),
@@ -37,7 +38,8 @@ class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappi
        "postcode" -> optional(text("whatIsYourPreviousAddressInternational.error.postcode.required")
          .verifying(maxLength(12, "whatIsYourPreviousAddressInternational.error.postcode.length"))),
        "country" -> text("whatIsYourPreviousAddressInternational.error.country.required")
-         .verifying(maxLength(100, "whatIsYourPreviousAddressInternational.error.country.length")),
+         .verifying("whatIsYourPreviousAddressInternational.error.country.required", c => Country.internationalCountries.exists(_.code == c))
+         .transform[Country](value => Country.internationalCountries.find(_.code == value).get, _.code),
        "from" -> localDate(
          invalidKey = "whatIsYourPreviousAddressInternational.error.from.invalid",
          allRequiredKey = "whatIsYourPreviousAddressInternational.error.from.required.all",

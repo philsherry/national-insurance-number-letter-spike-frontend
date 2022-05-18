@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CurrentAddressInternational, CurrentAddressUk, UserAnswers}
+import models.{Country, CurrentAddressInternational, CurrentAddressUk, UserAnswers}
 import pages.behaviours.PageBehaviours
 
 class IsYourCurrentAddressInUkPageSpec extends PageBehaviours {
@@ -32,7 +32,7 @@ class IsYourCurrentAddressInUkPageSpec extends PageBehaviours {
     "must remove international address when true" in {
       val answers = UserAnswers("id")
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk("line 1", None, None, "AA1 1AA")).get
-        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational("line 1", None, None, None, "France")).get
+        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational("line 1", None, None, None, Country("FR", "France"))).get
 
       val result = answers.set(IsYourCurrentAddressInUkPage, true).success.value
 
@@ -43,11 +43,11 @@ class IsYourCurrentAddressInUkPageSpec extends PageBehaviours {
     "must remove uk address when false" in {
       val answers = UserAnswers("id")
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk("line 1", None, None, "AA1 1AA")).get
-        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational("line 1", None, None, None, "France")).get
+        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational("line 1", None, None, None, Country("FR", "France"))).get
 
       val result = answers.set(IsYourCurrentAddressInUkPage, false).success.value
 
-      result.get(WhatIsYourCurrentAddressInternationalPage).value mustBe CurrentAddressInternational("line 1", None, None, None, "France")
+      result.get(WhatIsYourCurrentAddressInternationalPage).value mustBe CurrentAddressInternational("line 1", None, None, None, Country("FR", "France"))
       result.get(WhatIsYourCurrentAddressUkPage) must not be defined
     }
   }

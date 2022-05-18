@@ -29,10 +29,10 @@ class PrintModelSpec extends SpecBase {
   "PrintModel" - {
 
     val currentAddressUk = CurrentAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
-    val currentAddressInternational = CurrentAddressInternational(addressLine1 = "line 1", None, None, None, country = "France")
+    val currentAddressInternational = CurrentAddressInternational(addressLine1 = "line 1", None, None, None, country = Country("FR", "France"))
     val previousAddressUk = PreviousAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA",
       LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1))
-    val previousAddressInternational = PreviousAddressInternational(addressLine1 = "line 1", None, None, None, country = "France",
+    val previousAddressInternational = PreviousAddressInternational(addressLine1 = "line 1", None, None, None, country = Country("FR", "France"),
       LocalDate.of(2002, 1, 1), LocalDate.of(2003, 1, 1))
     val previousEmployerAddress = EmployersAddress("line 1", None, None, "AA1 1AA")
 

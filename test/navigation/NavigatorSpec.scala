@@ -617,7 +617,7 @@ class NavigatorSpec extends SpecBase {
         "to the check your answers page if answer is no and international address is set" in {
           val answers = emptyUserAnswers
             .set(IsYourCurrentAddressInUkPage, false).get
-            .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational("line 1", None, None, None, "France")).get
+            .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational("line 1", None, None, None, Country("FR", "France"))).get
 
           navigator.nextPage(IsYourCurrentAddressInUkPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
