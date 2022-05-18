@@ -378,13 +378,13 @@ signedOut.restart = Start again
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
-whatIsYourName.title = What is your name?
-whatIsYourName.heading = What is your name?
-whatIsYourName.titleField = Title (optional)
+whatIsYourName.title = What is your full name?
+whatIsYourName.heading = What is your full name?
+whatIsYourName.titleField = Title
 whatIsYourName.firstName = First name
 whatIsYourName.middleNames = Middle names
 whatIsYourName.lastName = Last name
-whatIsYourName.checkYourAnswersLabel = What is your name?
+whatIsYourName.checkYourAnswersLabel = What is your full name?
 whatIsYourName.error.titleField.required = Enter your title
 whatIsYourName.error.firstName.required = Enter your first name
 whatIsYourName.error.lastName.required = Enter your last name
@@ -392,7 +392,7 @@ whatIsYourName.error.titleField.length = Title must be 20 characters or less
 whatIsYourName.error.firstName.length = First name must be 100 characters or less
 whatIsYourName.error.middleNames.length = Middle names must be 100 characters or less
 whatIsYourName.error.lastName.length = Last name must be 100 characters or less
-whatIsYourName.change.hidden = your name
+whatIsYourName.change.hidden = your full name
 
 doYouHaveAPreviousName.title = Do you have any previous names?
 doYouHaveAPreviousName.add.title = You have added 1 previous name
