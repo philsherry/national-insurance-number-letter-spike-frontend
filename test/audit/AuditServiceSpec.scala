@@ -17,12 +17,13 @@
 package audit
 
 import audit.DownloadAuditEvent._
+import models.PreviousRelationshipType.CivilPartnership
 import models._
 import org.scalatest.{OptionValues, TryValues}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.mockito.Mockito.{times, verify}
-import org.mockito.ArgumentMatchers.{eq => eqTo, any}
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.scalatestplus.mockito.MockitoSugar
 import pages._
 import uk.gov.hmrc.domain.Nino
@@ -69,6 +70,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         .set(WhenDidYouGetMarriedPage, now).success.value
         .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
         .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(now, now, "nunya")).success.value
+        .set(PreviousRelationshipTypePage(Index(0)), CivilPartnership).success.value
         .set(HaveYouEverClaimedChildBenefitPage, true).success.value
         .set(DoYouKnowYourChildBenefitNumberPage, true).success.value
         .set(WhatIsYourChildBenefitNumberPage, "cbn").success.value
@@ -106,7 +108,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         relationships = Relationships(
           currentRelationship = Some(Relationship("marriage", now)),
           previousRelationships = List(
-            PreviousRelationship(now, now, "nunya")
+            PreviousRelationship("civilPartnership", now, now, "nunya")
           )
         ),
         benefits = Benefits(
