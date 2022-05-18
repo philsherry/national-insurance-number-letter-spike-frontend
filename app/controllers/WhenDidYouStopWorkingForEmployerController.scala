@@ -22,9 +22,10 @@ import forms.WhenDidYouStopWorkingForEmployerFormProvider
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.{WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
+import pages.{WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.twirl.api.HtmlFormat
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.WhenDidYouStopWorkingForEmployerView
@@ -48,15 +49,18 @@ class WhenDidYouStopWorkingForEmployerController @Inject()(
     implicit request =>
       getAnswer(WhenDidYouStartWorkingForEmployerPage(index)) {
         startDate =>
+          getAnswer(WhatIsYourEmployersNamePage(index)) {
+            employerName =>
 
-          val form = formProvider(startDate)
+              val form = formProvider(startDate)
 
-          val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index)) match {
-            case None => form
-            case Some(value) => form.fill(value)
-          }
+              val preparedForm = request.userAnswers.get(WhenDidYouStopWorkingForEmployerPage(index)) match {
+                case None => form
+                case Some(value) => form.fill(value)
+              }
 
-          Ok(view(preparedForm, index, mode))
+              Ok(view(preparedForm, index, mode, HtmlFormat.escape(employerName).toString))
+            }
       }
   }
 
@@ -64,19 +68,22 @@ class WhenDidYouStopWorkingForEmployerController @Inject()(
     implicit request =>
       getAnswerAsync(WhenDidYouStartWorkingForEmployerPage(index)) {
         startDate =>
+          getAnswerAsync(WhatIsYourEmployersNamePage(index)) {
+            employerName =>
 
-          val form = formProvider(startDate)
+              val form = formProvider(startDate)
 
-          form.bindFromRequest().fold(
-            formWithErrors =>
-              Future.successful(BadRequest(view(formWithErrors, index, mode))),
+              form.bindFromRequest().fold(
+                formWithErrors =>
+                  Future.successful(BadRequest(view(formWithErrors, index, mode, HtmlFormat.escape(employerName).toString))),
 
-            value =>
-              for {
-                updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForEmployerPage(index), value))
-                _ <- sessionRepository.set(updatedAnswers)
-              } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(index), mode, updatedAnswers))
-          )
-        }
+                value =>
+                  for {
+                    updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenDidYouStopWorkingForEmployerPage(index), value))
+                    _ <- sessionRepository.set(updatedAnswers)
+                  } yield Redirect(navigator.nextPage(WhenDidYouStopWorkingForEmployerPage(index), mode, updatedAnswers))
+              )
+            }
+      }
   }
 }

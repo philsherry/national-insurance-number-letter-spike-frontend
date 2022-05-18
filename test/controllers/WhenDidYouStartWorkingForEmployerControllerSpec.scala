@@ -24,7 +24,7 @@ import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.WhenDidYouStartWorkingForEmployerPage
+import pages.{WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -38,14 +38,14 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
 
   val formProvider = new WhenDidYouStartWorkingForEmployerFormProvider()
   private def form = formProvider()
+  private val employerName = "foo"
+  private val baseAnswers = emptyUserAnswers.set(WhatIsYourEmployersNamePage(Index(0)), employerName).success.value
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
   lazy val whenDidYouStartWorkingForPreviousEmployerRoute = routes.WhenDidYouStartWorkingForEmployerController.onPageLoad(Index(0), NormalMode).url
-
-  override val emptyUserAnswers = UserAnswers(userAnswersId)
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, whenDidYouStartWorkingForPreviousEmployerRoute)
@@ -62,7 +62,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(baseAnswers)).build()
 
       running(application) {
         val result = route(application, getRequest).value
@@ -70,13 +70,13 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
         val view = application.injector.instanceOf[WhenDidYouStartWorkingForEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, employerName)(getRequest, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouStartWorkingForEmployerPage(Index(0)), validAnswer).success.value
+      val userAnswers = baseAnswers.set(WhenDidYouStartWorkingForEmployerPage(Index(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -86,7 +86,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode, employerName)(getRequest, messages(application)).toString
       }
     }
 
@@ -97,7 +97,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(baseAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -114,7 +114,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(baseAnswers)).build()
 
       val request =
         FakeRequest(POST, whenDidYouStartWorkingForPreviousEmployerRoute)
@@ -128,7 +128,7 @@ class WhenDidYouStartWorkingForEmployerControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, employerName)(request, messages(application)).toString
       }
     }
 

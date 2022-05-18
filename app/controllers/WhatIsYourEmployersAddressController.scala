@@ -22,9 +22,10 @@ import forms.WhatIsYourEmployersAddressFormProvider
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.WhatIsYourEmployersAddressPage
+import pages.{WhatIsYourEmployersAddressPage, WhatIsYourEmployersNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.twirl.api.HtmlFormat
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.WhatIsYourEmployersAddressView
@@ -41,33 +42,39 @@ class WhatIsYourEmployersAddressController @Inject()(
                                                       formProvider: WhatIsYourEmployersAddressFormProvider,
                                                       val controllerComponents: MessagesControllerComponents,
                                                       view: WhatIsYourEmployersAddressView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   val form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      getAnswer(WhatIsYourEmployersNamePage(index)) {
+        employerName =>
 
-      val preparedForm = request.userAnswers.get(WhatIsYourEmployersAddressPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
+          val preparedForm = request.userAnswers.get(WhatIsYourEmployersAddressPage(index)) match {
+            case None => form
+            case Some(value) => form.fill(value)
+          }
 
-      Ok(view(preparedForm, index, mode))
+          Ok(view(preparedForm, index, mode, HtmlFormat.escape(employerName).toString))
+        }
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      getAnswerAsync(WhatIsYourEmployersNamePage(index)) {
+        employerName =>
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
+          form.bindFromRequest().fold(
+            formWithErrors =>
+              Future.successful(BadRequest(view(formWithErrors, index, mode, HtmlFormat.escape(employerName).toString))),
 
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhatIsYourEmployersAddressPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhatIsYourEmployersAddressPage(index), mode, updatedAnswers))
-      )
+            value =>
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.set(WhatIsYourEmployersAddressPage(index), value))
+                _ <- sessionRepository.set(updatedAnswers)
+              } yield Redirect(navigator.nextPage(WhatIsYourEmployersAddressPage(index), mode, updatedAnswers))
+          )
+        }
   }
 }

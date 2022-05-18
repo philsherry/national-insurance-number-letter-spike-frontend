@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.WhatIsYourEmployersAddressFormProvider
-import models.{Index, NormalMode, EmployersAddress, UserAnswers}
+import models.{EmployersAddress, Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.WhatIsYourEmployersAddressPage
+import pages.{WhatIsYourEmployersAddressPage, WhatIsYourEmployersNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -37,13 +37,15 @@ import scala.concurrent.Future
 class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
+  private val employerName = "foo"
+  private val baseAnswers = emptyUserAnswers.set(WhatIsYourEmployersNamePage(Index(0)), employerName).success.value
 
   val formProvider = new WhatIsYourEmployersAddressFormProvider()
   val form = formProvider()
 
   lazy val whatIsYourPreviousEmployersAddressRoute = routes.WhatIsYourEmployersAddressController.onPageLoad(Index(0), NormalMode).url
 
-  val userAnswers = UserAnswers(userAnswersId)
+  val userAnswers = baseAnswers
     .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("value 1", Some("value 2"), None, "postcode"))
     .success.value
 
@@ -51,7 +53,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(baseAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, whatIsYourPreviousEmployersAddressRoute)
@@ -61,7 +63,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, employerName)(request, messages(application)).toString
       }
     }
 
@@ -77,7 +79,12 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(EmployersAddress("value 1", Some("value 2"), None, "postcode")), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          form.fill(EmployersAddress("value 1", Some("value 2"), None, "postcode")),
+          Index(0),
+          NormalMode,
+          employerName
+        )(request, messages(application)).toString
       }
     }
 
@@ -88,7 +95,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(baseAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -115,7 +122,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(baseAnswers)).build()
 
       running(application) {
         val request =
@@ -129,7 +136,7 @@ class WhatIsYourEmployersAddressControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, employerName)(request, messages(application)).toString
       }
     }
 

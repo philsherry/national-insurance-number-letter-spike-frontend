@@ -24,7 +24,7 @@ import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
+import pages.{WhatIsYourEmployersNamePage, WhenDidYouStartWorkingForEmployerPage, WhenDidYouStopWorkingForEmployerPage}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -38,6 +38,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
   val startDate = validAnswer.minusDays(1)
+  private val employerName = "foo"
 
   val formProvider = new WhenDidYouStopWorkingForEmployerFormProvider()
   private val form = formProvider(startDate)
@@ -47,7 +48,9 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
   lazy val whenDidYouStopWorkingForPreviousEmployerRoute = routes.WhenDidYouStopWorkingForEmployerController.onPageLoad(Index(0), NormalMode).url
 
   private val baseAnswers =
-    emptyUserAnswers.set(WhenDidYouStartWorkingForEmployerPage(Index(0)), startDate).success.value
+    emptyUserAnswers
+      .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), startDate).success.value
+      .set(WhatIsYourEmployersNamePage(Index(0)), employerName).success.value
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, whenDidYouStopWorkingForPreviousEmployerRoute)
@@ -72,7 +75,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
         val view = application.injector.instanceOf[WhenDidYouStopWorkingForEmployerView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, employerName)(getRequest, messages(application)).toString
       }
     }
 
@@ -88,7 +91,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode, employerName)(getRequest, messages(application)).toString
       }
     }
 
@@ -130,7 +133,7 @@ class WhenDidYouStopWorkingForEmployerControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, employerName)(request, messages(application)).toString
       }
     }
 
