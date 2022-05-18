@@ -41,12 +41,10 @@
         }
 
         @h1WithCaption(
-            content = messages("areYouSureYouWantToRemoveEmployer.heading"),
+            content = messages("areYouSureYouWantToRemoveEmployer.heading", employerName.getOrElse("")),
             caption = messages("section.employmentHistory"))
 
         <p class="govuk-body govuk-!-margin-bottom-9">
-            @employerName.map { name => <span>@name</span><br/> }
-
             @from.map { from =>
                 <span>
                   @to.map { to =>
@@ -61,7 +59,7 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("areYouSureYouWantToRemoveEmployer.heading")).withCssClass("govuk-visually-hidden")
+                legend = LegendViewModel(messages("areYouSureYouWantToRemoveEmployer.heading", employerName.getOrElse(""))).withCssClass("govuk-visually-hidden")
             )
         )
 
