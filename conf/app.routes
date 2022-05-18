@@ -94,15 +94,15 @@ POST       /what-is-your-telephone-number                        controllers.Wha
 GET        /change-your-telephone-number                  controllers.WhatIsYourTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-your-telephone-number                  controllers.WhatIsYourTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
-GET        /are-you-married                        controllers.AreYouMarriedController.onPageLoad(mode: Mode = NormalMode)
-POST       /are-you-married                        controllers.AreYouMarriedController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-are-married                  controllers.AreYouMarriedController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-are-married                  controllers.AreYouMarriedController.onSubmit(mode: Mode = CheckMode)
+GET        /are-you-in-a-relationship                        controllers.AreYouMarriedController.onPageLoad(mode: Mode = NormalMode)
+POST       /are-you-in-a-relationship                        controllers.AreYouMarriedController.onSubmit(mode: Mode = NormalMode)
+GET        /change-if-you-are-in-a-relationship                  controllers.AreYouMarriedController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-if-you-are-in-a-relationship                  controllers.AreYouMarriedController.onSubmit(mode: Mode = CheckMode)
 
-GET        /when-did-you-get-married                  controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = NormalMode)
-POST       /when-did-you-get-married                  controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = NormalMode)
-GET        /change-when-you-got-married                        controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-when-you-got-married                        controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = CheckMode)
+GET        /when-did-you-begin-your-relationship                  controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = NormalMode)
+POST       /when-did-you-begin-your-relationship                  controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = NormalMode)
+GET        /change-when-you-began-your-relationship                        controllers.WhenDidYouGetMarriedController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-when-you-began-your-relationship                        controllers.WhenDidYouGetMarriedController.onSubmit(mode: Mode = CheckMode)
 
 GET        /have-you-been-in-a-previous-marriage-or-civil-partnership                        controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onPageLoad(mode: Mode = NormalMode)
 POST       /have-you-been-in-a-previous-marriage-or-civil-partnership                        controllers.HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipController.onSubmit(mode: Mode = NormalMode)

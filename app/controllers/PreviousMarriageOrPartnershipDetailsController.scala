@@ -22,7 +22,7 @@ import forms.PreviousMarriageOrPartnershipDetailsFormProvider
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.PreviousMarriageOrPartnershipDetailsPage
+import pages.{PreviousMarriageOrPartnershipDetailsPage, PreviousRelationshipTypePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -48,21 +48,23 @@ class PreviousMarriageOrPartnershipDetailsController @Inject()(
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
+      val relationshipType = request.userAnswers.get(PreviousRelationshipTypePage(index))
       val preparedForm = request.userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode))
+      Ok(view(preparedForm, relationshipType, index, mode))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => {
+          val relationshipType = request.userAnswers.get(PreviousRelationshipTypePage(index))
+          Future.successful(BadRequest(view(formWithErrors, relationshipType, index, mode)))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(PreviousMarriageOrPartnershipDetailsPage(index), value))
