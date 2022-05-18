@@ -49,7 +49,7 @@ class PrintModelSpec extends SpecBase {
         val userAnswers = UserAnswers("id")
           .set(WhatIsYourCurrentAddressInternationalPage, currentAddressInternational).get
 
-        getCurrentAddress(userAnswers) mustBe Some(List("line 1", "France"))
+        getCurrentAddress(userAnswers) mustBe Some(List("line 1", "France (FR)"))
       }
 
       "must extract a UK address if both present" in {
@@ -91,7 +91,7 @@ class PrintModelSpec extends SpecBase {
           .set(WhatIsYourPreviousAddressInternationalPage(Index(0)), previousAddressInternational).get
 
         val expected = List(
-          PreviousAddressPrintModel(List("line 1", "France"), "1 January 2002", "1 January 2003")
+          PreviousAddressPrintModel(List("line 1", "France (FR)"), "1 January 2002", "1 January 2003")
         )
         getPreviousAddresses(userAnswers) mustBe expected
       }
@@ -105,8 +105,8 @@ class PrintModelSpec extends SpecBase {
 
         val expected = List(
           PreviousAddressPrintModel(List("line 1", "AA1 1AA"), "1 January 2000", "1 January 2001"),
-          PreviousAddressPrintModel(List("line 1", "France"), "1 January 2002", "1 January 2003"),
-          PreviousAddressPrintModel(List("line 1", "France"), "1 January 2002", "1 January 2003"),
+          PreviousAddressPrintModel(List("line 1", "France (FR)"), "1 January 2002", "1 January 2003"),
+          PreviousAddressPrintModel(List("line 1", "France (FR)"), "1 January 2002", "1 January 2003"),
           PreviousAddressPrintModel(List("line 1", "AA1 1AA"), "1 January 2000", "1 January 2001")
         )
         getPreviousAddresses(userAnswers) mustBe expected
