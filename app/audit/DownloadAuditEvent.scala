@@ -103,8 +103,10 @@ object DownloadAuditEvent {
 
   private def getPreviousRelationships(answers: UserAnswers): Option[List[PreviousRelationship]] =
     answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty).indices.toList.traverse { i =>
-      answers.get(PreviousMarriageOrPartnershipDetailsPage(Index(i))).map { details =>
-        PreviousRelationship(details.startDate, details.endDate, details.endingReason)
+      answers.get(PreviousMarriageOrPartnershipDetailsPage(Index(i))).flatMap { details =>
+        answers.get(PreviousRelationshipTypePage(Index(i))).map { relationshipType =>
+          PreviousRelationship(relationshipType.toString, details.startDate, details.endDate, details.endingReason)
+        }
       }
     }
 
@@ -158,7 +160,7 @@ object DownloadAuditEvent {
     implicit lazy val formats: Format[Relationship] = Json.format
   }
 
-  private[audit] final case class PreviousRelationship(startDate: LocalDate, endDate: LocalDate, reasonForEnding: String)
+  private[audit] final case class PreviousRelationship(relationshipType: String, startDate: LocalDate, endDate: LocalDate, reasonForEnding: String)
   object PreviousRelationship {
     implicit lazy val formats: Format[PreviousRelationship] = Json.format
   }
