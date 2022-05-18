@@ -898,7 +898,9 @@ areYouSureYouWantToRemovePreviousName.error.required = Select yes if are sure yo
 
 areYouSureYouWantToRemovePreviousRelationship.title = Are you sure you want to remove this previous relationship?
 areYouSureYouWantToRemovePreviousRelationship.heading = Are you sure you want to remove this previous relationship?
-areYouSureYouWantToRemovePreviousRelationship.text = From {0} to {1}
+areYouSureYouWantToRemovePreviousRelationship.text = In a relationship from {0} to {1}
+areYouSureYouWantToRemovePreviousRelationship.text.marriage = Married from {0} to {1}
+areYouSureYouWantToRemovePreviousRelationship.text.civilPartnership = In a civil partnership from {0} to {1}
 areYouSureYouWantToRemovePreviousRelationship.error.required = Select yes if you want to remove this previous relationship
 
 whatIsYourGender.title = What is your gender?

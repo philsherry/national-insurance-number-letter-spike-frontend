@@ -64,7 +64,7 @@ class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBa
         val view = application.injector.instanceOf[AreYouSureYouWantToRemovePreviousRelationshipView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, details, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, None, details, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -140,7 +140,7 @@ class AreYouSureYouWantToRemovePreviousRelationshipControllerSpec extends SpecBa
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, details, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, None, details, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
