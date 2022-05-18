@@ -568,7 +568,8 @@ pdf.personalDetails.maritalStatus = Marital or partnership status
 pdf.personalDetails.maritalStatus.married = Currently married (since {0})
 pdf.personalDetails.maritalStatus.civilPartnership = Currently in a civil partnership (since {0})
 pdf.personalDetails.previousRelationships = Previous relationships
-pdf.personalDetails.previousRelationships.tofrom = From {0} to {1} (reason: {2})
+pdf.personalDetails.previousRelationships.tofrom.marriage = Married from {0} to {1} (reason: {2})
+pdf.personalDetails.previousRelationships.tofrom.civilPartnership = In a civil partnership from {0} to {1} (reason: {2})
 
 pdf.addressHistory = Address history
 pdf.addressHistory.current = Current address

@@ -53,18 +53,7 @@ final case class PreviousAddressPrintModel(address: List[String], from: String, 
 
 final case class EmployerPrintModel(name: String, address: List[String], from: String, to: Option[String])
 
-final case class PreviousMarriageOrPartnershipPrintModel(from: String, to: String, reason: String)
-
-object PreviousMarriageOrPartnershipPrintModel {
-
-  def apply(model: PreviousMarriageOrPartnershipDetails): PreviousMarriageOrPartnershipPrintModel = {
-    PreviousMarriageOrPartnershipPrintModel(
-      model.startDate.format(PrintModel.formatter),
-      model.endDate.format(PrintModel.formatter),
-      model.endingReason
-    )
-  }
-}
+final case class PreviousMarriageOrPartnershipPrintModel(relationshipType: String, from: String, to: String, reason: String)
 
 object PrintModel {
 
@@ -133,7 +122,15 @@ object PrintModel {
 
   private def getPreviousRelationships(userAnswers: UserAnswers): Seq[PreviousMarriageOrPartnershipPrintModel] = {
     userAnswers.get(PreviousRelationshipsQuery).getOrElse(List.empty).indices.flatMap { index =>
-      userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(Index(index))).map(PreviousMarriageOrPartnershipPrintModel(_))
+      for {
+        relationshipType <- userAnswers.get(PreviousRelationshipTypePage(Index(index)))
+        details <- userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(Index(index)))
+      } yield PreviousMarriageOrPartnershipPrintModel(
+        relationshipType.toString,
+        formatter.format(details.startDate),
+        formatter.format(details.endDate),
+        details.endingReason
+      )
     }
   }
 
