@@ -23,23 +23,33 @@
 
 <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.personalDetails")</fo:block>
 
-<fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-<fo:block margin-bottom="2mm" font-weight="bold"><fo:inline font-weight="bold">@messages("pdf.addressHistory.current"): </fo:inline></fo:block>
-@for(line <- model.currentAddress) {
-<fo:block margin-left="0.5cm"><fo:inline>@(line)</fo:inline></fo:block>
-}
+<fo:block-container margin-left="0.5cm" margin-bottom="0.5cm" keep-together="always">
+    <fo:block margin-bottom="2mm" font-weight="bold">
+        <fo:inline font-weight="bold">@messages("pdf.addressHistory.current"): </fo:inline>
+    </fo:block>
+    @for(line <- model.currentAddress) {
+        <fo:block margin-left="0.5cm"><fo:inline>@(line)</fo:inline></fo:block>
+    }
 </fo:block-container>
 
 @if(model.previousAddresses.nonEmpty) {
     <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-    <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline font-weight="bold">@messages("pdf.addressHistory.previous"): </fo:inline></fo:block>
-    @for(addr <- model.previousAddresses) {
-        <fo:block margin-left="0.5cm" margin-bottom="2mm"><fo:inline>@messages("pdf.addressHistory.previous.fromto", addr.from, addr.to)</fo:inline></fo:block>
-        @for(line <- addr.address) {
-            <fo:block margin-left="1.0cm"><fo:inline>@(line)</fo:inline></fo:block>
+        <fo:block margin-bottom="2mm" font-weight="bold">
+            <fo:inline font-weight="bold">@messages("pdf.addressHistory.previous"): </fo:inline>
+        </fo:block>
+        @for(addr <- model.previousAddresses) {
+            <fo:block-container keep-together="always">
+                <fo:block margin-left="0.5cm" margin-bottom="2mm">
+                    <fo:inline>@messages("pdf.addressHistory.previous.fromto", addr.from, addr.to)</fo:inline>
+                </fo:block>
+                @for(line <- addr.address) {
+                    <fo:block margin-left="1.0cm">
+                        <fo:inline>@(line)</fo:inline>
+                    </fo:block>
+                }
+                <fo:block margin-bottom="0.5cm"/>
+            </fo:block-container>
         }
-        <fo:block margin-bottom="0.5cm"/>
-    }
     </fo:block-container>
 }
 
@@ -63,11 +73,11 @@
 </fo:block-container>
 
 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.telephoneNumber"): </fo:inline>@(model.telephoneNumber)</fo:block>
+    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.telephoneNumber"): </fo:inline>@(model.telephoneNumber)</fo:block>
 </fo:block-container>
 
 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.gender"): </fo:inline>@messages(s"whatIsYourGender.${model.gender.toString}")</fo:block>
+    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.gender"): </fo:inline>@messages(s"whatIsYourGender.${model.gender.toString}")</fo:block>
 </fo:block-container>
 
 @for(relationshipType <- model.currentRelationshipType; relationshipDate <- model.currentRelationshipDate) {
