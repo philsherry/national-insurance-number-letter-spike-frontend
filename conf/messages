@@ -340,7 +340,6 @@ haveYouPreviouslyBeenInAMarriageOrCivilPartnership.change.hidden = if you have p
 
 previousMarriageOrPartnershipDetails.title = When were you previously in a marriage or civil partnership?
 previousMarriageOrPartnershipDetails.heading = When were you previously in a marriage or civil partnership?
-previousMarriageOrPartnershipDetails.hint = If you have been in a previous marriage or civil partnership more than once, enter the most recent details.
 previousMarriageOrPartnershipDetails.startDate = Start date
 previousMarriageOrPartnershipDetails.endDate = End date
 previousMarriageOrPartnershipDetails.endReason = Why did the marriage or civil partnership end?
