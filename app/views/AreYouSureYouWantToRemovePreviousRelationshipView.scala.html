@@ -25,7 +25,7 @@
     h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], details: PreviousMarriageOrPartnershipDetails, index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], relationshipType: Option[PreviousRelationshipType], details: PreviousMarriageOrPartnershipDetails, index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @dateFormatter = @{
     DateTimeFormatter.ofPattern("d MMMM yyyy")
@@ -44,10 +44,8 @@
             caption = HmrcSectionCaption(messages("section.relationshipHistory"))
         )
 
-        <h1 class="govuk-heading-xl">@messages("areYouSureYouWantToRemovePreviousRelationship.heading")</h1>
-
         <p class="govuk-body govuk-!-margin-bottom-9">
-            @messages("areYouSureYouWantToRemovePreviousRelationship.text", dateFormatter.format(details.startDate), dateFormatter.format(details.endDate))
+            @messages(s"areYouSureYouWantToRemovePreviousRelationship.text${relationshipType.fold("")(t => s".$t")}", dateFormatter.format(details.startDate), dateFormatter.format(details.endDate))
         </p>
 
         @govukRadios(

@@ -36,7 +36,7 @@ object AlternativeDocuments extends Enumerable.Implicits {
 
   val values: Seq[AlternativeDocuments] = Seq(
     AdoptionCertificate, HomeOfficeOrTravelDocument, WorkPermit, CertificateOfNaturalisation,
-    MarriageOrCivilPartnershipCertificate, ArmyOrNavyCertificate, IdentityOrMedicalCard
+    MarriageOrCivilPartnershipCertificate, IdentityOrMedicalCard, ArmyOrNavyCertificate
   )
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =

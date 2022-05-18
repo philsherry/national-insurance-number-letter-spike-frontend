@@ -22,7 +22,7 @@ import forms.AreYouSureYouWantToRemovePreviousRelationshipFormProvider
 import javax.inject.Inject
 import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
-import pages.{AreYouSureYouWantToRemovePreviousRelationshipPage, PreviousMarriageOrPartnershipDetailsPage, PreviousRelationshipQuery}
+import pages.{AreYouSureYouWantToRemovePreviousRelationshipPage, PreviousMarriageOrPartnershipDetailsPage, PreviousRelationshipQuery, PreviousRelationshipTypePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -53,7 +53,8 @@ class AreYouSureYouWantToRemovePreviousRelationshipController @Inject()(
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       request.userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(index)).map { details =>
-        Ok(view(form, details, index, mode))
+        val relationshipType = request.userAnswers.get(PreviousRelationshipTypePage(index))
+        Ok(view(form, relationshipType, details, index, mode))
       }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
 
@@ -62,7 +63,8 @@ class AreYouSureYouWantToRemovePreviousRelationshipController @Inject()(
       form.bindFromRequest().fold(
         formWithErrors =>
           request.userAnswers.get(PreviousMarriageOrPartnershipDetailsPage(index)).map { details =>
-            Future.successful(BadRequest(view(formWithErrors, details, index, mode)))
+            val relationshipType = request.userAnswers.get(PreviousRelationshipTypePage(index))
+            Future.successful(BadRequest(view(formWithErrors, relationshipType, details, index, mode)))
           }.getOrElse(Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))),
         value =>
           for {
