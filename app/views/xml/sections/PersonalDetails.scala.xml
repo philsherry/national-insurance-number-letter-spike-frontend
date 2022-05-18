@@ -88,7 +88,7 @@
         <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
             @for(previous <- model.previousRelationships) {
                 <fo:block-container margin-bottom="0.5cm">
-                <fo:block margin-bottom="2mm">@messages("pdf.personalDetails.previousRelationships.tofrom", previous.from, previous.to, previous.reason)</fo:block>
+                <fo:block margin-bottom="2mm">@messages(s"pdf.personalDetails.previousRelationships.tofrom.${previous.relationshipType}", previous.from, previous.to, previous.reason)</fo:block>
                 </fo:block-container>
             }
         </fo:block-container>

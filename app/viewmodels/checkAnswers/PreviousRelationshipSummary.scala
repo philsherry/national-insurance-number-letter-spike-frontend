@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{Index, Mode, UserAnswers}
-import pages.PreviousMarriageOrPartnershipDetailsPage
+import pages.{PreviousMarriageOrPartnershipDetailsPage, PreviousRelationshipTypePage}
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import uk.gov.hmrc.hmrcfrontend.views.Aliases.ListWithActionsItem
@@ -26,24 +26,25 @@ import uk.gov.hmrc.hmrcfrontend.views.viewmodels.listwithactions.ListWithActions
 
 import java.time.format.DateTimeFormatter
 
-object PreviousMarriageOrPartnershipDetailsSummary  {
+object PreviousRelationshipSummary  {
 
   private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
   def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): Option[ListWithActionsItem] =
-    answers
-      .get(PreviousMarriageOrPartnershipDetailsPage(Index(i)))
-      .map { details =>
-        val from = dateFormatter.format(details.startDate)
-        val to = dateFormatter.format(details.endDate)
-        val content = messages("previousMarriageOrPartnershipDetails.checkYourAnswersFormat", from, to)
+    for {
+      relationshipType <- answers.get(PreviousRelationshipTypePage(Index(i)))
+      details          <- answers.get(PreviousMarriageOrPartnershipDetailsPage(Index(i)))
+    } yield {
+      val from = dateFormatter.format(details.startDate)
+      val to = dateFormatter.format(details.endDate)
+      val content = messages(s"previousMarriageOrPartnershipDetails.checkYourAnswersFormat.$relationshipType", from, to)
 
-        ListWithActionsItem(
-          name = Text(content),
-          actions = List(
-            ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousRelationshipHidden", from, to)), href = routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(i), mode).url),
-            ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousRelationshipHidden", from, to)), href = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(i), mode).url)
-          )
+      ListWithActionsItem(
+        name = Text(content),
+        actions = List(
+          ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousRelationshipHidden", from, to)), href = routes.PreviousRelationshipTypeController.onPageLoad(Index(i), mode).url),
+          ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousRelationshipHidden", from, to)), href = routes.AreYouSureYouWantToRemovePreviousRelationshipController.onPageLoad(Index(i), mode).url)
         )
-      }
+      )
+    }
 }

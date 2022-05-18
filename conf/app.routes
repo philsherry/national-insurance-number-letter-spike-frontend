@@ -224,7 +224,12 @@ POST       /what-is-your-gender                        controllers.WhatIsYourGen
 GET        /change-your-gender                  controllers.WhatIsYourGenderController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-your-gender                  controllers.WhatIsYourGenderController.onSubmit(mode: Mode = CheckMode)
 
-GET        /currentRelationshipType                        controllers.CurrentRelationshipTypeController.onPageLoad(mode: Mode = NormalMode)
-POST       /currentRelationshipType                        controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = NormalMode)
-GET        /changeCurrentRelationshipType                  controllers.CurrentRelationshipTypeController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeCurrentRelationshipType                  controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = CheckMode)
+GET        /current-relationship-type                        controllers.CurrentRelationshipTypeController.onPageLoad(mode: Mode = NormalMode)
+POST       /current-relationship-type                        controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-current-relationship-type                  controllers.CurrentRelationshipTypeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-current-relationship-type                  controllers.CurrentRelationshipTypeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /:index/previous-relationship-type                        controllers.PreviousRelationshipTypeController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/previous-relationship-type                        controllers.PreviousRelationshipTypeController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-previous-relationship-type                  controllers.PreviousRelationshipTypeController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-previous-relationship-type                  controllers.PreviousRelationshipTypeController.onSubmit(index: Index, mode: Mode = CheckMode)

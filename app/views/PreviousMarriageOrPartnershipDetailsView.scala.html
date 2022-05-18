@@ -50,8 +50,6 @@
             caption = HmrcSectionCaption(messages("section.relationshipHistory"))
         )
 
-        @govukHint(Hint(content = "previousMarriageOrPartnershipDetails.hint"))
-
         @govukDateInput(
             DateViewModel(
                 field  = form("startDate"),
