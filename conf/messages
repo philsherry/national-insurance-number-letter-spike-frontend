@@ -570,10 +570,14 @@ areYouMarried.checkYourAnswersLabel = Are you married or in a civil partnership?
 areYouMarried.error.required = Select yes if you are married or in a civil partnership
 areYouMarried.change.hidden = if you are married or in a civil partnership
 
-whenDidYouGetMarried.title = When did you enter a marriage or civil partnership?
-whenDidYouGetMarried.heading = When did you enter a marriage or civil partnership?
+whenDidYouGetMarried.title = When did enter your marriage or civil partnership?
+whenDidYouGetMarried.title.marriage = When did you get married?
+whenDidYouGetMarried.title.civilPartnership = When did you enter your civil partnership?
+whenDidYouGetMarried.heading = When did you enter your marriage or civil partnership?
+whenDidYouGetMarried.heading.marriage = When did you get married?
+whenDidYouGetMarried.heading.civilPartnership = When did you enter your civil partnership?
 whenDidYouGetMarried.hint = For example, 12 11 2007
-whenDidYouGetMarried.checkYourAnswersLabel = When did you enter a marriage or civil partnership?
+whenDidYouGetMarried.checkYourAnswersLabel = When did you enter your marriage or civil partnership?
 whenDidYouGetMarried.error.required.all = Enter the date you entered into a marriage or civil partnership
 whenDidYouGetMarried.error.required.two = The date that you entered into a marriage or civil partnership must include {0} and {1}
 whenDidYouGetMarried.error.required = The date that you entered into a marriage or civil partnership must include {0}

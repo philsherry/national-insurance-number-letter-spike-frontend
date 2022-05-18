@@ -71,7 +71,7 @@ class WhenDidYouGetMarriedControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[WhenDidYouGetMarriedView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, None, NormalMode)(getRequest, messages(application)).toString
       }
     }
 
@@ -87,7 +87,7 @@ class WhenDidYouGetMarriedControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), None, NormalMode)(getRequest, messages(application)).toString
       }
     }
 
@@ -129,7 +129,7 @@ class WhenDidYouGetMarriedControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, None, NormalMode)(request, messages(application)).toString
       }
     }
 
