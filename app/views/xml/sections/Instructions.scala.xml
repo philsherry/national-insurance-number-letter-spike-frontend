@@ -95,6 +95,10 @@
             </fo:block-container>
             }
 
+            @if(model.hasDocuments) {
+                <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.documents.warning")</fo:block>
+            }
+
         </fo:block></fo:block-container>
 
     </fo:flow>

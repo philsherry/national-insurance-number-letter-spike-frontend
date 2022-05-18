@@ -546,6 +546,7 @@ pdf.nextSteps.address2 = HM Revenue and Customs
 pdf.nextSteps.address3 = BX9 1AN
 pdf.nextSteps.documentsToInclude.singular = You must include a photocopy of the following document, or we may not be able to process your application:
 pdf.nextSteps.documentsToInclude.plural = You must include photocopies of the following documents, or we may not be able to process your application:
+pdf.nextSteps.documents.warning = If you send an original document we can not guarantee that it will be returned to you.
 
 pdf.personalDetails = Personal details
 pdf.personalDetails.firstName = First name
