@@ -672,7 +672,7 @@ haveYouEverWorkedInUk.error.required = Select yes if you have ever worked in the
 haveYouEverWorkedInUk.change.hidden = whether you have have worked in the UK
 
 whatIsYourEmployersAddress.title = What is your employer’s address?
-whatIsYourEmployersAddress.heading = What is your employer’s address?
+whatIsYourEmployersAddress.heading = What is {0}’s address?
 whatIsYourEmployersAddress.addressLine1 = Address line 1
 whatIsYourEmployersAddress.addressLine2 = Address line 2 (optional)
 whatIsYourEmployersAddress.addressLine3 = Address line 3 (optional)
@@ -698,7 +698,7 @@ whatIsYourEmployersName.error.length = Your employer’s name must be 100 charac
 whatIsYourEmployersName.change.hidden = your employer’s name
 
 whenDidYouStartWorkingForEmployer.title = When did you start working for your employer?
-whenDidYouStartWorkingForEmployer.heading = When did you start working for your employer?
+whenDidYouStartWorkingForEmployer.heading = When did you start working for {0}?
 whenDidYouStartWorkingForEmployer.hint = For example, 12 11 2007
 whenDidYouStartWorkingForEmployer.checkYourAnswersLabel = When did you start working for your employer?
 whenDidYouStartWorkingForEmployer.error.required.all = Enter the date you started working for your employer
@@ -708,7 +708,7 @@ whenDidYouStartWorkingForEmployer.error.invalid = Enter a real date
 whenDidYouStartWorkingForEmployer.change.hidden = when you started working for your most recent employer
 
 whenDidYouStartForEmployer.title = When did you start working for your employer?
-whenDidYouStartForEmployer.heading = When did you start working for your employer?
+whenDidYouStartForEmployer.heading = When did you start working for {0}?
 whenDidYouStartForEmployer.hint = For example, 12 11 2007
 whenDidYouStartForEmployer.error.required.all = Enter the date you started working for employer
 whenDidYouStartForEmployer.error.required.two = The date you started working for your employer must include {0} and {1}
@@ -716,7 +716,7 @@ whenDidYouStartForEmployer.error.required = The date you started working for you
 whenDidYouStartForEmployer.error.invalid = Enter a real date
 
 whenDidYouStopWorkingForEmployer.title = When did you stop working for your employer?
-whenDidYouStopWorkingForEmployer.heading = When did you stop working for your employer?
+whenDidYouStopWorkingForEmployer.heading = When did you stop working for {0}?
 whenDidYouStopWorkingForEmployer.hint = For example, 12 11 2007
 whenDidYouStopWorkingForEmployer.error.required.all = Enter the date you stopped working for your employer
 whenDidYouStopWorkingForEmployer.error.required.two = The date you stopped working for your employer must include {0} and {1}
@@ -780,9 +780,9 @@ doYouKnowYourNationalInsuranceNumber.error.required = Select yes if you know you
 doYouKnowYourNationalInsuranceNumber.change.hidden = whether you know your National Insurance number
 
 areYouStillEmployed.title = Are you still employed by your employer?
-areYouStillEmployed.heading = Are you still employed by your employer?
+areYouStillEmployed.heading = Are you still employed by {0}?
 areYouStillEmployed.checkYourAnswersLabel = Are you still employed by your employer?
-areYouStillEmployed.error.required = Select yes if are still employed by your employer
+areYouStillEmployed.error.required = Select yes if you are still employed by your employer
 areYouStillEmployed.change.hidden = whether you are still employed by your employer
 
 areYouSureYouWantToRemovePreviousAddress.title = Are you sure you want to remove this previous address?

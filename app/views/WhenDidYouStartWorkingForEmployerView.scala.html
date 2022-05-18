@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index: Index, mode: Mode, employerName: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("whenDidYouStartForEmployer.title"), Some(messages("section.employmentHistory")))) {
 
@@ -36,7 +36,7 @@
             DateViewModel(
                 field  = form("value"),
                 legend = HmrcPageHeadingLegend(
-                    content = messages("whenDidYouStartForEmployer.heading"),
+                    content = messages("whenDidYouStartForEmployer.heading", employerName),
                     caption = HmrcSectionCaption(messages("section.employmentHistory"))
                 )
             )

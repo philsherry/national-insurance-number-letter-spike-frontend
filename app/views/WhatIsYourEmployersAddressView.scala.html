@@ -26,7 +26,7 @@
     h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index: Index, mode: Mode, employerName: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("whatIsYourEmployersAddress.title"), Some(messages("section.employmentHistory")))) {
 
@@ -37,7 +37,7 @@
         }
 
         @h1WithCaption(
-            content = messages("whatIsYourEmployersAddress.heading"),
+            content = messages("whatIsYourEmployersAddress.heading", employerName),
             caption = HmrcSectionCaption(messages("section.employmentHistory"))
         )
 
