@@ -596,10 +596,16 @@ haveYouPreviouslyBeenInAMarriageOrCivilPartnership.error.required = Select yes i
 haveYouPreviouslyBeenInAMarriageOrCivilPartnership.change.hidden = if you have previously been in a marriage or civil partnership
 
 previousMarriageOrPartnershipDetails.title = When were you previously in a marriage or civil partnership?
+previousMarriageOrPartnershipDetails.title.marriage = When were you previously married?
+previousMarriageOrPartnershipDetails.title.civilPartnership = When were you previously in a civil partnership?
 previousMarriageOrPartnershipDetails.heading = When were you previously in a marriage or civil partnership?
+previousMarriageOrPartnershipDetails.heading.marriage = When were you previously married?
+previousMarriageOrPartnershipDetails.heading.civilPartnership = When were you previously in a civil partnership?
 previousMarriageOrPartnershipDetails.startDate = Start date
 previousMarriageOrPartnershipDetails.endDate = End date
 previousMarriageOrPartnershipDetails.endReason = Why did the marriage or civil partnership end?
+previousMarriageOrPartnershipDetails.endReason.marriage = Why did the marriage end?
+previousMarriageOrPartnershipDetails.endReason.civilPartnership = Why did the civil partnership end?
 previousMarriageOrPartnershipDetails.endReason.hint = For example, divorce, dissolved, widowed or other reason
 previousMarriageOrPartnershipDetails.checkYourAnswersLabel = When were you previously in a marriage or civil partnership?
 previousMarriageOrPartnershipDetails.error.startDate.required = The start date of your previous marriage or civil partnership must include {0}

@@ -66,7 +66,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, None, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -82,7 +82,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(model), None, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -134,7 +134,7 @@ class PreviousMarriageOrPartnershipDetailsControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, None, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

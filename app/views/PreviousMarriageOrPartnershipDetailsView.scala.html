@@ -27,9 +27,13 @@
     h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], relationshipType: Option[PreviousRelationshipType], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("previousMarriageOrPartnershipDetails.title"), Some(messages("section.relationshipHistory")))) {
+@relationship = @{
+    relationshipType.fold("")(r => s".$r")
+}
+
+@layout(pageTitle = title(form, messages(s"previousMarriageOrPartnershipDetails.title$relationship"), Some(messages("section.relationshipHistory")))) {
 
     @formHelper(action = routes.PreviousMarriageOrPartnershipDetailsController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -46,7 +50,7 @@
         }
 
         @h1WithCaption(
-            content = messages("previousMarriageOrPartnershipDetails.heading"),
+            content = messages(s"previousMarriageOrPartnershipDetails.heading$relationship"),
             caption = HmrcSectionCaption(messages("section.relationshipHistory"))
         )
 
@@ -67,7 +71,7 @@
         @govukInput(
             InputViewModel(
                 field = form("endReason"),
-                label = LabelViewModel(messages("previousMarriageOrPartnershipDetails.endReason"))
+                label = LabelViewModel(messages(s"previousMarriageOrPartnershipDetails.endReason$relationship"))
             )
             .withWidth(Full)
             .withHint(Hint(content = "previousMarriageOrPartnershipDetails.endReason.hint"))
