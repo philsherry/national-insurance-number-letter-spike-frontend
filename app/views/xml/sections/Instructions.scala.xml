@@ -41,8 +41,10 @@
 
             <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.p1")</fo:block>
 
-            @if(model.hasDocuments) {
-                <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.p2.documents")</fo:block>
+            @if(model.primaryDocument.isDefined) {
+                <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.p2.primaryDocuments")</fo:block>
+            } else if (model.secondaryDocuments.isDefined) {
+                <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.p2.secondaryDocuments")</fo:block>
             } else {
                 <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.p2.noDocuments")</fo:block>
             }
@@ -91,6 +93,10 @@
                     }
                 </fo:list-block>
             </fo:block-container>
+            }
+
+            @if(model.hasDocuments) {
+                <fo:block margin-bottom="2mm">@messages("pdf.nextSteps.documents.warning")</fo:block>
             }
 
         </fo:block></fo:block-container>

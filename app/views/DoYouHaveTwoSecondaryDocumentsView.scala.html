@@ -38,8 +38,6 @@
             caption = HmrcSectionCaption(messages("section.supportingDocuments"))
         )
 
-        <h1 class="govuk-heading-xl">@messages("doYouHaveTwoSecondaryDocuments.heading")</h1>
-
         <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
             <li>@messages("doYouHaveTwoSecondaryDocuments.adoptionCertificate")</li>
             <li>@messages("doYouHaveTwoSecondaryDocuments.homeOfficeOrTravelDocument")</li>
@@ -49,6 +47,8 @@
             <li>@messages("doYouHaveTwoSecondaryDocuments.armyOrNavyCertificate")</li>
             <li>@messages("doYouHaveTwoSecondaryDocuments.identityOrMedicalCard")</li>
         </ul>
+
+        <p class="govuk-body">@messages("doYouHaveTwoSecondaryDocuments.hint")</p>
 
         @govukRadios(
             RadiosViewModel.yesNo(
