@@ -68,8 +68,37 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(WhatIsYourDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourGenderController.onPageLoad(NormalMode)
       }
 
-      "must go from the what is your gender page to the is current address in the uk page" in {
-        navigator.nextPage(WhatIsYourGenderPage, NormalMode, emptyUserAnswers) mustBe routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
+      "must go from the what is your gender page to the telephone number page" in {
+        navigator.nextPage(WhatIsYourGenderPage, NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
+      }
+
+      "must go from the telephone number page to the do you know your national insurance number page" in {
+        navigator.nextPage(WhatIsYourTelephoneNumberPage, NormalMode, emptyUserAnswers) mustBe routes.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(NormalMode)
+      }
+
+      "must go from the do you know your national insurance number page" - {
+
+        "to the national insurance page when the user selects yes" in {
+          val answers = emptyUserAnswers.set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
+          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, NormalMode, answers) mustBe routes.WhatIsYourNationalInsuranceNumberController.onPageLoad(NormalMode)
+        }
+
+        "to the returning from living abroad page when the user selects no" in {
+          val answers = emptyUserAnswers.set(DoYouKnowYourNationalInsuranceNumberPage, false).success.value
+          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, NormalMode, answers) mustBe routes.AreYouReturningFromLivingAbroadController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery controller when the user has no selection" in {
+          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "must go from the national insurance number page to the returning from living abroad page" in {
+        navigator.nextPage(WhatIsYourNationalInsuranceNumberPage, NormalMode, emptyUserAnswers) mustBe routes.AreYouReturningFromLivingAbroadController.onPageLoad(NormalMode)
+      }
+
+      "must go from the returning from living abroad page to the current address in UK page" in {
+        navigator.nextPage(AreYouReturningFromLivingAbroadPage, NormalMode, emptyUserAnswers) mustBe routes.IsYourCurrentAddressInUkController.onPageLoad(NormalMode)
       }
 
       "must go from the is current address in the uk page" - {
@@ -123,9 +152,9 @@ class NavigatorSpec extends SpecBase {
           }
         }
 
-        "to the returning from living abroad page when the user selects no" in {
+        "to the are you married page when the user selects no" in {
           val answers = emptyUserAnswers.set(DoYouHaveAnyPreviousAddressesPage, false).success.value
-          navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, NormalMode, answers) mustBe routes.AreYouReturningFromLivingAbroadController.onPageLoad(NormalMode)
+          navigator.nextPage(DoYouHaveAnyPreviousAddressesPage, NormalMode, answers) mustBe routes.AreYouMarriedController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery controller when the user has no selection" in {
@@ -160,35 +189,6 @@ class NavigatorSpec extends SpecBase {
 
       "must go from the are you sure you want to remove your previous address page to the do you have a previous address page" in {
         navigator.nextPage(AreYouSureYouWantToRemovePreviousAddressPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.DoYouHaveAnyPreviousAddressesController.onPageLoad(NormalMode)
-      }
-
-      "must go from the returning from living abroad page to the telephone number page" in {
-        navigator.nextPage(AreYouReturningFromLivingAbroadPage, NormalMode, emptyUserAnswers) mustBe routes.WhatIsYourTelephoneNumberController.onPageLoad(NormalMode)
-      }
-
-      "must go from the telephone number page to the do you know your national insurance number page" in {
-        navigator.nextPage(WhatIsYourTelephoneNumberPage, NormalMode, emptyUserAnswers) mustBe routes.DoYouKnowYourNationalInsuranceNumberController.onPageLoad(NormalMode)
-      }
-
-      "must go from the do you know your national insurance number page" - {
-
-        "to the national insurance page when the user selects yes" in {
-          val answers = emptyUserAnswers.set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
-          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, NormalMode, answers) mustBe routes.WhatIsYourNationalInsuranceNumberController.onPageLoad(NormalMode)
-        }
-
-        "to the are you married page when the user selects no" in {
-          val answers = emptyUserAnswers.set(DoYouKnowYourNationalInsuranceNumberPage, false).success.value
-          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, NormalMode, answers) mustBe routes.AreYouMarriedController.onPageLoad(NormalMode)
-        }
-
-        "to the journey recovery controller when the user has no selection" in {
-          navigator.nextPage(DoYouKnowYourNationalInsuranceNumberPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
-      }
-
-      "must go from the national insurance number page to the are you married page" in {
-        navigator.nextPage(WhatIsYourNationalInsuranceNumberPage, NormalMode, emptyUserAnswers) mustBe routes.AreYouMarriedController.onPageLoad(NormalMode)
       }
 
       "must go from the are you married page" - {
