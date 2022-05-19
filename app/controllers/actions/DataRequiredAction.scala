@@ -22,6 +22,7 @@ import logging.Logging
 import models.requests.{DataRequest, OptionalDataRequest}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
+import play.api.routing.Router.Attrs
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -31,7 +32,8 @@ class DataRequiredActionImpl @Inject()(implicit val executionContext: ExecutionC
 
     request.userAnswers match {
       case None =>
-        logger.info("Could not find user answers, redirecting to Journey Recovery")
+        val path = request.attrs.get(Attrs.HandlerDef).map(_.path)
+        logger.info(s"Could not find user answers, redirecting to Journey Recovery${path.fold("")(p => s" from $p")}")
         Future.successful(Left(Redirect(routes.JourneyRecoveryController.onPageLoad())))
       case Some(data) =>
         Future.successful(Right(DataRequest(request.request, request.userId, data)))
