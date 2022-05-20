@@ -55,7 +55,7 @@ class PrintController @Inject()(
       val pdf = fop.processTwirlXml(template.render(model, implicitly), MimeConstants.MIME_PDF, foUserAgentBlock = userAgentBlock)
       auditService.auditDownload(request.userAnswers)
       
-      Ok(pdf).as(MimeConstants.MIME_PDF).withHeaders(CONTENT_DISPOSITION -> "attachment; filename=get-your-national-insurance-number-by-post.pdf")
+      Ok(pdf).as("application/octet-stream").withHeaders(CONTENT_DISPOSITION -> "attachment; filename=get-your-national-insurance-number-by-post.pdf")
     }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
 
