@@ -21,7 +21,7 @@ import play.api.libs.json.JsPath
 
 final case class AreYouSureYouWantToRemovePreviousEmployerPage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "previousEmployer" \ index.position \ toString
+  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
 
   override def toString: String = "areYouSureYouWantToRemovePreviousEmployer"
 }
