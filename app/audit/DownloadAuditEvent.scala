@@ -16,11 +16,13 @@
 
 package audit
 
-import audit.DownloadAuditEvent._
+import audit.DownloadAuditEvent.{Addresses, Relationships, _}
+import cats.data.EitherNec
 import models.{Country, Index, UserAnswers, WhatIsYourGender}
 import pages._
 import cats.implicits._
 import play.api.libs.json.{Format, Json}
+import queries.Query
 
 import java.time.LocalDate
 
@@ -41,94 +43,124 @@ final case class DownloadAuditEvent(
 // scalastyle:off
 object DownloadAuditEvent {
 
-  def apply(answers: UserAnswers): Option[DownloadAuditEvent] = for {
-    names                     <- getNames(answers)
-    dob                       <- answers.get(WhatIsYourDateOfBirthPage)
-    gender                    <- answers.get(WhatIsYourGenderPage)
-    addresses                 <- getAddresses(answers)
-    returningFromLivingAbroad <- answers.get(AreYouReturningFromLivingAbroadPage)
-    telephoneNumber           <- answers.get(WhatIsYourTelephoneNumberPage)
-    nino                      =  answers.get(WhatIsYourNationalInsuranceNumberPage).map(_.value)
-    relationships             <- getRelationships(answers)
-    benefits                  <- getBenefits(answers)
-    employers                 <- getEmployers(answers)
-    documents                 <- getDocuments(answers)
-  } yield DownloadAuditEvent(
-    names, dob, gender, addresses, returningFromLivingAbroad, telephoneNumber,
-    nino, relationships, benefits, employers, documents
-  )
-
-  private def getNames(answers: UserAnswers): Option[Names] = for {
-    current  <- answers.get(WhatIsYourNamePage)
-    previous <-  answers.get(PreviousNamesQuery).getOrElse(Seq.empty).indices.toList.traverse(i => answers.get(WhatIsYourPreviousNamePage(Index(i))))
-  } yield Names(
-    currentName = Name(current.title, current.firstName, current.middleNames, current.lastName),
-    previousNames = previous.map { previous =>
-      Name(None, previous.firstName, previous.middleNames, previous.lastName)
+  def apply(answers: UserAnswers): EitherNec[Query, DownloadAuditEvent] = {
+    (
+      getNames(answers), answers.getNec(WhatIsYourDateOfBirthPage), answers.getNec(WhatIsYourGenderPage), getNino(answers),
+      getAddresses(answers), answers.getNec(AreYouReturningFromLivingAbroadPage), answers.getNec(WhatIsYourTelephoneNumberPage),
+      getRelationships(answers), getBenefits(answers), getEmployers(answers), getDocuments(answers)
+    ).parMapN { (names, dob, gender, nino, addresses, returningFromLivingAbroad, telephoneNumber, relationships, benefits, employers, documents) =>
+      DownloadAuditEvent(
+        names, dob, gender, addresses, returningFromLivingAbroad, telephoneNumber,
+        nino, relationships, benefits, employers, documents
+      )
     }
-  )
+  }
 
-  private def getAddresses(answers: UserAnswers): Option[Addresses] = for {
-    current  <- getCurrentAddress(answers)
-    previous <- getPreviousAddresses(answers)
-  } yield Addresses(current, previous)
+  private def getNames(answers: UserAnswers): EitherNec[Query, Names] = {
+    (
+      answers.getNec(WhatIsYourNamePage),
+      answers.get(PreviousNamesQuery).getOrElse(Seq.empty).indices.toList.parTraverse(i => answers.getNec(WhatIsYourPreviousNamePage(Index(i))))
+    ).parMapN { (current, previous) =>
+      Names(
+        currentName = Name(current.title, current.firstName, current.middleNames, current.lastName),
+        previousNames = previous.map { previous =>
+          Name(None, previous.firstName, previous.middleNames, previous.lastName)
+        }
+      )
+    }
+  }
 
-  private def getCurrentAddress(answers: UserAnswers): Option[Address] =
-    answers.get(IsYourCurrentAddressInUkPage).flatMap {
-      case true  => answers.get(WhatIsYourCurrentAddressUkPage)
+  private def getNino(answers: UserAnswers): EitherNec[Query, Option[String]] =
+    answers.getNec(DoYouKnowYourNationalInsuranceNumberPage).flatMap {
+      case true  => answers.getNec(WhatIsYourNationalInsuranceNumberPage).map(nino => Some(nino.value))
+      case false => Right(None)
+    }
+
+  private def getAddresses(answers: UserAnswers): EitherNec[Query, Addresses] =
+    (getCurrentAddress(answers), getPreviousAddresses(answers)).parMapN(Addresses.apply)
+
+  private def getCurrentAddress(answers: UserAnswers): EitherNec[Query, Address] =
+    answers.getNec(IsYourCurrentAddressInUkPage).flatMap {
+      case true  => answers.getNec(WhatIsYourCurrentAddressUkPage)
         .map(a => Address(a.addressLine1, a.addressLine2, a.addressLine3, Some(a.postcode), None))
-      case false => answers.get(WhatIsYourCurrentAddressInternationalPage)
+      case false => answers.getNec(WhatIsYourCurrentAddressInternationalPage)
         .map(a => Address(a.addressLine1, a.addressLine2, a.addressLine3, a.postcode, Some(a.country)))
     }
 
-  private def getPreviousAddresses(answers: UserAnswers): Option[List[PreviousAddress]] =
-    answers.get(PreviousAddressesQuery).getOrElse(Seq.empty).indices.toList.traverse { i =>
-      answers.get(IsYourPreviousAddressInUkPage(Index(i))).flatMap {
-        case true  => answers.get(WhatIsYourPreviousAddressUkPage(Index(i)))
+  private def getPreviousAddresses(answers: UserAnswers): EitherNec[Query, List[PreviousAddress]] =
+    answers.getNec(PreviousAddressesQuery).getOrElse(Seq.empty).indices.toList.parTraverse { i =>
+      answers.getNec(IsYourPreviousAddressInUkPage(Index(i))).flatMap {
+        case true  => answers.getNec(WhatIsYourPreviousAddressUkPage(Index(i)))
           .map(a => PreviousAddress(a.addressLine1, a.addressLine2, a.addressLine3, Some(a.postcode), None, a.from, a.to))
-        case false => answers.get(WhatIsYourPreviousAddressInternationalPage(Index(i)))
+        case false => answers.getNec(WhatIsYourPreviousAddressInternationalPage(Index(i)))
           .map(a => PreviousAddress(a.addressLine1, a.addressLine2, a.addressLine3, a.postcode, Some(a.country), a.from, a.to))
       }
     }
 
-  private def getRelationships(answers: UserAnswers): Option[Relationships] = for {
-    previous <- getPreviousRelationships(answers)
-    current  =  getCurrentRelationship(answers)
-  } yield Relationships(current, previous)
+  private def getRelationships(answers: UserAnswers): EitherNec[Query, Relationships] =
+    (getCurrentRelationship(answers), getPreviousRelationships(answers)).parMapN(Relationships.apply)
 
-  private def getCurrentRelationship(answers: UserAnswers): Option[Relationship] = for {
-    relationshipType <- answers.get(CurrentRelationshipTypePage)
-    date             <- answers.get(WhenDidYouGetMarriedPage)
-  } yield Relationship(relationshipType.toString, date)
+  private def getCurrentRelationship(answers: UserAnswers): EitherNec[Query, Option[Relationship]] =
+    answers.getNec(AreYouMarriedPage).flatMap {
+      case true  => (answers.getNec(CurrentRelationshipTypePage), answers.getNec(WhenDidYouGetMarriedPage)).parMapN { (relationshipType, date) =>
+        Some(Relationship(relationshipType.toString, date))
+      }
+      case false => Right(None)
+    }
 
-  private def getPreviousRelationships(answers: UserAnswers): Option[List[PreviousRelationship]] =
-    answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty).indices.toList.traverse { i =>
-      answers.get(PreviousMarriageOrPartnershipDetailsPage(Index(i))).flatMap { details =>
-        answers.get(PreviousRelationshipTypePage(Index(i))).map { relationshipType =>
-          PreviousRelationship(relationshipType.toString, details.startDate, details.endDate, details.endingReason)
-        }
+  private def getPreviousRelationships(answers: UserAnswers): EitherNec[Query, List[PreviousRelationship]] =
+    answers.get(PreviousRelationshipsQuery).getOrElse(Seq.empty).indices.toList.parTraverse { i =>
+      (answers.getNec(PreviousMarriageOrPartnershipDetailsPage(Index(i))), answers.getNec(PreviousRelationshipTypePage(Index(i)))).parMapN { (details, relationshipType) =>
+        PreviousRelationship(relationshipType.toString, details.startDate, details.endDate, details.endingReason)
       }
     }
 
-  private def getBenefits(answers: UserAnswers): Option[Benefits] = for {
-    claimedChildBenefit <- answers.get(HaveYouEverClaimedChildBenefitPage)
-    childBenefitNumber  =  answers.get(WhatIsYourChildBenefitNumberPage)
-    otherBenefits       =  answers.get(WhatOtherUkBenefitsHaveYouReceivedPage)
-  } yield Benefits(claimedChildBenefit, childBenefitNumber, otherBenefits)
+  private def getBenefits(answers: UserAnswers): EitherNec[Query, Benefits] =
+    (
+      answers.getNec(HaveYouEverClaimedChildBenefitPage),
+      getChildBenefitNumber(answers),
+      getOtherBenefits(answers)
+    ).parMapN(Benefits.apply)
 
-  private def getEmployers(answers: UserAnswers): Option[List[Employer]] =
-    answers.get(EmployersQuery).getOrElse(Seq.empty).indices.toList.traverse { i =>
-      for {
-        name    <- answers.get(WhatIsYourEmployersNamePage(Index(i)))
-        address <- answers.get(WhatIsYourEmployersAddressPage(Index(i)))
-        from    <- answers.get(WhenDidYouStartWorkingForEmployerPage(Index(i)))
-        to      =  answers.get(WhenDidYouStopWorkingForEmployerPage(Index(i)))
-      } yield Employer(name, EmployerAddress(address.addressLine1, address.addressLine2, address.addressLine3, address.postcode), from, to)
+  private def getChildBenefitNumber(answers: UserAnswers): EitherNec[Query, Option[String]] =
+    answers.getNec(DoYouKnowYourChildBenefitNumberPage).flatMap {
+      case true  => answers.getNec(WhatIsYourChildBenefitNumberPage).map(Some(_))
+      case false => Right(None)
     }
 
-  private def getDocuments(answers: UserAnswers): Option[List[String]] =
-    answers.get(WhichPrimaryDocumentPage).map(d => List(d.toString)) orElse
-      answers.get(WhichAlternativeDocumentsPage).map(d => d.map(_.toString).toList)
+  private def getOtherBenefits(answers: UserAnswers): EitherNec[Query, Option[String]] =
+    answers.getNec(HaveYouEverReceivedOtherUkBenefitsPage).flatMap {
+      case true  => answers.getNec(WhatOtherUkBenefitsHaveYouReceivedPage).map(Some(_))
+      case false => Right(None)
+    }
+
+  private def getEmployers(answers: UserAnswers): EitherNec[Query, List[Employer]] =
+    answers.get(EmployersQuery).getOrElse(Seq.empty).indices.toList.parTraverse { i =>
+      (
+        answers.getNec(WhatIsYourEmployersNamePage(Index(i))),
+        answers.getNec(WhatIsYourEmployersAddressPage(Index(i))),
+        answers.getNec(WhenDidYouStartWorkingForEmployerPage(Index(i))),
+        getEmploymentEndDate(answers, Index(i))
+      ).parMapN { (name, address, from, to) =>
+        Employer(name, EmployerAddress(address.addressLine1, address.addressLine2, address.addressLine3, address.postcode), from, to)
+      }
+    }
+
+  private def getEmploymentEndDate(answers: UserAnswers, index: Index): EitherNec[Query, Option[LocalDate]] =
+    answers.getNec(AreYouStillEmployedPage(index)).flatMap {
+      case true  => Right(None)
+      case false => answers.getNec(WhenDidYouStopWorkingForEmployerPage(index)).map(Some(_))
+    }
+
+  private def getDocuments(answers: UserAnswers): EitherNec[Query, List[String]] = {
+    answers.getNec(DoYouHavePrimaryDocumentPage).flatMap {
+      case true  => answers.getNec(WhichPrimaryDocumentPage).map(d => List(d.toString))
+      case false => answers.getNec(DoYouHaveTwoSecondaryDocumentsPage).flatMap {
+        case true  => answers.getNec(WhichAlternativeDocumentsPage).map(_.map(_.toString).toList)
+        case false => Right(List.empty)
+      }
+    }
+  }
 
   private[audit] final case class Name(title: Option[String], firstName: String, middleNames: Option[String], lastName: String)
   object Name {

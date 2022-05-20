@@ -16,8 +16,9 @@
 
 package models
 
+import cats.data.{EitherNec, NonEmptyChain}
 import play.api.libs.json._
-import queries.{Gettable, Settable}
+import queries.{Gettable, Settable, Query}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 
 import java.time.Instant
@@ -28,6 +29,9 @@ final case class UserAnswers(
                               data: JsObject = Json.obj(),
                               lastUpdated: Instant = Instant.now
                             ) {
+
+  def getNec[A](page: Gettable[A])(implicit rds: Reads[A]): EitherNec[Query, A] =
+    get(page).toRight(NonEmptyChain.one(page))
 
   def get[A](page: Gettable[A])(implicit rds: Reads[A]): Option[A] =
     Reads.optionNoError(Reads.at(page.path)).reads(data).getOrElse(None)

@@ -81,7 +81,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         .set(WhatIsYourEmployersNamePage(Index(0)), "previous employers name").success.value
         .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("line 1", None, None, "postcode")).success.value
         .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
-        .set(AreYouStillEmployedPage(Index(0)), true).success.value
+        .set(AreYouStillEmployedPage(Index(0)), false).success.value
         .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2001, 3, 2)).success.value
         .set(DoYouHavePrimaryDocumentPage, true).success.value
         .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).success.value
