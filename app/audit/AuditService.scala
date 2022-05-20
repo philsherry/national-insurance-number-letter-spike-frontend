@@ -26,10 +26,13 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class AuditService @Inject() (connector: AuditConnector, configuration: Configuration)(implicit ec: ExecutionContext) extends Logging {
 
+  private val downloadEventName = configuration.get[String]("auditing.downloadEventName")
+
   def auditDownload(answers: UserAnswers)(implicit hc: HeaderCarrier): Unit =
-    DownloadAuditEvent(answers).map { data =>
-      connector.sendExplicitAudit(configuration.get[String]("auditing.downloadEventName"), data)
-    }.getOrElse {
-      logger.warn(s"Unable to create download event for ${answers.id}")
-    }
+    DownloadAuditEvent(answers).fold(failedQueries => {
+      val queries = failedQueries.map(_.path.toString).toNonEmptyList.toList.mkString(", ")
+      logger.warn(s"Unable to create download event for: ${answers.id}, with missing values: $queries")
+    }, data =>
+      connector.sendExplicitAudit(downloadEventName, data)
+    )
 }
