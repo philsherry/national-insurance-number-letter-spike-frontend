@@ -46,7 +46,7 @@ trait PageBehaviours extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
             forAll(gen) {
               case (page, userAnswers) =>
 
-                userAnswers.get(page) must be(empty)
+                userAnswers.get(page) mustBe empty
             }
           }
         }
@@ -63,7 +63,6 @@ trait PageBehaviours extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
 
             forAll(gen) {
               case (page, savedValue, userAnswers) =>
-
                 userAnswers.get(page).value mustEqual savedValue
             }
           }
