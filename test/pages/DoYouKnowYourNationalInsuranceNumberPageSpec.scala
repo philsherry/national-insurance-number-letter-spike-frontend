@@ -17,18 +17,14 @@
 package pages
 
 import models.UserAnswers
-import pages.behaviours.PageBehaviours
+import org.scalatest.{OptionValues, TryValues}
 import uk.gov.hmrc.domain.Nino
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class DoYouKnowYourNationalInsuranceNumberPageSpec extends PageBehaviours {
+class DoYouKnowYourNationalInsuranceNumberPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "DoYouKnowYourNationalInsuranceNumberPage" - {
-
-    beRetrievable[Boolean](DoYouKnowYourNationalInsuranceNumberPage)
-
-    beSettable[Boolean](DoYouKnowYourNationalInsuranceNumberPage)
-
-    beRemovable[Boolean](DoYouKnowYourNationalInsuranceNumberPage)
 
     "must remove national insurance number when false" in {
       val answers = UserAnswers("id")

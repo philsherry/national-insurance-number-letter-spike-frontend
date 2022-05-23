@@ -17,17 +17,13 @@
 package pages
 
 import models.{Country, CurrentAddressInternational, CurrentAddressUk, UserAnswers}
-import pages.behaviours.PageBehaviours
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class IsYourCurrentAddressInUkPageSpec extends PageBehaviours {
+class IsYourCurrentAddressInUkPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "IsYourCurrentAddressInUkPage" - {
-
-    beRetrievable[Boolean](IsYourCurrentAddressInUkPage)
-
-    beSettable[Boolean](IsYourCurrentAddressInUkPage)
-
-    beRemovable[Boolean](IsYourCurrentAddressInUkPage)
 
     "must remove international address when true" in {
       val answers = UserAnswers("id")
