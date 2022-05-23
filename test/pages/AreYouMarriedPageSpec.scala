@@ -17,19 +17,15 @@
 package pages
 
 import models.UserAnswers
-import pages.behaviours.PageBehaviours
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
 import java.time.LocalDate
 
-class AreYouMarriedPageSpec extends PageBehaviours {
+class AreYouMarriedPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "AreYouMarriedPage" - {
-
-    beRetrievable[Boolean](AreYouMarriedPage)
-
-    beSettable[Boolean](AreYouMarriedPage)
-
-    beRemovable[Boolean](AreYouMarriedPage)
 
     "must remove marriage date when false" in {
       val answers = UserAnswers("id")

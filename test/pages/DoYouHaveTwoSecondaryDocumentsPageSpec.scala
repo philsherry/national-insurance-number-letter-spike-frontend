@@ -18,17 +18,13 @@ package pages
 
 import models.AlternativeDocuments.{AdoptionCertificate, MarriageOrCivilPartnershipCertificate}
 import models.{AlternativeDocuments, UserAnswers}
-import pages.behaviours.PageBehaviours
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class DoYouHaveTwoSecondaryDocumentsPageSpec extends PageBehaviours {
+class DoYouHaveTwoSecondaryDocumentsPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "DoYouHaveTwoSecondaryDocumentsPage" - {
-
-    beRetrievable[Boolean](DoYouHaveTwoSecondaryDocumentsPage)
-
-    beSettable[Boolean](DoYouHaveTwoSecondaryDocumentsPage)
-
-    beRemovable[Boolean](DoYouHaveTwoSecondaryDocumentsPage)
 
     "must remove which secondary documents when false" in {
       val answers =

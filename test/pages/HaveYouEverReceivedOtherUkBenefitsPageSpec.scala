@@ -17,17 +17,13 @@
 package pages
 
 import models.UserAnswers
-import pages.behaviours.PageBehaviours
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class HaveYouEverReceivedOtherUkBenefitsPageSpec extends PageBehaviours {
+class HaveYouEverReceivedOtherUkBenefitsPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "HaveYouEverReceivedOtherUkBenefitsPage" - {
-
-    beRetrievable[Boolean](HaveYouEverReceivedOtherUkBenefitsPage)
-
-    beSettable[Boolean](HaveYouEverReceivedOtherUkBenefitsPage)
-
-    beRemovable[Boolean](HaveYouEverReceivedOtherUkBenefitsPage)
 
     "must remove other uk benefits when false" in {
       val answers = UserAnswers("id")

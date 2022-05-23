@@ -16,18 +16,14 @@
 
 package pages
 
-import models.{UserAnswers, WhatIsYourPreviousName}
-import pages.behaviours.PageBehaviours
+import models.UserAnswers
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class HaveYouEverClaimedChildBenefitPageSpec extends PageBehaviours {
+class HaveYouEverClaimedChildBenefitPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "HaveYouEverClaimedChildBenefitPage" - {
-
-    beRetrievable[Boolean](HaveYouEverClaimedChildBenefitPage)
-
-    beSettable[Boolean](HaveYouEverClaimedChildBenefitPage)
-
-    beRemovable[Boolean](HaveYouEverClaimedChildBenefitPage)
 
     "must remove child benefit number when false" in {
       val answers = UserAnswers("id")

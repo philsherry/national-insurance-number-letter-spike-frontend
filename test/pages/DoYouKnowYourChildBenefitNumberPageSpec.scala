@@ -17,17 +17,13 @@
 package pages
 
 import models.UserAnswers
-import pages.behaviours.PageBehaviours
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class DoYouKnowYourChildBenefitNumberPageSpec extends PageBehaviours {
+class DoYouKnowYourChildBenefitNumberPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "DoYouKnowYourChildBenefitNumberPage" - {
-
-    beRetrievable[Boolean](DoYouKnowYourChildBenefitNumberPage)
-
-    beSettable[Boolean](DoYouKnowYourChildBenefitNumberPage)
-
-    beRemovable[Boolean](DoYouKnowYourChildBenefitNumberPage)
 
     "must remove child benefit number when false" in {
       val answers = UserAnswers("id")

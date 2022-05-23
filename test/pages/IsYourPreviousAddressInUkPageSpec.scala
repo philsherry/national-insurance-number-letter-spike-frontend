@@ -17,19 +17,15 @@
 package pages
 
 import models.{Country, Index, PreviousAddressInternational, PreviousAddressUk, UserAnswers}
-import pages.behaviours.PageBehaviours
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
 import java.time.LocalDate
 
-class IsYourPreviousAddressInUkPageSpec extends PageBehaviours {
+class IsYourPreviousAddressInUkPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
   "IsYourPreviousAddressInUkPage" - {
-
-    beRetrievable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
-
-    beSettable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
-
-    beRemovable[Boolean](IsYourPreviousAddressInUkPage(Index(0)))
 
     "must remove what is your previous address uk when set to false" in {
       val answer = PreviousAddressUk(

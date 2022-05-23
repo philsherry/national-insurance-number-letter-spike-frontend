@@ -19,17 +19,13 @@ package pages
 import models.AlternativeDocuments.HomeOfficeOrTravelDocument
 import models.PrimaryDocument.BirthCertificate
 import models.{AlternativeDocuments, UserAnswers}
-import pages.behaviours.PageBehaviours
+import org.scalatest.TryValues
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class DoYouHavePrimaryDocumentPageSpec extends PageBehaviours {
+class DoYouHavePrimaryDocumentPageSpec extends AnyFreeSpec with Matchers with TryValues {
 
   "DoYouHavePrimaryDocumentPage" - {
-
-    beRetrievable[Boolean](DoYouHavePrimaryDocumentPage)
-
-    beSettable[Boolean](DoYouHavePrimaryDocumentPage)
-
-    beRemovable[Boolean](DoYouHavePrimaryDocumentPage)
 
     "must remove which primary document when false" in {
 
