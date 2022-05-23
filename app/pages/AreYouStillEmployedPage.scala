@@ -23,7 +23,7 @@ import scala.util.Try
 
 final case class AreYouStillEmployedPage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString \ "employer" \ index.position \ toString
+  override def path: JsPath = JsPath \ "employer" \ index.position \ toString
 
   override def toString: String = "areYouStillEmployed"
 
