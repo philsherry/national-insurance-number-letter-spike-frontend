@@ -17,9 +17,9 @@
 package pages
 
 import play.api.libs.json.{JsPath, JsValue}
-import queries.Gettable
+import queries.{Gettable, Settable}
 
-case object EmployersQuery extends Gettable[List[JsValue]] {
+case object EmployersQuery extends Gettable[List[JsValue]] with Settable[List[JsValue]] {
 
   override def path: JsPath = JsPath \ "employer"
 }
