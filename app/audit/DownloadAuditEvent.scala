@@ -123,8 +123,12 @@ object DownloadAuditEvent {
     ).parMapN(Benefits.apply)
 
   private def getChildBenefitNumber(answers: UserAnswers): EitherNec[Query, Option[String]] =
-    answers.getNec(DoYouKnowYourChildBenefitNumberPage).flatMap {
-      case true  => answers.getNec(WhatIsYourChildBenefitNumberPage).map(Some(_))
+    answers.getNec(HaveYouEverClaimedChildBenefitPage).flatMap {
+      case true =>
+        answers.getNec(DoYouKnowYourChildBenefitNumberPage).flatMap {
+          case true  => answers.getNec(WhatIsYourChildBenefitNumberPage).map(Some(_))
+          case false => Right(None)
+        }
       case false => Right(None)
     }
 
