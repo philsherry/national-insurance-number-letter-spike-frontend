@@ -128,7 +128,7 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with TryValues with Eit
         .set(CurrentRelationshipTypePage, CurrentRelationshipType.Marriage).success.value
         .set(WhenDidYouGetMarriedPage, now).success.value
         .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-        // omitt previous marriage or partnership details
+        // omitting previous marriage or partnership details
         .set(PreviousRelationshipTypePage(Index(0)), CivilPartnership).success.value
         .set(HaveYouEverClaimedChildBenefitPage, true).success.value
         .set(DoYouKnowYourChildBenefitNumberPage, true).success.value
