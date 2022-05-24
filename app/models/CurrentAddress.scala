@@ -16,19 +16,6 @@
 
 package models
 
-import play.api.libs.json._
-
-final case class CurrentAddressUk(
-                                   addressLine1: String,
-                                   addressLine2: Option[String],
-                                   addressLine3: Option[String],
-                                   postcode: String
-                                 ) extends CurrentAddress {
-
-  def lines: List[String] =
-    List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
-}
-
-object CurrentAddressUk {
-  implicit val format = Json.format[CurrentAddressUk]
+trait CurrentAddress {
+  def lines: List[String]
 }
