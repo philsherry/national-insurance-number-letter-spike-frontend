@@ -30,46 +30,54 @@ import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import audit.AuditService
+import models.PreviousRelationshipType.CivilPartnership
 
 import java.nio.charset.Charset
 import java.time.LocalDate
 
 class PrintControllerSpec extends SpecBase with MockitoSugar {
 
-  private val completeUserAnswers: UserAnswers = {
-    val currentAddressUk = CurrentAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA")
-    val previousAddressUk = PreviousAddressUk(addressLine1 = "line 1", None, None, postcode = "AA1 1AA",
-      LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1))
-    val previousEmployerAddress = EmployersAddress("line 1", None, None, "AA1 1AA")
+  private val now = LocalDate.now
 
-    val previousMarriage = PreviousMarriageOrPartnershipDetails(
-      LocalDate.of(2005, 2, 1),
-      LocalDate.of(2006, 3, 2),
-      "reason"
-    )
-
+  private val completeUserAnswers: UserAnswers =
     UserAnswers("id")
-      .set(WhatIsYourNamePage, WhatIsYourName(Some("title"), "first", Some("middle"), "last")).get
-      .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName("prev", Some("prev2"), "prev3")).get
-      .set(WhatIsYourDateOfBirthPage, LocalDate.of(1990, 12, 1)).get
-      .set(WhatIsYourGenderPage, WhatIsYourGender.PreferNotToSay).get
-      .set(WhatIsYourCurrentAddressUkPage, currentAddressUk).get
-      .set(WhatIsYourPreviousAddressUkPage(Index(0)), previousAddressUk).get
-      .set(AreYouReturningFromLivingAbroadPage, false).get
-      .set(WhatIsYourTelephoneNumberPage, "1234567890").get
-      .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).get
-      .set(WhenDidYouGetMarriedPage, LocalDate.of(2000, 5, 1)).get
-      .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), previousMarriage).get
-      .set(HaveYouEverClaimedChildBenefitPage, true).get
-      .set(WhatIsYourChildBenefitNumberPage, "CHB12345678").get
-      .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-      .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").get
-      .set(WhatIsYourEmployersNamePage(Index(0)), "emp 1").get
-      .set(WhatIsYourEmployersAddressPage(Index(0)), previousEmployerAddress).get
-      .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 2)).get
-      .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2013, 3, 3)).get
-      .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).get
-  }
+      .set(WhatIsYourNamePage, WhatIsYourName(title = Some("title"), firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+      .set(DoYouHaveAPreviousNamePage, true).success.value
+      .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
+      .set(WhatIsYourPreviousNamePage(Index(1)), WhatIsYourPreviousName(firstName = "first2", None, lastName = "last2")).success.value
+      .set(WhatIsYourDateOfBirthPage, now).success.value
+      .set(WhatIsYourGenderPage, WhatIsYourGender.PreferNotToSay).success.value
+      .set(IsYourCurrentAddressInUkPage, true).success.value
+      .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
+      .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, Some("postcode"), Country("FR", "France"))).success.value
+      .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
+      .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))).success.value
+      .set(AreYouReturningFromLivingAbroadPage, true).success.value
+      .set(WhatIsYourTelephoneNumberPage, "tel").success.value
+      .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
+      .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).success.value
+      .set(AreYouMarriedPage, true).success.value
+      .set(CurrentRelationshipTypePage, CurrentRelationshipType.Marriage).success.value
+      .set(WhenDidYouGetMarriedPage, now).success.value
+      .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
+      .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(now, now, "nunya")).success.value
+      .set(PreviousRelationshipTypePage(Index(0)), CivilPartnership).success.value
+      .set(HaveYouEverClaimedChildBenefitPage, true).success.value
+      .set(DoYouKnowYourChildBenefitNumberPage, true).success.value
+      .set(WhatIsYourChildBenefitNumberPage, "cbn").success.value
+      .set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
+      .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").success.value
+      .set(HaveYouEverWorkedInUkPage, true).success.value
+      .set(EmploymentHistoryPage, true).success.value
+      .set(WhatIsYourEmployersNamePage(Index(0)), "previous employers name").success.value
+      .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("line 1", None, None, "postcode")).success.value
+      .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
+      .set(AreYouStillEmployedPage(Index(0)), false).success.value
+      .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2001, 3, 2)).success.value
+      .set(DoYouHavePrimaryDocumentPage, true).success.value
+      .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).success.value
+      .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
+      .set(WhichAlternativeDocumentsPage, AlternativeDocuments.values.toSet).success.value
 
   "Print Controller" - {
 
@@ -78,7 +86,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar {
       "must return OK and the correct view for a GET when user answers is complete" in {
 
         val application = applicationBuilder(userAnswers = Some(completeUserAnswers)).build()
-        val printModel = PrintModel.from(completeUserAnswers).value
+        val printModel = PrintModel.from(JourneyModel.from(completeUserAnswers).toOption.value)
 
         running(application) {
           val request = FakeRequest(GET, routes.PrintController.onPageLoad.url)

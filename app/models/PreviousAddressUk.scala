@@ -29,6 +29,9 @@ final case class PreviousAddressUk(
                                     to: LocalDate
                                   ) extends PreviousAddress {
 
+  override def postcodeOption: Option[String] = Some(postcode)
+  override def countryOption: Option[Country] = None
+
   override def lines: List[String] =
     List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
 }

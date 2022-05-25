@@ -16,9 +16,7 @@
 
 package models
 
-import java.time.LocalDate
-
-abstract class PreviousAddress extends Product with Serializable {
+trait CurrentAddress {
 
   def addressLine1: String
   def addressLine2: Option[String]
@@ -28,6 +26,4 @@ abstract class PreviousAddress extends Product with Serializable {
   def countryOption: Option[Country]
 
   def lines: List[String]
-  def from: LocalDate
-  def to: LocalDate
 }
