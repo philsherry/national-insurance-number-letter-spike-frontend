@@ -18,7 +18,7 @@ package audit
 
 import audit.DownloadAuditEvent.{Addresses, Relationships, _}
 import cats.data.EitherNec
-import models.{Country, Index, UserAnswers, WhatIsYourGender}
+import models.{Country, Index, UserAnswers, WhatIsYourGender, JourneyModel}
 import pages._
 import cats.implicits._
 import play.api.libs.json.{Format, Json}
@@ -42,6 +42,61 @@ final case class DownloadAuditEvent(
 
 // scalastyle:off
 object DownloadAuditEvent {
+
+  def from(model: JourneyModel): DownloadAuditEvent =
+    DownloadAuditEvent(
+      names = Names(
+        currentName = Name(model.currentName.title, model.currentName.firstName, model.currentName.middleNames, model.currentName.lastName),
+        previousNames = model.previousNames.map { name =>
+          Name(None, name.firstName, name.middleNames, name.lastName)
+        }
+      ),
+      dateOfBirth = model.dateOfBirth,
+      gender = model.gender,
+      addresses = Addresses(
+        currentAddress = Address(
+          model.currentAddress.addressLine1,
+          model.currentAddress.addressLine2,
+          model.currentAddress.addressLine3,
+          model.currentAddress.postcodeOption,
+          model.currentAddress.countryOption
+        ),
+        previousAddresses = model.previousAddresses.map { address =>
+          PreviousAddress(
+            address.addressLine1,
+            address.addressLine2,
+            address.addressLine3,
+            address.postcodeOption,
+            address.countryOption,
+            address.from,
+            address.to
+          )
+        }
+      ),
+      returningFromLivingAbroad = model.returningFromLivingAbroad,
+      telephoneNumber = model.telephoneNumber,
+      nationalInsuranceNumber = model.nationalInsuranceNumber,
+      relationships = Relationships(
+        currentRelationship = model.currentRelationship.map(relationship => Relationship(relationship.relationshipType.toString, relationship.from)),
+        previousRelationships = model.previousRelationships.map { relationship =>
+          PreviousRelationship(relationship.relationshipType.toString, relationship.from, relationship.to, relationship.endReason)
+        }
+      ),
+      benefits = Benefits(
+        claimedChildBenefit = model.claimedChildBenefit,
+        childBenefitNumber = model.childBenefitNumber,
+        otherBenefits = model.otherBenefits
+      ),
+      employers = model.employers.map { employer =>
+        Employer(
+          employer.name,
+          EmployerAddress(employer.address.addressLine1, employer.address.addressLine2, employer.address.addressLine3, employer.address.postcode),
+          employer.startDate,
+          employer.endDate
+        )
+      },
+      documents = model.documents
+    )
 
   def apply(answers: UserAnswers): EitherNec[Query, DownloadAuditEvent] = {
     (

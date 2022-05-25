@@ -30,6 +30,9 @@ final case class PreviousAddressInternational(
                                                to: LocalDate
                                              ) extends PreviousAddress {
 
+  override def postcodeOption: Option[String] = postcode
+  override def countryOption: Option[Country] = Some(country)
+
   override def lines: List[String] = List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(country.name)).flatten
 
   def pdfLines: List[String] = List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(s"${country.name} (${country.code})")).flatten

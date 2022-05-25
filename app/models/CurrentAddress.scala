@@ -17,5 +17,13 @@
 package models
 
 trait CurrentAddress {
+
+  def addressLine1: String
+  def addressLine2: Option[String]
+  def addressLine3: Option[String]
+
+  def postcodeOption: Option[String]
+  def countryOption: Option[Country]
+
   def lines: List[String]
 }

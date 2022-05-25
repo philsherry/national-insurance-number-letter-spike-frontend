@@ -25,6 +25,9 @@ final case class CurrentAddressUk(
                                    postcode: String
                                  ) extends CurrentAddress {
 
+  override def postcodeOption: Option[String] = Some(postcode)
+  override def countryOption: Option[Country] = None
+
   def lines: List[String] =
     List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
 }

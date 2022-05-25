@@ -19,6 +19,14 @@ package models
 import java.time.LocalDate
 
 abstract class PreviousAddress extends Product with Serializable {
+
+  def addressLine1: String
+  def addressLine2: Option[String]
+  def addressLine3: Option[String]
+
+  def postcodeOption: Option[String]
+  def countryOption: Option[Country]
+
   def lines: List[String]
   def from: LocalDate
   def to: LocalDate
