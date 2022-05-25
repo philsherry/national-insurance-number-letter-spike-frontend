@@ -16,16 +16,16 @@
 
 package controllers
 
-import audit.{AuditService, DownloadAuditEvent}
+import audit.AuditService
 import com.dmanchester.playfop.sapi.PlayFop
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.{JourneyModel, UserAnswers}
 import org.apache.fop.apps.FOUserAgent
 import org.apache.xmlgraphics.util.MimeConstants
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import models.{JourneyModel, UserAnswers}
 import viewmodels.PrintModel
 import views.xml.xml.PrintTemplate
 
@@ -68,7 +68,7 @@ class PrintController @Inject()(
 
     (maybeModel.map(PrintModel.from) orElse backup).map { printModel =>
       if (errors.nonEmpty) {
-        logger.warn(s"Journey model creation successful with warnings$errors")
+        logger.info(s"Journey model creation successful with warnings$errors")
       }
       fn(printModel)
     }.getOrElse {
