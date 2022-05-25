@@ -98,7 +98,8 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with TryValues with Eit
         employers = List(
           JourneyModel.Employer("previous employers name", EmployersAddress("line 1", None, None, "postcode"), LocalDate.of(2000, 2, 1), Some(LocalDate.of(2001, 3, 2)))
         ),
-        documents = List("passport")
+        primaryDocument = Some("passport"),
+        alternativeDocuments = List.empty
       )
 
       val (errors, data) = JourneyModel.from(answers).pad
@@ -165,7 +166,8 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with TryValues with Eit
         childBenefitNumber = Some("cbn"),
         otherBenefits = Some("other benefits"),
         employers = List.empty,
-        documents = List("passport")
+        primaryDocument = Some("passport"),
+        alternativeDocuments = List.empty
       )
 
       val (errors, data) = JourneyModel.from(answers).pad

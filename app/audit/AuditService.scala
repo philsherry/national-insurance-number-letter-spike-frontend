@@ -17,10 +17,11 @@
 package audit
 
 import com.google.inject.{Inject, Singleton}
-import play.api.{Logging, Configuration}
-import models.UserAnswers
-import uk.gov.hmrc.play.audit.http.connector.AuditConnector
+import models.JourneyModel
+import play.api.{Configuration, Logging}
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.http.connector.AuditConnector
+
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -28,11 +29,8 @@ class AuditService @Inject() (connector: AuditConnector, configuration: Configur
 
   private val downloadEventName = configuration.get[String]("auditing.downloadEventName")
 
-  def auditDownload(answers: UserAnswers)(implicit hc: HeaderCarrier): Unit =
-    DownloadAuditEvent(answers).fold(failedQueries => {
-      val queries = failedQueries.map(_.path.toString).toNonEmptyList.toList.mkString(", ")
-      logger.warn(s"Unable to create download event for: ${answers.id}, with missing values: $queries")
-    }, data =>
-      connector.sendExplicitAudit(downloadEventName, data)
-    )
+  def auditDownload(model: JourneyModel)(implicit hc: HeaderCarrier): Unit = {
+    val data = DownloadAuditEvent.from(model)
+    connector.sendExplicitAudit(downloadEventName, data)
+  }
 }

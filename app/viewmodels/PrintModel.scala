@@ -59,6 +59,30 @@ object PrintModel {
 
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
+  def from(model: JourneyModel): PrintModel =
+    PrintModel(
+      name = model.currentName,
+      previousNames = model.previousNames,
+      dob = formatter.format(model.dateOfBirth),
+      gender = model.gender,
+      currentAddress = model.currentAddress.lines,
+      previousAddresses = model.previousAddresses.map(a => PreviousAddressPrintModel(a.lines, formatter.format(a.from), formatter.format(a.to))),
+      returningFromLivingAbroad = model.returningFromLivingAbroad,
+      telephoneNumber = model.telephoneNumber,
+      nino = model.nationalInsuranceNumber,
+      currentRelationshipType = model.currentRelationship.map(_.relationshipType.toString),
+      currentRelationshipDate = model.currentRelationship.map(d => formatter.format(d.from)),
+      previousRelationships = model.previousRelationships.map(r => PreviousMarriageOrPartnershipPrintModel(r.relationshipType.toString, formatter.format(r.from), formatter.format(r.to), r.endReason)),
+      claimedChildBenefit = model.claimedChildBenefit,
+      childBenefitNumber = model.childBenefitNumber,
+      otherBenefits = model.otherBenefits,
+      currentEmployers = model.employers.filter(_.endDate.isEmpty).map(e => EmployerPrintModel(e.name, e.address.lines, formatter.format(e.startDate), e.endDate.map(formatter.format))),
+      previousEmployers = model.employers.filter(_.endDate.nonEmpty).map(e => EmployerPrintModel(e.name, e.address.lines, formatter.format(e.startDate), e.endDate.map(formatter.format))),
+      primaryDocument = model.primaryDocument.map(key => s"whichPrimaryDocument.$key"),
+      secondaryDocuments = if (model.alternativeDocuments.nonEmpty) Some(model.alternativeDocuments.map(key => s"whichAlternativeDocuments.$key")) else None
+    )
+
+  @deprecated
   def from(userAnswers: UserAnswers): Option[PrintModel] = {
     for {
       name                                  <- userAnswers.get(WhatIsYourNamePage)
@@ -172,5 +196,4 @@ object PrintModel {
       }
     }
   }
-
 }

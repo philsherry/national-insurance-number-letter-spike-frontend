@@ -16,14 +16,16 @@
 
 package controllers
 
-import audit.AuditService
+import audit.{AuditService, DownloadAuditEvent}
 import com.dmanchester.playfop.sapi.PlayFop
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import org.apache.fop.apps.FOUserAgent
 import org.apache.xmlgraphics.util.MimeConstants
+import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import models.{JourneyModel, UserAnswers}
 import viewmodels.PrintModel
 import views.xml.xml.PrintTemplate
 
@@ -38,9 +40,9 @@ class PrintController @Inject()(
                                  template: PrintTemplate,
                                  view: views.html.PrintView,
                                  auditService: AuditService
-                               ) extends FrontendBaseController with I18nSupport {
+                               ) extends FrontendBaseController with I18nSupport with Logging {
 
-  val userAgentBlock: FOUserAgent => Unit = { foUserAgent: FOUserAgent =>
+  private val userAgentBlock: FOUserAgent => Unit = { foUserAgent: FOUserAgent =>
     foUserAgent.setAccessibility(true)
     foUserAgent.setPdfUAEnabled(true)
     foUserAgent.setAuthor("HMRC forms service")
@@ -50,18 +52,44 @@ class PrintController @Inject()(
     foUserAgent.setTitle("Get your National Insurance number by post form")
   }
 
+  private def withPrintModel(answers: UserAnswers)(fn: PrintModel => Result): Result = {
+
+    val (maybeFailures, maybeModel) = JourneyModel.from(answers).pad
+
+    val errors = maybeFailures.map { failures =>
+      val message = failures.toChain.toList.map(_.path).mkString(", ")
+      s" at: $message"
+    }.getOrElse("")
+
+    lazy val backup = PrintModel.from(answers).map { model =>
+      logger.warn(s"Journey model creation failed but was recovered$errors")
+      model
+    }
+
+    (maybeModel.map(PrintModel.from) orElse backup).map { printModel =>
+      if (errors.nonEmpty) {
+        logger.warn(s"Journey model creation successful with warnings$errors")
+      }
+      fn(printModel)
+    }.getOrElse {
+      logger.warn(s"Journey model creation failed and could not be recovered$errors")
+      Redirect(routes.JourneyRecoveryController.onPageLoad())
+    }
+  }
+
   def onDownload: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    PrintModel.from(request.userAnswers).map { model =>
-      val pdf = fop.processTwirlXml(template.render(model, implicitly), MimeConstants.MIME_PDF, foUserAgentBlock = userAgentBlock)
-      auditService.auditDownload(request.userAnswers)
-      
+
+    JourneyModel.from(request.userAnswers).foreach(auditService.auditDownload(_))
+
+    withPrintModel(request.userAnswers) { printModel =>
+      val pdf = fop.processTwirlXml(template.render(printModel, implicitly), MimeConstants.MIME_PDF, foUserAgentBlock = userAgentBlock)
       Ok(pdf).as("application/octet-stream").withHeaders(CONTENT_DISPOSITION -> "attachment; filename=get-your-national-insurance-number-by-post.pdf")
-    }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+    }
   }
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    PrintModel.from(request.userAnswers).map { model =>
-      Ok(view(model))
-    }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+    withPrintModel(request.userAnswers) { printModel =>
+      Ok(view(printModel))
+    }
   }
 }

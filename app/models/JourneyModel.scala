@@ -40,7 +40,8 @@ final case class JourneyModel(
                                childBenefitNumber: Option[String],
                                otherBenefits: Option[String],
                                employers: List[Employer],
-                               documents: List[String]
+                               primaryDocument: Option[String],
+                               alternativeDocuments: List[String]
                              )
 
 object JourneyModel {
@@ -67,7 +68,8 @@ object JourneyModel {
       getChildBenefitNumber(answers),
       getOtherBenefits(answers),
       getEmployers(answers),
-      getDocuments(answers)
+      getPrimaryDocument(answers),
+      getAlternativeDocuments(answers)
     ).parMapN(JourneyModel.apply)
   }
 
@@ -146,13 +148,18 @@ object JourneyModel {
       case false => answers.getIor(WhenDidYouStopWorkingForEmployerPage(index)).map(Some(_))
     }
 
-  private def getDocuments(answers: UserAnswers): IorNec[Query, List[String]] = {
+  private def getPrimaryDocument(answers: UserAnswers): IorNec[Query, Option[String]] =
     answers.getIor(DoYouHavePrimaryDocumentPage).flatMap {
-      case true  => answers.getIor(WhichPrimaryDocumentPage).map(d => List(d.toString))
+      case true  => answers.getIor(WhichPrimaryDocumentPage).map(d => Some(d.toString))
+      case false => Ior.Right(None)
+    }
+
+  private def getAlternativeDocuments(answers: UserAnswers): IorNec[Query, List[String]] =
+    answers.getIor(DoYouHavePrimaryDocumentPage).flatMap {
+      case true  => Ior.Right(List.empty)
       case false => answers.getIor(DoYouHaveTwoSecondaryDocumentsPage).flatMap {
         case true  => answers.getIor(WhichAlternativeDocumentsPage).map(_.map(_.toString).toList)
         case false => Ior.Right(List.empty)
       }
     }
-  }
 }

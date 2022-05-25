@@ -17,19 +17,17 @@
 package audit
 
 import audit.DownloadAuditEvent._
-import models.PreviousRelationshipType.CivilPartnership
+import models.JourneyModel.PreviousRelationship
 import models._
-import org.scalatest.{OptionValues, TryValues}
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import org.mockito.Mockito.{times, verify}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.mockito.Mockito.{times, verify}
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import org.scalatest.{OptionValues, TryValues}
 import org.scalatestplus.mockito.MockitoSugar
-import pages._
-import uk.gov.hmrc.domain.Nino
+import play.api.Configuration
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
-import play.api.Configuration
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -48,45 +46,34 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
 
       val now = LocalDate.now
 
-      val answers = UserAnswers("id")
-        .set(WhatIsYourNamePage, WhatIsYourName(title = Some("title"), firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
-        .set(DoYouHaveAPreviousNamePage, true).success.value
-        .set(WhatIsYourPreviousNamePage(Index(0)), WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last")).success.value
-        .set(WhatIsYourPreviousNamePage(Index(1)), WhatIsYourPreviousName(firstName = "first2", None, lastName = "last2")).success.value
-        .set(WhatIsYourDateOfBirthPage, now).success.value
-        .set(WhatIsYourGenderPage, WhatIsYourGender.PreferNotToSay).success.value
-        .set(IsYourCurrentAddressInUkPage, true).success.value
-        .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
-        .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, Some("postcode"), Country("FR", "France"))).success.value
-        .set(DoYouHaveAnyPreviousAddressesPage, true).success.value
-        .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
-        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))).success.value
-        .set(AreYouReturningFromLivingAbroadPage, true).success.value
-        .set(WhatIsYourTelephoneNumberPage, "tel").success.value
-        .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
-        .set(WhatIsYourNationalInsuranceNumberPage, Nino("AA123456A")).success.value
-        .set(AreYouMarriedPage, true).success.value
-        .set(CurrentRelationshipTypePage, CurrentRelationshipType.Marriage).success.value
-        .set(WhenDidYouGetMarriedPage, now).success.value
-        .set(HaveYouPreviouslyBeenInAMarriageOrCivilPartnershipPage, true).success.value
-        .set(PreviousMarriageOrPartnershipDetailsPage(Index(0)), PreviousMarriageOrPartnershipDetails(now, now, "nunya")).success.value
-        .set(PreviousRelationshipTypePage(Index(0)), CivilPartnership).success.value
-        .set(HaveYouEverClaimedChildBenefitPage, true).success.value
-        .set(DoYouKnowYourChildBenefitNumberPage, true).success.value
-        .set(WhatIsYourChildBenefitNumberPage, "cbn").success.value
-        .set(HaveYouEverReceivedOtherUkBenefitsPage, true).success.value
-        .set(WhatOtherUkBenefitsHaveYouReceivedPage, "other benefits").success.value
-        .set(HaveYouEverWorkedInUkPage, true).success.value
-        .set(EmploymentHistoryPage, true).success.value
-        .set(WhatIsYourEmployersNamePage(Index(0)), "previous employers name").success.value
-        .set(WhatIsYourEmployersAddressPage(Index(0)), EmployersAddress("line 1", None, None, "postcode")).success.value
-        .set(WhenDidYouStartWorkingForEmployerPage(Index(0)), LocalDate.of(2000, 2, 1)).success.value
-        .set(AreYouStillEmployedPage(Index(0)), false).success.value
-        .set(WhenDidYouStopWorkingForEmployerPage(Index(0)), LocalDate.of(2001, 3, 2)).success.value
-        .set(DoYouHavePrimaryDocumentPage, true).success.value
-        .set(WhichPrimaryDocumentPage, PrimaryDocument.Passport).success.value
-        .set(DoYouHaveTwoSecondaryDocumentsPage, true).success.value
-        .set(WhichAlternativeDocumentsPage, AlternativeDocuments.values.toSet).success.value
+      val model: JourneyModel = JourneyModel(
+        currentName = WhatIsYourName(title = Some("title"), firstName = "first", middleNames = Some("middle"), lastName = "last"),
+        previousNames = List(
+          WhatIsYourPreviousName(firstName = "first", middleNames = Some("middle"), lastName = "last"),
+          WhatIsYourPreviousName(firstName = "first2", middleNames = None, lastName = "last2")
+        ),
+        dateOfBirth = now,
+        gender = WhatIsYourGender.PreferNotToSay,
+        telephoneNumber = "tel",
+        nationalInsuranceNumber = Some("AA123456A"),
+        returningFromLivingAbroad = true,
+        currentAddress = CurrentAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode"),
+        previousAddresses = List(
+          PreviousAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))
+        ),
+        currentRelationship = Some(JourneyModel.CurrentRelationship(relationshipType = CurrentRelationshipType.Marriage, from = now)),
+        previousRelationships = List(
+          PreviousRelationship(relationshipType = PreviousRelationshipType.CivilPartnership, now, now, "nunya")
+        ),
+        claimedChildBenefit = true,
+        childBenefitNumber = Some("cbn"),
+        otherBenefits = Some("other benefits"),
+        employers = List(
+          JourneyModel.Employer("previous employers name", EmployersAddress("line 1", None, None, "postcode"), LocalDate.of(2000, 2, 1), Some(LocalDate.of(2001, 3, 2)))
+        ),
+        primaryDocument = Some("passport"),
+        alternativeDocuments = List.empty
+      )
 
       val expected: DownloadAuditEvent = DownloadAuditEvent(
         names = Names(
@@ -108,7 +95,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         relationships = Relationships(
           currentRelationship = Some(Relationship("marriage", now)),
           previousRelationships = List(
-            PreviousRelationship("civilPartnership", now, now, "nunya")
+            DownloadAuditEvent.PreviousRelationship("civilPartnership", now, now, "nunya")
           )
         ),
         benefits = Benefits(
@@ -119,13 +106,11 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         employers = List(
           Employer("previous employers name", EmployerAddress("line 1", None, None, "postcode"), LocalDate.of(2000, 2, 1), Some(LocalDate.of(2001, 3, 2)))
         ),
-        documents = List(
-          "passport"
-        )
+        documents = List("passport")
       )
 
       val hc = HeaderCarrier()
-      service.auditDownload(answers)(hc)
+      service.auditDownload(model)(hc)
 
       verify(mockAuditConnector, times(1)).sendExplicitAudit(eqTo("downloadAuditEvent"), eqTo(expected))(eqTo(hc), any(), any())
     }
