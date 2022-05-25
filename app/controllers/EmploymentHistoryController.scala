@@ -45,7 +45,7 @@ class EmploymentHistoryController @Inject()(
   val form = formProvider()
 
   private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
-    answers.get(EmployersQuery).getOrElse(Seq.empty).indices.map(EmployerSummary.item(answers, mode, _))
+    answers.get(EmployersQuery).getOrElse(Seq.empty).indices.flatMap(EmployerSummary.item(answers, mode, _))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>

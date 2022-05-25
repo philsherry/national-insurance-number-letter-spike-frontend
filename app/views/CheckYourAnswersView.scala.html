@@ -49,7 +49,7 @@
     } else {
         <p class="govuk-body govuk-!-margin-bottom-9">
             <span>@messages("checkYourAnswers.noPreviousNames")</span><br/>
-            <a class="govuk-link" href="@routes.WhatIsYourPreviousNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousName")</a>
+            <a class="govuk-link" href="@routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url">@messages("checkYourAnswers.addAPreviousName")</a>
         </p>
     }
 
@@ -64,7 +64,7 @@
     } else {
         <p class="govuk-body govuk-!-margin-bottom-9">
             <span>@messages("checkYourAnswers.noPreviousAddresses")</span><br/>
-            <a class="govuk-link" href="@routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousAddress")</a>
+            <a class="govuk-link" href="@routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url">@messages("checkYourAnswers.addAPreviousAddress")</a>
         </p>
     }
 
@@ -74,12 +74,12 @@
     @if(previousRelationships.nonEmpty) {
         @hmrcListWithActions(ListWithActions(items = previousRelationships))
         <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" href="@routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(previousRelationships.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousRelationship")</a>
+            <a class="govuk-link" href="@routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousRelationship")</a>
         </p>
     } else {
         <p class="govuk-body govuk-!-margin-bottom-9">
             <span>@messages("checkYourAnswers.noPreviousRelationships")</span><br/>
-            <a class="govuk-link" href="@routes.PreviousMarriageOrPartnershipDetailsController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAPreviousRelationship")</a>
+            <a class="govuk-link" href="@routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url">@messages("checkYourAnswers.addAPreviousRelationship")</a>
         </p>
     }
 
@@ -97,7 +97,7 @@
     } else {
         <p class="govuk-body govuk-!-margin-bottom-9">
             <span>@messages("checkYourAnswers.noEmployers")</span><br/>
-            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(0), CheckMode).url">@messages("checkYourAnswers.addAnEmployer")</a>
+            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url">@messages("checkYourAnswers.addAnEmployer")</a>
         </p>
     }
 

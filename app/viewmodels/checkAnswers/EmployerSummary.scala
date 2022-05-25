@@ -31,27 +31,28 @@ object EmployerSummary {
 
   private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
-  def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): ListWithActionsItem = {
-
-    val name = answers.get(WhatIsYourEmployersNamePage(Index(i))).getOrElse("")
-
-    val content = HtmlContent(
-      List(
-        answers.get(WhatIsYourEmployersNamePage(Index(i))),
-        answers.get(WhatIsYourEmployersAddressPage(Index(i))).map(_.lines.mkString(", ")),
-        for {
-          from <- answers.get(WhenDidYouStartWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
-          to   = answers.get(WhenDidYouStopWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
-        } yield to.fold(Messages("employmentHistory.from", from))(to => Messages("employmentHistory.fromTo", from, to))
-      ).flatten.map(HtmlFormat.escape(_).toString).mkString("<br/>")
-    )
-
-    ListWithActionsItem(
-      name = content,
-      actions = List(
-        ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changeEmployerHidden", name)), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(i), mode).url),
-        ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removeEmployerHidden", name)), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(i), mode).url)
+  def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): Option[ListWithActionsItem] = {
+    for {
+      name    <- answers.get(WhatIsYourEmployersNamePage(Index(i)))
+      address <- answers.get(WhatIsYourEmployersAddressPage(Index(i)))
+      from    <- answers.get(WhenDidYouStartWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
+      to      =  answers.get(WhenDidYouStopWorkingForEmployerPage(Index(i))).map(_.format(dateFormatter))
+    } yield {
+      val content = HtmlContent(
+        List(
+          name,
+          address.lines.mkString(", "),
+          to.fold(Messages("employmentHistory.from", from))(to => Messages("employmentHistory.fromTo", from, to))
+        ).map(HtmlFormat.escape(_).toString).mkString("<br/>")
       )
-    )
+
+      ListWithActionsItem(
+        name = content,
+        actions = List(
+          ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changeEmployerHidden", name)), href = routes.WhatIsYourEmployersNameController.onPageLoad(Index(i), mode).url),
+          ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removeEmployerHidden", name)), href = routes.AreYouSureYouWantToRemoveEmployerController.onPageLoad(Index(i), mode).url)
+        )
+      )
+    }
   }
 }

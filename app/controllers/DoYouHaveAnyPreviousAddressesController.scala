@@ -46,7 +46,7 @@ class DoYouHaveAnyPreviousAddressesController @Inject()(
 
   private def listItems(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListWithActionsItem] =
     answers.get(PreviousAddressesQuery).getOrElse(Seq.empty)
-      .indices.map(PreviousAddressSummary.item(answers, mode, _))
+      .indices.flatMap(PreviousAddressSummary.item(answers, mode, _))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
