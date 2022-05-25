@@ -31,28 +31,25 @@ object PreviousAddressSummary {
 
   private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
-  def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): ListWithActionsItem = {
+  def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): Option[ListWithActionsItem] = {
+    for {
+      address <- answers.get(WhatIsYourPreviousAddressUkPage(Index(i))) orElse answers.get(WhatIsYourPreviousAddressInternationalPage(Index(i)))
+    } yield {
 
-    val address = answers.get(WhatIsYourPreviousAddressUkPage(Index(i)))
-      .orElse(answers.get(WhatIsYourPreviousAddressInternationalPage(Index(i))))
-
-    val lines = address.map(_.lines.mkString(", ")).getOrElse("")
-
-    val content = HtmlContent {
-      address.map { address =>
+      val content = HtmlContent {
         List(
-          lines,
+          address.lines.mkString(", "),
           Messages("site.range", address.from.format(dateFormatter), address.to.format(dateFormatter))
         ).map(HtmlFormat.escape(_).toString).mkString("<br/>")
-      }.getOrElse("")
-    }
+      }
 
-    ListWithActionsItem(
-      name = content,
-      actions = List(
-        ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousAddressHidden", lines)), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(i), mode).url),
-        ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousAddressHidden", lines)), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(i), mode).url)
+      ListWithActionsItem(
+        name = content,
+        actions = List(
+          ListWithActionsAction(content = Text(Messages("site.change")), visuallyHiddenText = Some(Messages("checkYourAnswers.changePreviousAddressHidden", address.lines.mkString(", "))), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(i), mode).url),
+          ListWithActionsAction(content = Text(Messages("site.remove")), visuallyHiddenText = Some(Messages("checkYourAnswers.removePreviousAddressHidden", address.lines.mkString(", "))), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(i), mode).url)
+        )
       )
-    )
+    }
   }
 }

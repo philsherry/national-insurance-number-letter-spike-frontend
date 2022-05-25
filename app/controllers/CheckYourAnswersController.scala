@@ -64,7 +64,7 @@ class CheckYourAnswersController @Inject()(
         ).flatten)
 
       val previousAddresses = answers.get(PreviousAddressesQuery).getOrElse(List.empty)
-        .indices.map(PreviousAddressSummary.item(answers, CheckMode, _))
+        .indices.flatMap(PreviousAddressSummary.item(answers, CheckMode, _))
 
       val currentRelationship = SummaryListViewModel(Seq(
         AreYouMarriedSummary.row(answers),
@@ -89,7 +89,7 @@ class CheckYourAnswersController @Inject()(
         ).flatten)
 
       val employers = answers.get(EmployersQuery).getOrElse(List.empty)
-        .indices.map(EmployerSummary.item(answers, CheckMode, _))
+        .indices.flatMap(EmployerSummary.item(answers, CheckMode, _))
 
       val supportingDocuments = SummaryListViewModel(Seq(
         DoYouHavePrimaryDocumentSummary.row(answers),
