@@ -52,7 +52,7 @@ class PrintController @Inject()(
     foUserAgent.setTitle("Get your National Insurance number by post form")
   }
 
-  private def withPrintModel(answers: UserAnswers)(fn: PrintModel => Result): Result = {
+  private def withJourneyModel(answers: UserAnswers)(fn: JourneyModel => Result): Result = {
 
     val (maybeFailures, maybeModel) = JourneyModel.from(answers).pad
 
@@ -61,16 +61,11 @@ class PrintController @Inject()(
       s" at: $message"
     }.getOrElse("")
 
-    lazy val backup = PrintModel.from(answers).map { model =>
-      logger.warn(s"Journey model creation failed but was recovered$errors")
-      model
-    }
-
-    (maybeModel.map(PrintModel.from) orElse backup).map { printModel =>
+    maybeModel.map { model =>
       if (errors.nonEmpty) {
         logger.info(s"Journey model creation successful with warnings$errors")
       }
-      fn(printModel)
+      fn(model)
     }.getOrElse {
       logger.warn(s"Journey model creation failed and could not be recovered$errors")
       Redirect(routes.JourneyRecoveryController.onPageLoad())
@@ -78,18 +73,17 @@ class PrintController @Inject()(
   }
 
   def onDownload: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-
-    JourneyModel.from(request.userAnswers).foreach(auditService.auditDownload(_))
-
-    withPrintModel(request.userAnswers) { printModel =>
+    withJourneyModel(request.userAnswers) { model =>
+      val printModel = PrintModel.from(model)
       val pdf = fop.processTwirlXml(template.render(printModel, implicitly), MimeConstants.MIME_PDF, foUserAgentBlock = userAgentBlock)
+      auditService.auditDownload(model)
       Ok(pdf).as("application/octet-stream").withHeaders(CONTENT_DISPOSITION -> "attachment; filename=get-your-national-insurance-number-by-post.pdf")
     }
   }
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    withPrintModel(request.userAnswers) { printModel =>
-      Ok(view(printModel))
+    withJourneyModel(request.userAnswers) { model =>
+      Ok(view(PrintModel.from(model)))
     }
   }
 }
