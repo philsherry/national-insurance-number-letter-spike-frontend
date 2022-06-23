@@ -57,7 +57,7 @@ final case class PreviousMarriageOrPartnershipPrintModel(relationshipType: Strin
 
 object PrintModel {
 
-  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
 
   def from(model: JourneyModel): PrintModel =
     PrintModel(
