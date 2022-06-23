@@ -28,6 +28,38 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@outOfOrderError = @{
+    form.errors.exists(_.messages.contains("whatIsYourPreviousAddressUk.error.datesOutOfOrder"))
+}
+
+@fromDateMonthError = @{
+    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressUk.error.from.month")))
+}
+
+@fromDateYearError = @{
+    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressUk.error.from.year")))
+}
+
+@fromDateErrorMessage = @{
+    form.errors
+        .find(_.messages.exists(err => err.startsWith("whatIsYourPreviousAddressUk.error.from") || err.startsWith("whatIsYourPreviousAddressUk.error.datesOutOfOrder")))
+        .map(err => ErrorMessage(content = Text(messages(err.message, err.args: _*))))
+}
+
+@toDateMonthError = @{
+    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressUk.error.to.month")))
+}
+
+@toDateYearError = @{
+    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressUk.error.to.year")))
+}
+
+@toDateErrorMessage = @{
+    form.errors
+        .find(_.messages.exists(err => err.startsWith("whatIsYourPreviousAddressUk.error.to")))
+        .map(err => ErrorMessage(content = Text(messages(err.message, err.args: _*))))
+}
+
 @layout(pageTitle = title(form, messages("whatIsYourPreviousAddressUk.title"), Some(messages("section.addressHistory")))) {
 
     @formHelper(action = routes.WhatIsYourPreviousAddressUkController.onSubmit(index, mode), 'autoComplete -> "on") {
@@ -37,9 +69,9 @@
                 ErrorSummaryViewModel(
                     form = form,
                     errorLinkOverrides = Map(
-                        "from" -> "from.day",
-                        "to"   -> "to.day",
-                        ""     -> "from.day"
+                        "from" -> "from.month",
+                        "to"   -> "to.month",
+                        ""     -> "from.month"
                     )
                 )
             )
@@ -87,16 +119,50 @@
         )
 
         @govukDateInput(
-            DateViewModel(
-                field  = form("from"),
-                legend = LegendViewModel(messages("whatIsYourPreviousAddressUk.from"))
+            DateInput(
+                id = "from",
+                fieldset = Some(FieldsetViewModel(LegendViewModel(messages("whatIsYourPreviousAddressUk.from")))),
+                errorMessage = fromDateErrorMessage,
+                items = Seq(
+                    InputItem(
+                        id = "from.month",
+                        name = "from.month",
+                        value = form("from.month").value,
+                        label = Some(messages("date.month")),
+                        classes = "govuk-input--width-2 " + (if(outOfOrderError || fromDateMonthError) "govuk-input--error" else "")
+                    ),
+                    InputItem(
+                        id = "from.year",
+                        name = "from.year",
+                        value = form("from.year").value,
+                        label = Some(messages("date.year")),
+                        classes = "govuk-input--width-4 " + (if(outOfOrderError || fromDateYearError) "govuk-input--error" else "")
+                    )
+                )
             )
         )
 
         @govukDateInput(
-            DateViewModel(
-                field  = form("to"),
-                legend = LegendViewModel(messages("whatIsYourPreviousAddressUk.to"))
+            DateInput(
+                id = "to",
+                fieldset = Some(FieldsetViewModel(LegendViewModel(messages("whatIsYourPreviousAddressUk.to")))),
+                errorMessage = toDateErrorMessage,
+                items = Seq(
+                    InputItem(
+                        id = "to.month",
+                        name = "to.month",
+                        value = form("to.month").value,
+                        label = Some(messages("date.month")),
+                        classes = "govuk-input--width-2 " + (if(toDateMonthError) "govuk-input--error" else "")
+                    ),
+                    InputItem(
+                        id = "to.year",
+                        name = "to.year",
+                        value = form("to.year").value,
+                        label = Some(messages("date.year")),
+                        classes = "govuk-input--width-4 " + (if(toDateYearError) "govuk-input--error" else "")
+                    )
+                )
             )
         )
 
