@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import models.PreviousAddressUk
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 class WhatIsYourPreviousAddressUkFormProvider @Inject() extends Mappings {
 
@@ -36,21 +36,38 @@ class WhatIsYourPreviousAddressUkFormProvider @Inject() extends Mappings {
          .verifying(maxLength(100, "whatIsYourPreviousAddressUk.error.addressLine3.length"))),
        "postcode" -> text("whatIsYourPreviousAddressUk.error.postcode.required")
          .verifying(maxLength(100, "whatIsYourPreviousAddressUk.error.postcode.length")),
-       "from" -> localDate(
-         invalidKey = "whatIsYourPreviousAddressUk.error.from.invalid",
-         allRequiredKey = "whatIsYourPreviousAddressUk.error.from.required.all",
-         twoRequiredKey = "whatIsYourPreviousAddressUk.error.from.required.two",
-         requiredKey    = "whatIsYourPreviousAddressUk.error.from.required"
-       ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressUk.error.from.past")),
-       "to" -> localDate(
-         invalidKey = "whatIsYourPreviousAddressUk.error.to.invalid",
-         allRequiredKey = "whatIsYourPreviousAddressUk.error.to.required.all",
-         twoRequiredKey = "whatIsYourPreviousAddressUk.error.to.required.two",
-         requiredKey    = "whatIsYourPreviousAddressUk.error.to.required"
-       ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressUk.error.to.past"))
-    )(PreviousAddressUk.apply)(PreviousAddressUk.unapply)
-       .verifying("whatIsYourPreviousAddressUk.error.datesOutOfOrder", x => {
-         (x.from isBefore x.to) || (x.from == x.to)
-       })
+       "from.month" -> int(
+         "whatIsYourPreviousAddressUk.error.from.month.required",
+         "whatIsYourPreviousAddressUk.error.from.month.invalid.numeric",
+         "whatIsYourPreviousAddressUk.error.from.month.invalid.nonNumeric"
+       ).verifying(inRange(1, 12, "whatIsYourPreviousAddressUk.error.from.month.range")),
+       "from.year" -> int(
+         "whatIsYourPreviousAddressUk.error.from.year.required",
+         "whatIsYourPreviousAddressUk.error.from.year.invalid.numeric",
+         "whatIsYourPreviousAddressUk.error.from.year.invalid.nonNumeric"
+       ).verifying(inRange(1900, LocalDate.now().getYear, "whatIsYourPreviousAddressUk.error.from.year.range")),
+       "to.month" -> int(
+         "whatIsYourPreviousAddressUk.error.to.month.required",
+         "whatIsYourPreviousAddressUk.error.to.month.invalid.numeric",
+         "whatIsYourPreviousAddressUk.error.to.month.invalid.nonNumeric"
+       ).verifying(inRange(1, 12, "whatIsYourPreviousAddressUk.error.to.month.range")),
+       "to.year" -> int(
+         "whatIsYourPreviousAddressUk.error.to.year.required",
+         "whatIsYourPreviousAddressUk.error.to.year.invalid.numeric",
+         "whatIsYourPreviousAddressUk.error.to.year.invalid.nonNumeric"
+       ).verifying(inRange(1900, LocalDate.now().getYear, "whatIsYourPreviousAddressUk.error.to.year.range")),
+    ){ (line1, line2, line3, postcode, fromMonth, fromYear, toMonth, toYear) =>
+       PreviousAddressUk(
+         line1, line2, line3, postcode,
+         from = YearMonth.of(fromYear, fromMonth),
+         to = YearMonth.of(toYear, toMonth)
+       )
+     }(a => Some((
+       a.addressLine1, a.addressLine2, a.addressLine3, a.postcode,
+       a.from.getMonthValue, a.from.getYear,
+       a.to.getMonthValue, a.to.getYear
+     ))).verifying("whatIsYourPreviousAddressUk.error.datesOutOfOrder", x => {
+       (x.from isBefore x.to) || (x.from == x.to)
+     })
    )
  }
