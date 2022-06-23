@@ -23,7 +23,7 @@ import play.api.i18n.Messages
 import play.api.test.Helpers.{stubMessages, stubMessagesApi}
 import uk.gov.hmrc.domain.Nino
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 trait ModelGenerators { this: Generators =>
 
@@ -82,7 +82,7 @@ trait ModelGenerators { this: Generators =>
         postcode     <- arbitrary[String]
         from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
         to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
-      } yield PreviousAddressUk(addressLine1, addressLine2, addressLine3, postcode, from, to)
+      } yield PreviousAddressUk(addressLine1, addressLine2, addressLine3, postcode, YearMonth.from(from), YearMonth.from(to))
     }
 
   implicit lazy val arbitraryWhatIsYourPreviousAddressInternational: Arbitrary[PreviousAddressInternational] =
@@ -95,7 +95,7 @@ trait ModelGenerators { this: Generators =>
         country      <- Gen.oneOf(Country.internationalCountries)
         from         <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
         to           <- datesBetween(LocalDate.of(2000, 1, 1), LocalDate.now)
-      } yield PreviousAddressInternational(addressLine1, addressLine2, addressLine3, postcode, country, from, to)
+      } yield PreviousAddressInternational(addressLine1, addressLine2, addressLine3, postcode, country, YearMonth.from(from), YearMonth.from(to))
     }
 
   implicit lazy val arbitraryWhatIsYourCurrentAddressUk: Arbitrary[CurrentAddressUk] =
