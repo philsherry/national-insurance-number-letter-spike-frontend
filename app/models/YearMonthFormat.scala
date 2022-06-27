@@ -16,16 +16,22 @@
 
 package models
 
-import play.api.libs.json.{Format, JsError, JsString, JsSuccess}
+import play.api.libs.json._
 
-import java.time.YearMonth
+import java.time.{LocalDate, YearMonth}
 import scala.util.Try
 
 trait YearMonthFormat {
 
-  implicit def yearMonthFormat: Format[YearMonth] = Format ({
-      case JsString(x) => Try(JsSuccess(YearMonth.parse(x))).getOrElse(JsError("Parse failure"))
-      case _ => JsError("Invalid")
-    }, value => JsString(value.toString)
-  )
+  implicit def reads: Reads[YearMonth] = Reads ({
+    case JsString(x) => Try(JsSuccess(YearMonth.parse(x))).getOrElse(JsError("YearMonth parse failure"))
+    case _ => JsError("Invalid")
+  }) orElse fallbackReads
+
+  implicit def writes: Writes[YearMonth] = Writes(value => JsString(value.toString))
+
+  private def fallbackReads: Reads[YearMonth] = Reads ({
+    case JsString(x) => Try(JsSuccess(YearMonth.from(LocalDate.parse(x)))).getOrElse(JsError("LocalDate parse failure"))
+    case _ => JsError("Invalid")
+  })
 }
