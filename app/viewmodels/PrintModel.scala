@@ -57,7 +57,8 @@ final case class PreviousMarriageOrPartnershipPrintModel(relationshipType: Strin
 
 object PrintModel {
 
-  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
+  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  val yearMonthFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
 
   def from(model: JourneyModel): PrintModel =
     PrintModel(
@@ -66,7 +67,7 @@ object PrintModel {
       dob = formatter.format(model.dateOfBirth),
       gender = model.gender,
       currentAddress = model.currentAddress.lines,
-      previousAddresses = model.previousAddresses.map(a => PreviousAddressPrintModel(a.lines, formatter.format(a.from), formatter.format(a.to))),
+      previousAddresses = model.previousAddresses.map(a => PreviousAddressPrintModel(a.lines, yearMonthFormatter.format(a.from), yearMonthFormatter.format(a.to))),
       returningFromLivingAbroad = model.returningFromLivingAbroad,
       telephoneNumber = model.telephoneNumber,
       nino = model.nationalInsuranceNumber,

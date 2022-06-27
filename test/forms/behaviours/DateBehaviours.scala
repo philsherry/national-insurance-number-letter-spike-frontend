@@ -16,9 +16,8 @@
 
 package forms.behaviours
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 import java.time.format.DateTimeFormatter
-
 import org.scalacheck.Gen
 import play.api.data.{Form, FormError}
 
@@ -95,6 +94,25 @@ trait DateBehaviours extends FieldBehaviours {
       val result = form.bind(Map.empty[String, String])
 
       result(key).errors must contain only FormError(key, requiredAllKey, errorArgs)
+    }
+  }
+
+  def yearMonthField(form: Form[_], key: String, validData: Gen[YearMonth]): Unit = {
+
+    "bind valid data" in {
+
+      forAll(validData -> "valid date") {
+        date =>
+
+          val data = Map(
+            s"$key.month" -> date.getMonthValue.toString,
+            s"$key.year"  -> date.getYear.toString
+          )
+
+          val result = form.bind(data)
+
+          result(key).errors mustBe empty
+      }
     }
   }
 }

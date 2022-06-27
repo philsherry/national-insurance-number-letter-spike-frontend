@@ -16,17 +16,17 @@
 
 package forms
 
-import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
-import models.Country
+import forms.behaviours.{DateBehaviours, IntFieldBehaviours, StringFieldBehaviours}
+import models.{Country, PreviousAddressInternational}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
 import play.api.data.FormError
 import play.api.i18n.Messages
 import play.api.test.Helpers.{stubMessages, stubMessagesApi}
 
-import java.time.{LocalDate, ZoneOffset}
+import java.time.{LocalDate, YearMonth, ZoneOffset}
 
-class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
+class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringFieldBehaviours with DateBehaviours with IntFieldBehaviours {
 
   private implicit val msgs: Messages = stubMessages(stubMessagesApi())
   val form = new WhatIsYourPreviousAddressInternationalFormProvider()()
@@ -134,13 +134,21 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
     val validData = datesBetween(
       min = LocalDate.of(2000, 1, 1),
       max = LocalDate.now(ZoneOffset.UTC)
-    )
+    ).map(YearMonth.from(_))
 
-    behave like dateField(form, "from", validData)
+    behave like yearMonthField(form, "from", validData)
 
-    behave like mandatoryDateField(form, "from", "whatIsYourPreviousAddressInternational.error.from.required.all")
+    ".month" - {
+      behave like mandatoryField(form, "from.month", FormError("from.month", "whatIsYourPreviousAddressInternational.error.from.month.required"))
 
-    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousAddressInternational.error.from.past"))
+      behave like intFieldWithRange(form, "from.month", 1, 12, FormError("from.month", "whatIsYourPreviousAddressInternational.error.from.month.range", List(1, 12)))
+    }
+
+    ".year" - {
+      behave like mandatoryField(form, "from.year", FormError("from.year", "whatIsYourPreviousAddressInternational.error.from.year.required"))
+
+      behave like intFieldWithRange(form, "from.year", 1900, LocalDate.now().getYear, FormError("from.year", "whatIsYourPreviousAddressInternational.error.from.year.range", List(1900, LocalDate.now().getYear)))
+    }
   }
 
   ".to" - {
@@ -148,27 +156,48 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
     val validData = datesBetween(
       min = LocalDate.of(2000, 1, 1),
       max = LocalDate.now(ZoneOffset.UTC)
-    )
+    ).map(YearMonth.from(_))
 
-    behave like dateField(form, "from", validData)
+    behave like yearMonthField(form, "to", validData)
 
-    behave like mandatoryDateField(form, "from", "whatIsYourPreviousAddressInternational.error.from.required.all")
+    ".month" - {
+      behave like mandatoryField(form, "to.month", FormError("to.month", "whatIsYourPreviousAddressInternational.error.to.month.required"))
 
-    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousAddressInternational.error.from.past"))
+      behave like intFieldWithRange(form, "to.month", 1, 12, FormError("to.month", "whatIsYourPreviousAddressInternational.error.to.month.range", List(1, 12)))
+    }
+
+    ".year" - {
+      behave like mandatoryField(form, "to.year", FormError("to.year", "whatIsYourPreviousAddressInternational.error.to.year.required"))
+
+      behave like intFieldWithRange(form, "to.year", 1, LocalDate.now().getYear, FormError("to.year", "whatIsYourPreviousAddressInternational.error.to.year.range", List(1900, LocalDate.now().getYear)))
+    }
   }
 
   "form" - {
 
+    "must bind if start date and end date match" in {
+      val date = LocalDate.now
+
+      val data = Map(
+        "from.month"   -> date.getMonthValue.toString,
+        "from.year"    -> date.getYear.toString,
+        "to.month"     -> date.getMonthValue.toString,
+        "to.year"      -> date.getYear.toString,
+        "addressLine1" -> "line 1",
+        "country"     -> "FR"
+      )
+
+      form.bind(data).value.value mustBe PreviousAddressInternational("line 1", None, None, None, Country("FR", "country.fr.text"), YearMonth.from(date), YearMonth.from(date))
+    }
+
     "must give an error if start date is not before end date" in {
 
       val startDate = LocalDate.now
-      val endDate   = startDate.minusDays(1)
+      val endDate   = startDate.minusMonths(1)
 
       val data = Map(
-        "from.day"     -> startDate.getDayOfMonth.toString,
         "from.month"   -> startDate.getMonthValue.toString,
         "from.year"    -> startDate.getYear.toString,
-        "to.day"       -> endDate.getDayOfMonth.toString,
         "to.month"     -> endDate.getMonthValue.toString,
         "to.year"      -> endDate.getYear.toString,
         "addressLine1" -> "line 1",

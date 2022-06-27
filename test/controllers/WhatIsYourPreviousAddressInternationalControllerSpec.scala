@@ -31,7 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.WhatIsYourPreviousAddressInternationalView
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 import scala.concurrent.Future
 
 class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with MockitoSugar {
@@ -44,8 +44,8 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
 
   lazy val whatIsYourPreviousAddressInternationalRoute = routes.WhatIsYourPreviousAddressInternationalController.onPageLoad(Index(0), NormalMode).url
 
-  val startDate = LocalDate.now.minusDays(1)
-  val endDate = LocalDate.now
+  val startDate = YearMonth.from(LocalDate.now.minusDays(1))
+  val endDate = YearMonth.from(LocalDate.now)
 
   val validData = PreviousAddressInternational(
     addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = None, country = country, from = startDate, to = endDate
@@ -113,8 +113,8 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
               "country" -> "FR",
-              "from.day" -> startDate.getDayOfMonth.toString, "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
-              "to.day" -> endDate.getDayOfMonth.toString, "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
+              "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
+              "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
             )
 
         val result = route(application, request).value
@@ -171,8 +171,8 @@ class WhatIsYourPreviousAddressInternationalControllerSpec extends SpecBase with
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
               "country" -> "FR",
-              "from.day" -> startDate.getDayOfMonth.toString, "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
-              "to.day" -> endDate.getDayOfMonth.toString, "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
+              "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
+              "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
             )
 
         val result = route(application, request).value

@@ -29,7 +29,7 @@ import play.api.Configuration
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues with MockitoSugar {
@@ -59,7 +59,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         returningFromLivingAbroad = true,
         currentAddress = CurrentAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode"),
         previousAddresses = List(
-          PreviousAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))
+          PreviousAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = YearMonth.of(2000, 2), to = YearMonth.of(2001, 3))
         ),
         currentRelationship = Some(JourneyModel.CurrentRelationship(relationshipType = CurrentRelationshipType.Marriage, from = now)),
         previousRelationships = List(
@@ -87,7 +87,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with OptionValues with 
         gender = WhatIsYourGender.PreferNotToSay,
         addresses = Addresses(
           currentAddress = Address("line 1", None, None, Some("postcode"), None),
-          previousAddresses = List(PreviousAddress("line 1", None, None, Some("postcode"), None, LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2)))
+          previousAddresses = List(PreviousAddress("line 1", None, None, Some("postcode"), None, YearMonth.of(2000, 2), to = YearMonth.of(2001, 3)))
         ),
         returningFromLivingAbroad = true,
         telephoneNumber = "tel",
