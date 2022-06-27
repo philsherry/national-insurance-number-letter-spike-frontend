@@ -17,7 +17,6 @@
 package models
 
 import play.api.libs.json._
-import models.YearMonthFormat._
 
 import java.time.YearMonth
 
@@ -37,6 +36,6 @@ final case class PreviousAddressUk(
     List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
 }
 
-object PreviousAddressUk {
+object PreviousAddressUk extends YearMonthFormat {
   implicit val format = Json.format[PreviousAddressUk]
 }

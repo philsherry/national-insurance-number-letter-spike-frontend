@@ -21,7 +21,7 @@ import play.api.libs.json.{Format, JsError, JsString, JsSuccess}
 import java.time.YearMonth
 import scala.util.Try
 
-object YearMonthFormat {
+trait YearMonthFormat {
 
   implicit def yearMonthFormat: Format[YearMonth] = Format ({
       case JsString(x) => Try(JsSuccess(YearMonth.parse(x))).getOrElse(JsError("Parse failure"))
