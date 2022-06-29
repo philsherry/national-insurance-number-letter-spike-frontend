@@ -70,7 +70,11 @@ class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappi
        a.addressLine1, a.addressLine2, a.addressLine3, a.postcode, a.country,
        a.from.getYear, a.from.getMonthValue,
        a.to.getYear, a.to.getMonthValue
-     ))).verifying("whatIsYourPreviousAddressInternational.error.datesOutOfOrder", x => {
+     )))
+       .verifying("whatIsYourPreviousAddressInternational.error.dateInFuture", x => {
+         x.from.isAfter(YearMonth.now()) || x.to.isAfter(YearMonth.now())
+       })
+       .verifying("whatIsYourPreviousAddressInternational.error.datesOutOfOrder", x => {
        (x.from isBefore x.to) || (x.from == x.to)
      })
    )
