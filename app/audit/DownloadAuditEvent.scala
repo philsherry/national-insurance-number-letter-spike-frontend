@@ -17,10 +17,10 @@
 package audit
 
 import audit.DownloadAuditEvent.{Addresses, Relationships, _}
-import models.{Country, JourneyModel, WhatIsYourGender}
+import models.{Country, JourneyModel, WhatIsYourGender, YearMonthFormat}
 import play.api.libs.json.{Format, Json}
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 final case class DownloadAuditEvent(
                                      names: Names,
@@ -109,8 +109,8 @@ object DownloadAuditEvent {
     implicit lazy val formats: Format[Address] = Json.format
   }
 
-  private[audit] final case class PreviousAddress(line1: String, line2: Option[String], line3: Option[String], postcode: Option[String], country: Option[Country], from: LocalDate, to: LocalDate)
-  object PreviousAddress {
+  private[audit] final case class PreviousAddress(line1: String, line2: Option[String], line3: Option[String], postcode: Option[String], country: Option[Country], from: YearMonth, to: YearMonth)
+  object PreviousAddress extends YearMonthFormat {
     implicit lazy val formats: Format[PreviousAddress] = Json.format
   }
 

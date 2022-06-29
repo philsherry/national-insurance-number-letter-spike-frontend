@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter
 
 object PreviousAddressSummary {
 
-  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  private val dateFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
 
   def item(answers: UserAnswers, mode: Mode, i: Int)(implicit messages: Messages): Option[ListWithActionsItem] = {
     for {

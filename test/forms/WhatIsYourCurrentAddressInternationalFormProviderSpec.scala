@@ -104,7 +104,7 @@ class WhatIsYourCurrentAddressInternationalFormProviderSpec extends StringFieldB
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      Gen.oneOf(Country.countryCodes.map(_.toUpperCase))
+      Gen.oneOf(Country.internationalCountries.map(_.code))
     )
 
     behave like mandatoryField(

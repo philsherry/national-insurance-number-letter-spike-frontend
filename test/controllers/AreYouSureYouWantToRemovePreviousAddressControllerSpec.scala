@@ -31,7 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.AreYouSureYouWantToRemovePreviousAddressView
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 import scala.concurrent.Future
 
 class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase with MockitoSugar {
@@ -43,7 +43,7 @@ class AreYouSureYouWantToRemovePreviousAddressControllerSpec extends SpecBase wi
 
   lazy val areYouSureYouWantToRemovePreviousAddressRoute = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), NormalMode).url
 
-  val answers = emptyUserAnswers.set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk("line 1", None, None, "postcode", LocalDate.now, LocalDate.now)).success.value
+  val answers = emptyUserAnswers.set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk("line 1", None, None, "postcode", YearMonth.from(LocalDate.now), YearMonth.from(LocalDate.now))).success.value
 
   val lines = List("line 1", "postcode")
 

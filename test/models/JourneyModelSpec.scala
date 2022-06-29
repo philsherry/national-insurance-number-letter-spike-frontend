@@ -24,7 +24,7 @@ import org.scalatest.{EitherValues, OptionValues, TryValues}
 import pages._
 import uk.gov.hmrc.domain.Nino
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 class JourneyModelSpec extends AnyFreeSpec with Matchers with TryValues with EitherValues with OptionValues {
 
@@ -45,7 +45,7 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with TryValues with Eit
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
         .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, Some("postcode"), Country("FR", "France"))).success.value
         .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
-        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))).success.value
+        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = YearMonth.of(2000, 2), to = YearMonth.of(2001, 3))).success.value
         .set(AreYouReturningFromLivingAbroadPage, true).success.value
         .set(WhatIsYourTelephoneNumberPage, "tel").success.value
         .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
@@ -86,7 +86,7 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with TryValues with Eit
         returningFromLivingAbroad = true,
         currentAddress = CurrentAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode"),
         previousAddresses = List(
-          PreviousAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))
+          PreviousAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = YearMonth.of(2000, 2), to = YearMonth.of(2001, 3))
         ),
         currentRelationship = Some(JourneyModel.CurrentRelationship(relationshipType = CurrentRelationshipType.Marriage, from = now)),
         previousRelationships = List(
@@ -192,7 +192,7 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with TryValues with Eit
         .set(WhatIsYourCurrentAddressUkPage, CurrentAddressUk(addressLine1 = "line 1", None, None, "postcode")).success.value
         .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, Some("postcode"), Country("FR", "France"))).success.value
         .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
-        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))).success.value
+        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = YearMonth.of(2000, 2), to = YearMonth.of(2001, 3))).success.value
         .set(AreYouReturningFromLivingAbroadPage, true).success.value
         .set(WhatIsYourTelephoneNumberPage, "tel").success.value
         .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value

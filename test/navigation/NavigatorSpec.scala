@@ -24,7 +24,7 @@ import pages._
 import models._
 import uk.gov.hmrc.domain.Nino
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 class NavigatorSpec extends SpecBase {
 
@@ -141,8 +141,8 @@ class NavigatorSpec extends SpecBase {
               addressLine2 = None,
               addressLine3 = None,
               postcode = "postcode",
-              from = LocalDate.now,
-              to = LocalDate.now
+              from = YearMonth.from(LocalDate.now),
+              to = YearMonth.from(LocalDate.now)
             )
             val answers = emptyUserAnswers
               .set(DoYouHaveAnyPreviousAddressesPage, true).success.value

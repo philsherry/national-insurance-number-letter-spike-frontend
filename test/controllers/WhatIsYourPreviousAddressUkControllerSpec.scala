@@ -31,7 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.WhatIsYourPreviousAddressUkView
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 import scala.concurrent.Future
 
 class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSugar {
@@ -43,8 +43,8 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
 
   lazy val whatIsYourPreviousAddressUkRoute = routes.WhatIsYourPreviousAddressUkController.onPageLoad(Index(0), NormalMode).url
 
-  val startDate = LocalDate.now.minusDays(1)
-  val endDate = LocalDate.now
+  val startDate = YearMonth.from(LocalDate.now.minusDays(1))
+  val endDate = YearMonth.from(LocalDate.now)
 
   val validData = PreviousAddressUk(
     addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = "postcode", from = startDate, to = endDate
@@ -108,8 +108,8 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
               "postcode" -> "postcode",
-              "from.day" -> startDate.getDayOfMonth.toString, "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
-              "to.day" -> endDate.getDayOfMonth.toString, "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
+              "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
+              "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
             )
 
         val result = route(application, request).value
@@ -160,7 +160,12 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
       running(application) {
         val request =
           FakeRequest(POST, whatIsYourPreviousAddressUkRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("adressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              "addressLine1" -> "value 1",
+              "postcode" -> "postcode",
+              "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
+              "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
+            )
 
         val result = route(application, request).value
 

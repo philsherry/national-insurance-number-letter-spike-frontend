@@ -21,7 +21,7 @@ import org.scalatest.{OptionValues, TryValues}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 class IsYourPreviousAddressInUkPageSpec extends AnyFreeSpec with Matchers with OptionValues with TryValues {
 
@@ -33,8 +33,8 @@ class IsYourPreviousAddressInUkPageSpec extends AnyFreeSpec with Matchers with O
         None,
         None,
         "postcode",
-        LocalDate.of(2000, 1, 1),
-        LocalDate.of(2000, 2, 2)
+        YearMonth.of(2000, 1),
+        YearMonth.of(2000, 2)
       )
       val answers = UserAnswers("id")
         .set(WhatIsYourPreviousAddressUkPage(Index(0)), answer)
@@ -50,8 +50,8 @@ class IsYourPreviousAddressInUkPageSpec extends AnyFreeSpec with Matchers with O
         None,
         None,
         Country("FR", "France"),
-        LocalDate.of(2000, 1, 1),
-        LocalDate.of(2000, 2, 2)
+        YearMonth.of(2000, 1),
+        YearMonth.of(2000, 2)
       )
       val answers = UserAnswers("id")
         .set(WhatIsYourPreviousAddressInternationalPage(Index(0)), answer).success.value

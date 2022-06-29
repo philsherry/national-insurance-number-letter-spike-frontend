@@ -23,7 +23,7 @@ import play.api.data.Forms._
 import models.{Country, PreviousAddressInternational}
 import play.api.i18n.Messages
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappings {
 
@@ -40,21 +40,42 @@ class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappi
        "country" -> text("whatIsYourPreviousAddressInternational.error.country.required")
          .verifying("whatIsYourPreviousAddressInternational.error.country.required", c => Country.internationalCountries.exists(_.code == c))
          .transform[Country](value => Country.internationalCountries.find(_.code == value).get, _.code),
-       "from" -> localDate(
-         invalidKey = "whatIsYourPreviousAddressInternational.error.from.invalid",
-         allRequiredKey = "whatIsYourPreviousAddressInternational.error.from.required.all",
-         twoRequiredKey = "whatIsYourPreviousAddressInternational.error.from.required.two",
-         requiredKey    = "whatIsYourPreviousAddressInternational.error.from.required"
-       ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressInternational.error.from.past")),
-       "to" -> localDate(
-         invalidKey = "whatIsYourPreviousAddressInternational.error.to.invalid",
-         allRequiredKey = "whatIsYourPreviousAddressInternational.error.to.required.all",
-         twoRequiredKey = "whatIsYourPreviousAddressInternational.error.to.required.two",
-         requiredKey    = "whatIsYourPreviousAddressInternational.error.to.required"
-       ).verifying(maxDate(LocalDate.now, "whatIsYourPreviousAddressInternational.error.to.past"))
-     )(PreviousAddressInternational.apply)(PreviousAddressInternational.unapply)
-       .verifying("whatIsYourPreviousAddressInternational.error.datesOutOfOrder", x => {
-         (x.from isBefore x.to) || (x.from == x.to)
+       "from.month" -> int(
+         "whatIsYourPreviousAddressInternational.error.from.month.required",
+         "whatIsYourPreviousAddressInternational.error.from.month.invalid.numeric",
+         "whatIsYourPreviousAddressInternational.error.from.month.invalid.nonNumeric"
+       ).verifying(inRange(1, 12, "whatIsYourPreviousAddressInternational.error.from.month.range")),
+       "from.year" -> int(
+         "whatIsYourPreviousAddressInternational.error.from.year.required",
+         "whatIsYourPreviousAddressInternational.error.from.year.invalid.numeric",
+         "whatIsYourPreviousAddressInternational.error.from.year.invalid.nonNumeric"
+       ).verifying(inRange(1900, LocalDate.now().getYear, "whatIsYourPreviousAddressInternational.error.from.year.range")),
+       "to.month" -> int(
+         "whatIsYourPreviousAddressInternational.error.to.month.required",
+         "whatIsYourPreviousAddressInternational.error.to.month.invalid.numeric",
+         "whatIsYourPreviousAddressInternational.error.to.month.invalid.nonNumeric"
+       ).verifying(inRange(1, 12, "whatIsYourPreviousAddressInternational.error.to.month.range")),
+       "to.year" -> int(
+         "whatIsYourPreviousAddressInternational.error.to.year.required",
+         "whatIsYourPreviousAddressInternational.error.to.year.invalid.numeric",
+         "whatIsYourPreviousAddressInternational.error.to.year.invalid.nonNumeric"
+       ).verifying(inRange(1900, LocalDate.now().getYear, "whatIsYourPreviousAddressInternational.error.to.year.range")),
+     ){ (line1, line2, line3, postcode, country, fromMonth, fromYear, toMonth, toYear) =>
+       PreviousAddressInternational(
+         line1, line2, line3, postcode, country,
+         from = YearMonth.of(fromYear, fromMonth),
+         to = YearMonth.of(toYear, toMonth)
+       )
+     }(a => Some((
+       a.addressLine1, a.addressLine2, a.addressLine3, a.postcode, a.country,
+       a.from.getYear, a.from.getMonthValue,
+       a.to.getYear, a.to.getMonthValue
+     )))
+       .verifying("whatIsYourPreviousAddressInternational.error.dateInFuture", x => {
+         !x.from.isAfter(YearMonth.now()) && !x.to.isAfter(YearMonth.now())
        })
+       .verifying("whatIsYourPreviousAddressInternational.error.datesOutOfOrder", x => {
+       (x.from isBefore x.to) || (x.from == x.to)
+     })
    )
  }

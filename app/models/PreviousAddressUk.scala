@@ -18,15 +18,15 @@ package models
 
 import play.api.libs.json._
 
-import java.time.LocalDate
+import java.time.YearMonth
 
 final case class PreviousAddressUk(
                                     addressLine1: String,
                                     addressLine2: Option[String],
                                     addressLine3: Option[String],
                                     postcode: String,
-                                    from: LocalDate,
-                                    to: LocalDate
+                                    from: YearMonth,
+                                    to: YearMonth
                                   ) extends PreviousAddress {
 
   override def postcodeOption: Option[String] = Some(postcode)
@@ -36,6 +36,6 @@ final case class PreviousAddressUk(
     List(Some(addressLine1), addressLine2, addressLine3, Some(postcode)).flatten
 }
 
-object PreviousAddressUk {
+object PreviousAddressUk extends YearMonthFormat {
   implicit val format = Json.format[PreviousAddressUk]
 }

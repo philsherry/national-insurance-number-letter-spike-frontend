@@ -28,7 +28,7 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
@@ -47,7 +47,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(WhatIsYourCurrentAddressInternationalPage, CurrentAddressInternational(addressLine1 = "line 1", None, None, None, Country("FR", "France"))).success.value
         .set(DoYouHaveAnyPreviousAddressesPage, true).success.value
         .set(IsYourPreviousAddressInUkPage(Index(0)), true).success.value
-        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = LocalDate.of(2000, 2, 1), to = LocalDate.of(2001, 3, 2))).success.value
+        .set(WhatIsYourPreviousAddressUkPage(Index(0)), PreviousAddressUk(addressLine1 = "line 1", None, None, "postcode", from = YearMonth.of(2000, 2), to = YearMonth.of(2001, 3))).success.value
         .set(AreYouReturningFromLivingAbroadPage, true).success.value
         .set(WhatIsYourTelephoneNumberPage, "tel").success.value
         .set(DoYouKnowYourNationalInsuranceNumberPage, true).success.value
@@ -119,7 +119,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         ).flatten)
 
         val previousAddresses = List(ListWithActionsItem(
-          name = HtmlContent("line 1, postcode<br/>1 February 2000 to 2 March 2001"),
+          name = HtmlContent("line 1, postcode<br/>February 2000 to March 2001"),
           actions = List(
             ListWithActionsAction(content = Text(messages(application)("site.change")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.changePreviousAddressHidden", "line 1, postcode")), href = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(0), CheckMode).url),
             ListWithActionsAction(content = Text(messages(application)("site.remove")), visuallyHiddenText = Some(messages(application)("checkYourAnswers.removePreviousAddressHidden", "line 1, postcode")), href = routes.AreYouSureYouWantToRemovePreviousAddressController.onPageLoad(Index(0), CheckMode).url)

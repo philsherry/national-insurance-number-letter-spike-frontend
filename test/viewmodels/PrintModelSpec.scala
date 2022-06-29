@@ -20,7 +20,7 @@ import base.SpecBase
 import models.JourneyModel.PreviousRelationship
 import models._
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 class PrintModelSpec extends SpecBase {
 
@@ -40,7 +40,7 @@ class PrintModelSpec extends SpecBase {
         returningFromLivingAbroad = false,
         currentAddress = CurrentAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "AA1 1AA"),
         previousAddresses = List(
-          PreviousAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "AA1 1AA", from = LocalDate.of(2000, 1, 1), to = LocalDate.of(2001, 1, 1))
+          PreviousAddressUk(addressLine1 = "line 1", addressLine2 = None, addressLine3 = None, postcode = "AA1 1AA", from = YearMonth.of(2000, 1), to = YearMonth.of(2001, 1))
         ),
         currentRelationship = Some(JourneyModel.CurrentRelationship(relationshipType = CurrentRelationshipType.Marriage, from = LocalDate.of(2000, 5, 1))),
         previousRelationships = List(
@@ -62,7 +62,7 @@ class PrintModelSpec extends SpecBase {
         "1 December 1990",
         WhatIsYourGender.PreferNotToSay,
         List("line 1", "AA1 1AA"),
-        List(PreviousAddressPrintModel(List("line 1", "AA1 1AA"), "1 January 2000", "1 January 2001")),
+        List(PreviousAddressPrintModel(List("line 1", "AA1 1AA"), "January 2000", "January 2001")),
         returningFromLivingAbroad = false,
         "1234567890",
         Some("AA123456A"),

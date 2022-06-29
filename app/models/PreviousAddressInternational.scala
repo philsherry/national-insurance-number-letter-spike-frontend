@@ -18,7 +18,7 @@ package models
 
 import play.api.libs.json._
 
-import java.time.LocalDate
+import java.time.YearMonth
 
 final case class PreviousAddressInternational(
                                                addressLine1: String,
@@ -26,8 +26,8 @@ final case class PreviousAddressInternational(
                                                addressLine3: Option[String],
                                                postcode: Option[String],
                                                country: Country,
-                                               from: LocalDate,
-                                               to: LocalDate
+                                               from: YearMonth,
+                                               to: YearMonth
                                              ) extends PreviousAddress {
 
   override def postcodeOption: Option[String] = postcode
@@ -38,6 +38,6 @@ final case class PreviousAddressInternational(
   def pdfLines: List[String] = List(Some(addressLine1), addressLine2, addressLine3, postcode, Some(s"${country.name} (${country.code})")).flatten
 }
 
-object PreviousAddressInternational {
+object PreviousAddressInternational extends YearMonthFormat {
   implicit val format = Json.format[PreviousAddressInternational]
 }

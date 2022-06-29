@@ -16,12 +16,13 @@
 
 package forms
 
-import forms.behaviours.{DateBehaviours, StringFieldBehaviours}
+import forms.behaviours.{DateBehaviours, IntFieldBehaviours, StringFieldBehaviours}
+import models.PreviousAddressUk
 import play.api.data.FormError
 
-import java.time.{LocalDate, ZoneOffset}
+import java.time.{LocalDate, YearMonth, ZoneOffset}
 
-class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours with DateBehaviours {
+class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours with DateBehaviours with IntFieldBehaviours {
 
   val form = new WhatIsYourPreviousAddressUkFormProvider()()
 
@@ -124,13 +125,22 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
     val validData = datesBetween(
       min = LocalDate.of(2000, 1, 1),
       max = LocalDate.now(ZoneOffset.UTC)
-    )
+    ).map(YearMonth.from(_))
 
-    behave like dateField(form, "from", validData)
+    behave like yearMonthField(form, "from", validData)
 
-    behave like mandatoryDateField(form, "from", "whatIsYourPreviousAddressUk.error.from.required.all")
+    ".month" - {
+      behave like mandatoryField(form, "from.month", FormError("from.month", "whatIsYourPreviousAddressUk.error.from.month.required"))
 
-    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousAddressUk.error.from.past"))
+      behave like intFieldWithRange(form, "from.month", 1, 12, FormError("from.month", "whatIsYourPreviousAddressUk.error.from.month.range", List(1, 12)))
+    }
+
+    ".year" - {
+      behave like mandatoryField(form, "from.year", FormError("from.year", "whatIsYourPreviousAddressUk.error.from.year.required"))
+
+      behave like intFieldWithRange(form, "from.year", 1900, LocalDate.now().getYear, FormError("from.year", "whatIsYourPreviousAddressUk.error.from.year.range", List(1900, LocalDate.now().getYear)))
+    }
+
   }
 
   ".to" - {
@@ -138,27 +148,48 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
     val validData = datesBetween(
       min = LocalDate.of(2000, 1, 1),
       max = LocalDate.now(ZoneOffset.UTC)
-    )
+    ).map(YearMonth.from(_))
 
-    behave like dateField(form, "from", validData)
+    behave like yearMonthField(form, "to", validData)
 
-    behave like mandatoryDateField(form, "from", "whatIsYourPreviousAddressUk.error.from.required.all")
+    ".month" - {
+      behave like mandatoryField(form, "to.month", FormError("to.month", "whatIsYourPreviousAddressUk.error.to.month.required"))
 
-    behave like dateFieldWithMax(form, "from", LocalDate.now, FormError("from", "whatIsYourPreviousAddressUk.error.from.past"))
+      behave like intFieldWithRange(form, "to.month", 1, 12, FormError("to.month", "whatIsYourPreviousAddressUk.error.to.month.range", List(1, 12)))
+    }
+
+    ".year" - {
+      behave like mandatoryField(form, "to.year", FormError("to.year", "whatIsYourPreviousAddressUk.error.to.year.required"))
+
+      behave like intFieldWithRange(form, "to.year", 1, LocalDate.now().getYear, FormError("to.year", "whatIsYourPreviousAddressUk.error.to.year.range", List(1900, LocalDate.now().getYear)))
+    }
   }
 
   "form" - {
 
+    "must bind if start date and end date match" in {
+      val date = LocalDate.now
+
+      val data = Map(
+        "from.month"   -> date.getMonthValue.toString,
+        "from.year"    -> date.getYear.toString,
+        "to.month"     -> date.getMonthValue.toString,
+        "to.year"      -> date.getYear.toString,
+        "addressLine1" -> "line 1",
+        "postcode"     -> "postcode"
+      )
+
+      form.bind(data).value.value mustBe PreviousAddressUk("line 1", None, None, "postcode", YearMonth.from(date), YearMonth.from(date))
+    }
+
     "must give an error if start date is not before end date" in {
 
       val startDate = LocalDate.now
-      val endDate   = startDate.minusDays(1)
+      val endDate   = startDate.minusMonths(1)
 
       val data = Map(
-        "from.day"     -> startDate.getDayOfMonth.toString,
         "from.month"   -> startDate.getMonthValue.toString,
         "from.year"    -> startDate.getYear.toString,
-        "to.day"       -> endDate.getDayOfMonth.toString,
         "to.month"     -> endDate.getMonthValue.toString,
         "to.year"      -> endDate.getYear.toString,
         "addressLine1" -> "line 1",
@@ -167,6 +198,44 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
 
       val result = form.bind(data)
       result.errors must contain only FormError("", "whatIsYourPreviousAddressUk.error.datesOutOfOrder")
+    }
+
+    "must give an error if start date is in the future" in {
+
+      val startDate = YearMonth.now().plusMonths(1)
+      val endDate = YearMonth.now()
+
+      val data = Map(
+        "from.month"   -> startDate.getMonthValue.toString,
+        "from.year"    -> startDate.getYear.toString,
+        "to.month"     -> endDate.getMonthValue.toString,
+        "to.year"      -> endDate.getYear.toString,
+        "addressLine1" -> "line 1",
+        "postcode"     -> "postcode"
+      )
+
+      val result = form.bind(data)
+      result.errors must contain(FormError("", "whatIsYourPreviousAddressUk.error.dateInFuture"))
+
+    }
+
+    "must give an error if end date is in the future" in {
+
+      val startDate = YearMonth.now()
+      val endDate = YearMonth.now().plusMonths(1)
+
+      val data = Map(
+        "from.month"   -> startDate.getMonthValue.toString,
+        "from.year"    -> startDate.getYear.toString,
+        "to.month"     -> endDate.getMonthValue.toString,
+        "to.year"      -> endDate.getYear.toString,
+        "addressLine1" -> "line 1",
+        "postcode"     -> "postcode"
+      )
+
+      val result = form.bind(data)
+      result.errors must contain(FormError("", "whatIsYourPreviousAddressUk.error.dateInFuture"))
+
     }
   }
 }

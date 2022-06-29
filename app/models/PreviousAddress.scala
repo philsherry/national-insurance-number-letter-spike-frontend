@@ -16,7 +16,7 @@
 
 package models
 
-import java.time.LocalDate
+import java.time.YearMonth
 
 abstract class PreviousAddress extends Product with Serializable {
 
@@ -28,6 +28,6 @@ abstract class PreviousAddress extends Product with Serializable {
   def countryOption: Option[Country]
 
   def lines: List[String]
-  def from: LocalDate
-  def to: LocalDate
+  def from: YearMonth
+  def to: YearMonth
 }
