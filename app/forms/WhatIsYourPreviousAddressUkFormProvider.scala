@@ -67,8 +67,8 @@ class WhatIsYourPreviousAddressUkFormProvider @Inject() extends Mappings {
        a.from.getMonthValue, a.from.getYear,
        a.to.getMonthValue, a.to.getYear
      )))
-       .verifying("whatIsYourPreviousAddressInternational.error.dateInFuture", x => {
-         x.from.isAfter(YearMonth.now()) || x.to.isAfter(YearMonth.now())
+       .verifying("whatIsYourPreviousAddressUk.error.dateInFuture", x => {
+         !x.from.isAfter(YearMonth.now()) && !x.to.isAfter(YearMonth.now())
        })
        .verifying("whatIsYourPreviousAddressUk.error.datesOutOfOrder", x => {
        (x.from isBefore x.to) || (x.from == x.to)

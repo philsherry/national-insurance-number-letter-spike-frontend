@@ -72,7 +72,7 @@ class WhatIsYourPreviousAddressInternationalFormProvider @Inject() extends Mappi
        a.to.getYear, a.to.getMonthValue
      )))
        .verifying("whatIsYourPreviousAddressInternational.error.dateInFuture", x => {
-         x.from.isAfter(YearMonth.now()) || x.to.isAfter(YearMonth.now())
+         !x.from.isAfter(YearMonth.now()) && !x.to.isAfter(YearMonth.now())
        })
        .verifying("whatIsYourPreviousAddressInternational.error.datesOutOfOrder", x => {
        (x.from isBefore x.to) || (x.from == x.to)

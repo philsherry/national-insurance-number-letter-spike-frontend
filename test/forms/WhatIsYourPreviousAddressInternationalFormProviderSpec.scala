@@ -207,5 +207,43 @@ class WhatIsYourPreviousAddressInternationalFormProviderSpec extends StringField
       val result = form.bind(data)
       result.errors must contain only FormError("", "whatIsYourPreviousAddressInternational.error.datesOutOfOrder")
     }
+
+    "must give an error if start date is in the future" in {
+
+      val startDate = YearMonth.now().plusMonths(1)
+      val endDate = YearMonth.now()
+
+      val data = Map(
+        "from.month"   -> startDate.getMonthValue.toString,
+        "from.year"    -> startDate.getYear.toString,
+        "to.month"     -> endDate.getMonthValue.toString,
+        "to.year"      -> endDate.getYear.toString,
+        "addressLine1" -> "line 1",
+        "country"      -> "FR"
+      )
+
+      val result = form.bind(data)
+      result.errors must contain(FormError("", "whatIsYourPreviousAddressInternational.error.dateInFuture"))
+
+    }
+
+    "must give an error if end date is in the future" in {
+
+      val startDate = YearMonth.now()
+      val endDate = YearMonth.now().plusMonths(1)
+
+      val data = Map(
+        "from.month"   -> startDate.getMonthValue.toString,
+        "from.year"    -> startDate.getYear.toString,
+        "to.month"     -> endDate.getMonthValue.toString,
+        "to.year"      -> endDate.getYear.toString,
+        "addressLine1" -> "line 1",
+        "country"      -> "FR"
+      )
+
+      val result = form.bind(data)
+      result.errors must contain(FormError("", "whatIsYourPreviousAddressInternational.error.dateInFuture"))
+
+    }
   }
 }
