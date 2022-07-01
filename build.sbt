@@ -49,6 +49,13 @@ lazy val root = (project in file("."))
       baseDirectory.value.getCanonicalPath,
       "-Wconf:cat=deprecation:ws,cat=feature:ws,cat=optimizer:ws,src=target/.*:s"
     ),
+    javacOptions := Seq(
+      "-Xlint",
+      "-encoding",
+      "UTF-8",
+      "--release",
+      "11"
+    ),
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
     evictionWarningOptions in update :=
@@ -71,10 +78,7 @@ lazy val root = (project in file("."))
   )
 
 lazy val testSettings: Seq[Def.Setting[_]] = Seq(
-  fork        := true,
-  javaOptions ++= Seq(
-    "-Dconfig.resource=test.application.conf"
-  ),
+  fork := true,
   unmanagedSourceDirectories += baseDirectory.value / "test-utils"
 )
 
@@ -87,8 +91,5 @@ lazy val itSettings = Defaults.itSettings ++ Seq(
     baseDirectory.value / "it" / "resources"
   ),
   parallelExecution := false,
-  fork := true,
-  javaOptions ++= Seq(
-    "-Dconfig.resource=it.application.conf"
-  )
+  fork := true
 )
