@@ -17,6 +17,7 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import models.CurrentAddressUk
 import play.api.data.FormError
 
 class WhatIsYourCurrentAddressUkFormProviderSpec extends StringFieldBehaviours {
@@ -73,6 +74,7 @@ class WhatIsYourCurrentAddressUkFormProviderSpec extends StringFieldBehaviours {
   ".addressLine3" - {
 
     val fieldName = "addressLine3"
+    val requiredKey = "whatIsYourCurrentAddressUk.error.addressLine3.required"
     val lengthKey = "whatIsYourCurrentAddressUk.error.addressLine3.length"
     val maxLength = 100
 
@@ -87,6 +89,12 @@ class WhatIsYourCurrentAddressUkFormProviderSpec extends StringFieldBehaviours {
       fieldName,
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
     )
   }
 
@@ -115,5 +123,27 @@ class WhatIsYourCurrentAddressUkFormProviderSpec extends StringFieldBehaviours {
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
     )
+  }
+
+  "unapply" - {
+
+    "must leave line 2 and line 3 unchanged if line 3 is present" in {
+      val address = CurrentAddressUk("line 1", Some("line 2"), Some("line 3"), "postcode")
+
+      val filled = form.fill(address)
+
+      filled("addressLine2").value mustBe Some("line 2")
+      filled("addressLine3").value mustBe Some("line 3")
+    }
+
+    "must swap line 2 to line 3 if line 3 is not present" in {
+      val address = CurrentAddressUk("line 1", Some("line 2"), None, "postcode")
+
+      val filled = form.fill(address)
+
+      filled("addressLine2").value mustBe None
+      filled("addressLine3").value mustBe Some("line 2")
+    }
+
   }
 }
