@@ -107,6 +107,7 @@ class WhatIsYourPreviousAddressUkControllerSpec extends SpecBase with MockitoSug
           FakeRequest(POST, whatIsYourPreviousAddressUkRoute)
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
+              "addressLine3" -> "value 3",
               "postcode" -> "postcode",
               "from.month" -> startDate.getMonthValue.toString, "from.year" -> startDate.getYear.toString,
               "to.month" -> endDate.getMonthValue.toString, "to.year" -> endDate.getYear.toString
