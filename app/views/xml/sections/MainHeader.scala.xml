@@ -31,6 +31,7 @@
         <fo:inline font-weight="bold">@messages("pdf.personalDetails.nino"): </fo:inline>@model.nino.getOrElse(messages("pdf.personalDetails.noNino"))
         <fo:inline padding-left="2cm" font-weight="bold">@messages("pdf.personalDetails.dob"): </fo:inline>@(model.dob)
     </fo:block>
+    <fo:block margin-bottom="1mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.title"): </fo:inline>@if(model.name.title.isDefined){@model.name.title.get} else {}</fo:block>
     <fo:block margin-bottom="1mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.firstName"): </fo:inline>@model.name.firstName</fo:block>
     <fo:block margin-bottom="1mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.middleNames"): </fo:inline>@if(model.name.middleNames.isDefined){@model.name.middleNames.get} else {}</fo:block>
     <fo:block margin-bottom="1mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.lastName"): </fo:inline>@model.name.lastName</fo:block>

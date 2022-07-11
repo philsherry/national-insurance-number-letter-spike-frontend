@@ -842,6 +842,7 @@ pdf.nextSteps.documentsToInclude.plural = You must include photocopies of the fo
 pdf.nextSteps.documents.warning = If you send an original document we can not guarantee that it will be returned to you.
 
 pdf.personalDetails = Personal details
+pdf.personalDetails.title = Title
 pdf.personalDetails.firstName = First name
 pdf.personalDetails.middleNames = Middle names
 pdf.personalDetails.lastName = Last name
