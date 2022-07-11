@@ -31,10 +31,18 @@ class WhatIsYourCurrentAddressUkFormProvider @Inject() extends Mappings {
          .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine1.length")),
        "addressLine2" -> optional(text("whatIsYourCurrentAddressUk.error.addressLine2.required")
          .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine2.length"))),
-       "addressLine3" -> optional(text("whatIsYourCurrentAddressUk.error.addressLine3.required")
-         .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine3.length"))),
+       "addressLine3" -> text("whatIsYourCurrentAddressUk.error.addressLine3.required")
+         .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.addressLine3.length")),
        "postcode" -> text("whatIsYourCurrentAddressUk.error.postcode.required")
          .verifying(maxLength(100, "whatIsYourCurrentAddressUk.error.postcode.length"))
-    )(CurrentAddressUk.apply)(CurrentAddressUk.unapply)
+    )(
+       (line1, line2, line3, postcode) => CurrentAddressUk.apply(line1, line2, Some(line3), postcode)
+     )(
+       // Temporary until model can be updated to enforce town or city as mandatory
+       addr => addr.addressLine3 match {
+         case Some(line3) => Some((addr.addressLine1, addr.addressLine2, line3, addr.postcode))
+         case None => Some((addr.addressLine1, None, addr.addressLine2.getOrElse(""), addr.postcode))
+       }
+     )
    )
  }

@@ -17,8 +17,6 @@
 package viewmodels
 
 import models._
-import pages._
-import queries._
 import java.time.format.DateTimeFormatter
 
 final case class PrintModel(

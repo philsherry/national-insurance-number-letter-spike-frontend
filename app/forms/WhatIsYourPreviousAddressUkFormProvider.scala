@@ -32,8 +32,8 @@ class WhatIsYourPreviousAddressUkFormProvider @Inject() extends Mappings {
          .verifying(maxLength(100, "whatIsYourPreviousAddressUk.error.addressLine1.length")),
        "addressLine2" -> optional(text("whatIsYourPreviousAddressUk.error.addressLine2.required")
          .verifying(maxLength(100, "whatIsYourPreviousAddressUk.error.addressLine2.length"))),
-       "addressLine3" -> optional(text("whatIsYourPreviousAddressUk.error.addressLine3.required")
-         .verifying(maxLength(100, "whatIsYourPreviousAddressUk.error.addressLine3.length"))),
+       "addressLine3" -> text("whatIsYourPreviousAddressUk.error.addressLine3.required")
+         .verifying(maxLength(100, "whatIsYourPreviousAddressUk.error.addressLine3.length")),
        "postcode" -> text("whatIsYourPreviousAddressUk.error.postcode.required")
          .verifying(maxLength(100, "whatIsYourPreviousAddressUk.error.postcode.length")),
        "from.month" -> int(
@@ -58,15 +58,23 @@ class WhatIsYourPreviousAddressUkFormProvider @Inject() extends Mappings {
        ).verifying(inRange(1900, LocalDate.now().getYear, "whatIsYourPreviousAddressUk.error.to.year.range")),
     ){ (line1, line2, line3, postcode, fromMonth, fromYear, toMonth, toYear) =>
        PreviousAddressUk(
-         line1, line2, line3, postcode,
+         line1, line2, Some(line3), postcode,
          from = YearMonth.of(fromYear, fromMonth),
          to = YearMonth.of(toYear, toMonth)
        )
-     }(a => Some((
-       a.addressLine1, a.addressLine2, a.addressLine3, a.postcode,
-       a.from.getMonthValue, a.from.getYear,
-       a.to.getMonthValue, a.to.getYear
-     )))
+     }{a =>
+       // Temporary until model can be updated to enforce town or city as mandatory
+       val (line2, line3) = a.addressLine3 match {
+         case Some(_) => (a.addressLine2, a.addressLine3)
+         case None => (None, a.addressLine2)
+       }
+
+       Some((
+         a.addressLine1, line2, line3.getOrElse(""), a.postcode,
+         a.from.getMonthValue, a.from.getYear,
+         a.to.getMonthValue, a.to.getYear
+       ))
+     }
        .verifying("whatIsYourPreviousAddressUk.error.dateInFuture", x => {
          !x.from.isAfter(YearMonth.now()) && !x.to.isAfter(YearMonth.now())
        })

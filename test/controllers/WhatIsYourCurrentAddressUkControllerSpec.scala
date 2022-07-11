@@ -43,7 +43,7 @@ class WhatIsYourCurrentAddressUkControllerSpec extends SpecBase with MockitoSuga
   lazy val whatIsYourCurrentAddressUkRoute = routes.WhatIsYourCurrentAddressUkController.onPageLoad(NormalMode).url
 
   val validData = CurrentAddressUk(
-    addressLine1 = "value 1", addressLine2 = None, addressLine3 = None, postcode = "postcode"
+    addressLine1 = "value 1", addressLine2 = None, addressLine3 = Some("value 3"), postcode = "postcode"
   )
 
   val userAnswers = UserAnswers(userAnswersId)
@@ -103,6 +103,7 @@ class WhatIsYourCurrentAddressUkControllerSpec extends SpecBase with MockitoSuga
           FakeRequest(POST, whatIsYourCurrentAddressUkRoute)
             .withFormUrlEncodedBody(
               "addressLine1" -> "value 1",
+              "addressLine3" -> "value 3",
               "postcode" -> "postcode"
             )
 

@@ -23,6 +23,21 @@
 
 <fo:block font-size="18pt" font-weight="bold" margin-bottom="0.5cm">@messages("pdf.personalDetails")</fo:block>
 
+@if(model.previousNames.nonEmpty) {
+    <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+        <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.personalDetails.previousNames"): </fo:inline></fo:block>
+        <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
+            @for(previousName <- model.previousNames) {
+                <fo:block-container margin-bottom="0.5cm">
+                    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousFirstName"): </fo:inline>@previousName.firstName</fo:block>
+                    @if(previousName.middleNames.isDefined) {<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousMiddleNames"): </fo:inline>@previousName.middleNames</fo:block>}
+                    <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousLastName"): </fo:inline>@previousName.lastName</fo:block>
+                </fo:block-container>
+            }
+        </fo:block-container>
+    </fo:block-container>
+}
+
 <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm" keep-together="always">
     <fo:block margin-bottom="2mm" font-weight="bold">
         <fo:inline font-weight="bold">@messages("pdf.addressHistory.current"): </fo:inline>
@@ -50,21 +65,6 @@
                 <fo:block margin-bottom="0.5cm"/>
             </fo:block-container>
         }
-    </fo:block-container>
-}
-
-@if(model.previousNames.nonEmpty) {
-    <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-        <fo:block margin-bottom="2mm" font-weight="bold"><fo:inline>@messages("pdf.personalDetails.previousNames"): </fo:inline></fo:block>
-        <fo:block-container margin-left="0.5cm" margin-bottom="0.5cm">
-            @for(previousName <- model.previousNames) {
-            <fo:block-container margin-bottom="0.5cm">
-                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousFirstName"): </fo:inline>@previousName.firstName</fo:block>
-                @if(previousName.middleNames.isDefined) {<fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousMiddleNames"): </fo:inline>@previousName.middleNames</fo:block>}
-                <fo:block margin-bottom="2mm"><fo:inline font-weight="bold">@messages("pdf.personalDetails.previousLastName"): </fo:inline>@previousName.lastName</fo:block>
-            </fo:block-container>
-            }
-        </fo:block-container>
     </fo:block-container>
 }
 

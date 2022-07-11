@@ -76,6 +76,7 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
   ".addressLine3" - {
 
     val fieldName = "addressLine3"
+    val requiredKey = "whatIsYourPreviousAddressUk.error.addressLine3.required"
     val lengthKey = "whatIsYourPreviousAddressUk.error.addressLine3.length"
     val maxLength = 100
 
@@ -90,6 +91,12 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
       fieldName,
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
     )
   }
 
@@ -176,10 +183,11 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
         "to.month"     -> date.getMonthValue.toString,
         "to.year"      -> date.getYear.toString,
         "addressLine1" -> "line 1",
+        "addressLine3" -> "line 3",
         "postcode"     -> "postcode"
       )
 
-      form.bind(data).value.value mustBe PreviousAddressUk("line 1", None, None, "postcode", YearMonth.from(date), YearMonth.from(date))
+      form.bind(data).value.value mustBe PreviousAddressUk("line 1", None, Some("line 3"), "postcode", YearMonth.from(date), YearMonth.from(date))
     }
 
     "must give an error if start date is not before end date" in {
@@ -193,6 +201,7 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
         "to.month"     -> endDate.getMonthValue.toString,
         "to.year"      -> endDate.getYear.toString,
         "addressLine1" -> "line 1",
+        "addressLine3" -> "line 3",
         "postcode"     -> "postcode"
       )
 
@@ -211,6 +220,7 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
         "to.month"     -> endDate.getMonthValue.toString,
         "to.year"      -> endDate.getYear.toString,
         "addressLine1" -> "line 1",
+        "addressLine3" -> "line 3",
         "postcode"     -> "postcode"
       )
 
@@ -230,6 +240,7 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
         "to.month"     -> endDate.getMonthValue.toString,
         "to.year"      -> endDate.getYear.toString,
         "addressLine1" -> "line 1",
+        "addressLine3" -> "line 3",
         "postcode"     -> "postcode"
       )
 
@@ -237,5 +248,27 @@ class WhatIsYourPreviousAddressUkFormProviderSpec extends StringFieldBehaviours 
       result.errors must contain(FormError("", "whatIsYourPreviousAddressUk.error.dateInFuture"))
 
     }
+  }
+
+  "unapply" - {
+
+    "must leave line 2 and line 3 unchanged if line 3 is present" in {
+      val address = PreviousAddressUk("line 1", Some("line 2"), Some("line 3"), "postcode", YearMonth.now(), YearMonth.now())
+
+      val filled = form.fill(address)
+
+      filled("addressLine2").value mustBe Some("line 2")
+      filled("addressLine3").value mustBe Some("line 3")
+    }
+
+    "must swap line 2 to line 3 if line 3 is not present" in {
+      val address = PreviousAddressUk("line 1", Some("line 2"), None, "postcode", YearMonth.now(), YearMonth.now())
+
+      val filled = form.fill(address)
+
+      filled("addressLine2").value mustBe None
+      filled("addressLine3").value mustBe Some("line 2")
+    }
+
   }
 }
