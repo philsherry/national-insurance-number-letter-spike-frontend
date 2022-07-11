@@ -39,13 +39,9 @@ class WhatIsYourCurrentAddressUkFormProvider @Inject() extends Mappings {
        (line1, line2, line3, postcode) => CurrentAddressUk.apply(line1, line2, Some(line3), postcode)
      )(
        // Temporary until model can be updated to enforce town or city as mandatory
-       addr => {
-         val res = addr.addressLine3 match {
-           case Some(line3) => Some((addr.addressLine1, addr.addressLine2, line3, addr.postcode))
-           case None => Some((addr.addressLine1, None, addr.addressLine2.getOrElse(""), addr.postcode))
-         }
-         println(s"$addr => $res")
-         res
+       addr => addr.addressLine3 match {
+         case Some(line3) => Some((addr.addressLine1, addr.addressLine2, line3, addr.postcode))
+         case None => Some((addr.addressLine1, None, addr.addressLine2.getOrElse(""), addr.postcode))
        }
      )
    )
