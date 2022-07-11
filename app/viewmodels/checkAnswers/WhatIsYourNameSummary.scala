@@ -32,7 +32,7 @@ object WhatIsYourNameSummary  {
     answers.get(WhatIsYourNamePage).map {
       answer =>
 
-        val value = List(Some(answer.firstName), answer.middleNames, Some(answer.lastName))
+        val value = List(answer.title, Some(answer.firstName), answer.middleNames, Some(answer.lastName))
           .flatten.map(HtmlFormat.escape(_).toString)
           .mkString("<br/>")
 
