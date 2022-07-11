@@ -49,13 +49,6 @@ lazy val root = (project in file("."))
       baseDirectory.value.getCanonicalPath,
       "-Wconf:cat=deprecation:ws,cat=feature:ws,cat=optimizer:ws,src=target/.*:s"
     ),
-    javacOptions := Seq(
-      "-Xlint",
-      "-encoding",
-      "UTF-8",
-      "--release",
-      "11"
-    ),
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
     evictionWarningOptions in update :=
