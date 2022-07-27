@@ -15,37 +15,53 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukCheckboxes: GovukCheckboxes,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukCheckboxes: GovukCheckboxes,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whichAlternativeDocuments.title"), Some(messages("section.supportingDocuments")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whichAlternativeDocuments.title"),
+    Some(messages("section.supportingDocuments"))
+  )
+) {
 
-    @formHelper(action = routes.WhichAlternativeDocumentsController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.WhichAlternativeDocumentsController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
-        }
-
-        @govukCheckboxes(
-            CheckboxesViewModel(
-                form   = form,
-                name   = "value",
-                legend = HmrcPageHeadingLegend(
-                    content = messages("whichAlternativeDocuments.heading"),
-                    caption = HmrcSectionCaption(messages("section.supportingDocuments"))
-                ),
-                items  = AlternativeDocuments.checkboxItems
-            ).withHint(Hint(content = "whichAlternativeDocuments.hint"))
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(
+        ErrorSummaryViewModel(
+          form,
+          errorLinkOverrides = Map("value" -> "value_0")
+      ))
     }
+
+    @govukCheckboxes(
+      CheckboxesViewModel(
+        form   = form,
+        name   = "value",
+        legend = HmrcPageHeadingLegend(
+          content = messages("whichAlternativeDocuments.heading"),
+          caption = HmrcSectionCaption(messages("section.supportingDocuments"))
+        ),
+        items  = AlternativeDocuments.checkboxItems
+      ).withHint(Hint(content = "whichAlternativeDocuments.hint"))
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

@@ -15,70 +15,91 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton,
-    hmrcListWithActions: HmrcListWithActions,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton,
+  hmrcListWithActions: HmrcListWithActions,
+  h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], items: Seq[ListWithActionsItem], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  items: Seq[ListWithActionsItem],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
 @titleText = @{
-    items.length match {
-        case 0 => messages("doYouHaveAPreviousName.title")
-        case 1 => messages("doYouHaveAPreviousName.add.title")
-        case _ => messages("doYouHaveAPreviousName.add.title.plural", items.length)
-    }
+  items.length match {
+    case 0 => messages("doYouHaveAPreviousName.title")
+    case 1 => messages("doYouHaveAPreviousName.add.title")
+    case _ => messages("doYouHaveAPreviousName.add.title.plural", items.length)
+  }
 }
 
 @headingText = @{
-    items.length match {
-        case 1 => messages("doYouHaveAPreviousName.add.heading")
-        case _ => messages("doYouHaveAPreviousName.add.heading.plural", items.length)
-    }
+  items.length match {
+    case 1 => messages("doYouHaveAPreviousName.add.heading")
+    case _ => messages("doYouHaveAPreviousName.add.heading.plural", items.length)
+  }
 }
 
-@layout(pageTitle = title(form, titleText, Some(messages("section.personalDetails")))) {
+@layout(
+  pageTitle = title(
+    form,
+    titleText,
+    Some(messages("section.personalDetails"))
+  )
+) {
 
-    @formHelper(action = routes.DoYouHaveAPreviousNameController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.DoYouHaveAPreviousNameController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @if(items.isEmpty) {
-
-            @govukRadios(
-                RadiosViewModel.yesNo(
-                    field = form("value"),
-                    legend = HmrcPageHeadingLegend(
-                        content = messages("doYouHaveAPreviousName.heading"),
-                        caption = HmrcSectionCaption(messages("section.personalDetails"))
-                    )
-                )
-            )
-        } else {
-            @h1WithCaption(
-                content = headingText,
-                caption = messages("section.personalDetails")
-            )
-
-            @hmrcListWithActions(ListWithActions(items = items, classes = "govuk-!-margin-bottom-9"))
-
-            @govukRadios(
-                RadiosViewModel.yesNo(
-                    field = form("value"),
-                    legend = LegendViewModel(messages("doYouHaveAPreviousName.add.legend"))
-                    .withCssClass("govuk-fieldset__legend--m")
-                )
-            )
-        }
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @if(items.isEmpty) {
+
+      @govukRadios(
+        RadiosViewModel.yesNo(
+          field = form("value"),
+          legend = HmrcPageHeadingLegend(
+            content = messages("doYouHaveAPreviousName.heading"),
+            caption = HmrcSectionCaption(messages("section.personalDetails"))
+          )
+        )
+      )
+
+    } else {
+
+      @h1WithCaption(
+        caption = messages("section.personalDetails"),
+        context = messages("thisSectionIs"),
+        heading = headingText
+      )
+
+      @hmrcListWithActions(
+        ListWithActions(
+          items = items,
+          classes = "govuk-!-margin-bottom-9"
+      ))
+
+      @govukRadios(
+        RadiosViewModel.yesNo(
+          field = form("value"),
+          legend = LegendViewModel(
+            messages("doYouHaveAPreviousName.add.legend")
+          ).withCssClass("govuk-fieldset__legend--m")
+        )
+      )
+    }
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

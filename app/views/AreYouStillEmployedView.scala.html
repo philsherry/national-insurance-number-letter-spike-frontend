@@ -15,35 +15,49 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], index: Index, mode: Mode, employerName: String)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  index: Index,
+  mode: Mode,
+  employerName: String
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("areYouStillEmployed.title"), Some(messages("section.employmentHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("areYouStillEmployed.title"),
+    Some(messages("section.employmentHistory"))
+  )
+) {
 
-    @formHelper(action = routes.AreYouStillEmployedController.onSubmit(index, mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.AreYouStillEmployedController.onSubmit(index, mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("areYouStillEmployed.heading", employerName),
-                    caption = HmrcSectionCaption(messages("section.employmentHistory"))
-                )
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @govukRadios(
+      RadiosViewModel.yesNo(
+        field = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("areYouStillEmployed.heading", employerName),
+          caption = HmrcSectionCaption(messages("section.employmentHistory"))
+        )
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

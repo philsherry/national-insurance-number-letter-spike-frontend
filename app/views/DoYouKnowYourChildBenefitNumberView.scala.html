@@ -15,35 +15,47 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("doYouKnowYourChildBenefitNumber.title"), Some(messages("section.benefitHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("doYouKnowYourChildBenefitNumber.title"),
+    Some(messages("section.benefitHistory"))
+  )
+) {
 
-    @formHelper(action = routes.DoYouKnowYourChildBenefitNumberController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.DoYouKnowYourChildBenefitNumberController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("doYouKnowYourChildBenefitNumber.heading"),
-                    caption = HmrcSectionCaption(messages("section.benefitHistory"))
-                )
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @govukRadios(
+      RadiosViewModel.yesNo(
+        field = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("doYouKnowYourChildBenefitNumber.heading"),
+          caption = HmrcSectionCaption(messages("section.benefitHistory"))
+        )
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

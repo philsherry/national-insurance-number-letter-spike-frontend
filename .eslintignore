@@ -1,0 +1,6 @@
+## ESlint ignores everything in this file
+
+*.md
+lib/
+vendor/
+app/assets/javascripts/accessible-autocomplete.js

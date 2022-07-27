@@ -17,41 +17,53 @@
 @import viewmodels.InputWidth._
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukCharacterCount : GovukCharacterCount,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukCharacterCount : GovukCharacterCount,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatOtherUkBenefitsHaveYouReceived.title"), Some(messages("section.benefitHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatOtherUkBenefitsHaveYouReceived.title"),
+    Some(messages("section.benefitHistory"))
+  )
+) {
 
-    @formHelper(action = routes.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode)) {
+  @formHelper(
+    action = routes.WhatOtherUkBenefitsHaveYouReceivedController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @govukCharacterCount(
-            uk.gov.hmrc.govukfrontend.views.html.components.CharacterCount(
-                id = form("value").id,
-                name = form("value").id,
-                maxLength = Some(250),
-                label = HmrcPageHeadingLabel(
-                    content = Text(messages("whatOtherUkBenefitsHaveYouReceived.heading")),
-                    caption = HmrcSectionCaption(messages("section.benefitHistory"))
-                ),
-                value = form("value").value,
-                hint = Some(Hint(
-                content = Text(messages("whatOtherUkBenefitsHaveYouReceived.hint"))
-                ))
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @govukCharacterCount(
+      uk.gov.hmrc.govukfrontend.views.html.components.CharacterCount(
+          id = form("value").id,
+          name = form("value").id,
+          maxLength = Some(250),
+          label = HmrcPageHeadingLabel(
+            content = Text(messages("whatOtherUkBenefitsHaveYouReceived.heading")),
+            caption = HmrcSectionCaption(messages("section.benefitHistory"))
+          ),
+          value = form("value").value,
+          hint = Some(Hint(
+          content = Text(messages("whatOtherUkBenefitsHaveYouReceived.hint"))
+        ))
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

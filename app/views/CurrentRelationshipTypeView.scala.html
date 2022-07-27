@@ -15,36 +15,48 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton,
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton,
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("currentRelationshipType.title"), Some(messages("section.relationshipHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("currentRelationshipType.title"),
+    Some(messages("section.relationshipHistory"))
+  )
+) {
 
-    @formHelper(action = routes.CurrentRelationshipTypeController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.CurrentRelationshipTypeController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
-        }
-
-        @govukRadios(
-            RadiosViewModel(
-                field  = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("currentRelationshipType.heading"),
-                    caption = HmrcSectionCaption(messages("section.relationshipHistory"))
-                ),
-                items  = CurrentRelationshipType.options
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
     }
+
+    @govukRadios(
+      RadiosViewModel(
+        field  = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("currentRelationshipType.heading"),
+          caption = HmrcSectionCaption(messages("section.relationshipHistory"))
+        ),
+        items  = CurrentRelationshipType.options
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

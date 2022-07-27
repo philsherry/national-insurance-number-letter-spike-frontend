@@ -15,37 +15,53 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourGender.title"), Some(messages("section.personalDetails")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatIsYourGender.title"),
+    Some(messages("section.personalDetails"))
+  )
+) {
 
-    @formHelper(action = routes.WhatIsYourGenderController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.WhatIsYourGenderController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
-        }
-
-        @govukRadios(
-            RadiosViewModel(
-                field  = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("whatIsYourGender.heading"),
-                    caption = HmrcSectionCaption(messages("section.personalDetails"))
-                ),
-                items  = WhatIsYourGender.options
-            )
-            .withHint(Hint(content = messages("whatIsYourGender.hint")))
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(
+        ErrorSummaryViewModel(
+          form,
+          errorLinkOverrides = Map("value" -> "value_0")
+      ))
     }
+
+    @govukRadios(
+      RadiosViewModel(
+        field  = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("whatIsYourGender.heading"),
+          caption = HmrcSectionCaption(messages("section.personalDetails"))
+        ),
+        items  = WhatIsYourGender.options
+      )
+      .withHint(Hint(content = messages("whatIsYourGender.hint")))
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

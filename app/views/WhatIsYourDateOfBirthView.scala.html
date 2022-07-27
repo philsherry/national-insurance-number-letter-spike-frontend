@@ -15,37 +15,52 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukDateInput: GovukDateInput,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukDateInput: GovukDateInput,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourDateOfBirth.title"), Some(messages("section.personalDetails")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatIsYourDateOfBirth.title"),
+    Some(messages("section.personalDetails"))
+  )
+) {
 
-    @formHelper(action = routes.WhatIsYourDateOfBirthController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.WhatIsYourDateOfBirthController.onSubmit(mode)
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value.day")))
-        }
-
-        @govukDateInput(
-            DateViewModel(
-                field  = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("whatIsYourDateOfBirth.heading"),
-                    caption = HmrcSectionCaption(messages("section.personalDetails"))
-                )
-            )
-            .withHint(HintViewModel(messages("whatIsYourDateOfBirth.hint")))
-            .asDateOfBirth()
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(
+        ErrorSummaryViewModel(
+          form,
+          errorLinkOverrides = Map("value" -> "value.day")
+      ))
     }
+
+    @govukDateInput(
+      DateViewModel(
+        field  = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("whatIsYourDateOfBirth.heading"),
+          caption = HmrcSectionCaption(messages("section.personalDetails"))
+        )
+      )
+      .withHint(HintViewModel(messages("whatIsYourDateOfBirth.hint")))
+      .asDateOfBirth()
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

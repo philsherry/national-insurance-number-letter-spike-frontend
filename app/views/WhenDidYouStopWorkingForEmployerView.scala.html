@@ -15,36 +15,54 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukDateInput: GovukDateInput,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukDateInput: GovukDateInput,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], index: Index, mode: Mode, employerName: String)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  index: Index,
+  mode: Mode,
+  employerName: String
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whenDidYouStopWorkingForEmployer.title"), Some(messages("section.employmentHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whenDidYouStopWorkingForEmployer.title"),
+    Some(messages("section.employmentHistory"))
+  )
+) {
 
-    @formHelper(action = routes.WhenDidYouStopWorkingForEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.WhenDidYouStopWorkingForEmployerController.onSubmit(index, mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value.day")))
-        }
-
-        @govukDateInput(
-            DateViewModel(
-                field  = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("whenDidYouStopWorkingForEmployer.heading", employerName),
-                    caption = HmrcSectionCaption(messages("section.employmentHistory"))
-                )
-            )
-            .withHint(HintViewModel(messages("whenDidYouStopWorkingForEmployer.hint")))
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(
+        ErrorSummaryViewModel(
+          form,
+          errorLinkOverrides = Map("value" -> "value.day")
+      ))
     }
+
+    @govukDateInput(
+      DateViewModel(
+        field  = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("whenDidYouStopWorkingForEmployer.heading", employerName),
+          caption = HmrcSectionCaption(messages("section.employmentHistory"))
+        )
+      )
+      .withHint(HintViewModel(messages("whenDidYouStopWorkingForEmployer.hint")))
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

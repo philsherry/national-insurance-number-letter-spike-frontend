@@ -17,67 +17,79 @@
 @import viewmodels.InputWidth._
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukButton: GovukButton,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukInput: GovukInput,
+  govukButton: GovukButton,
+  h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourName.title"), Some(messages("section.personalDetails")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatIsYourName.title"),
+    Some(messages("section.personalDetails"))
+  )
+) {
 
-    @formHelper(action = routes.WhatIsYourNameController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.WhatIsYourNameController.onSubmit(mode)
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @h1WithCaption(
-            content = messages("whatIsYourName.heading"),
-            caption = messages("section.personalDetails")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("title"),
-                label = LabelViewModel(messages("whatIsYourName.titleField"))
-            )
-            .withWidth(Fixed20)
-            .withAutocomplete("honorific-prefix")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("firstName"),
-                label = LabelViewModel(messages("whatIsYourName.firstName"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("given-name")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("middleNames"),
-                label = LabelViewModel(messages("whatIsYourName.middleNames"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("additional-name")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("lastName"),
-                label = LabelViewModel(messages("whatIsYourName.lastName"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("family-name")
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @h1WithCaption(
+      caption = messages("section.personalDetails"),
+      context = messages("thisSectionIs"),
+      heading = messages("whatIsYourName.heading")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("title"),
+        label = LabelViewModel(messages("whatIsYourName.titleField"))
+      )
+      .withWidth(Fixed10)
+      .withAutocomplete("honorific-prefix")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("firstName"),
+        label = LabelViewModel(messages("whatIsYourName.firstName"))
+      )
+      .withWidth(Fixed20)
+      .withAutocomplete("given-name")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("middleNames"),
+        label = LabelViewModel(messages("whatIsYourName.middleNames"))
+      )
+      .withWidth(Fixed20)
+      .withAutocomplete("additional-name")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("lastName"),
+        label = LabelViewModel(messages("whatIsYourName.lastName"))
+      )
+      .withWidth(Fixed20)
+      .withAutocomplete("family-name")
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

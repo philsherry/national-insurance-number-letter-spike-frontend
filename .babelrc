@@ -1,0 +1,25 @@
+{
+  "env": {
+    "e2e": {
+      "plugins": ["istanbul", "transform-class-properties"],
+      "presets": ["@babel/env", "@babel/preset-react"]
+    },
+    "test": {
+      "plugins": [["istanbul", {
+        "exclude": ["**/*.spec.js"],
+        "useInlineSourceMaps": false
+      }], "@babel/plugin-transform-modules-commonjs"],
+      "presets": ["@babel/env"]
+    }
+  },
+  "presets": [["@babel/env", {
+    "corejs": "3.6.5",
+    "targets": {
+      "chrome": "67",
+      "edge": "17",
+      "firefox": "60",
+      "safari": "11.1"
+    },
+    "useBuiltIns": "usage"
+  }]]
+}

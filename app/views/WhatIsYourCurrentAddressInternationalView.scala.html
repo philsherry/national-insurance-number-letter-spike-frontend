@@ -17,77 +17,89 @@
 @import viewmodels.InputWidth._
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukButton: GovukButton,
-    govukSelect: GovukSelect,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukInput: GovukInput,
+  govukButton: GovukButton,
+  govukSelect: GovukSelect,
+  h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourCurrentAddressInternational.title"), Some(messages("section.addressHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatIsYourCurrentAddressInternational.title"),
+    Some(messages("section.addressHistory"))
+  )
+) {
 
-    @formHelper(action = routes.WhatIsYourCurrentAddressInternationalController.onSubmit(mode), 'autoComplete -> "on") {
+  @formHelper(
+    action = routes.WhatIsYourCurrentAddressInternationalController.onSubmit(mode)
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @h1WithCaption(
-            content = messages("whatIsYourCurrentAddressInternational.heading"),
-            caption = messages("section.addressHistory")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("addressLine1"),
-                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.addressLine1"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("address-line1")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("addressLine2"),
-                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.addressLine2"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("address-line2")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("addressLine3"),
-                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.addressLine3"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("address-line3")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("postcode"),
-                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.postcode"))
-            )
-            .withWidth(Fixed10)
-            .withAutocomplete("postal-code")
-        )
-
-        @govukSelect(
-            SelectViewModel(
-                field = form("country"),
-                label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.country")),
-                items = Country.selectItems(Country.internationalCountries)
-            )
-            .withCssClass("autocomplete")
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @h1WithCaption(
+      caption = messages("section.addressHistory"),
+      context = messages("thisSectionIs"),
+      heading = messages("whatIsYourCurrentAddressInternational.heading")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("addressLine1"),
+        label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.addressLine1"))
+      )
+      .withWidth(Full)
+      .withAutocomplete("address-line1")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("addressLine2"),
+        label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.addressLine2"))
+      )
+      .withWidth(Full)
+      .withAutocomplete("address-line2")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("addressLine3"),
+        label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.addressLine3"))
+      )
+      .withWidth(Fixed20)
+      .withAutocomplete("address-line3")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("postcode"),
+        label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.postcode"))
+      )
+      .withWidth(Fixed10)
+      .withAutocomplete("postal-code")
+    )
+
+    @govukSelect(
+      SelectViewModel(
+        field = form("country"),
+        label = LabelViewModel(messages("whatIsYourCurrentAddressInternational.country")),
+        items = Country.selectItems(Country.internationalCountries)
+      )
+      .withCssClass("autocomplete")
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

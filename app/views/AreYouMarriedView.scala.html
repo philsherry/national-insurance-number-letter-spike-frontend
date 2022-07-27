@@ -15,35 +15,47 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("areYouMarried.title"), Some(messages("section.relationshipHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("areYouMarried.title"),
+    Some(messages("section.relationshipHistory"))
+  )
+) {
 
-    @formHelper(action = routes.AreYouMarriedController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.AreYouMarriedController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("areYouMarried.heading"),
-                    caption = HmrcSectionCaption(messages("section.relationshipHistory"))
-                )
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @govukRadios(
+      RadiosViewModel.yesNo(
+        field = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("areYouMarried.heading"),
+          caption = HmrcSectionCaption(messages("section.relationshipHistory"))
+        )
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

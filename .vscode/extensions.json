@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "2gua.rainbow-brackets",
+    "bierner.github-markdown-preview",
+    "bierner.markdown-checkbox",
+    "bierner.markdown-emoji",
+    "bierner.markdown-preview-github-styles",
+    "bierner.markdown-prism",
+    "bierner.markdown-yaml-preamble",
+    "davidanson.vscode-markdownlint",
+    "esbenp.prettier-vscode",
+    "jebbs.markdown-extended",
+    "jerriepelser.copy-markdown-as-html",
+    "yzhang.markdown-all-in-one"
+  ]
+}

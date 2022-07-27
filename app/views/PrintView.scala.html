@@ -15,56 +15,87 @@
  *@
 
 @import viewmodels.PrintModel
+@import views.html.components.{Link, P}
 
 @this(
-        layout: templates.Layout,
-        govukButton: GovukButton,
-        govukInset: GovukInsetText,
-        govukPanel : GovukPanel,
-        govukWarningText : GovukWarningText
+  layout: templates.Layout,
+  govukButton: GovukButton,
+  govukInset: GovukInsetText,
+  govukPanel: GovukPanel,
+  govukWarningText: GovukWarningText,
+  link: Link,
+  p: P
 )
 
 @(model: PrintModel)(implicit request: Request[_], messages: Messages)
 
 @warningText = @{
-    model.primaryDocument.fold(
-        model.secondaryDocuments.fold(
-            messages("print.warning.none")
-        )(secondaryDocuments =>
-            messages("print.warning.multiple", secondaryDocuments.map(messages(_)):_*)
-        )
-    )(primaryDocument =>
-        messages("print.warning.single", messages(primaryDocument))
+  model.primaryDocument.fold(
+    model.secondaryDocuments.fold(
+      messages("print.warning.none")
+    )(secondaryDocuments =>
+      messages("print.warning.multiple", secondaryDocuments.map(messages(_)):_*)
     )
+  )(primaryDocument =>
+    messages("print.warning.single", messages(primaryDocument))
+  )
 }
 
-@layout(pageTitle = titleNoForm(messages("print.title"))) {
+@layout(
+  pageTitle = titleNoForm(messages("print.title"))
+) {
 
-    @govukPanel(Panel(title = messages("print.heading")))
+  @govukPanel(Panel(title = messages("print.heading")))
 
-    @if(!model.hasDocuments) {
-        <p class="govuk-body">@messages("print.p1.none")</p>
-    }
-
-    @for(primaryDocument <- model.primaryDocument) {
-        <p class="govuk-body">@messages("print.p1.single", messages(primaryDocument))</p>
-    }
-
-    @for(secondaryDocuments <- model.secondaryDocuments.map(_.map(messages(_)))) {
-        <p class="govuk-body">@messages("print.p1.multiple", secondaryDocuments:_*)</p>
-    }
-
-    @govukInset(
-        InsetText(content = HtmlContent("<p class=\"govuk-body\">" + messages("print.address1") + "<br/>" + messages("print.address2")+ "<br/>" + messages("print.address3") + "</p>"))
+  @if(!model.hasDocuments) {
+    @p(
+      content = messages("print.p1.none")
     )
+  }
 
-    <p class="govuk-body">@messages("print.p2.1") <a class="govuk-link" href="@routes.CheckYourAnswersController.onPageLoad">@messages("print.p2.change")</a> @messages("print.p2.2")
-    <a href="@routes.JourneyRecoveryController.onStartAgain.url" class="govuk-link">@messages("print.p2.restart")</a>.</p>
+  @for(primaryDocument <- model.primaryDocument) {
+    @p(
+      content = messages("print.p1.single", messages(primaryDocument))
+    )
+  }
 
-    @govukWarningText(WarningText(
-        iconFallbackText = "Warning",
-        content = warningText
-    ))
+  @for(secondaryDocuments <- model.secondaryDocuments.map(_.map(messages(_)))) {
+    @p(
+      content = messages("print.p1.multiple", secondaryDocuments:_*)
+    )
+  }
 
-    <a id="download" href="@routes.PrintController.onDownload" class="govuk-button" download>@messages("print.button")</a>
+  @govukInset(
+    InsetText(content = HtmlContent("<p class=\"govuk-body\">" + messages("print.address1") + "<br/>" + messages("print.address2")+ "<br/>" + messages("print.address3") + "</p>"))
+  )
+
+  @p(
+    content = HtmlContent(
+      messages("print.p2.1") + " " +
+      link(
+        inParagraph = true,
+        link = "@routes.CheckYourAnswersController.onPageLoad",
+        messageKey = "print.p2.change"
+      ) + " " +
+      messages("print.p2.2") + " " +
+      link(
+        fullStop = true,
+        inParagraph = true,
+        link = "@routes.JourneyRecoveryController.onStartAgain.url",
+        messageKey = "print.p2.restart"
+      )
+    )
+  )
+
+  @govukWarningText(WarningText(
+    iconFallbackText = "Warning",
+    content = warningText
+  ))
+
+  @link(
+    attrs = Map("id" -> "download"),
+    isDownloadable = true,
+    link = "@routes.PrintController.onDownload",
+    messageKey = "print.button",
+  )
 }

@@ -17,167 +17,192 @@
 @import viewmodels.InputWidth._
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukButton: GovukButton,
-    govukDateInput: GovukDateInput,
-    govukSelect: GovukSelect,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukInput: GovukInput,
+  govukButton: GovukButton,
+  govukDateInput: GovukDateInput,
+  govukSelect: GovukSelect,
+  h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  index: Index,
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
 @outOfOrderError = @{
-    form.errors.exists(_.messages.contains("whatIsYourPreviousAddressInternational.error.datesOutOfOrder"))
+  form.errors.exists(_.messages.contains("whatIsYourPreviousAddressInternational.error.datesOutOfOrder"))
 }
 
 @fromDateMonthError = @{
-    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.from.month")))
+  form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.from.month")))
 }
 
 @fromDateYearError = @{
-    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.from.year")))
+  form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.from.year")))
 }
 
 @fromDateErrorMessage = @{
-    form.errors
-        .find(_.messages.exists(err => err.startsWith("whatIsYourPreviousAddressInternational.error.from") || err.startsWith("whatIsYourPreviousAddressInternational.error.datesOutOfOrder")))
-        .map(err => ErrorMessage(content = Text(messages(err.message, err.args: _*))))
+  form.errors
+    .find(_.messages.exists(err => err.startsWith("whatIsYourPreviousAddressInternational.error.from") || err.startsWith("whatIsYourPreviousAddressInternational.error.datesOutOfOrder")))
+    .map(err => ErrorMessage(content = Text(messages(err.message, err.args: _*))))
 }
 
 @toDateMonthError = @{
-    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.to.month")))
+  form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.to.month")))
 }
 
 @toDateYearError = @{
-    form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.to.year")))
+  form.errors.exists(_.messages.exists(_.startsWith("whatIsYourPreviousAddressInternational.error.to.year")))
 }
 
 @toDateErrorMessage = @{
-    form.errors
-        .find(_.messages.exists(err => err.startsWith("whatIsYourPreviousAddressInternational.error.to")))
-        .map(err => ErrorMessage(content = Text(messages(err.message, err.args: _*))))
+  form.errors
+    .find(_.messages.exists(err => err.startsWith("whatIsYourPreviousAddressInternational.error.to")))
+    .map(err => ErrorMessage(content = Text(messages(err.message, err.args: _*))))
 }
 
-@layout(pageTitle = title(form, messages("whatIsYourPreviousAddressInternational.title"), Some(messages("section.addressHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatIsYourPreviousAddressInternational.title"),
+    Some(messages("section.addressHistory"))
+  )
+) {
 
-    @formHelper(action = routes.WhatIsYourPreviousAddressInternationalController.onSubmit(index, mode), 'autoComplete -> "on") {
+  @formHelper(
+    action = routes.WhatIsYourPreviousAddressInternationalController.onSubmit(index, mode)
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(
-                ErrorSummaryViewModel(
-                    form = form,
-                    errorLinkOverrides = Map(
-                        "from" -> "from.month",
-                        "to"   -> "to.month",
-                        ""     -> "from.month"
-                    )
-                )
-            )
-        }
-
-        @h1WithCaption(
-            content = messages("whatIsYourPreviousAddressInternational.heading"),
-            caption = messages("section.addressHistory")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("addressLine1"),
-                label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.addressLine1"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("address-line1")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("addressLine2"),
-                label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.addressLine2"))
-            )
-            .withAutocomplete("address-line2")
-            .withWidth(Full)
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("addressLine3"),
-                label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.addressLine3"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("address-line3")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("postcode"),
-                label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.postcode"))
-            )
-            .withWidth(Fixed10)
-            .withAutocomplete("postal-code")
-        )
-
-        @govukSelect(
-            SelectViewModel(
-                field = form("country"),
-                label = LabelViewModel(messages("whatIsYourPreviousAddressInternational.country")),
-                items = Country.selectItems(Country.internationalCountries)
-            )
-            .withCssClass("autocomplete")
-        )
-
-        @govukDateInput(
-            DateInput(
-                id = "from",
-                fieldset = Some(FieldsetViewModel(LegendViewModel(messages("whatIsYourPreviousAddressInternational.from")))),
-                errorMessage = fromDateErrorMessage,
-                items = Seq(
-                    InputItem(
-                        id = "from.month",
-                        name = "from.month",
-                        value = form("from.month").value,
-                        label = Some(messages("date.month")),
-                        classes = "govuk-input--width-2 " + (if(outOfOrderError || fromDateMonthError) "govuk-input--error" else "")
-                    ),
-                    InputItem(
-                        id = "from.year",
-                        name = "from.year",
-                        value = form("from.year").value,
-                        label = Some(messages("date.year")),
-                        classes = "govuk-input--width-4 " + (if(outOfOrderError || fromDateYearError) "govuk-input--error" else "")
-                    )
-                )
-            )
-        )
-
-        @govukDateInput(
-            DateInput(
-                id = "to",
-                fieldset = Some(FieldsetViewModel(LegendViewModel(messages("whatIsYourPreviousAddressInternational.to")))),
-                errorMessage = toDateErrorMessage,
-                items = Seq(
-                    InputItem(
-                        id = "to.month",
-                        name = "to.month",
-                        value = form("to.month").value,
-                        label = Some(messages("date.month")),
-                        classes = "govuk-input--width-2 " + (if(toDateMonthError) "govuk-input--error" else "")
-                    ),
-                    InputItem(
-                        id = "to.year",
-                        name = "to.year",
-                        value = form("to.year").value,
-                        label = Some(messages("date.year")),
-                        classes = "govuk-input--width-4 " + (if(toDateYearError) "govuk-input--error" else "")
-                    )
-                )
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(
+        ErrorSummaryViewModel(
+          form = form,
+          errorLinkOverrides = Map(
+            "from" -> "from.month",
+            "to"   -> "to.month",
+            ""     -> "from.month"
+      )))
     }
+
+    @h1WithCaption(
+      caption = messages("section.addressHistory"),
+      context = messages("thisSectionIs"),
+      heading = messages("whatIsYourPreviousAddressInternational.heading")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("addressLine1"),
+        label = LabelViewModel(
+          messages("whatIsYourPreviousAddressInternational.addressLine1")
+        )
+      )
+      .withWidth(Full)
+      .withAutocomplete("address-line1")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("addressLine2"),
+        label = LabelViewModel(
+          messages("whatIsYourPreviousAddressInternational.addressLine2")
+        )
+      )
+      .withAutocomplete("address-line2")
+      .withWidth(Full)
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("addressLine3"),
+        label = LabelViewModel(
+          messages("whatIsYourPreviousAddressInternational.addressLine3")
+        )
+      )
+      .withWidth(Fixed20)
+      .withAutocomplete("address-line3")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("postcode"),
+        label = LabelViewModel(
+          messages("whatIsYourPreviousAddressInternational.postcode")
+        )
+      )
+      .withWidth(Fixed10)
+      .withAutocomplete("postal-code")
+    )
+
+    @govukSelect(
+      SelectViewModel(
+        field = form("country"),
+        label = LabelViewModel(
+          messages("whatIsYourPreviousAddressInternational.country")
+        ),
+        items = Country.selectItems(Country.internationalCountries)
+      )
+      .withCssClass("autocomplete")
+    )
+
+    @govukDateInput(
+      DateInput(
+        id = "from",
+        fieldset = Some(FieldsetViewModel(LegendViewModel(
+          messages("whatIsYourPreviousAddressInternational.from")
+        ))),
+        errorMessage = fromDateErrorMessage,
+        items = Seq(
+          InputItem(
+            id = "from.month",
+            name = "from.month",
+            value = form("from.month").value,
+            label = Some(messages("date.month")),
+            classes = "govuk-input--width-2 " + (if(outOfOrderError || fromDateMonthError) "govuk-input--error" else "")
+          ),
+          InputItem(
+            id = "from.year",
+            name = "from.year",
+            value = form("from.year").value,
+            label = Some(messages("date.year")),
+            classes = "govuk-input--width-4 " + (if(outOfOrderError || fromDateYearError) "govuk-input--error" else "")
+          )
+        )
+      )
+    )
+
+    @govukDateInput(
+      DateInput(
+        id = "to",
+        fieldset = Some(FieldsetViewModel(LegendViewModel(
+          messages("whatIsYourPreviousAddressInternational.to")
+        ))),
+        errorMessage = toDateErrorMessage,
+        items = Seq(
+          InputItem(
+            id = "to.month",
+            name = "to.month",
+            value = form("to.month").value,
+            label = Some(messages("date.month")),
+            classes = "govuk-input--width-2 " + (if(toDateMonthError) "govuk-input--error" else "")
+          ),
+          InputItem(
+            id = "to.year",
+            name = "to.year",
+            value = form("to.year").value,
+            label = Some(messages("date.year")),
+            classes = "govuk-input--width-4 " + (if(toDateYearError) "govuk-input--error" else "")
+          )
+        )
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

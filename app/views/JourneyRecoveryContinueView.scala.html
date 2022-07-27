@@ -15,22 +15,28 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  govukButton: GovukButton,
+  h1: components.H1,
+  p: components.P
 )
 
 @(continueUrl: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("journeyRecovery.continue.title"))) {
+@layout(
+  pageTitle = titleNoForm(messages("journeyRecovery.continue.title"))
+) {
 
-    <h1 class="govuk-heading-xl">@messages("journeyRecovery.continue.heading")</h1>
+  @h1(
+    content = messages("journeyRecovery.continue.heading")
+  )
 
-    <p class="govuk-body">@messages("journeyRecovery.continue.guidance")</p>
+  @p(
+    content = messages("journeyRecovery.continue.guidance")
+  )
 
-    <p class="govuk-body">
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-                .asLink(continueUrl)
-        )
-    </p>
+  @govukButton(
+    ButtonViewModel(messages("site.continue"))
+      .asLink(continueUrl)
+  )
 }

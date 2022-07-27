@@ -1,5 +1,12 @@
+/* global accessibleAutocomplete */
+/* eslint-disable no-inner-declarations, sonarjs/cognitive-complexity, sonarjs/no-collapsible-if, sonarjs/no-duplicate-string */
+
 // prevent resubmit warning
-if (window.history && window.history.replaceState && typeof window.history.replaceState === 'function') {
+if (
+  window.history &&
+  window.history.replaceState &&
+  typeof window.history.replaceState === 'function'
+) {
   window.history.replaceState(null, null, window.location.href);
 }
 
@@ -31,17 +38,20 @@ function upTo(el, tagName) {
   return null;
 }
 
-if (typeof accessibleAutocomplete != 'undefined' && document.querySelector('.autocomplete') != null) {
+if (
+  typeof accessibleAutocomplete != 'undefined' &&
+  document.querySelector('.autocomplete') != null
+) {
   // load autocomplete
   var selectEl = document.querySelector('.autocomplete');
-  if (selectEl && selectEl.style.display !== "none") {
+  if (selectEl && selectEl.style.display !== 'none') {
     accessibleAutocomplete.enhanceSelectElement({
       autoselect: true,
       id: selectEl.id, // Important that id is the same
-      defaultValue: "",
+      defaultValue: '',
       minLength: 0,
       selectElement: selectEl,
-      showAllValues: true
+      showAllValues: true,
     });
   }
 
@@ -52,16 +62,24 @@ if (typeof accessibleAutocomplete != 'undefined' && document.querySelector('.aut
   var originalSelect = document.querySelector('select.autocomplete');
   var parentForm = upTo(originalSelect, 'form');
 
-  function polyfillAutocomplete(){
+  function polyfillAutocomplete() {
     var combo = parentForm.querySelector('[role="combobox"]');
     // =====================================================
     // Update autocomplete once loaded with fallback's aria attributes
     // Ensures hint and error are read out before usage instructions
     // =====================================================
-    if(originalSelect && originalSelect.getAttribute('aria-describedby') > ""){
-      if(parentForm){
-        if(combo){
-          combo.setAttribute('aria-describedby', originalSelect.getAttribute('aria-describedby') + ' ' + combo.getAttribute('aria-describedby'));
+    if (
+      originalSelect &&
+      originalSelect.getAttribute('aria-describedby') > ''
+    ) {
+      if (parentForm) {
+        if (combo) {
+          combo.setAttribute(
+            'aria-describedby',
+            originalSelect.getAttribute('aria-describedby') +
+              ' ' +
+              combo.getAttribute('aria-describedby')
+          );
         }
       }
     }
@@ -70,22 +88,31 @@ if (typeof accessibleAutocomplete != 'undefined' && document.querySelector('.aut
     // Ensure when user replaces valid answer with a non-valid answer, then valid answer is not retained
     // =====================================================
     var holdSubmit = true;
-    parentForm.addEventListener('submit', function(e){
-      if(holdSubmit){
-        e.preventDefault()
-        if(originalSelect.querySelectorAll('[selected]').length > 0 || originalSelect.value > ""){
-
+    parentForm.addEventListener('submit', function (e) {
+      if (holdSubmit) {
+        e.preventDefault();
+        if (
+          originalSelect.querySelectorAll('[selected]').length > 0 ||
+          originalSelect.value > ''
+        ) {
           var resetSelect = false;
 
-          if(originalSelect.value){
-            if(combo.value != originalSelect.querySelector('option[value="' + originalSelect.value +'"]').text){
+          if (originalSelect.value) {
+            if (
+              combo.value !=
+              originalSelect.querySelector(
+                'option[value="' + originalSelect.value + '"]'
+              ).text
+            ) {
               resetSelect = true;
             }
           }
-          if(resetSelect){
-            originalSelect.value = "";
-            if(originalSelect.querySelectorAll('[selected]').length > 0){
-              originalSelect.querySelectorAll('[selected]')[0].removeAttribute('selected');
+          if (resetSelect) {
+            originalSelect.value = '';
+            if (originalSelect.querySelectorAll('[selected]').length > 0) {
+              originalSelect
+                .querySelectorAll('[selected]')[0]
+                .removeAttribute('selected');
             }
           }
         }
@@ -94,12 +121,12 @@ if (typeof accessibleAutocomplete != 'undefined' && document.querySelector('.aut
         //parentForm.submit();
         HTMLFormElement.prototype.submit.call(parentForm); // because submit buttons have id of "submit" which masks the form's natural form.submit() function
       }
-    })
-
+    });
   }
-  function checkForAutocompleteLoad(){
-    if(parentForm.querySelector('[role="combobox"]')){
-      clearInterval(checkForLoad)
+
+  function checkForAutocompleteLoad() {
+    if (parentForm.querySelector('[role="combobox"]')) {
+      clearInterval(checkForLoad);
       polyfillAutocomplete();
     }
   }

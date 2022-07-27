@@ -17,58 +17,71 @@
 @import viewmodels.InputWidth._
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukButton: GovukButton,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukInput: GovukInput,
+  govukButton: GovukButton,
+  h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  index: Index,
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourPreviousName.title"), Some(messages("section.personalDetails")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatIsYourPreviousName.title"),
+    Some(messages("section.personalDetails"))
+  )
+) {
 
-    @formHelper(action = routes.WhatIsYourPreviousNameController.onSubmit(index, mode), 'autoComplete -> "on") {
+  @formHelper(
+    action = routes.WhatIsYourPreviousNameController.onSubmit(index, mode)
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @h1WithCaption(
-            content = messages("whatIsYourPreviousName.heading"),
-            caption = messages("section.personalDetails")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("firstName"),
-                label = LabelViewModel(messages("whatIsYourPreviousName.firstName"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("given-name")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("middleNames"),
-                label = LabelViewModel(messages("whatIsYourPreviousName.middleNames"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("additional-name")
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("lastName"),
-                label = LabelViewModel(messages("whatIsYourPreviousName.lastName"))
-            )
-            .withWidth(Full)
-            .withAutocomplete("family-name")
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @h1WithCaption(
+      caption = messages("section.personalDetails"),
+      context = messages("thisSectionIs"),
+      heading = messages("whatIsYourPreviousName.heading")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("firstName"),
+        label = LabelViewModel(messages("whatIsYourPreviousName.firstName"))
+      )
+      .withWidth(Fixed10)
+      .withAutocomplete("given-name")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("middleNames"),
+        label = LabelViewModel(messages("whatIsYourPreviousName.middleNames"))
+      )
+      .withWidth(Fixed20)
+      .withAutocomplete("additional-name")
+    )
+
+    @govukInput(
+      InputViewModel(
+        field = form("lastName"),
+        label = LabelViewModel(messages("whatIsYourPreviousName.lastName"))
+      )
+      .withWidth(Fixed20)
+      .withAutocomplete("family-name")
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

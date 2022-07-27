@@ -15,35 +15,49 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], name: String, mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  name: String,
+  mode: Mode,
+  index: Index
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("areYouSureYouWantToRemovePreviousName.title"), Some(messages("section.personalDetails")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("areYouSureYouWantToRemovePreviousName.title"),
+    Some(messages("section.personalDetails"))
+  )
+) {
 
-    @formHelper(action = routes.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index, mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.AreYouSureYouWantToRemovePreviousNameController.onSubmit(index, mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("areYouSureYouWantToRemovePreviousName.heading", name),
-                    caption = HmrcSectionCaption(messages("section.personalDetails"))
-                )
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @govukRadios(
+      RadiosViewModel.yesNo(
+        field = form("value"),
+        legend = HmrcPageHeadingLegend(
+          content = messages("areYouSureYouWantToRemovePreviousName.heading", name),
+          caption = HmrcSectionCaption(messages("section.personalDetails"))
+        )
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

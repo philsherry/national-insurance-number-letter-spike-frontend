@@ -1,0 +1,25 @@
+{
+  "elements": ["html5"],
+  "extends": ["html-validate:recommended"],
+  "root": true,
+  "rules": {
+    "attr-quotes": "off",
+    "attribute-allowed-values": "off",
+    "attribute-boolean-style": "off",
+    "no-conditional-comment": "off",
+    "no-inline-style": "off",
+    "no-redundant-role": "off",
+    "no-self-closing": ["warn", {
+      "ignoreForeign": true,
+      "ignoreXML": true
+    }],
+    "no-trailing-whitespace": "off",
+    "script-type": "off",
+    "void-style": "off"
+  },
+  "transform": {
+    "^.*\\.html$": "html-validate-angular/html",
+    "^.*\\.js$": "html-validate-angular/js",
+    "^.*\\.md$": "html-validate-markdown"
+  }
+}

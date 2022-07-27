@@ -15,46 +15,64 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton,
+  h1WithCaption: components.h1WithCaption,
+  p: components.P
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("doYouHavePrimaryDocument.title"), Some(messages("section.supportingDocuments")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("doYouHavePrimaryDocument.title"),
+    Some(messages("section.supportingDocuments"))
+  )
+) {
 
-    @formHelper(action = routes.DoYouHavePrimaryDocumentController.onSubmit(mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.DoYouHavePrimaryDocumentController.onSubmit(mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @h1WithCaption(
-            content = messages("doYouHavePrimaryDocument.heading"),
-            caption = messages("section.supportingDocuments")
-        )
-
-        <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-            <li>@messages("doYouHavePrimaryDocument.birthCertificate")</li>
-            <li>@messages("doYouHavePrimaryDocument.drivingLicense")</li>
-            <li>@messages("doYouHavePrimaryDocument.passport")</li>
-        </ul>
-
-        <p class="govuk-body">@messages("whichPrimaryDocument.hint")</p>
-
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("doYouHavePrimaryDocument.legend")).withCssClass("govuk-visually-hidden")
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @h1WithCaption(
+      caption = messages("section.supportingDocuments"),
+      context = messages("thisSectionIs"),
+      heading = messages("doYouHavePrimaryDocument.heading")
+    )
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>@messages("doYouHavePrimaryDocument.birthCertificate")</li>
+      <li>@messages("doYouHavePrimaryDocument.drivingLicense")</li>
+      <li>@messages("doYouHavePrimaryDocument.passport")</li>
+    </ul>
+
+    @p(
+      content = "whichPrimaryDocument.hint"
+    )
+
+    @govukRadios(
+      RadiosViewModel.yesNo(
+        field = form("value"),
+        legend = LegendViewModel(
+          messages("doYouHavePrimaryDocument.legend")
+        ).withCssClass("govuk-visually-hidden")
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

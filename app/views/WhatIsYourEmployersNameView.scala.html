@@ -17,36 +17,49 @@
 @import viewmodels.InputWidth._
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukButton: GovukButton
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukInput: GovukInput,
+  govukButton: GovukButton
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  index: Index,
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whatIsYourEmployersName.title"), Some(messages("section.employmentHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("whatIsYourEmployersName.title"),
+    Some(messages("section.employmentHistory"))
+  )
+) {
 
-    @formHelper(action = routes.WhatIsYourEmployersNameController.onSubmit(index, mode)) {
+  @formHelper(
+    action = routes.WhatIsYourEmployersNameController.onSubmit(index, mode)
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @govukInput(
-            InputViewModel(
-                field = form("value"),
-                label = HmrcPageHeadingLabel(
-                    content = messages("whatIsYourEmployersName.heading"),
-                    caption = HmrcSectionCaption(messages("section.employmentHistory"))
-                )
-            )
-            .withWidth(Full)
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @govukInput(
+      InputViewModel(
+        field = form("value"),
+        label = HmrcPageHeadingLabel(
+          content = messages("whatIsYourEmployersName.heading"),
+          caption = HmrcSectionCaption(messages("section.employmentHistory"))
+        )
+      )
+      .withWidth(Full)
+      .withAutocomplete("work organization")
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

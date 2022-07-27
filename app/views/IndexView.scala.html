@@ -14,54 +14,142 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.{h1WithCaption, H1, H2, Link, P}
+
 @this(
-    layout: templates.Layout
+  layout: templates.Layout,
+  govukButton : GovukButton,
+  h1WithCaption: h1WithCaption,
+  h1: H1,
+  h2: H2,
+  link: Link,
+  p: P
 )
 
 @(welshEnabled: Boolean)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageTitle    = titleNoForm(messages("index.title")),
-    showBackLink = false,
-    timeout = false
+  pageTitle = titleNoForm(messages("index.title")),
+  showBackLink = false,
+  timeout = false
 ) {
 
-    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
+  @h1(
+    content = messages("index.heading"),
+    specId = Some("start__index_heading")
+  )
 
-    <p class="govuk-body">@messages("index.p1") @messages("index.p2")</p>
+  @p(
+    content = messages("index.p1") + " " + messages("index.p2")
+  )
 
-    @if(welshEnabled) {
-    <p class="govuk-body">@messages("index.p3") <a href="@routes.LanguageSwitchController.switchToLanguage("cy")" class="govuk-link">@messages("index.p3.link")</a></p>
-    }
+  @if(welshEnabled) {
+    @p(
+      content = HtmlContent(
+        messages("index.p3") +
+        link(
+          fullStop = true,
+          inParagraph = true,
+          link = routes.LanguageSwitchController.switchToLanguage("cy").url,
+          messageKey = "index.p3.link"
+        )
+    ))
+  }
 
-    <h2 class="govuk-heading-m">@messages("index.whatInformation.h2")</h2>
-    <p class="govuk-body">@messages("index.whatInformation.p1")</p>
-    <ul class="govuk-list govuk-list--bullet">
-        <li>@messages("index.whatInformation.li.1")</li>
-        <li>@messages("index.whatInformation.li.2")</li>
-        <li>@messages("index.whatInformation.li.3")</li>
-        <li>@messages("index.whatInformation.li.4")</li>
-    </ul>
-    <p class="govuk-body">@messages("index.whatInformation.p2")</p>
+  @h2(
+    content = messages("index.whatInformation.h2"),
+    eId = "what-information",
+    specId = Some("start__what_information")
+  )
 
-    <h2 class="govuk-heading-m">@messages("index.beforeYouStart.h2")</h2>
+  @p(
+    content = messages("index.whatInformation.p1")
+  )
 
-    <p class="govuk-body">@messages("index.beforeYouStart.p1")</p>
-    <p class="govuk-body">@messages("index.beforeYouStart.p2")</p>
+  <ul class="govuk-list govuk-list--bullet" data-spec="start__what_information__list_1">
+    <li>@messages("index.whatInformation.li.1")</li>
+    <li>@messages("index.whatInformation.li.2")</li>
+    <li>@messages("index.whatInformation.li.3")</li>
+    <li>@messages("index.whatInformation.li.4")</li>
+  </ul>
 
-    <a id="start" href="@routes.WhatIsYourNameController.onPageLoad(NormalMode)" class="govuk-button govuk-button--start" role="button" data-module="govuk-button">@messages("site.start")</a>
+  @p(
+    content = messages("index.whatInformation.p2")
+  )
 
-    <h2 class="govuk-heading-m">@messages("index.otherWays.h2")</h2>
+  @h2(
+    content = messages("index.beforeYouStart.h2"),
+    eId = "before-you-start",
+    specId = Some("start__before_you_start")
+  )
 
-    <p class="govuk-body">@messages("index.otherWays.p1")</p>
-    <ul class="govuk-list govuk-list--bullet">
-        <li>@messages("index.otherWays.li.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/personal-tax-account">@messages("index.otherWays.li.1.link")</a></li>
-        <li>@messages("index.otherWays.li.2")</li>
-        <li>@messages("index.otherWays.li.3")</li>
-        <li>@messages("index.otherWays.li.4")</li>
-    </ul>
+  @p(
+    content = messages("index.beforeYouStart.p1")
+  )
 
-    <p class="govuk-body">@messages("index.otherWays.p2.1") <span style="white-space:nowrap">@messages("index.otherWays.p2.telephone1")</span> @messages("index.otherWays.p2.2") <span style="white-space:nowrap">@messages("index.otherWays.p2.telephone2")</span></p>
+  @p(
+    content = messages("index.beforeYouStart.p2")
+  )
 
-    <p class="govuk-body">@messages("index.otherWays.p3.1") <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/apply-national-insurance-number">@messages("index.otherWays.p3.link")</a> @messages("index.otherWays.p3.2")</p>
+  @govukButton(Button(
+    attributes = Map(
+      "specId" -> "start__before_you_start__button",
+      "id" -> "start"
+    ),
+    content = messages("site.start"),
+    href = Some(routes.WhatIsYourNameController.onPageLoad(NormalMode).url),
+    isStartButton = true
+  ))
+
+  @h2(
+    content = messages("index.otherWays.h2"),
+    eId = "other-ways",
+    specId = Some("start__other_ways")
+  )
+
+  @p(
+    content = messages("index.otherWays.p1")
+  )
+
+  <ul class="govuk-list govuk-list--bullet" data-spec="start__what_information__list_2">
+    <li>
+      @messages("index.otherWays.li.1")
+      @link(
+        classes = Some("govuk-link govuk-link--no-visited-state"),
+        inParagraph = true,
+        link = "https://www.gov.uk/personal-tax-account",
+        messageKey = "index.otherWays.li.1.link",
+        specId = Some("start__other_ways__link_1")
+      )
+    </li>
+    <li>@messages("index.otherWays.li.2")</li>
+    <li>@messages("index.otherWays.li.3")</li>
+    <li>@messages("index.otherWays.li.4")</li>
+  </ul>
+
+  @p(
+    content = HtmlContent(s"""
+      ${messages("index.otherWays.p2.1")}
+      <span class="telephone">
+      ${messages("index.otherWays.p2.telephone1")}
+      </span>
+      ${messages("index.otherWays.p2.2")}
+      <span class="telephone">
+      ${messages("index.otherWays.p2.telephone2")}
+      </span>
+  """))
+
+  @p(
+    content = HtmlContent(
+      messages("index.otherWays.p3.1") +
+      link(
+        inParagraph = true,
+        fullStop = true,
+        link = "https://www.gov.uk/apply-national-insurance-number",
+        messageKey = "index.otherWays.p3.link",
+        specId = Some("start__other_ways__link_2")
+      ) +
+      messages("index.otherWays.p3.2")
+  ))
 }

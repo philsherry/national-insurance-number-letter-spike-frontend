@@ -18,53 +18,84 @@
 @import java.time.format.DateTimeFormatter
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
-    govukButton: GovukButton,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukRadios: GovukRadios,
+  govukButton: GovukButton,
+  h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], employerName: Option[String], from: Option[LocalDate], to: Option[LocalDate], mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  employerName: Option[String],
+  from: Option[LocalDate],
+  to: Option[LocalDate],
+  mode: Mode,
+  index: Index
+)(implicit request: Request[_], messages: Messages)
 
 @dateFormatter = @{
-    DateTimeFormatter.ofPattern("d MMMM yyyy")
+  DateTimeFormatter.ofPattern("d MMMM yyyy")
 }
 
-    @layout(pageTitle = title(form, messages("areYouSureYouWantToRemoveEmployer.title"), Some(messages("section.employmentHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages("areYouSureYouWantToRemoveEmployer.title"),
+    Some(messages("section.employmentHistory"))
+  )
+) {
 
-    @formHelper(action = routes.AreYouSureYouWantToRemoveEmployerController.onSubmit(index, mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.AreYouSureYouWantToRemoveEmployerController.onSubmit(index, mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
-
-        @h1WithCaption(
-            content = messages("areYouSureYouWantToRemoveEmployer.heading", employerName.getOrElse("")),
-            caption = messages("section.employmentHistory"))
-
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            @from.map { from =>
-                <span>
-                  @to.map { to =>
-                      @messages("areYouSureYouWantToRemoveEmployer.range", from.format(dateFormatter), to.format(dateFormatter))
-                  }.getOrElse {
-                      @messages("areYouSureYouWantToRemoveEmployer.openRange", from.format(dateFormatter))
-                  }
-                </span>
-            }
-        </p>
-
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("areYouSureYouWantToRemoveEmployer.heading", employerName.getOrElse(""))).withCssClass("govuk-visually-hidden")
-            )
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(ErrorSummaryViewModel(form))
     }
+
+    @h1WithCaption(
+      caption = messages("section.employmentHistory"),
+      context = messages("thisSectionIs"),
+      heading = messages(
+        "areYouSureYouWantToRemoveEmployer.heading",
+        employerName.getOrElse("")
+      )
+    )
+
+    <p class="govuk-body govuk-!-margin-bottom-9">
+      @from.map { from =>
+        <span>
+          @to.map { to =>
+            @messages(
+              "areYouSureYouWantToRemoveEmployer.range",
+              from.format(dateFormatter),
+              to.format(dateFormatter)
+            )
+          }.getOrElse {
+            @messages(
+              "areYouSureYouWantToRemoveEmployer.openRange",
+              from.format(dateFormatter)
+            )
+          }
+        </span>
+      }
+    </p>
+
+    @govukRadios(
+      RadiosViewModel.yesNo(
+        field = form("value"),
+        legend = LegendViewModel(
+          messages("areYouSureYouWantToRemoveEmployer.heading",
+          employerName.getOrElse(""))
+        ).withCssClass("govuk-visually-hidden")
+      )
+    )
+
+    @govukButton(
+      ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

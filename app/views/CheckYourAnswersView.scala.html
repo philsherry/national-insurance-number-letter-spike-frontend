@@ -14,95 +14,193 @@
  * limitations under the License.
  *@
 
+@import views.html.components.{H1, H2, H3, Link, P}
+
 @this(
-    layout: templates.Layout,
-    govukSummaryList: GovukSummaryList,
-    hmrcListWithActions: HmrcListWithActions
+  layout: templates.Layout,
+  govukSummaryList: GovukSummaryList,
+  hmrcListWithActions: HmrcListWithActions,
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  link: Link,
+  p: P
 )
 
 @(
-        personalDetails: SummaryList,
-        previousNames: Seq[ListWithActionsItem],
-        currentAddress: SummaryList,
-        previousAddresses: Seq[ListWithActionsItem],
-        currentRelationship: SummaryList,
-        previousRelationships: Seq[ListWithActionsItem],
-        benefitHistory: SummaryList,
-        employmentHistory: SummaryList,
-        employers: Seq[ListWithActionsItem],
-        supportingDocuments: SummaryList
+  personalDetails: SummaryList,
+  previousNames: Seq[ListWithActionsItem],
+  currentAddress: SummaryList,
+  previousAddresses: Seq[ListWithActionsItem],
+  currentRelationship: SummaryList,
+  previousRelationships: Seq[ListWithActionsItem],
+  benefitHistory: SummaryList,
+  employmentHistory: SummaryList,
+  employers: Seq[ListWithActionsItem],
+  supportingDocuments: SummaryList,
 )(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
+@layout(
+  pageTitle = titleNoForm(messages("checkYourAnswers.title"))
+) {
 
-    <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
+  @h1(
+    content = messages("checkYourAnswers.heading")
+  )
 
-    <h2 class="govuk-heading-m">@messages("checkYourAnswers.personalDetails")</h2>
-    @govukSummaryList(personalDetails)
+  @h2(
+    content = messages("checkYourAnswers.personalDetails"),
+    eId = "personal-details-heading"
+  )
 
-    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousNames")</h3>
-    @if(previousNames.nonEmpty) {
-        @hmrcListWithActions(ListWithActions(items = previousNames))
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" href="@routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousName")</a>
-        </p>
-    } else {
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <span>@messages("checkYourAnswers.noPreviousNames")</span><br/>
-            <a class="govuk-link" href="@routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url">@messages("checkYourAnswers.addAPreviousName")</a>
-        </p>
-    }
+  @govukSummaryList(personalDetails)
 
-    <h2 class="govuk-heading-m">@messages("checkYourAnswers.addressHistory")</h2>
-    @govukSummaryList(currentAddress)
-    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousAddresses")</h3>
-    @if(previousAddresses.nonEmpty) {
-        @hmrcListWithActions(ListWithActions(items = previousAddresses))
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" href="@routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousAddress")</a>
-        </p>
-    } else {
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <span>@messages("checkYourAnswers.noPreviousAddresses")</span><br/>
-            <a class="govuk-link" href="@routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url">@messages("checkYourAnswers.addAPreviousAddress")</a>
-        </p>
-    }
+  @h3(
+    content = messages("checkYourAnswers.previousNames"),
+    eId = "previous-names-heading"
+  )
 
-    <h2 class="govuk-heading-m">@messages("checkYourAnswers.relationshipHistory")</h2>
-    @govukSummaryList(currentRelationship)
-    <h3 class="govuk-heading-s">@messages("checkYourAnswers.previousRelationships")</h3>
-    @if(previousRelationships.nonEmpty) {
-        @hmrcListWithActions(ListWithActions(items = previousRelationships))
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" href="@routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url">@messages("checkYourAnswers.addAnotherPreviousRelationship")</a>
-        </p>
-    } else {
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <span>@messages("checkYourAnswers.noPreviousRelationships")</span><br/>
-            <a class="govuk-link" href="@routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url">@messages("checkYourAnswers.addAPreviousRelationship")</a>
-        </p>
-    }
+  @if(previousNames.nonEmpty) {
+    @hmrcListWithActions(ListWithActions(items = previousNames))
 
-    <h2 class="govuk-heading-m">@messages("checkYourAnswers.benefitHistory")</h2>
-    @govukSummaryList(benefitHistory.withCssClass("govuk-!-margin-bottom-9"))
+    @link(
+      inParagraph = true,
+      link = routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAnotherPreviousName"
+    )
+  } else {
+    @p(
+      content = "checkYourAnswers.noPreviousNames",
+      classes = Some("govuk-body govuk-!-margin-bottom-0")
+    )
 
-    <h2 class="govuk-heading-m">@messages("checkYourAnswers.employmentHistory")</h2>
-    @govukSummaryList(employmentHistory)
-    <h3 class="govuk-heading-s">@messages("checkYourAnswers.employers")</h3>
-    @if(employers.nonEmpty) {
-        @hmrcListWithActions(ListWithActions(items = employers))
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url">@messages("checkYourAnswers.addAnotherEmployer")</a>
-        </p>
-    } else {
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <span>@messages("checkYourAnswers.noEmployers")</span><br/>
-            <a class="govuk-link" href="@routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url">@messages("checkYourAnswers.addAnEmployer")</a>
-        </p>
-    }
+    @link(
+      link = routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAPreviousName"
+    )
 
-    <h2 class="govuk-heading-m">@messages("checkYourAnswers.supportingDocuments")</h2>
-    @govukSummaryList(supportingDocuments.withCssClass("govuk-!-margin-bottom-9"))
+  }
 
-    <a id="continue" href="@routes.PrintController.onPageLoad" class="govuk-button" role="button" data-module="govuk-button">@messages("site.continue")</a>
+  @h2(
+    content = messages("checkYourAnswers.addressHistory"),
+    eId = "address-history-heading"
+  )
+
+  @govukSummaryList(currentAddress)
+
+  @h3(
+    content = messages("checkYourAnswers.previousAddresses"),
+    eId = "previous-addresses-heading"
+  )
+
+  @if(previousAddresses.nonEmpty) {
+    @hmrcListWithActions(ListWithActions(items = previousAddresses))
+
+    @link(
+      inParagraph = true,
+      link = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAnotherPreviousAddress"
+    )
+
+  } else {
+    @p(
+      content = "checkYourAnswers.noPreviousAddresses",
+      classes = Some("govuk-body govuk-!-margin-bottom-0")
+    )
+
+    @link(
+      link = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAPreviousAddress"
+    )
+
+  }
+
+  @h2(
+    content = messages("checkYourAnswers.relationshipHistory"),
+    eId = "relationship-history-heading"
+  )
+
+  @govukSummaryList(currentRelationship)
+
+  @h3(
+    content = messages("checkYourAnswers.previousRelationships"),
+    eId = "previous-relationships-heading"
+  )
+
+  @if(previousRelationships.nonEmpty) {
+
+    @hmrcListWithActions(ListWithActions(items = previousRelationships))
+
+    @link(
+      inParagraph = true,
+      link = routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAnotherPreviousRelationship"
+    )
+
+  } else {
+    @p(
+      content = "checkYourAnswers.noPreviousRelationships",
+      classes = Some("govuk-body govuk-!-margin-bottom-0")
+    )
+
+    @link(
+      link = routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAPreviousRelationship"
+    )
+
+  }
+
+  @h2(
+    content = messages("checkYourAnswers.benefitHistory"),
+    eId = "benefit-history-heading"
+  )
+
+  @govukSummaryList(benefitHistory.withCssClass("govuk-!-margin-bottom-9"))
+
+  @h2(
+    content = messages("checkYourAnswers.employmentHistory"),
+    eId = "employment-history-heading"
+  )
+
+  @govukSummaryList(employmentHistory)
+
+  @h3(
+    content = messages("checkYourAnswers.employers"),
+    eId = "employers-heading"
+  )
+
+  @if(employers.nonEmpty) {
+    @hmrcListWithActions(ListWithActions(items = employers))
+
+    @link(
+      inParagraph = true,
+      link = routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAnotherEmployer"
+    )
+  } else {
+    @p(
+      content = "checkYourAnswers.noEmployers",
+      classes = Some("govuk-body govuk-!-margin-bottom-0")
+    )
+
+    @link(
+      link = routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url,
+      messageKey = "checkYourAnswers.addAnEmployer"
+    )
+  }
+
+  @h2(
+    content = messages("checkYourAnswers.supportingDocuments"),
+    eId = "supporting-documents-heading"
+  )
+
+  @govukSummaryList(supportingDocuments.withCssClass("govuk-!-margin-bottom-9"))
+
+  @link(
+    link = routes.PrintController.onPageLoad.url,
+    messageKey = "site.continue",
+    id = Some("continue"),
+    classes = Some("govuk-button"),
+    isButton = true
+  )
 }

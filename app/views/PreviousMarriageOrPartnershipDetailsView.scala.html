@@ -17,68 +17,83 @@
 @import viewmodels.InputWidth._
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukButton: GovukButton,
-    govukHint: GovukHint,
-    govukDateInput: GovukDateInput,
-    h1WithCaption: components.h1WithCaption
+  layout: templates.Layout,
+  formHelper: FormWithCSRF,
+  govukErrorSummary: GovukErrorSummary,
+  govukInput: GovukInput,
+  govukButton: GovukButton,
+  govukHint: GovukHint,
+  govukDateInput: GovukDateInput,
+  h1WithCaption: components.h1WithCaption
 )
 
-@(form: Form[_], relationshipType: Option[PreviousRelationshipType], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+  form: Form[_],
+  relationshipType: Option[PreviousRelationshipType],
+  index: Index,
+  mode: Mode
+)(implicit request: Request[_], messages: Messages)
 
 @relationship = @{
-    relationshipType.fold("")(r => s".$r")
+  relationshipType.fold("")(r => s".$r")
 }
 
-@layout(pageTitle = title(form, messages(s"previousMarriageOrPartnershipDetails.title$relationship"), Some(messages("section.relationshipHistory")))) {
+@layout(
+  pageTitle = title(
+    form,
+    messages(s"previousMarriageOrPartnershipDetails.title$relationship"),
+    Some(messages("section.relationshipHistory"))
+  )
+) {
 
-    @formHelper(action = routes.PreviousMarriageOrPartnershipDetailsController.onSubmit(index, mode), 'autoComplete -> "off") {
+  @formHelper(
+    action = routes.PreviousMarriageOrPartnershipDetailsController.onSubmit(index, mode),
+    'autoComplete -> "off"
+  ) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(
-                ErrorSummaryViewModel(
-                    form = form,
-                    errorLinkOverrides = Map(
-                        "startDate" -> "startDate.day",
-                        "endDate"   -> "endDate.day",
-                        ""          -> "startDate.day"
-                    ))
-            )
-        }
-
-        @h1WithCaption(
-            content = messages(s"previousMarriageOrPartnershipDetails.heading$relationship"),
-            caption = messages("section.relationshipHistory")
-        )
-
-        @govukDateInput(
-            DateViewModel(
-                field  = form("startDate"),
-                legend = LegendViewModel(messages("previousMarriageOrPartnershipDetails.startDate"))
-            )
-        )
-
-        @govukDateInput(
-            DateViewModel(
-                field  = form("endDate"),
-                legend = LegendViewModel(messages("previousMarriageOrPartnershipDetails.endDate"))
-            )
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("endReason"),
-                label = LabelViewModel(messages(s"previousMarriageOrPartnershipDetails.endReason$relationship"))
-            )
-            .withWidth(Full)
-            .withHint(Hint(content = "previousMarriageOrPartnershipDetails.endReason.hint"))
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+    @if(form.errors.nonEmpty) {
+      @govukErrorSummary(
+        ErrorSummaryViewModel(
+          form = form,
+          errorLinkOverrides = Map(
+            "startDate" -> "startDate.day",
+            "endDate"   -> "endDate.day",
+            ""          -> "startDate.day"
+      )))
     }
+
+    @h1WithCaption(
+      caption = messages("section.relationshipHistory"),
+      context = messages("thisSectionIs"),
+      heading = messages(s"previousMarriageOrPartnershipDetails.heading$relationship")
+    )
+
+    @govukDateInput(
+      DateViewModel(
+        field  = form("startDate"),
+        legend = LegendViewModel(messages("previousMarriageOrPartnershipDetails.startDate"))
+    ))
+
+    @govukDateInput(
+      DateViewModel(
+        field  = form("endDate"),
+        legend = LegendViewModel(
+          messages("previousMarriageOrPartnershipDetails.endDate")
+    )))
+
+    @govukInput(
+        InputViewModel(
+          field = form("endReason"),
+          label = LabelViewModel(
+            messages(s"previousMarriageOrPartnershipDetails.endReason$relationship")
+        ))
+        .withWidth(Full)
+        .withHint(Hint(
+          content = "previousMarriageOrPartnershipDetails.endReason.hint"
+    )))
+
+    @govukButton(
+        ButtonViewModel(messages("site.continue"))
+    )
+  }
 }

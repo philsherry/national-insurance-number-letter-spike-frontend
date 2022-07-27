@@ -16,12 +16,25 @@
 
 @this()
 
-@(content: Content, caption: Content, size: String = "xl")(implicit request: Request[_], messages: Messages)
+@(
+  caption: Content,
+  context: Content,
+  eId: String = "index-heading",
+  heading: Content,
+  size: String = "xl",
+  specId: Option[String] = None
+)(implicit request: Request[_], messages: Messages)
 
-    <header class="hmrc-page-heading">
-        <h1 class="govuk-heading-@size">@content.asHtml</h1>
-        <p class="hmrc-caption govuk-caption-@size">
-            <span class="govuk-visually-hidden">@messages("thisSectionIs") </span>
-            @caption.asHtml
-        </p>
-    </header>
+<header class="hmrc-page-heading" data-component="hmrc_page_heading"@if(specId){ data-spec="@specId"}>
+  <h1 class="govuk-heading-@size" data-component="hmrc_page_heading__h1" id="@eId">
+    @heading.asHtml
+  </h1>
+  <p class="govuk-caption-@size hmrc-caption" data-component="hmrc_page_heading__p">
+    <span data-aria-hidden aria-hidden="true">
+      @caption.asHtml
+    </span>
+    <span data-visually-hidden class="govuk-visually-hidden">
+      @context.asHtml @caption.asHtml
+    </span>
+  </p>
+</header>
