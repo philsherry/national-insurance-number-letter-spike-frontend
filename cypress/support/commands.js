@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 // https://on.cypress.io/custom-commands
+import user from '../fixtures/user.json';
 import './govuk-cypress/index';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * @link https://docs.cypress.io/api/cypress-api/screenshot-api
@@ -9,7 +11,7 @@ Cypress.Screenshot.defaults({
   capture: 'fullPage',
   disableTimersAndAnimations: false,
   overwrite: true,
-  screenshotOnRunFailure: false
+  screenshotOnRunFailure: false,
 });
 
 /**
@@ -120,7 +122,7 @@ Cypress.Commands.add('compareStrings', (element1, element2) => {
   Cypress.log({
     displayName: 'COMPARE',
     message: `${element1} || ${element2}`,
-    name: 'compareStrings'
+    name: 'compareStrings',
   });
   /**
    * Text from the first element.
@@ -150,11 +152,109 @@ Cypress.Commands.add('compareStrings', (element1, element2) => {
 
 /**
  * Check a NINO
- */
+ **/
 Cypress.Commands.add('checkNino', (parentEl, ninoEl, checkNino) => {
   cy.get(parentEl).then(($nino) => {
     let ninoText = $nino.find(ninoEl).text().trim();
     expect(ninoText).to.equal(checkNino);
     expect(ninoText).to.match(/^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$/);
   });
+});
+
+/**
+ * @description Cockamamie login to force a session cookie for the postal NINO service. We need to hit `setCookiePage` to get the cookie. Then we check a page after that in the journey (`validatePage`) to make sure the cookie is set.
+ * @see https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/logging-in__csrf-tokens/cypress/e2e/logging-in-csrf-tokens-spec.cy.js
+ */
+
+Cypress.Commands.add('loginByCSRF', (csrfToken) => {
+  Cypress.log({
+    displayName: 'loginByCSRF',
+    message: 'Login by CSRF',
+    name: 'loginByCSRF',
+  });
+  const port = 11300;
+  const serviceID = 'fill-online/get-your-national-insurance-number-by-post';
+  const setCookiePage = 'what-is-your-name';
+  const checkValidateSlug = 'what-is-your-previous-name';
+  const cookiePage = `http://localhost:${port}/${serviceID}/${setCookiePage}`;
+  const validatePage = `http://localhost:${port}/${serviceID}/${checkValidateSlug}`;
+  const firstName = user.username.firstName;
+  const lastName = user.username.lastName;
+
+  cy.request(
+    {
+      method: 'POST',
+      url: cookiePage,
+      failOnStatusCode: false, // don’t fail so we can make assertions
+      form: true, // we are submitting a regular form body
+      body: {
+        csrfToken: csrfToken, // insert this as part of form body
+        firstName: firstName,
+        lastName: lastName,
+        validatePage: validatePage
+      },
+    },
+    {
+      validate() {
+        cy.visit(`${validatePage}`, { failOnStatusCode: false });
+      },
+    }
+  );
+
+  // Logging for development purposes; remove once tests are finalised.
+  console.log('loginByCSRF', {
+    csrfToken,
+    firstName,
+    lastName,
+    validatePage,
+  });
+});
+
+// userUuid, pageSlug, firstName, lastName
+Cypress.Commands.add('loginForCookie', (userUuid, pageSlug) => {
+  const port = 11300;
+  const serviceID = 'fill-online/get-your-national-insurance-number-by-post';
+  const setCookiePage = 'what-is-your-name';
+  const cookiePage = `http://localhost:${port}/${serviceID}/${setCookiePage}`;
+  const firstName = user.username.firstName;
+  const lastName = user.username.lastName;
+
+  Cypress.log({
+    displayName: 'loginForCookie',
+    message: 'Login for session cookie',
+    name: 'loginForCookie',
+  });
+
+  console.log({ userUuid, pageSlug, firstName, lastName });
+
+  cy.session(
+    [userUuid, pageSlug, firstName, lastName],
+    () => {
+      console.log('LOGGING_INSIDE_THE_SESSION_COMMAND', {
+        userUuid,
+        firstName,
+        lastName,
+        pageSlug,
+      });
+      cy.request({
+        method: 'POST',
+        url: cookiePage,
+        body: {
+          userUuid: userUuid,
+          firstName: firstName,
+          lastName: lastName,
+          pageSlug: pageSlug,
+        },
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response).to.have.property('headers');
+        expect(response).to.have.property('duration');
+      });
+    },
+    {
+      validate() {
+        cy.visit(`${pageSlug}`);
+      },
+    }
+  );
 });

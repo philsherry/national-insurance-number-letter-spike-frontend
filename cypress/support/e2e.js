@@ -7,6 +7,7 @@ import 'cypress-fail-fast';
 import failOnConsoleError, {
   consoleType,
 } from 'cypress-fail-on-console-error';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * https://github.com/nils-hoyer/cypress-fail-on-console-error

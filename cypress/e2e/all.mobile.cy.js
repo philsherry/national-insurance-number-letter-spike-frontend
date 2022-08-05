@@ -1,0 +1,1 @@
+import './index/mobile.cy';

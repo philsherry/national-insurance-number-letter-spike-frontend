@@ -62,7 +62,8 @@
       heading = messages(
         "areYouSureYouWantToRemoveEmployer.heading",
         employerName.getOrElse("")
-      )
+      ),
+      specId = Some("are_you_sure_you_want_to_remove_employer__heading_with_caption")
     )
 
     <p class="govuk-body govuk-!-margin-bottom-9">
@@ -95,7 +96,9 @@
     )
 
     @govukButton(
-      ButtonViewModel(messages("site.continue"))
+      ButtonViewModel(
+        messages("site.continue")
+      ).withAttribute("data-spec", "are_you_sure_you_want_to_remove_employer__continue")
     )
   }
 }

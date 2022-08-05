@@ -64,6 +64,7 @@
     @hmrcListWithActions(ListWithActions(items = previousNames))
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       inParagraph = true,
       link = routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAnotherPreviousName"
@@ -75,6 +76,7 @@
     )
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       link = routes.WhatIsYourPreviousNameController.onPageLoad(Index(previousNames.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAPreviousName"
     )
@@ -97,6 +99,7 @@
     @hmrcListWithActions(ListWithActions(items = previousAddresses))
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       inParagraph = true,
       link = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAnotherPreviousAddress"
@@ -109,6 +112,7 @@
     )
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       link = routes.IsYourPreviousAddressInUkController.onPageLoad(Index(previousAddresses.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAPreviousAddress"
     )
@@ -132,6 +136,7 @@
     @hmrcListWithActions(ListWithActions(items = previousRelationships))
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       inParagraph = true,
       link = routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAnotherPreviousRelationship"
@@ -144,6 +149,7 @@
     )
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       link = routes.PreviousRelationshipTypeController.onPageLoad(Index(previousRelationships.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAPreviousRelationship"
     )
@@ -173,6 +179,7 @@
     @hmrcListWithActions(ListWithActions(items = employers))
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       inParagraph = true,
       link = routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAnotherEmployer"
@@ -184,6 +191,7 @@
     )
 
     @link(
+      classes = Some("govuk-link govuk-!-margin-bottom-9 add-check-your-answers-section"),
       link = routes.WhatIsYourEmployersNameController.onPageLoad(Index(employers.length), CheckMode).url,
       messageKey = "checkYourAnswers.addAnEmployer"
     )

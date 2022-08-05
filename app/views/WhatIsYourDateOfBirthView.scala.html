@@ -47,6 +47,10 @@
       ))
     }
 
+    @*
+     * Ideally, add `data-spec` attribute to the `govuk-date-input` element
+     * for use in the tests, rather than the IDs.
+    *@
     @govukDateInput(
       DateViewModel(
         field  = form("value"),
@@ -60,7 +64,9 @@
     )
 
     @govukButton(
-      ButtonViewModel(messages("site.continue"))
+      ButtonViewModel(
+        messages("site.continue")
+      ).withAttribute("data-spec", "what_is_your_dob__continue")
     )
   }
 }

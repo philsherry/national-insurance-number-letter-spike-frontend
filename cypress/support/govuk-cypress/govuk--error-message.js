@@ -108,12 +108,20 @@ Cypress.Commands.add(
       // Error message should exist
       expect($el).to.exist;
 
-      cy.get(subject).should('have.class', 'govuk-form-group--error');
+      cy.get($el)
+        .closest('.govuk-form-group')
+        .should('have.class', 'govuk-form-group--error');
 
       // Find `govuk-form-group--error` in the component and run `.checkAriaDescribedBy()` on it.
+      cy.get($el).checkAriaDescribedBy();
 
       // Expect to find the class `govuk-error-message` in the component.
       // Expect `govuk-error-message` to contain the visually-hidden text `Error:`
+
+      cy.get($el)
+        .closest('.govuk-form-group')
+        .find('.govuk-error-message .govuk-visually-hidden')
+        .should('have.text', 'Error:');
     });
   }
 );

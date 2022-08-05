@@ -67,12 +67,23 @@ Cypress.Commands.add(
               // 1. Expect href to match a valid id in the `<main>` element.
               cy.wrap($target)
                 .should('have.attr', 'id')
-                .and('match', /^[a-z0-9-]+$/);
+                .and('match', /^[a-zA-Z0-9-_\\.]+$/);
+              /**
+               * ^ That regExp is aiming to match the following:
+               * ('.hmrc-page-heading') // regular kebab-case class names
+               * ('#value') // regular id names
+               * ('#value\\.day') // but also allow for dots in the id :facepalm:
+               * ('#value\\.year-something') // and let’s try to account for…
+               * ('#value\\.yearAndAnotherThing') //…even more amazing decisions…
+               * ('#value\\.yearAndAnotherThing__FML') //…from people who shun consistency!
+               **/
               // 2. Check the ordering of the target items is the same as the list items.
               expect($target.attr('id')).to.equal(listItems[index]);
             });
         });
+
       });
+
     })
   }
 );

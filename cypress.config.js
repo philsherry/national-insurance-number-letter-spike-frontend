@@ -6,6 +6,7 @@ const istanbul = require('istanbul-lib-coverage');
 const { join } = require('path');
 const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('fs');
 const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
+const chai = require('chai');
 
 const { defineConfig } = require('cypress');
 
@@ -13,6 +14,7 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:11300/',
     chromeWebSecurity: false,
+    experimentalSessionAndOrigin: true,
     env: {
       browserPermissions: {
         camera: 'block',
@@ -30,7 +32,9 @@ module.exports = defineConfig({
     },
     setupNodeEvents(on, config) {
 
-      console.log(config) // see everything in here!
+      // console.log(config) // see everything in here!
+
+      chai.use(require('chai-string'));
 
       // bind to the event we care about
       // these are standard folder and file names used by NYC tools

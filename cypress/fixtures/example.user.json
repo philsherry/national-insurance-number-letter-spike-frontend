@@ -1,40 +1,107 @@
 {
-  "username": {
-    "firstName": "",
-    "middleNames": "",
-    "lastNames": ""
-  },
-  "dateOfBirth": {
-    "year": "",
-    "month": "",
-    "day": ""
-  },
   "address": {
-    "addressLine1": "",
+    "addressLine1": "Anfield Road",
     "addressLine2": "",
-    "addressLine3": "",
-    "city": "",
-    "county": "",
-    "postcode": "",
-    "country": ""
-  },
-  "contactDetails": {
-    "emailAddress": "",
-    "phoneNumber": "",
-    "mobileNumber": "",
-    "voiceCall": "false"
+    "city": "Liverpool",
+    "country": "UK",
+    "postcode": "L4 0TH"
   },
   "bankDetails": {
-    "bankName": "",
-    "branchName": "",
-    "branchCode": "",
     "accountHolderName": "",
     "accountNumber": "",
+    "bankName": "",
+    "branchCode": "",
+    "branchName": "",
     "sortCode": ""
   },
-  "passportDetails": {
-    "passportNumber": "",
-    "expiryDate": ""
+  "benefits": [
+    "Universal Credit",
+    "Tax Credits"
+  ],
+  "contactDetails": {
+    "emailAddress": "",
+    "mobileNumber": "+44(0)987654321",
+    "phoneNumber": "+44(0)987654321",
+    "voiceCall": "false"
   },
-  "taxCreditsDetails": {}
+  "dateOfBirth": {
+    "day": "11",
+    "month": "01",
+    "year": "1984"
+  },
+  "employer": {
+    "address": {
+      "addressLine1": "666 Evil Street",
+      "addressLine2": "Cirith Gorgor",
+      "city": "Mordor",
+      "country": "Middle Earth",
+      "postcode": "SAU R0N"
+    },
+    "duration": {
+      "from": {
+        "day": "6",
+        "month": "6",
+        "year": "2006"
+      }
+    },
+    "name": "EVIL CORP."
+  },
+  "gender": "male",
+  "marriage": {
+    "duration": {
+      "from": {
+        "day": "1",
+        "month": "1",
+        "year": "2021"
+      },
+      "to": {
+        "day": "31",
+        "month": "12",
+        "year": "2021"
+      }
+    },
+    "reason": "death"
+  },
+  "nino": "AB123456C",
+  "passportDetails": {
+    "expiryDate": "",
+    "passportNumber": ""
+  },
+  "previous": {
+    "address": {
+      "addressLine1": "Arenaslingan 14",
+      "addressLine2": "Johanneshov",
+      "addressLine3": "",
+      "city": "Stockholm",
+      "country": "Sweden",
+      "duration": {
+        "from": {
+          "month": "1",
+          "year": "2010"
+        },
+        "to": {
+          "month": "12",
+          "year": "2020"
+        }
+      },
+      "postcode": "12177"
+    },
+    "username": {
+      "firstName": "David",
+      "lastName": "Hubbins",
+      "middleNames": "Saint",
+      "title": "Sir"
+    }
+  },
+  "supportingDocuments": [
+    "Birth certificate",
+    "Driving licence",
+    "Passport"
+  ],
+  "username": {
+    "firstName": "John",
+    "lastName": "Pepys",
+    "middleNames": "“Stumpy”",
+    "title": "Mister"
+  }
 }

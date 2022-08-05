@@ -8,6 +8,7 @@ import './govuk--error-summary';
 import './govuk--focus-colours';
 import './govuk--headings';
 import './govuk--link-context';
+import './govuk--munch-cookies';
 import './hmrc--account-header';
 import './hmrc--ask-the-user-for-their-consent';
 import './hmrc--check-tax-years.js';

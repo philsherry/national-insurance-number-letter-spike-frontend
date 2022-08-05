@@ -74,14 +74,14 @@
       messages("print.p2.1") + " " +
       link(
         inParagraph = true,
-        link = "@routes.CheckYourAnswersController.onPageLoad",
+        link = routes.CheckYourAnswersController.onPageLoad.url,
         messageKey = "print.p2.change"
       ) + " " +
       messages("print.p2.2") + " " +
       link(
         fullStop = true,
         inParagraph = true,
-        link = "@routes.JourneyRecoveryController.onStartAgain.url",
+        link = routes.JourneyRecoveryController.onStartAgain.url,
         messageKey = "print.p2.restart"
       )
     )
@@ -95,7 +95,7 @@
   @link(
     attrs = Map("id" -> "download"),
     isDownloadable = true,
-    link = "@routes.PrintController.onDownload",
+    link = routes.PrintController.onDownload.url,
     messageKey = "print.button",
   )
 }

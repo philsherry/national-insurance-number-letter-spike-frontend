@@ -50,7 +50,8 @@
     @h1WithCaption(
       caption = messages("section.personalDetails"),
       context = messages("thisSectionIs"),
-      heading = messages("whatIsYourPreviousName.heading")
+      heading = messages("whatIsYourPreviousName.heading"),
+      specId = Some("what_is_your_previous_name__heading_with_caption")
     )
 
     @govukInput(
@@ -60,6 +61,7 @@
       )
       .withWidth(Fixed10)
       .withAutocomplete("given-name")
+      .withAttribute("data-spec", "what_is_your_previous_name__given_name")
     )
 
     @govukInput(
@@ -69,6 +71,7 @@
       )
       .withWidth(Fixed20)
       .withAutocomplete("additional-name")
+      .withAttribute("data-spec", "what_is_your_previous_name__additional_name")
     )
 
     @govukInput(
@@ -78,10 +81,13 @@
       )
       .withWidth(Fixed20)
       .withAutocomplete("family-name")
+      .withAttribute("data-spec", "what_is_your_previous_name__family_name")
     )
 
     @govukButton(
-      ButtonViewModel(messages("site.continue"))
+      ButtonViewModel(
+        messages("site.continue")
+      ).withAttribute("data-spec", "what_is_your_previous_name__continue")
     )
   }
 }

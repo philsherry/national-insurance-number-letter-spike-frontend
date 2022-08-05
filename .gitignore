@@ -23,11 +23,9 @@
 ~*.*
 bin/
 coverage/
-cypress/e2e/
 cypress/examples/
 cypress/fixtures/example.json
 cypress/fixtures/user.json
-cypress/integration/
 cypress/results/
 cypress/screenshots/
 cypress/videos/

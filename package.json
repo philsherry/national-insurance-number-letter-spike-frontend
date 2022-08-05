@@ -16,6 +16,7 @@
     "axe-core": "^4.2.3",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "chai-string": "^1.5.0",
     "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.10",
     "commander": "^8.0.0",
@@ -23,7 +24,7 @@
     "css-declaration-sorter": "^6.0.3",
     "css-mqpacker-sort-mediaqueries": "^0.2.2",
     "cssnano": "^5.0.5",
-    "cypress": "^10.3.1",
+    "cypress": "^10.4.0",
     "cypress-audit": "^1.0.0",
     "cypress-axe": "^1.0.0",
     "cypress-fail-fast": "^3.1.0",
@@ -96,7 +97,8 @@
     "stylelint-config-standard": "^22.0.0",
     "stylelint-no-unsupported-browser-features": "^5.0.1",
     "stylelint-order": "^4.1.0",
-    "stylelint-scss": "^3.19.0"
+    "stylelint-scss": "^3.19.0",
+    "uuid": "^8.3.2"
   },
   "description": "The “Get your National Insurance number by post” service allows unauthenticated users to get HMRC to send them proof of their National Insurance number by post. This is an alternative to similar functionality in the Personal Tax Account, for users who cannot pass identity verification.",
   "directories": {

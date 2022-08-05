@@ -1,9 +1,11 @@
 autoselect
 bloginfo
 combobox
+cysp
 dept
 describedby
 downloadurl
+fieldset
 fieldsets
 firefox
 fullpage
@@ -33,7 +35,9 @@ tabindex
 tagify
 talkback
 textareas
+uuidv4
 vars
+viewmodels
 wcag
 webhint
 xcode

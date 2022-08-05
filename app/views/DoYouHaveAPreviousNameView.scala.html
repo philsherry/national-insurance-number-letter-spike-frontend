@@ -69,9 +69,11 @@
           field = form("value"),
           legend = HmrcPageHeadingLegend(
             content = messages("doYouHaveAPreviousName.heading"),
-            caption = HmrcSectionCaption(messages("section.personalDetails"))
+            caption = HmrcSectionCaption(
+              messages("section.personalDetails")
+            )
           )
-        )
+        ).withAttribute("data-spec", "do_you_have_a_previous_name__radio_group")
       )
 
     } else {
@@ -79,7 +81,8 @@
       @h1WithCaption(
         caption = messages("section.personalDetails"),
         context = messages("thisSectionIs"),
-        heading = headingText
+        heading = headingText,
+        specId = Some("do_you_have_a_previous_name__heading_with_caption")
       )
 
       @hmrcListWithActions(
@@ -99,7 +102,9 @@
     }
 
     @govukButton(
-      ButtonViewModel(messages("site.continue"))
+      ButtonViewModel(
+        messages("site.continue")
+      ).withAttribute("data-spec", "do_you_have_a_previous_name__continue")
     )
   }
 }

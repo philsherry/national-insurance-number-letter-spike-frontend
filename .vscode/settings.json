@@ -1,8 +1,59 @@
 {
-  "cSpell.userWords": ["autoselect", "bloginfo", "combobox", "dept", "describedby", "downloadurl", "fieldsets", "firefox", "greyscale", "govuk", "hljs", "inputmode", "ios", "isaddo", "javascripts", "labelledby", "macos", "micalevisk", "mochawesome", "monochromacy", "nillermeddild", "noindex", "nvda", "philsherry", "siteimprove", "sonarjs", "tabindex", "tagify", "talkback", "textareas", "vars", "wcag", "webhint", "xcode", "zoomtext"],
+  "cSpell.userWords": [
+    "autoselect",
+    "bloginfo",
+    "combobox",
+    "cysp",
+    "dept",
+    "describedby",
+    "downloadurl",
+    "fieldset",
+    "fieldsets",
+    "firefox",
+    "fullpage",
+    "govuk",
+    "greyscale",
+    "govuk",
+    "hljs",
+    "hmrc",
+    "inputmode",
+    "ios",
+    "isaddo",
+    "javascripts",
+    "labelledby",
+    "macos",
+    "mdtp",
+    "mdtpdi",
+    "micalevisk",
+    "mochawesome",
+    "monochromacy",
+    "nillermeddild",
+    "nino",
+    "noindex",
+    "nvda",
+    "philsherry",
+    "siteimprove",
+    "sonarjs",
+    "tabindex",
+    "tagify",
+    "talkback",
+    "textareas",
+    "uuidv4",
+    "vars",
+    "viewmodels",
+    "wcag",
+    "webhint",
+    "xcode",
+    "zoomtext"
+  ],
   "files.watcherExclude": {
     "**/target": true
   },
-  "spellright.documentTypes": ["markdown", "plaintext"],
-  "spellright.language": ["en_GB"]
+  "spellright.documentTypes": [
+    "markdown",
+    "plaintext"
+  ],
+  "spellright.language": [
+    "en_GB"
+  ]
 }

@@ -14,15 +14,15 @@
  * @fixture `<title>What is their date of birth? - Their details - Manage your tax credits - GOV.UK<title>`
  *
  * @params {hasError} Page is in an error state
- * @example cy.checkPageTitle(error);
+ * @example cy.checkPageTitle(hasError);
  * @link https://design.tax.service.gov.uk/hmrc-design-patterns/page-title/#personally-identifiable-information
  * @fixture `<title>Error: What is their date of birth? - Their details - Manage your tax credits - GOV.UK<title>`
  **/
 
 // -- This is a parent command --
 Cypress.Commands.add('checkPageTitle', (subject, options) => {
-  const hasId = false;
-  const hasError = false;
+  let hasId = false;
+  let hasError = false;
   let hasSectionName = false;
   let pageHeading = '';
   let sectionName = '';
@@ -64,15 +64,18 @@ Cypress.Commands.add('checkPageTitle', (subject, options) => {
     // Get the length of the array to check if there is a section name
     const titleArrayLength = titleArray.length;
 
-
     // First part should match the page heading (h1)
     // Unless it has `hasId` is true (see HMRC PII above)
     if (hasId === true) {
       // no need to match this part exactly
       expect(titleArray[0]).to.contain(pageHeading);
+    } else if (hasError === true) {
+      // Page is in an error state.
+      // We expect “Error:” to be the first part of the title
+      expect(titleArray[0]).to.startsWith('Error:');
     } else {
       // should match exactly
-      expect(titleArray[0]).to.equal(pageHeading);
+      expect(titleArray[0]).to.contain(pageHeading);
     }
 
     // Last part should be “GOV.UK”
