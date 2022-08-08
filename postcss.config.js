@@ -7,7 +7,6 @@ module.exports = {
     }),
     require('postcss-em-media-query')(),
     require('postcss-combine-media-query')(),
-    require('postcss-mq-optimize')(),
     require('postcss-filter-mq')({
       invert: false,
       keepBaseRules: true,

@@ -1,6 +1,7 @@
 autoselect
 bloginfo
 combobox
+cssnano
 cysp
 dept
 describedby
@@ -21,14 +22,17 @@ labelledby
 macos
 mdtp
 mdtpdi
+mediaqueries
 micalevisk
 mochawesome
 monochromacy
+mqpacker
 nillermeddild
 nino
 noindex
 nvda
 philsherry
+positionless
 siteimprove
 sonarjs
 tabindex
@@ -41,4 +45,5 @@ viewmodels
 wcag
 webhint
 xcode
+zindex
 zoomtext

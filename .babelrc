@@ -6,7 +6,7 @@
     },
     "test": {
       "plugins": [["istanbul", {
-        "exclude": ["**/*.spec.js"],
+        "exclude": ["**/*.cy.js"],
         "useInlineSourceMaps": false
       }], "@babel/plugin-transform-modules-commonjs"],
       "presets": ["@babel/env"]
